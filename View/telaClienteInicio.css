@@ -1,0 +1,155 @@
+/* Fundo principal */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Alata', sans-serif;
+}
+
+.background {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #2A2A2A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Container principal */
+.container {
+  display: flex;
+  align-items: center;
+  gap: 200px; /* espaço entre logo e caixa */
+  z-index: 2;
+}
+
+/* Caixa logo */
+.logo-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  max-width: 300px;
+}
+
+/* Caixa login */
+.login-box {
+    width: 316px;
+    padding: 90px;
+  background: #d6ceb45f;
+  border-radius: 28px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  /* margin-left: 103px; */
+}
+
+.login-box h1 {
+  color: white;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.login-box input {
+  display: block;
+  width: 90%;
+  margin: 15px auto;
+  padding: 12px;
+  border: none;
+  border-radius: 30px;
+  background: #FFFAE6;
+  font-size: 16px;
+}
+
+/* Esqueci senha */
+.forgot {
+  display: block;
+  margin: 10px 0 20px;
+  font-size: 14px;
+  color: #2A2A2A;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* Botão */
+.login-box button {
+  padding: 12px 40px;
+  border: none;
+  border-radius: 30px;
+  background: #2a2a2a;
+  color: #e6c06b;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-box button:hover {
+  background: #e6c06b;
+
+}
+
+/* Bolinhas decorativas */
+.bolinha {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(45px);
+}
+
+.bolinha1 {
+  width: 320px; height: 240px;
+  top: -50px; left: 50px;
+  background: rgba(221, 179, 94, 0.85);
+}
+
+.bolinha2 {
+  width: 300px; height: 270px;
+  bottom: -40px; right: 150px;
+  background: rgba(221, 179, 94, 0.95);
+}
+
+.bolinha3 {
+  width: 120px; height: 120px;
+  bottom: 120px; left: 200px;
+  background: rgba(221, 179, 94, 0.59);
+}
+
+.bolinha4 {
+  width: 120px; height: 120px;
+  top: 50px; right: 300px;
+  background: rgba(221, 179, 94, 0.85);
+}
+
+.bolinha5 {
+  width: 120px; height: 120px;
+  top: 320px; left: 55%;
+  background: rgba(221, 179, 94, 0.85);
+}
+
+.bolinha6 {
+  width: 240px; height: 230px;
+  top: -30px; left: -50px;
+  background: #DDB35E;
+}
+
+  
+/* Responsividade 
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .login-box {
+    width: 90%;
+    padding: 30px;
+  }
+
+  .logo {
+    max-width: 200px;
+  }
+} 

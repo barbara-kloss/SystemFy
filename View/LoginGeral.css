@@ -21,7 +21,7 @@ body, html {
 .container {
   display: flex;
   align-items: center;
-  gap: 60px; /* espaço entre logo e caixa */
+  gap: 200px; /* espaço entre logo e caixa */
   z-index: 2;
 }
 
@@ -33,17 +33,18 @@ body, html {
 }
 
 .logo {
-  max-width: 280px;
+  max-width: 300px;
 }
 
 /* Caixa login */
 .login-box {
-  width: 420px;
-  padding: 40px;
-  background: rgba(255, 250, 230, 0.1);
+    width: 316px;
+    padding: 90px;
+  background: #d6ceb45f;
   border-radius: 28px;
   text-align: center;
   box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  /* margin-left: 103px; */
 }
 
 .login-box h1 {
@@ -71,6 +72,7 @@ body, html {
   font-size: 14px;
   color: #2A2A2A;
   text-decoration: underline;
+  font-weight: bold;
 }
 
 /* Botão */
@@ -78,8 +80,8 @@ body, html {
   padding: 12px 40px;
   border: none;
   border-radius: 30px;
-  background: #DDB35E;
-  color: #2A2A2A;
+  background: #2a2a2a;
+  color: #e6c06b;
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
@@ -88,6 +90,7 @@ body, html {
 
 .login-box button:hover {
   background: #e6c06b;
+
 }
 
 /* Bolinhas decorativas */
@@ -133,7 +136,7 @@ body, html {
   background: #DDB35E;
 }
 
-/*  
+  
 /* Responsividade 
 @media (max-width: 900px) {
   .container {
@@ -150,4 +153,3 @@ body, html {
     max-width: 200px;
   }
 } 
-*/
