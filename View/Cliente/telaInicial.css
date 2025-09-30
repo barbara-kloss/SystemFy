@@ -1,0 +1,96 @@
+/* Fundo principal */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Alata', sans-serif;
+}
+
+.background {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #2A2A2A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Bolinhas decorativas */
+.bolinha {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(45px);
+}
+
+.bolinha1 {
+  width: 320px; height: 240px;
+  top: -50px; left: 50px;
+  background: rgba(221, 179, 94, 0.85);
+}
+
+.bolinha2 {
+  width: 300px; height: 270px;
+  bottom: -40px; right: 150px;
+  background: rgba(221, 179, 94, 0.95);
+}
+
+.bolinha3 {
+  width: 120px; height: 120px;
+  bottom: 120px; left: 200px;
+  background: rgba(221, 179, 94, 0.59);
+}
+
+.bolinha4 {
+  width: 120px; height: 120px;
+  top: 50px; right: 300px;
+  background: rgba(221, 179, 94, 0.85);
+}
+
+.bolinha5 {
+  width: 120px; height: 120px;
+  top: 320px; left: 55%;
+  background: rgba(221, 179, 94, 0.85);
+}
+
+.bolinha6 {
+  width: 240px; height: 230px;
+  top: 437px; left: -50px;
+  background: #DDB35E;
+}
+
+.fundoSemiTransparente{
+    width: 1750px; 
+    height: 840px; 
+    left: 94px; 
+    top: 47px; 
+    position: absolute; 
+    background: rgba(213.53, 205.82, 179.63, 0.43); 
+    border-radius: 28px
+}
+
+.logoCantoInferior{
+    width: 50px; 
+    height: 80px; 
+    left: 14px; 
+    top: 52px; 
+    position: absolute
+}
+
+
+img.logoWhatsApp{
+    width: 60px; 
+    height: 60px; 
+    left: 19px; 
+    top: 776px; 
+    position: absolute
+}
+
+.cardMetaPeso{
+    width: 339px; 
+    height: 181px; 
+    left: 946px; 
+    top: 170px; 
+    position: absolute
+}
