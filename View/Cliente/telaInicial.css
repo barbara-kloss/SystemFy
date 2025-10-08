@@ -88,9 +88,51 @@ img.logoWhatsApp{
 }
 
 .cardMetaPeso{
-    width: 339px; 
-    height: 181px; 
-    left: 946px; 
-    top: 170px; 
-    position: absolute
+    width: 448px; 
+    height: 227px; 
+    left: 867px; 
+    top: 132px; 
+    position: absolute;
+    background: #FFFAE6; 
+    border-radius: 28px
+}
+
+.cardProgressoMetaPeso{
+   width: 263px;
+   height: 227px;
+   left: 1250px;
+   right: 100px;
+   top: 146px;
+   position: absolute;
+   justify-content: center;
+   display: flex;
+   flex-direction: 
+   column;
+   color: #1E1E1E;
+   font-size: 20px;
+   font-family: Akshar;
+   font-weight: 700;
+   line-height: 20px;
+   word-wrap: break-word;
+  
+}
+
+cardPercentuais{
+   width: 263px;
+   height: 227px;
+   left: 1250px;
+   right: 100px;
+   top: 100px;
+   position: absolute;
+   justify-content: center;
+   display: flex;
+   flex-direction: 
+   column;
+   color: #1E1E1E;
+   font-size: 20px;
+   font-family: Akshar;
+   font-weight: 700;
+   line-height: 20px;
+   word-wrap: break-word;
+  
 }
