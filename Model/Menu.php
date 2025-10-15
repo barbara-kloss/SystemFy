@@ -12,14 +12,7 @@ class Menu
 
 
     function __construct(
-        int $id,
-        string $dia,
-        string $observacao,
-        string $categoria,
-        Time $horario,
-        User $id_usuario,
-        User $id_nutri,
-        string $titulo
+        int $id, string $dia, string $observacao, string $categoria, Time $horario, User $id_usuario, User $id_nutri, string $titulo
     ) {
         $this->id = $id;
         $this->dia = $dia;

@@ -20,22 +20,7 @@ class User
     public readonly string $objetivo;
 
     function __construct(
-        int $id,
-        string $nome,
-        string $email,
-        Date $data_nasc,
-        string $genero,
-        string $telefone,
-        string $senha,
-        string $permissao,
-        float $altura,
-        int $peso,
-        bool $status,
-        string $observacao,
-        float $massa,
-        string $objetivo,
-        float $gordura,
-        Plano $plano_id
+        int $id, string $nome, string $email, Date $data_nasc, string $genero, string $telefone, string $senha, string $permissao, float $altura, int $peso, bool $status, string $observacao, float $massa, string $objetivo, float $gordura, Plano $plano_id
     ) {
         $this->id = $id;
         $this->nome = $nome;
