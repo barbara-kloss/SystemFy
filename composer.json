@@ -1,0 +1,18 @@
+{
+    "name": "systemfy/app",
+    "description": "Sistema de gerenciamento SystemFy desenvolvido em PHP.",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Systemfy\\App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Barbara Kloss Furquim",
+            "email": "barbarakf383@gmail.com"
+        }
+    ],
+    "require": {}
+}
