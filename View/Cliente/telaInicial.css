@@ -186,3 +186,20 @@ cardPercentuais{
   word-wrap: break-word
 
 }
+
+.navBar {
+  width: 1750px;
+  height: 100px;
+  left: 94px;
+  top: 47px;
+  position: absolute;
+  /* background: #DDB35E; */
+  /* border-radius: 28px; */
+  display: flex;
+  flex: auto;
+  /* align-items: center;
+  padding-left: 40px; */
+
+
+
+}
