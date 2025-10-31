@@ -40,12 +40,19 @@ class ExerciseRepository
 
     public function update(Exercise $exercise): bool
     {
-        $sql = 'UPDATE exercise SET peso = :peso, tempo_descanso= :title, desc= :desc  WHERE id = :id;';
+        $sql = 'UPDATE exercise SET peso = :peso, 
+        tempo_descanso= :tempo_descanso, repeticao= :repeticao,
+        tipo_exercicio = :tipo_exercicio, objetivo = :objetivo, 
+        dia = :dia, observacao = :observacao  WHERE id = :id;';
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':peso', $exercise->peso);
-        $stmt->bindValue(':title', $exercise->title);
-        $stmt->bindValue(':desc', $bookItem->desc);
-        $stmt->bindValue(':id', $bookItem->id);
+        $stmt->bindValue(':tempo_descanso', $exercise->tempo_descanso);
+        $stmt->bindValue(':repeticao', $exercise->repeticao);
+        $stmt->bindValue(':tipo_exercicio', $exercise->tipo_exercicio);
+        $stmt->bindValue(':objetivo', $exercise->objetivo);
+        $stmt->bindValue(':dia', $exercise->dia);
+        $stmt->bindValue(':observacao', $exercise->observacao);
+        $stmt->bindValue(':id', $exercise->id);
 
         return $stmt->execute();
     }
@@ -53,7 +60,7 @@ class ExerciseRepository
     public function all(): array
     {
         $bookItemList = $this->pdo
-            ->query('SELECT * FROM cardbook;')
+            ->query('SELECT * FROM exercise;')
             ->fetchAll(\PDO::FETCH_ASSOC);
         return array_map(
             $this->hydrateBookItem(...),
