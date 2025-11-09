@@ -12,6 +12,8 @@ class UserRepository
 
     public function add(User $user) : bool
     {
+        $hash = password_hash($user->senha, PASSWORD_ARGON2ID);
+
         $sql = "INSERT INTO user( 
         nome_completo, data_nascimento, genero, 
         telefone, senha, permissao, 
@@ -22,7 +24,7 @@ class UserRepository
         $stmt->bindValue(2, $user->data_nascimento);
         $stmt->bindValue(3, $user->genero);
         $stmt->bindValue(4, $user->telefone);
-        $stmt->bindValue(5, $user->senha);
+        $stmt->bindValue(5, $hash);
         $stmt->bindValue(6, $user->permissao);
         $stmt->bindValue(7, $user->altura);
         $stmt->bindValue(8, $user->peso);
