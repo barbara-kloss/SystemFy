@@ -1,0 +1,77 @@
+<?php
+
+namespace Systemfy\App\ReportController;
+
+use Systemfy\App\Controller\Controller;
+use Systemfy\App\Model\Report;
+use Systemfy\App\Repository\ReportRepository;
+
+class EditReportController implements Controller
+{
+    function __construct(private ReportRepository $reportRepository)
+    {
+// editado aqui
+    }
+    public function processaRequisicao(): void
+    {
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+        if ($id === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }/*horario (time),
+    objetivo (varchar),
+    restricao (varchar),
+    dia (date),
+    categoria (varchar),
+    observacao (varchar),
+    id_user,
+    id_nutri*/
+
+        $id_user = filter_input(INPUT_GET, 'id_user',FILTER_VALIDATE_INT);
+        if ($id_user === false) {
+            header('Location: /booklist?sucesso=0');// decidir se insere ou busca
+            exit();
+        }
+
+        $id_personal  = filter_input(INPUT_GET, 'id_personal',FILTER_VALIDATE_INT);
+        if ($id_personal === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
+
+        $id_nutri  = filter_input(INPUT_GET, 'id_personal',FILTER_VALIDATE_INT);
+        if ($id_nutri === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
+
+        $anotacao = filter_input(INPUT_POST, 'anotacao');
+        if ($anotacao === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
+
+        $dia = filter_input(INPUT_POST, 'dia');
+        if ($dia === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
+
+        $exe_feito = filter_input(INPUT_GET, 'exe_feito', FILTER_VALIDATE_BOOLEAN);
+        $menu_feito = filter_input(INPUT_GET, 'menu_feito', FILTER_VALIDATE_BOOLEAN);
+
+
+        $report = new Report($id_user, $id_personal, $id_nutri, $anotacao, $dia, $exe_feito, $menu_feito);
+        $report->setId($id);
+
+        $result = $this->reportRepository->update($report);
+
+        if ($result === false) {
+            header('Location: /booklist?sucesso=0');// tela de report
+
+        }else{
+            header('Location: /booklist?sucesso=1');
+        }
+
+    }
+}
