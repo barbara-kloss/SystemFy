@@ -1,4 +1,4 @@
-/* Fundo principal */
+/* Fundo principal e Reset */
 body, html {
     margin: 0;
     padding: 0;
@@ -22,7 +22,7 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center; 
-    gap: 10vw; /* Espaço relativo */
+    gap: 10vw; /* Usa unidade relativa para o espaço */
     max-width: 1200px; 
     width: 90%; 
     z-index: 2;
@@ -37,19 +37,19 @@ body, html {
 
 .logo {
     max-width: 300px; 
-    width: 100%; 
+    width: 100%; /* Garante que a logo se encolha */
     height: auto;
 }
 
-/* Caixa login - TAMANHO MAIOR (Desktop) */
+/* Caixa criar senha (login-box) */
 .login-box {
-    width: 400px; /* Largura aumentada para caixa de login */
-    padding: 80px 50px; /* Padding interno aumentado */
+    width: 400px; /* Largura base para desktop */
+    padding: 80px 50px; /* Padding interno */
     background: #d6ceb45f;
     border-radius: 28px;
     text-align: center;
     box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    box-sizing: border-box; /* Garante que o padding não estoure a largura */
+    box-sizing: border-box; 
 }
 
 .login-box h1 {
@@ -61,24 +61,14 @@ body, html {
 /* Inputs */
 .login-box input {
     display: block;
-    width: 100%; 
+    width: 100%; /* Ocupa 100% da largura da caixa */
     margin: 15px auto;
     padding: 12px;
     border: none;
     border-radius: 30px;
     background: #FFFAE6;
     font-size: 16px;
-    box-sizing: border-box; 
-}
-
-/* Esqueci senha */
-.forgot {
-    display: block;
-    margin: 10px 0 20px;
-    font-size: 14px;
-    color: #2A2A2A;
-    text-decoration: underline;
-    font-weight: bold;
+    box-sizing: border-box;
 }
 
 /* Botão */
@@ -105,7 +95,6 @@ body, html {
 .login-box button:hover a {
     color: #2A2A2A;
 }
-
 
 /* Bolinhas decorativas (Tamanho e posições relativos) */
 .bolinha {
@@ -166,21 +155,26 @@ body, html {
         max-width: 200px;
     }
 
-    /* Ajusta o tamanho da caixa de login para mobile (maior) */
+    /* Ajusta o tamanho da caixa de login/senha para mobile */
     .login-box {
         width: 100%; 
         max-width: 450px; 
-        padding: 60px 30px; /* Padding no mobile */
+        padding: 60px 30px; 
+        /* Se você quiser inverter a ordem no mobile (Logo em cima, Caixa de senha embaixo): */
+        order: 2; /* Move a caixa de senha para baixo */
+    }
+    
+    .logo-box {
+        order: 1; /* Move a logo para cima */
     }
 
     .login-box h1 {
         font-size: 28px;
     }
 
-    /* Reduz um pouco o blur das bolinhas no mobile */
+    /* Reduz o blur e redimensiona bolinhas no mobile */
     .bolinha { filter: blur(25px); }
 
-    /* Redimensiona e/ou reposiciona algumas bolinhas */
     .bolinha1, .bolinha2 {
         width: 30vw; height: 25vh;
     }

@@ -110,11 +110,11 @@ img.logoWhatsApp {
   border-radius: 28px
 }
 
- .titulo_peso {
+.titulo_peso {
   width: 280px;
   height: 40px;
   left: 1400px;
-  top: 200px; 
+  top: 200px;
   /* text-align: center; */
   padding-left: 20%;
   color: #1E1E1E;
@@ -123,13 +123,13 @@ img.logoWhatsApp {
   font-weight: 700;
   line-height: 24px;
   word-wrap: break-word
-} 
+}
 
 .titulo_percentual {
   width: 200px;
   height: 40px;
   left: 1400px;
-  top: 375px; 
+  top: 375px;
   /* text-align: center; */
   padding-left: 35%;
   color: #1E1E1E;
@@ -214,7 +214,6 @@ cardPercentuais{
   font-weight: 800;
   line-height: 16px;
   word-wrap: break-word
-
 }
 
 /* .navBar {
@@ -224,7 +223,7 @@ cardPercentuais{
   top: 47px;
   position: absolute;
   /* background: #DDB35E; */
-  /* border-radius: 28px; *
+/* border-radius: 28px; *
   display: flex;
   flex: auto;
   /* align-items: center;
@@ -237,11 +236,14 @@ cardPercentuais{
 
 
 .navBar ul {
-  list-style: none;          /* Remove bolinhas */
+  list-style: none;
+  /* Remove bolinhas */
   padding: 0;
   margin: 0;
-  display: flex;             /* Coloca os itens lado a lado */
-  gap: 40px;                 /* Espaçamento entre eles */
+  display: flex;
+  /* Coloca os itens lado a lado */
+  gap: 40px;
+  /* Espaçamento entre eles */
   align-items: center;
 }
 
@@ -290,4 +292,43 @@ cardPercentuais{
 
 .navBar a.active::after {
   width: 100%;
+}
+
+
+.title_RefeicaoLivre {
+  width: 219px;
+  height: 24px;
+  left: 941px;
+  top: 129px;
+  position: absolute;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: black;
+  font-size: 24px;
+  font-family: Akshar;
+  font-weight: 700;
+  line-height: 24px;
+  word-wrap: break-word;
+
+}
+
+.cardRefeicoesGeral {
+  width: 620px;
+  height: 476px;
+  left: 125px;
+  top: 144px;
+  position: absolute;
+  background: #FFFAE6;
+  border-radius: 28px;
+}
+
+.cardRefeicoesLivre {
+  width: 800px;
+  height: 475px;
+  left: 743px;
+  top: 144px;
+  position: absolute;
+  background: #FFFAE6;
+  border-radius: 28px
 }
