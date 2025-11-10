@@ -59,32 +59,37 @@ class ExerciseRepository
 
     public function all(): array
     {
-        $bookItemList = $this->pdo
+        $exerciseList = $this->pdo
             ->query('SELECT * FROM exercise;')
             ->fetchAll(\PDO::FETCH_ASSOC);
         return array_map(
-            $this->hydrateBookItem(...),
-            $bookItemList
+            $this->hydrateExercise(...),
+            $exerciseList
         );
     }
 
     public function find(int $id)
     {
-        $stmt = $this->pdo->prepare('SELECT * FROM cardbook WHERE id = ?;');
+        $stmt = $this->pdo->prepare('SELECT * FROM exercise WHERE id = ?;');
         $stmt->bindValue(1, $id, \PDO::PARAM_INT);
         $stmt->execute();
 
-        return $this->hydrateBookItem($stmt->fetch(\PDO::FETCH_ASSOC));
+        return $this->hydrateExercise($stmt->fetch(\PDO::FETCH_ASSOC));
     }
 
-    public function hydrateBookItem(array $BookItemData): BookItem
+    public function hydrateExercise(array $ExerciseData): Exercise
     {
-        $bookItem = new BookItem($BookItemData['image'], $BookItemData['title'], $BookItemData['desc']);
-        $bookItem->setId($BookItemData['id']);
-        return $bookItem;
+        $exercise = new Exercise($ExerciseData['peso'],
+            $ExerciseData['tempo_descanso'],
+            $ExerciseData['repeticao'],
+            $ExerciseData['tipo_exercicio'],
+            $ExerciseData['objetivo'],
+            $ExerciseData['dia'],
+            $ExerciseData['observacao']);
+        $exercise->setId($ExerciseData['id']);
+        return $exercise;
     }
 
 
 }
 
-?>
