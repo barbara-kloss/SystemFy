@@ -1,54 +1,69 @@
 <?php
 
-namespace Systemfy\App\ReportController;
+namespace Systemfy\App\MenuController;
 
 use Systemfy\App\Controller\Controller;
-use Systemfy\App\Model\Report;
-use Systemfy\App\Repository\ReportRepository;
+use Systemfy\App\Model\Menu;
+use Systemfy\App\Repository\MenuRepository;
 
-class NewReportController implements Controller
+class NewMenuController implements Controller
 {
-    function __construct(private ReportRepository $reportRepository)
+    function __construct(private MenuRepository $menuRepository)
     {
 
     }
 
     public function processaRequisicao(): void
     {
-        $id_user = filter_input(INPUT_GET, 'id_user',FILTER_VALIDATE_INT);
-        if ($id_user === false) {
-            header('Location: /booklist?sucesso=0');// decidir se insere ou busca
-            exit();
-        }
-
-        $id_personal  = filter_input(INPUT_GET, 'id_personal',FILTER_VALIDATE_INT);
-        if ($id_personal === false) {
+        $horario = filter_input(INPUT_POST, 'horario');
+        if ($horario === null || $horario === '') {
             header('Location: /booklist?sucesso=0');
             exit();
         }
 
-        $id_nutri  = filter_input(INPUT_GET, 'id_personal',FILTER_VALIDATE_INT);
-        if ($id_nutri === false) {
+        $objetivo = filter_input(INPUT_POST, 'objetivo');
+        if ($objetivo === false) {
             header('Location: /booklist?sucesso=0');
             exit();
         }
 
-        $anotacao = filter_input(INPUT_POST, 'anotacao');
-        if ($anotacao === false) {
+        $restricao = filter_input(INPUT_POST, 'restricao');
+        if ($restricao === false) {
             header('Location: /booklist?sucesso=0');
             exit();
         }
 
         $dia = filter_input(INPUT_POST, 'dia');
-        if ($dia === false) {
+        if ($dia === null || $dia === '') {
             header('Location: /booklist?sucesso=0');
             exit();
         }
 
-        $exe_feito = filter_input(INPUT_GET, 'exe_feito', FILTER_VALIDATE_BOOLEAN);
-        $menu_feito = filter_input(INPUT_GET, 'menu_feito', FILTER_VALIDATE_BOOLEAN);
+        $categoria = filter_input(INPUT_POST, 'categoria');
+        if ($categoria === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
 
-        $result = $this->reportRepository->add(new Report($id_user, $id_personal, $id_nutri, $anotacao, $dia, $exe_feito, $menu_feito));
+        $observacao = filter_input(INPUT_POST, 'observacao');
+        if ($observacao === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
+
+        $id_user = filter_input(INPUT_GET, 'id_user', FILTER_VALIDATE_INT);
+        if ($id_user === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
+
+        $id_nutri = filter_input(INPUT_GET, 'id_nutri', FILTER_VALIDATE_INT);
+        if ($id_nutri === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
+
+        $result = $this->menuRepository->add(new Menu($horario, $objetivo, $restricao, $dia, $categoria, $observacao, $id_user, $id_nutri));
 
         if ($result === false){
             header('Location: /booklist?sucesso=0');

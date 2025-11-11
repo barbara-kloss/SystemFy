@@ -1,6 +1,6 @@
 <?php
 
-namespace Systemfy\App\ReportController;
+namespace Systemfy\App\MenuController;
 
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Repository\MenuRepository;

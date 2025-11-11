@@ -1,17 +1,17 @@
 <?php
 
-namespace Systemfy\App\ReportController;
+namespace Systemfy\App\MenuController;
 
 use Systemfy\App\Controller\Controller;
-use Systemfy\App\Repository\ReportRepository;
+use Systemfy\App\Repository\MenuRepository;
 
 $caminho = __DIR__ . '/../../../databaselocal';
 $pdo = new \PDO("mysql:$caminho");
 
-class ReportFormController implements Controller
+class MenuFormController implements Controller
 {
 
-    function __construct(private ReportRepository $reportRepository)
+    function __construct(private MenuRepository $menuRepository)
     {
 
     }
@@ -20,9 +20,9 @@ class ReportFormController implements Controller
     {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
-        $report = null;
+        $menu = null;
         if ($id !== false && $id !== null) {
-            $report = $this->reportRepository->find($id);
+            $menu = $this->menuRepository->find($id);
         }
         require_once __DIR__ . '/../../views/formsbook.php';
     }

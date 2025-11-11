@@ -8,7 +8,7 @@ use Systemfy\App\Repository\PlanoRepository;
 
 class EditPlanoController implements Controller
 {
-    function __construct(private ReportRepository $reportRepository)
+    function __construct(private PlanoRepository $planoRepository)
     {
 // editado aqui
     }
