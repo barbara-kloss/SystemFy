@@ -9,20 +9,22 @@ class Report
     public readonly User $personal_id;
     public readonly User $nutri_id;
     public readonly bool $exe_feito;
+    public readonly bool $menu_feito;
     public readonly string $objetivo;
     public readonly User $user;
     public readonly Plano $plano;
 
-    public function __construct(int $id, string $anotacao, Date $data, User $personal_id, User $nutri_id, bool $exe_feito, string $objetivo, User $user, Plano $plano)
+    public function __construct(int $id, User $user, User $personal_id, User $nutri_id, string $anotacao, Date $data, bool $exe_feito, bool $menu_feito, string $objetivo, Plano $plano)
     {
         $this->id = $id;
-        $this->anotacao = $anotacao;
-        $this->data = $data;
+        $this->user = $user;
         $this->personal_id = $personal_id;
         $this->nutri_id = $nutri_id;
+        $this->anotacao = $anotacao;
+        $this->data = $data;
         $this->exe_feito = $exe_feito;
+        $this->menu_feito = $menu_feito;
         $this->objetivo = $objetivo;
-        $this->user = $user;
         $this->plano = $plano;
     }
 
@@ -54,6 +56,11 @@ class Report
     public function setExeFeito(bool $exe_feito)
     {
         $this->exe_feito = $exe_feito;
+    }
+
+    public function setMenuFeito(bool $menu_feito)
+    {
+        $this->menu_feito = $menu_feito;
     }
 
     public function setObjetivo(string $objetivo)
@@ -99,6 +106,10 @@ class Report
     public function getExeFeito(): bool
     {
         return $this->exe_feito;
+    }
+    public function getMenuFeito(): bool
+    {
+        return $this->menu_feito;
     }
 
     public function getObjetivo(): string
