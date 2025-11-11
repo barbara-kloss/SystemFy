@@ -18,8 +18,7 @@ html {
     overflow: hidden;
 }
 
-/* Bolinhas decorativas (Tamanhos e posições em unidades relativas) */
-/* (Sem alterações nas bolinhas) */
+/* Bolinhas decorativas (Sem Alterações) */
 .bolinha {
     position: absolute;
     border-radius: 50%;
@@ -70,19 +69,23 @@ html {
     position: relative;
     background: rgba(213.53, 205.82, 179.63, 0.43);
     border-radius: 28px;
-    padding: 20px;
+    padding: 0; 
     box-sizing: border-box;
+    overflow: hidden; 
+    margin-left: 0; 
+    
+    /* CORREÇÃO CHAVE: Desloca o bloco para a direita para afastar da logo */
+    transform: translateX(2.5%); 
 }
 
-/* Logos de Canto (Posição corrigida: Relativo ao .background) */
+/* Logos de Canto (Mais à esquerda) */
 .logoCantoInferior {
     position: absolute;
     width: 3.5vw;
     height: auto;
-    /* Posição em relação ao .background (que é a tela) */
-    left: 3vw; 
+    left: 1.5vw; 
     top: 3vh; 
-    z-index: 20; /* Garante que fique acima de tudo */
+    z-index: 20; 
 }
 .logoCantoInferior img {
     width: 100%;
@@ -93,8 +96,7 @@ html {
     position: absolute;
     width: 3.5vw;
     height: 3.5vw;
-    /* Posição em relação ao .background (que é a tela) */
-    left: 3vw;
+    left: 1.5vw;
     bottom: 3vh;
     z-index: 20; 
 }
@@ -103,49 +105,62 @@ html {
     height: 100%;
 }
 
-/* Container GRID para o conteúdo principal e a navegação */
+/* ========================================================= */
+/* GRID INTERNO (Para espaçamento uniforme) */
+/* ========================================================= */
 .main-content-grid {
-    height: 100%;
+    height: 90%;
     display: grid;
+    
     grid-template-areas:
         "nav profile_box"
         "main meta"
         "main percentuals";
 
-    grid-template-columns: 70% 30%;
+    /* Colunas: [Principal 70%] [Lateral 30%] */
+    /* grid-template-columns: 70% 30%; */
     grid-template-rows: 100px auto auto;
-    grid-gap: 20px;
-
-    /* Aumenta o padding-left para evitar que o grid toque a logo que está FORA */
-    padding-left: 7vw;
+    
+    grid-gap: 20px; 
+    
+    /* Padding uniforme para espaçamento interno */
+    padding: 30px; 
 }
 
-/* Posicionamento dos Itens no Grid (Sem Alterações) */
+/* Posicionamento da Navbar (Esquerda) */
 .navBar {
     grid-area: nav;
     align-self: center;
-    padding-left: 20px;
+    justify-self: start;
+    padding-left: 0; 
+    
+    /* CORREÇÃO: Remove o margin-left excessivo, confiando no transform do pai para afastar */
+    margin-left: 0; 
 }
 
-.cardVerPerfil {
+.navBar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: flex-start; 
+}
+
+/* Container de Perfil (Direita/Empilhado) */
+.profile-box-container {
     grid-area: profile_box;
-    width: 50px;
-    height: 50px;
-    border-radius: 9999px;
-    border: 2px #D4D2C8 solid;
-    justify-self: end;
-    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-self: end; 
+    align-self: center; 
+    margin-right: 0; 
 }
 
-.textocardVerPerfil {
-    grid-area: profile_box;
-    justify-self: end;
-    align-self: end;
-    margin-right: -25px;
-    font-weight: 800;
-    color: #2A2A2A;
-}
-
+/* Card Conteúdo Principal */
 .cardConteudoPrincipal {
     grid-area: main;
     background: #FFFAE6;
@@ -153,6 +168,7 @@ html {
     padding: 20px;
 }
 
+/* Card Meta Peso */
 .cardMetaPeso {
     grid-area: meta;
     background: #FFFAE6;
@@ -160,6 +176,7 @@ html {
     padding: 20px;
 }
 
+/* Card Progresso Meta Peso */
 .cardProgressoMetaPeso {
     grid-area: percentuals;
     background: #FFFAE6;
@@ -168,23 +185,27 @@ html {
 }
 
 
-/* Estilos de Títulos */
+/* Outros Estilos de Componentes (Sem Alterações) */
+.cardVerPerfil {
+    width: 50px;
+    height: 50px;
+    border-radius: 9999px;
+    border: 2px #D4D2C8 solid;
+    margin-bottom: 5px;
+}
+
+.textocardVerPerfil {
+    font-weight: 800;
+    color: #2A2A2A;
+    font-size: 0.8em; 
+}
+
 .titulo_peso, .titulo_percentual {
     color: #1E1E1E;
     font-size: 24px;
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
     text-align: center;
-}
-
-/* Estilização da Navbar */
-.navBar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 40px;
-    align-items: center;
 }
 
 .navBar a {
@@ -212,89 +233,3 @@ html {
 .navBar a.active::after {
     width: 100%;
 }
-
-
-/* --- MEDIA QUERY (Layout para Celulares/Telas Pequenas) ---
-@media (max-width: 800px) {
-
-    .fundoSemiTransparente {
-        width: 95%;
-        height: auto;
-        min-height: 95vh;
-    }
-
-    /* Logos de Canto (Posição corrigida: Relativo ao .background) */
-.logoCantoInferior {
-    position: absolute;
-    width: 3.5vw;
-    height: auto;
-    /* Reduza o valor 'left' para mover mais para a esquerda */
-    left: 1.0vw; /* Era 3vw. Mude para o valor que desejar */
-    top: 3vh;
-    z-index: 20;
-}
-.logoCantoInferior img {
-    width: 100%;
-    height: auto;
-}
-
-.logoWhatsApp {
-    position: absolute;
-    width: 3.5vw;
-    height: 3.5vw;
-    /* Reduza o valor 'left' para mover mais para a esquerda */
-    left: 1.0vw; /* Era 3vw. Mude para o valor que desejar */
-    bottom: 3vh;
-    z-index: 20;
-}
-.logoWhatsApp img {
-    width: 100%;
-    height: 100%;
-} */
-
-    /* O GRID no mobile (empilhamento) */
-    .main-content-grid {
-        grid-template-areas:
-            "nav nav"
-            "profile_box profile_box"
-            "meta meta"
-            "percentuals percentuals"
-            "main main";
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        grid-gap: 15px;
-        /* Margem de segurança para a logo superior, que está FORA do fundoSemiTransparente */
-        padding-top: 80px; 
-        padding-left: 0;
-    }
-
-    /* Ajuste de elementos no mobile (Sem Alterações) */
-    .cardVerPerfil, .textocardVerPerfil {
-        justify-self: center;
-        align-self: center;
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
-
-    .navBar {
-        justify-self: left;
-    }
-
-    .navBar ul {
-        gap: 15px;
-        justify-content: center;
-    }
-
-    .navBar a {
-        font-size: 22px;
-    }
-
-    /* Cards ocupam 100% */
-    .cardMetaPeso,
-    .cardProgressoMetaPeso,
-    .cardConteudoPrincipal {
-        width: 100%;
-        min-height: 150px;
-    }
-
- 
