@@ -18,6 +18,7 @@ class Exercise
         int $id,
         User $id_usuario,
         float $peso,
+        int $tempo_descanso,
         int $repeticao,
         string $exercicio,
         string $objetivo,
