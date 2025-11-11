@@ -10,8 +10,8 @@ use User;
     public readonly User $usuario_id;
     public readonly User $personal_id;
     public readonly User $nutri_id;
-    public readonly User $google_event_id;
     public readonly string $titulo;
+    public readonly User $google_event_id;
 
     public function __construct(int $id, Date $data_reuniao, Time $horario, Time $duracao, string $assunto, User $usuario_id, User $personal_id, User $nutri_id, User $google_event_id, string $titulo){
         $this->id = $id;      
