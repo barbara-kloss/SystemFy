@@ -33,6 +33,7 @@ class Exercise
         $this->tempo_descanso = $tempo_descanso;
         $this->repeticao = $repeticao;
         $this->exercicio = $exercicio;
+        $this->objetivo = $objetivo;
         $this->categoria = $categoria;
         $this->dia = $dia;
         $this->obs = $obs;
@@ -55,6 +56,14 @@ class Exercise
         $this->peso = $peso;
     }
 
+    public function setTempoDescanso(int $tempo_descanso)
+    {
+        if ($tempo_descanso < 0) {
+            throw new \InvalidArgumentException("Tempo de descanso não pode ser negativo!");
+        }
+        $this->tempo_descanso = $tempo_descanso;
+    }
+
     public function setRepeticao(string $repeticao)
     {
         if (empty($repeticao)) {
@@ -69,6 +78,14 @@ class Exercise
             throw new \InvalidArgumentException("Exercício não pode ser vazio!");
         }
         $this->exercicio = $exercicio;
+    }
+
+    public function setObjetivo(string $objetivo)
+    {
+        if (empty($objetivo)) {
+            throw new \InvalidArgumentException("Objetivo não pode ser vazio!");
+        }
+        $this->objetivo = $objetivo;
     }
 
     public function setCategoria(string $categoria)
@@ -123,9 +140,19 @@ class Exercise
         return $this->repeticao;
     }
 
+    public function getTempoDescanso(): int
+    {
+        return $this->tempo_descanso;
+    }
+
     public function getExercicio(): string
     {
         return $this->exercicio;
+    }
+
+    public function getObjetivo(): string
+    {
+        return $this->objetivo;
     }
 
     public function getCategoria(): string

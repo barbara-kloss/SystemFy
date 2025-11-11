@@ -10,7 +10,6 @@ class EditExerciseController implements Controller
 {
     function __construct(private ExerciseRepository $exerciseRepository)
     {
-// editado aqui
     }
     public function processaRequisicao(): void
     {
@@ -68,7 +67,18 @@ class EditExerciseController implements Controller
             exit();
         }
 
-        $exercise = new Exercise($id_user, $peso, $tempo_descanso, $repeticao, $tipo_exercicio, $objetivo, $dia, $observacao);
+        $categoria = filter_input(INPUT_POST, 'categoria');
+        if ($categoria === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
+        $id_personal = filter_input(INPUT_GET, 'id_personal',FILTER_VALIDATE_INT);
+        if ($id_personal === false) {
+            header('Location: /booklist?sucesso=0');// decidir se insere ou busca
+            exit();
+        }
+
+        $exercise = new Exercise($id_user, $peso, $tempo_descanso, $repeticao, $tipo_exercicio, $objetivo, $dia, $observacao, $categoria, $id_personal);
         $exercise->setId($id);
 
         $result = $this->exerciseRepository->update($exercise);
