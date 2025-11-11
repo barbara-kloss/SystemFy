@@ -44,7 +44,7 @@ body, html {
 /* Caixa criar senha (login-box) */
 .login-box {
     width: 400px; /* Largura base para desktop */
-    padding: 80px 50px; /* Padding interno */
+    padding: 100px 50px; /* Padding interno */
     background: #d6ceb45f;
     border-radius: 28px;
     text-align: center;
@@ -139,43 +139,4 @@ body, html {
     background: #DDB35E;
 }
 
-
-/* --- MEDIA QUERY: TRANSFORMAÇÃO PARA MOBILE --- */
-@media (max-width: 850px) {
-
-    /* Transforma o layout de lado a lado para empilhamento */
-    .container {
-        flex-direction: column;
-        gap: 40px; 
-        width: 85%; 
-    }
-
-    /* Reduz o tamanho da logo no mobile */
-    .logo {
-        max-width: 200px;
-    }
-
-    /* Ajusta o tamanho da caixa de login/senha para mobile */
-    .login-box {
-        width: 100%; 
-        max-width: 450px; 
-        padding: 60px 30px; 
-        /* Se você quiser inverter a ordem no mobile (Logo em cima, Caixa de senha embaixo): */
-        order: 2; /* Move a caixa de senha para baixo */
-    }
-    
-    .logo-box {
-        order: 1; /* Move a logo para cima */
-    }
-
-    .login-box h1 {
-        font-size: 28px;
-    }
-
-    /* Reduz o blur e redimensiona bolinhas no mobile */
-    .bolinha { filter: blur(25px); }
-
-    .bolinha1, .bolinha2 {
-        width: 30vw; height: 25vh;
-    }
-}
+/*  */
