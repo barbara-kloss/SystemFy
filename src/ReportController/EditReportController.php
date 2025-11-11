@@ -58,7 +58,7 @@ class EditReportController implements Controller
             header('Location: /booklist?sucesso=0');
             exit();
         }
-        $plano = filter_input(INPUT_POST, 'plano');
+        $plano = filter_input(INPUT_GET, 'plano');
         if ($plano === false) {
             header('Location: /booklist?sucesso=0');
             exit();

@@ -1,8 +1,8 @@
 <?php
 
-namespace SceneReads\Mvc\ControllerLogin;
+namespace Systemfy\App\ControllerLogin;
 
-use SceneReads\Mvc\Controller\Controller;
+use Systemfy\App\Controller\Controller;
 
 class LoginFormController implements Controller
 {
