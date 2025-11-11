@@ -19,6 +19,7 @@ html {
 }
 
 /* Bolinhas decorativas (Tamanhos e posições em unidades relativas) */
+/* (Sem alterações nas bolinhas) */
 .bolinha {
     position: absolute;
     border-radius: 50%;
@@ -63,24 +64,25 @@ html {
 
 /* Fundo Semi Transparente (Contêiner principal) */
 .fundoSemiTransparente {
-    width: 90%; 
-    max-width: 1750px; 
+    width: 90%;
+    max-width: 1750px;
     height: 90vh;
-    position: relative; 
+    position: relative;
     background: rgba(213.53, 205.82, 179.63, 0.43);
     border-radius: 28px;
     padding: 20px;
     box-sizing: border-box;
 }
 
-/* Logos de Canto (Posição e Tamanho CORRIGIDOS e relativos) */
+/* Logos de Canto (Posição corrigida: Relativo ao .background) */
 .logoCantoInferior {
     position: absolute;
-    width: 3.5vw; 
+    width: 3.5vw;
     height: auto;
-    left: 1.5%; 
-    top: 2%; 
-    z-index: 10;
+    /* Posição em relação ao .background (que é a tela) */
+    left: 3vw; 
+    top: 3vh; 
+    z-index: 20; /* Garante que fique acima de tudo */
 }
 .logoCantoInferior img {
     width: 100%;
@@ -89,11 +91,12 @@ html {
 
 .logoWhatsApp {
     position: absolute;
-    width: 3.5vw; 
+    width: 3.5vw;
     height: 3.5vw;
-    left: 1.5%;
-    bottom: 2%;
-    z-index: 10;
+    /* Posição em relação ao .background (que é a tela) */
+    left: 3vw;
+    bottom: 3vh;
+    z-index: 20; 
 }
 .logoWhatsApp img {
     width: 100%;
@@ -108,20 +111,20 @@ html {
         "nav profile_box"
         "main meta"
         "main percentuals";
-    
-    grid-template-columns: 70% 30%; 
-    grid-template-rows: 100px auto auto; 
-    grid-gap: 20px; 
-    
-    /* Afasta o GRID do canto para a logo de topo */
-    padding-left: 5vw; 
+
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 100px auto auto;
+    grid-gap: 20px;
+
+    /* Aumenta o padding-left para evitar que o grid toque a logo que está FORA */
+    padding-left: 7vw;
 }
 
-/* Posicionamento dos Itens no Grid */
+/* Posicionamento dos Itens no Grid (Sem Alterações) */
 .navBar {
     grid-area: nav;
     align-self: center;
-    padding-left: 20px; 
+    padding-left: 20px;
 }
 
 .cardVerPerfil {
@@ -130,22 +133,22 @@ html {
     height: 50px;
     border-radius: 9999px;
     border: 2px #D4D2C8 solid;
-    justify-self: end; 
-    align-self: center; 
+    justify-self: end;
+    align-self: center;
 }
 
 .textocardVerPerfil {
     grid-area: profile_box;
-    justify-self: end; 
+    justify-self: end;
     align-self: end;
-    margin-right: -25px; 
+    margin-right: -25px;
     font-weight: 800;
     color: #2A2A2A;
 }
 
 .cardConteudoPrincipal {
     grid-area: main;
-    background: #FFFAE6; 
+    background: #FFFAE6;
     border-radius: 28px;
     padding: 20px;
 }
@@ -176,11 +179,11 @@ html {
 
 /* Estilização da Navbar */
 .navBar ul {
-    list-style: none; 
+    list-style: none;
     padding: 0;
     margin: 0;
-    display: flex; 
-    gap: 40px; 
+    display: flex;
+    gap: 40px;
     align-items: center;
 }
 
@@ -211,31 +214,43 @@ html {
 }
 
 
-/* --- MEDIA QUERY (Layout para Celulares/Telas Pequenas) --- */
+/* --- MEDIA QUERY (Layout para Celulares/Telas Pequenas) ---
 @media (max-width: 800px) {
-    
+
     .fundoSemiTransparente {
-        width: 95%; 
-        height: auto; 
+        width: 95%;
+        height: auto;
         min-height: 95vh;
     }
-    
-    /* Logos absolutas no mobile (Centralizadas e ajustadas) */
-    .logoCantoInferior {
-        width: 10vw; 
-        height: auto;
-        left: 50%;
-        transform: translateX(-50%); 
-        top: 10px;
-    }
 
-    .logoWhatsApp {
-        width: 8vw;
-        height: 8vw;
-        left: 50%;
-        transform: translateX(-50%); 
-        bottom: 10px;
-    }
+    /* Logos de Canto (Posição corrigida: Relativo ao .background) */
+.logoCantoInferior {
+    position: absolute;
+    width: 3.5vw;
+    height: auto;
+    /* Reduza o valor 'left' para mover mais para a esquerda */
+    left: 1.0vw; /* Era 3vw. Mude para o valor que desejar */
+    top: 3vh;
+    z-index: 20;
+}
+.logoCantoInferior img {
+    width: 100%;
+    height: auto;
+}
+
+.logoWhatsApp {
+    position: absolute;
+    width: 3.5vw;
+    height: 3.5vw;
+    /* Reduza o valor 'left' para mover mais para a esquerda */
+    left: 1.0vw; /* Era 3vw. Mude para o valor que desejar */
+    bottom: 3vh;
+    z-index: 20;
+}
+.logoWhatsApp img {
+    width: 100%;
+    height: 100%;
+} */
 
     /* O GRID no mobile (empilhamento) */
     .main-content-grid {
@@ -245,32 +260,33 @@ html {
             "meta meta"
             "percentuals percentuals"
             "main main";
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr;
         grid-template-rows: auto;
         grid-gap: 15px;
-        padding-top: 100px; /* Margem de segurança para a logo superior */
+        /* Margem de segurança para a logo superior, que está FORA do fundoSemiTransparente */
+        padding-top: 80px; 
         padding-left: 0;
     }
-    
-    /* Ajuste de elementos no mobile */
+
+    /* Ajuste de elementos no mobile (Sem Alterações) */
     .cardVerPerfil, .textocardVerPerfil {
-        justify-self: center; 
+        justify-self: center;
         align-self: center;
         margin-right: 0;
         margin-bottom: 10px;
     }
 
     .navBar {
-        justify-self: center;
+        justify-self: left;
     }
-    
+
     .navBar ul {
-        gap: 15px; 
+        gap: 15px;
         justify-content: center;
     }
-    
+
     .navBar a {
-        font-size: 16px; 
+        font-size: 22px;
     }
 
     /* Cards ocupam 100% */
@@ -278,11 +294,7 @@ html {
     .cardProgressoMetaPeso,
     .cardConteudoPrincipal {
         width: 100%;
-        min-height: 150px; 
+        min-height: 150px;
     }
-    
-    /* Diminui o tamanho das bolinhas */
-    .bolinha { filter: blur(20px); }
-    .bolinha1, .bolinha2, .bolinha6 { display: none; }
-    .bolinha3, .bolinha4, .bolinha5 { width: 10vw; height: 10vh; }
-}
+
+ 
