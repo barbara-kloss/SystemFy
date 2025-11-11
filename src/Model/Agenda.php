@@ -5,6 +5,7 @@ use User;
     public readonly int $id;
     public readonly Date $data_reuniao;
     public readonly Time $horario;
+    public readonly Time $duracao;
     public readonly string $assunto;
     public readonly User $usuario_id;
     public readonly User $personal_id;
@@ -12,10 +13,11 @@ use User;
     public readonly User $google_event_id;
     public readonly string $titulo;
 
-    public function __construct(int $id, Date $data_reuniao, Time $horario, string $assunto, User $usuario_id, User $personal_id, User $nutri_id, User $google_event_id, string $titulo){
+    public function __construct(int $id, Date $data_reuniao, Time $horario, Time $duracao, string $assunto, User $usuario_id, User $personal_id, User $nutri_id, User $google_event_id, string $titulo){
         $this->id = $id;      
         $this->data_reuniao = $data_reuniao;
         $this->horario = $horario;
+        $this->duracao = $duracao;
         $this->assunto = $assunto;
         $this->usuario_id = $usuario_id;
         $this->personal_id = $personal_id;
@@ -33,6 +35,9 @@ use User;
         public function getHorario(): Time {
             return $this->horario;
         }
+     public function getDuracao(): Time {
+         return $this->duracao;
+     }
         public function getAssunto(): string {
             return $this->assunto;
         }
@@ -61,6 +66,9 @@ use User;
         }
         public function setHorario(Time $horario): void {
             $this->horario = $horario;
+        }
+        public function setDuracao(Time $duracao): void {
+         $this->duracao = $duracao;
         }
         public function setAssunto(string $assunto): void {
             $this->assunto = $assunto;

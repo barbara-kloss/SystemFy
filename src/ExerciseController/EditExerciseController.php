@@ -68,7 +68,6 @@ class EditExerciseController implements Controller
             exit();
         }
 
-
         $exercise = new Exercise($id_user, $peso, $tempo_descanso, $repeticao, $tipo_exercicio, $objetivo, $dia, $observacao);
         $exercise->setId($id);
 

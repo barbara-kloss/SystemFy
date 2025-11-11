@@ -4,22 +4,24 @@ class Exercise
 {
     public readonly int $id;
     public readonly float $peso;
-    public readonly string $repeticao;
+    public readonly int $repeticao;
     public readonly string $exercicio;
     public readonly string $categoria;
     public readonly string $dia;
+    public readonly string $objetivo;
     public readonly string $obs;
     public readonly User $id_usuario;
     public readonly User $id_personal;
     public function __construct(
         int $id,
+        User $id_usuario,
         float $peso,
-        string $repeticao,
+        int $repeticao,
         string $exercicio,
-        string $categoria,
+        string $objetivo,
         string $dia,
         string $obs,
-        User $id_usuario,
+        string $categoria,
         User $id_personal
     ) {
         $this->id = $id;
@@ -32,7 +34,15 @@ class Exercise
         $this->id_usuario = $id_usuario;
         $this->id_personal = $id_personal;
     }
-
+    /*$id_user,
+      $peso,
+      $tempo_descanso,
+      $repeticao,
+      $tipo_exercicio,
+      $objetivo,
+      $dia,
+      $observacao,
+          $categoria, id_personal*/
     public function setId(int $id)
     {
         if ($id <= 0) {
