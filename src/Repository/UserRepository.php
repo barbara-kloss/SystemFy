@@ -18,7 +18,7 @@ class UserRepository
         nome_completo, data_nascimento, genero, 
         telefone, senha, permissao, 
         altura, peso, objetivos, status, observacao,
-        massa, gordura, plano_id) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        massa, gordura, plano_id, email) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(1, $user->nome_completo);
         $stmt->bindValue(2, $user->data_nascimento);
@@ -34,6 +34,7 @@ class UserRepository
         $stmt->bindValue(12, $user->massa);
         $stmt->bindValue(13, $user->gordura);
         $stmt->bindValue(14, $user->plano_id);
+        $stmt->bindValue(15, $user->email);
 
         $result = $stmt->execute();
         $id = $this->pdo->lastInsertId();
@@ -47,7 +48,7 @@ class UserRepository
         telefone = :telefone, senha = :senha, 
         altura = :altura, peso = :peso, objetivos = :objetivos,
         status = :status, observacao = :observacao,
-        massa = :massa, gordura = :gordura, plano_id = :plano_id
+        massa = :massa, gordura = :gordura, plano_id = :plano_id, emil = :email
         WHERE id = :id;'; // sem mudança de permissao
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':nome_completo', $user->nome_completo);
@@ -63,6 +64,7 @@ class UserRepository
         $stmt->bindValue(':massa', $user->massa);
         $stmt->bindValue(':gordura', $user->gordura);
         $stmt->bindValue(':plano_id', $user->plano_id);
+        $stmt->bindValue(':email', $user->email);
         $stmt->bindValue(':id', $user->id);
 
         return $stmt->execute();
@@ -103,7 +105,8 @@ class UserRepository
             $UserData['observacao'],
             $UserData['massa'],
             $UserData['gordura'],
-            $UserData['plano_id']);
+            $UserData['plano_id'],
+            $UserData['email']);
         $user->setId($UserData['id']);
         return $user;
     }

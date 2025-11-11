@@ -12,20 +12,22 @@ class NewUserController implements Controller
         //functtion __construct(private UserRepository $userRepository) {}
         public function processaRequisicao(): void
         {
-            /*string $nome;
-Date $data_nasc;
-string $genero;
-string $telefone;
-string $permissao;
-float $altura;
-int $peso;
-FILTER_VALIDATE_INT
-bool $status;
-string $observacao;
-float $massa;
-float $gordura;
-Plano $plano_id;
-string $objetivo;*/ 
+           /*
+     * nome_completo,
+     * data_nascimento,
+     * genero,
+     * telefone,
+     * senha,
+     * permissao,
+     * altura,
+     * peso,
+     * objetivos,
+     * status (bit),
+     * observacao,
+     * massa,
+     * godura,
+     * plano_id,
+     * email*/
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         if ($email === false){
             header('Location: /?sucesso=0');
