@@ -1,0 +1,368 @@
+/* Fundo principal */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Alata', sans-serif;
+}
+
+.background {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #2A2A2A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Bolinhas decorativas (Sem Alterações) */
+.bolinha {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(45px);
+}
+
+.bolinha1 {
+    width: 20vw;
+    height: 15vh;
+    top: -5vh;
+    left: 3vw;
+    background: rgba(221, 179, 94, 0.85);
+}
+
+.bolinha2 {
+    width: 20vw;
+    height: 20vh;
+    bottom: -5vh;
+    right: 10vw;
+    background: rgba(221, 179, 94, 0.95);
+}
+
+.bolinha3 {
+    width: 8vw;
+    height: 8vw;
+    bottom: 12vh;
+    left: 10vw;
+    background: rgba(221, 179, 94, 0.59);
+}
+
+.bolinha4 {
+    width: 8vw;
+    height: 8vw;
+    top: 5vh;
+    right: 20vw;
+    background: rgba(221, 179, 94, 0.85);
+}
+
+.bolinha5 {
+    width: 8vw;
+    height: 8vw;
+    top: 40vh;
+    left: 55%;
+    background: rgba(221, 179, 94, 0.85);
+}
+
+.bolinha6 {
+    width: 15vw;
+    height: 15vh;
+    top: 50vh;
+    left: -5vw;
+    background: #DDB35E;
+}
+
+/* Fundo Semi Transparente (Contêiner principal) */
+.fundoSemiTransparente {
+    width: 90%;
+    max-width: 1750px;
+    height: 90vh;
+    position: relative;
+    background: rgba(213.53, 205.82, 179.63, 0.43);
+    border-radius: 28px;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    margin-left: 0;
+
+    transform: translateX(2.5%);
+}
+
+/* Logos de Canto (Mais à esquerda) */
+.logoCantoInferior {
+    position: absolute;
+    width: 3.5vw;
+    height: auto;
+    left: 1.5vw;
+    top: 3vh;
+    z-index: 20;
+}
+
+.logoCantoInferior img {
+    width: 100%;
+    height: auto;
+}
+
+.logoWhatsApp {
+    position: absolute;
+    width: 3.5vw;
+    height: 3.5vw;
+    left: 1.5vw;
+    bottom: 3vh;
+    z-index: 20;
+}
+
+.logoWhatsApp img {
+    width: 100%;
+    height: 100%;
+}
+
+/* ========================================================= */
+/* GRID INTERNO (Layout Principal) */
+/* ========================================================= */
+.main-content-grid {
+    height: 90%;
+    display: grid;
+
+    grid-template-areas:
+        "nav nav"
+        "profile_content main_area";
+
+    grid-template-columns: 45% 55%; 
+    grid-template-rows: 100px auto; 
+
+    grid-gap: 20px;
+    padding: 30px;
+}
+
+/* Navbar */
+.navBar {
+    grid-area: nav;
+    align-self: center;
+    justify-self: start;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.navBar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.navBar a {
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.navBar a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background-color: black;
+    transition: width 0.3s ease;
+}
+
+.navBar a:hover::after,
+.navBar a.active::after {
+    width: 100%;
+}
+
+/* ========================================================= */
+/* ESTILOS DO PERFIL (profile_content) */
+/* ========================================================= */
+
+.profile-box-container {
+    grid-area: profile_content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-self: start;
+    align-self: start;
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 16px;
+    gap: 8px;
+    margin-top: 15%;
+    margin-left: 100px;
+    position: relative;
+    background: transparent;
+    border-radius: 12px;
+}
+
+/* ========================================================= */
+/* ESTILOS DO PERFIL (profile_content) */
+/* ========================================================= */
+
+/* Círculo do Avatar - REMOVENDO overflow: hidden */
+.cardVerPerfil {
+    width: 180px;
+    height: 180px;
+    border-radius: 9999px;
+    border: 2px #D4D2C8 solid;
+    margin-bottom: 30px; 
+    align-self: center;
+    
+    position: relative; 
+    
+    /* REMOVEMOS O 'overflow: hidden' para que o ícone posicionado absolutamente (fora) seja visível. */
+    /* overflow: hidden; */ 
+    
+    display: block;
+    cursor: pointer;
+    background-color: #D4D2C8; 
+}
+
+/* Estilo da Imagem de Perfil */
+.cardVerPerfil img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    border-radius: 9999px; /* Adiciona border-radius na imagem também */
+    display: block;
+}
+
+/* Estilo do Ícone de Edição (Ajustado para ficar na ponta) */
+.edit-icon {
+    position: absolute;
+    /* Move o ícone para que metade dele comece exatamente na borda */
+    bottom: 0; 
+    right: 0; 
+    
+    /* Ajuste fino: move o ícone pela metade de seu próprio tamanho para que ele se sobreponha à borda. */
+    transform: translate(25%, 25%); /* Move 25% do seu tamanho para a direita e 25% para baixo. Ajuste se for necessário (ex: 50%, 50%) */
+    
+    z-index: 10; 
+    
+    color: #2A2A2A; 
+    background-color: #DDB35E; 
+    border-radius: 50%; 
+    padding: 8px; 
+    font-size: 20px; 
+    line-height: 1; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    pointer-events: none; 
+}
+
+
+/* Agrupamento Título + Mini Card */
+.profile-field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Títulos dos Mini Cards (Nome e E-mail) */
+.minicardNometit,
+.minicardEmailtit {
+    color: black;
+    font-size: 22px;
+    font-family: Akshar;
+    font-weight: 700;
+    line-height: 22px;
+    word-wrap: break-word;
+    margin-bottom: 8px;
+    margin-left: 0;
+}
+
+/* Mini Cards de Dados */
+.minicardNome,
+.minicarEmail {
+    width: 100%;
+    max-width: 453px;
+    height: 41px;
+    background: #FFFAE6;
+    border-radius: 28px;
+    margin-top: 0;
+}
+
+/* Botão Editar */
+.bt_editar {
+    background-color: #2A2A2A; 
+    border-radius: 30px;
+    padding: 15px 35px;
+    border: none;
+    cursor: pointer; 
+    
+    color: #DDB35E;
+    font-size: 24px;
+    font-family: Alatsi; 
+    font-weight: 400;
+    line-height: 24px;
+
+    margin-top: 30px; 
+    align-self: center;
+    
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bt_editar:hover {
+    background-color: #DDB35E; 
+    color: #2A2A2A;
+}
+
+/* ========================================================= */
+/* ESTILOS DOS RELATÓRIOS (main_area) */
+/* ========================================================= */
+
+.relatorios-container {
+    grid-area: main_area; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: flex-start;
+    margin-top: 15%; 
+    padding: 20px;
+}
+
+.relatorios-container h1 {
+    color: black;
+    font-size: 32px;
+    font-family: Akshar;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.botao-relatorio {
+    background-color: #2A2A2A; 
+    border-radius: 30px; 
+    border: none;
+    cursor: pointer; 
+    
+    padding: 18px 45px; 
+    width: 320px; 
+    text-align: center;
+    margin-bottom: 25px;
+
+    color: #DDB35E;
+    font-size: 24px;
+    font-family: Alatsi; 
+    font-weight: 400;
+    line-height: 24px;
+
+    transition: background-color 0.3s ease, transform 0.1s ease, color 0.3s ease;
+}
+
+.botao-relatorio:hover {
+    background-color: #DDB35E;
+    transform: translateY(-2px);
+    color: #2A2A2A;
+}

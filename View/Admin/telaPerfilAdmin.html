@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="telaPerfilAdmin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <div class="background">
+        <div class="bolinha bolinha1"></div>
+        <div class="bolinha bolinha2"></div>
+        <div class="bolinha bolinha3"></div>
+        <div class="bolinha bolinha4"></div>
+        <div class="bolinha bolinha5"></div>
+        <div class="bolinha bolinha6"></div>
+
+        <div class="logoCantoInferior">
+            <img src="../../imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
+        </div>
+
+        <div class="logoWhatsApp">
+            <img src="../../imgFy/whatsapp (3).png" alt="logoWhatsApp">
+        </div>
+
+        <div class="fundoSemiTransparente">
+
+            <div class="main-content-grid">
+
+                <div class="navBar">
+                    <nav>
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a href="" class="active">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="telaNutricional.html">Nutricional</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="telaTreinos.html">Treinos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="telaNewCliente.html">Clientes</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+
+                <div class="profile-box-container">
+                    
+                    <label for="profileImageUpload" class="cardVerPerfil" > 
+                        <img id="profileImage" src="" alt="Foto de Perfil">
+                        <i class="fas fa-pencil-alt edit-icon" id="lapis"></i>
+                    </label>
+
+                    <input type="file" id="profileImageUpload" accept="image/*" style="display: none;">
+
+                    <div class="profile-field">
+                        <div class="minicardNometit"> Nome completo </div>
+                        <div class="minicardNome"> </div>
+                    </div>
+
+                    <div class="profile-field">
+                        <div class="minicardEmailtit"> E-mail </div>
+                        <div class="minicarEmail"> </div>
+                    </div>
+
+                    <button class="bt_editar"> Editar </button> 
+
+                </div>
+                
+                <div class="relatorios-container">
+                    <h1>Relatórios</h1>
+                    <button class="botao-relatorio">Relatório de Clientes</button>
+                    <button class="botao-relatorio">Relatório de Agenda</button>
+                    <button class="botao-relatorio">Relatório de Faturamento</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageUpload = document.getElementById('lapis');
+            const profileImage = document.getElementById('profileImage');
+
+            imageUpload.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        profileImage.src = e.target.result;
+                    }
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

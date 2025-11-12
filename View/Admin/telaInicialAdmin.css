@@ -1,293 +1,209 @@
 /* Fundo principal */
 body,
 html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Alata', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Alata', sans-serif;
 }
 
 .background {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background: #2A2A2A;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #2A2A2A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
-/* Bolinhas decorativas */
+/* Bolinhas decorativas (Sem Alterações) */
 .bolinha {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(45px);
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(45px);
 }
 
 .bolinha1 {
-  width: 320px;
-  height: 240px;
-  top: -50px;
-  left: 50px;
-  background: rgba(221, 179, 94, 0.85);
+    width: 20vw; height: 15vh;
+    top: -5vh; left: 3vw;
+    background: rgba(221, 179, 94, 0.85);
 }
 
 .bolinha2 {
-  width: 300px;
-  height: 270px;
-  bottom: -40px;
-  right: 150px;
-  background: rgba(221, 179, 94, 0.95);
+    width: 20vw; height: 20vh;
+    bottom: -5vh; right: 10vw;
+    background: rgba(221, 179, 94, 0.95);
 }
 
 .bolinha3 {
-  width: 120px;
-  height: 120px;
-  bottom: 120px;
-  left: 200px;
-  background: rgba(221, 179, 94, 0.59);
+    width: 8vw; height: 8vw;
+    bottom: 12vh; left: 10vw;
+    background: rgba(221, 179, 94, 0.59);
 }
 
 .bolinha4 {
-  width: 120px;
-  height: 120px;
-  top: 50px;
-  right: 300px;
-  background: rgba(221, 179, 94, 0.85);
+    width: 8vw; height: 8vw;
+    top: 5vh; right: 20vw;
+    background: rgba(221, 179, 94, 0.85);
 }
 
 .bolinha5 {
-  width: 120px;
-  height: 120px;
-  top: 320px;
-  left: 55%;
-  background: rgba(221, 179, 94, 0.85);
+    width: 8vw; height: 8vw;
+    top: 40vh; left: 55%;
+    background: rgba(221, 179, 94, 0.85);
 }
 
 .bolinha6 {
-  width: 240px;
-  height: 230px;
-  top: 437px;
-  left: -50px;
-  background: #DDB35E;
+    width: 15vw; height: 15vh;
+    top: 50vh; left: -5vw;
+    background: #DDB35E;
 }
 
+/* Fundo Semi Transparente (Contêiner principal) */
 .fundoSemiTransparente {
-  width: 1750px;
-  height: 840px;
-  left: 94px;
-  top: 47px;
-  position: absolute;
-  background: rgba(213.53, 205.82, 179.63, 0.43);
-  border-radius: 28px
+    width: 90%;
+    max-width: 1750px;
+    height: 90vh;
+    position: relative;
+    background: rgba(213.53, 205.82, 179.63, 0.43);
+    border-radius: 28px;
+    padding: 0; 
+    box-sizing: border-box;
+    overflow: hidden; 
+    margin-left: 0; 
+    
+    /* CORREÇÃO CHAVE: Desloca o bloco para a direita para afastar da logo */
+    transform: translateX(2.5%); 
 }
 
+/* Logos de Canto (Mais à esquerda) */
 .logoCantoInferior {
-  width: 50px;
-  height: 80px;
-  left: 14px;
-  top: 52px;
-  position: absolute
+    position: absolute;
+    width: 3.5vw;
+    height: auto;
+    left: 1.5vw; 
+    top: 3vh; 
+    z-index: 20; 
+}
+.logoCantoInferior img {
+    width: 100%;
+    height: auto;
+}
+
+.logoWhatsApp {
+    position: absolute;
+    width: 3.5vw;
+    height: 3.5vw;
+    left: 1.5vw;
+    bottom: 3vh;
+    z-index: 20; 
+}
+.logoWhatsApp img {
+    width: 100%;
+    height: 100%;
+}
+
+/* ========================================================= */
+/* GRID INTERNO (Para espaçamento uniforme) */
+/* ========================================================= */
+.main-content-grid {
+    height: 90%;
+    display: grid;
+    
+    grid-template-areas:
+        "nav profile_box"
+        "main meta"
+        "main percentuals";
+
+    /* Colunas: [Principal 70%] [Lateral 30%] */
+    /* grid-template-columns: 70% 30%; */
+    grid-template-rows: 100px auto auto;
+    
+    grid-gap: 20px; 
+    
+    /* Padding uniforme para espaçamento interno */
+    padding: 30px; 
+}
+
+/* Posicionamento da Navbar (Esquerda) */
+.navBar {
+    grid-area: nav;
+    align-self: center;
+    justify-self: start;
+    padding-left: 0; 
+    
+    /* CORREÇÃO: Remove o margin-left excessivo, confiando no transform do pai para afastar */
+    margin-left: 0; 
+}
+
+.navBar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: flex-start; 
+}
+
+/* Container de Perfil (Direita/Empilhado) */
+.profile-box-container {
+    grid-area: profile_box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-self: end; 
+    align-self: center; 
+    margin-right: 0; 
 }
 
 
-img.logoWhatsApp {
-  width: 60px;
-  height: 60px;
-  left: 19px;
-  top: 776px;
-  position: absolute
-}
 
-.cardMetaPeso {
-  width: 500px;
-  height: 280px;
-  left: 1250px;
-  top: 175px;
-  position: absolute;
-  background: #FFFAE6;
-  border-radius: 28px
-}
 
- .titulo_peso {
-  width: 280px;
-  height: 40px;
-  left: 1400px;
-  top: 200px; 
-  /* text-align: center; */
-  padding-left: 20%;
-  color: #1E1E1E;
-  font-size: 24px;
-  font-family: 'Akshar', sans-serif;
-  font-weight: 700;
-  line-height: 24px;
-  word-wrap: break-word
-} 
 
-.titulo_percentual {
-  width: 200px;
-  height: 40px;
-  left: 1400px;
-  top: 375px; 
-  /* text-align: center; */
-  padding-left: 35%;
-  color: #1E1E1E;
-  font-size: 24px;
-  font-family: 'Akshar', sans-serif;
-  font-weight: 700;
-  line-height: 24px;
-  word-wrap: break-word
-}
 
-/*
-.cardProgressoMetaPeso{
-   width: 263px;
-   height: 227px;
-   left: 1250px;
-   right: 100px;
-   top: 146px;
-   position: absolute;
-   justify-content: center;
-   display: flex;
-   flex-direction: 
-   column;
-   color: #1E1E1E;
-   font-size: 20px;
-   font-family: Akshar;
-   font-weight: 700;
-   line-height: 20px;
-   word-wrap: break-word;
-  
-}
-
-cardPercentuais{
-   width: 263px;
-   height: 227px;
-   left: 1250px;
-   right: 100px;
-   top: 100px;
-   position: absolute;
-   justify-content: center;
-   display: flex;
-   flex-direction: 
-   column;
-   color: #1E1E1E;
-   font-size: 20px;
-   font-family: Akshar;
-   font-weight: 700;
-   line-height: 20px;
-   word-wrap: break-word;
-  
-}*/
-
-.cardProgressoMetaPeso {
-  width: 500px;
-  height: 280px;
-  left: 1250px;
-  margin-right: 1px;
-  margin-top: 347px;
-  position: absolute;
-  background: #FFFAE6;
-  border-radius: 28px
-}
-
+/* Outros Estilos de Componentes (Sem Alterações) */
 .cardVerPerfil {
-  width: 50px;
-  height: 50px;
-  left: 1680px;
-  top: 65px;
-  position: absolute;
-  border-radius: 9999px;
-  border: 2px #D4D2C8 solid
+    width: 50px;
+    height: 50px;
+    border-radius: 9999px;
+    border: 2px #D4D2C8 solid;
+    margin-bottom: 5px;
 }
 
 .textocardVerPerfil {
-  width: 100px;
-  height: 23px;
-  left: 1670px;
-  top: 125px;
-  position: absolute;
-  color: #2A2A2A;
-  font-size: 16px;
-  /* font-family: Alata; */
-  font-weight: 800;
-  line-height: 16px;
-  word-wrap: break-word
-
+    font-weight: 800;
+    color: #2A2A2A;
+    font-size: 0.8em; 
 }
 
-/* .navBar {
-  width: 1750px;
-  height: 100px;
-  left: 94px;
-  top: 47px;
-  position: absolute;
-  /* background: #DDB35E; */
-  /* border-radius: 28px; *
-  display: flex;
-  flex: auto;
-  /* align-items: center;
-  padding-left: 40px; *
 
-
-
-} */
-
-
-
-.navBar ul {
-  list-style: none;          /* Remove bolinhas */
-  padding: 0;
-  margin: 0;
-  display: flex;             /* Coloca os itens lado a lado */
-  gap: 40px;                 /* Espaçamento entre eles */
-  align-items: center;
-}
-
-.navBar li {
-  display: inline-block;
-}
 
 .navBar a {
-  text-decoration: none;
-  color: white;
-  font-size: 24px;
-  font-family: 'Akshar', sans-serif;
-  font-weight: 700;
-  position: relative;
-  transition: color 0.3s ease;
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    position: relative;
+    transition: color 0.3s ease;
 }
 
-/* Linha preta aparecendo ao passar o mouse */
 .navBar a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  width: 0;
-  height: 2px;
-  background-color: black;
-  transition: width 0.3s ease;
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background-color: black;
+    transition: width 0.3s ease;
 }
 
-.navBar a:hover::after {
-  width: 100%;
-}
-
-
-
-.navBar {
-  width: 1750px;
-  height: 100px;
-  left: 94px;
-  top: 47px;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  padding-left: 100px;
-}
-
+.navBar a:hover::after,
 .navBar a.active::after {
-  width: 100%;
+    width: 100%;
 }
