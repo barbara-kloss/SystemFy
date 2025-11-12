@@ -3,36 +3,43 @@ use User;
 class Exercise
 {
     public readonly int $id;
+    public readonly User $id_usuario;
     public readonly float $peso;
-    public readonly string $repeticao;
+    public readonly int $tempo_descanso;
+    public readonly int $repeticao;
     public readonly string $exercicio;
-    public readonly string $categoria;
+    public readonly string $objetivo;
     public readonly string $dia;
     public readonly string $obs;
-    public readonly User $id_usuario;
+    public readonly string $categoria;
     public readonly User $id_personal;
+ 
     public function __construct(
         int $id,
+        User $id_usuario,
         float $peso,
-        string $repeticao,
+        int $tempo_descanso,
+        int $repeticao,
         string $exercicio,
-        string $categoria,
+        string $objetivo,
         string $dia,
         string $obs,
-        User $id_usuario,
+        string $categoria,
         User $id_personal
     ) {
         $this->id = $id;
+        $this->id_usuario = $id_usuario;
         $this->peso = $peso;
+        $this->tempo_descanso = $tempo_descanso;
         $this->repeticao = $repeticao;
         $this->exercicio = $exercicio;
+        $this->objetivo = $objetivo;
         $this->categoria = $categoria;
         $this->dia = $dia;
         $this->obs = $obs;
-        $this->id_usuario = $id_usuario;
         $this->id_personal = $id_personal;
     }
-
+    
     public function setId(int $id)
     {
         if ($id <= 0) {
@@ -49,6 +56,14 @@ class Exercise
         $this->peso = $peso;
     }
 
+    public function setTempoDescanso(int $tempo_descanso)
+    {
+        if ($tempo_descanso < 0) {
+            throw new \InvalidArgumentException("Tempo de descanso não pode ser negativo!");
+        }
+        $this->tempo_descanso = $tempo_descanso;
+    }
+
     public function setRepeticao(string $repeticao)
     {
         if (empty($repeticao)) {
@@ -63,6 +78,14 @@ class Exercise
             throw new \InvalidArgumentException("Exercício não pode ser vazio!");
         }
         $this->exercicio = $exercicio;
+    }
+
+    public function setObjetivo(string $objetivo)
+    {
+        if (empty($objetivo)) {
+            throw new \InvalidArgumentException("Objetivo não pode ser vazio!");
+        }
+        $this->objetivo = $objetivo;
     }
 
     public function setCategoria(string $categoria)
@@ -117,9 +140,19 @@ class Exercise
         return $this->repeticao;
     }
 
+    public function getTempoDescanso(): int
+    {
+        return $this->tempo_descanso;
+    }
+
     public function getExercicio(): string
     {
         return $this->exercicio;
+    }
+
+    public function getObjetivo(): string
+    {
+        return $this->objetivo;
     }
 
     public function getCategoria(): string

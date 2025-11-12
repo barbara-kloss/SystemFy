@@ -8,20 +8,20 @@ class Menu
     public readonly Time $horario;
     public readonly User $id_usuario;
     public readonly User $id_nutri;
-    public readonly string $titulo;
+    public readonly string $restricao;
 
 
     function __construct(
-        int $id, string $dia, string $observacao, string $categoria, Time $horario, User $id_usuario, User $id_nutri, string $titulo
+        int $id, Time $horario, string $restricao, string $dia, string $categoria, string $observacao, User $id_usuario, User $id_nutri
     ) {
         $this->id = $id;
+        $this->horario = $horario;
+        $this->restricao = $restricao;
         $this->dia = $dia;
-        $this->observacao = $observacao;
         $this->categoria = $categoria;
+        $this->observacao = $observacao;
         $this->id_usuario = $id_usuario;
         $this->id_nutri = $id_nutri;
-        $this->titulo = $titulo;
-        $this->horario = $horario;
     }
 
     public function setDia(string $dia)
@@ -80,12 +80,9 @@ class Menu
         $this->id_nutri = $id_nutri;
     }
 
-    public function setTitulo(string $titulo)
+    public function setRestricao(string $restricao)
     {
-        if (empty($titulo)) {
-            throw new \InvalidArgumentException("Título não pode ser vazio!");
-        }
-        $this->titulo = $titulo;
+        $this->restricao = $restricao;
     }
 
     public function getId(): int
@@ -123,9 +120,9 @@ class Menu
         return $this->id_nutri;
     }
 
-    public function getTitulo(): string
+    public function getRestricao(): string
     {
-        return $this->titulo;
+        return $this->restricao;
     }
 }
 

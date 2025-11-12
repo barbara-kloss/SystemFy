@@ -53,8 +53,18 @@ class EditReportController implements Controller
         $exe_feito = filter_input(INPUT_GET, 'exe_feito', FILTER_VALIDATE_BOOLEAN);
         $menu_feito = filter_input(INPUT_GET, 'menu_feito', FILTER_VALIDATE_BOOLEAN);
 
+        $objetivo = filter_input(INPUT_POST, 'objetivo');
+        if ($objetivo === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
+        $plano = filter_input(INPUT_GET, 'plano');
+        if ($plano === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
 
-        $report = new Report($id_user, $id_personal, $id_nutri, $anotacao, $dia, $exe_feito, $menu_feito);
+        $report = new Report($id_user, $id_personal, $id_nutri, $anotacao, $dia, $exe_feito, $menu_feito, $objetivo, $plano);
         $report->setId($id);
 
         $result = $this->reportRepository->update($report);

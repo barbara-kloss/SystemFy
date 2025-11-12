@@ -1,8 +1,8 @@
 <?php
 
-namespace SceneReads\Mvc\ControllerLogin;
+namespace Systemfy\App\ControllerLogin;
 
-use SceneReads\Mvc\Controller\Controller;
+use Systemfy\App\Controller\Controller;
 use PDO;
 
 class LoginController implements Controller
@@ -11,8 +11,8 @@ class LoginController implements Controller
 
     function __construct()
     {
-        $caminho = __DIR__ . '/../../banco-mylist';
-        $pdo = new PDO("sqlite:$caminho");
+        caminho = __DIR__ . '/../../../databaselocal';
+        $pdo = new PDO("mysql:$caminho");
         $this->pdo = new PDO("sqlite:$caminho");
     }
 
@@ -32,7 +32,7 @@ class LoginController implements Controller
         if ($correctPassword) {
             $_SESSION['logado'] = true;
             header('location: /');
-        }else{
+        } else {
             header('location: /login?sucesso=0');
         }
     }

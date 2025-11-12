@@ -20,11 +20,10 @@ class User
     public readonly string $objetivo;
 
     function __construct(
-        int $id, string $nome, string $email, Date $data_nasc, string $genero, string $telefone, string $senha, string $permissao, float $altura, int $peso, bool $status, string $observacao, float $massa, string $objetivo, float $gordura, Plano $plano_id
+        int $id, string $nome, Date $data_nasc, string $genero, string $telefone, string $senha, string $permissao, float $altura, int $peso, string $objetivo, bool $status, string $observacao, float $massa, float $gordura, Plano $plano_id, string $email
     ) {
         $this->id = $id;
         $this->nome = $nome;
-        $this->email = $email;
         $this->data_nasc = $data_nasc;
         $this->genero = $genero;
         $this->telefone = $telefone;
@@ -32,12 +31,13 @@ class User
         $this->permissao = $permissao;
         $this->altura = $altura;
         $this->peso = $peso;
+        $this->objetivo = $objetivo;
         $this->status = $status;
         $this->observacao = $observacao;
-        $this->objetivo = $objetivo;
+        $this->massa = $massa;
         $this->gordura = $gordura;
         $this->plano_id = $plano_id;
-        $this->massa = $massa;
+        $this->email = $email;
     }
 
     public function setEmail(string $email): void
