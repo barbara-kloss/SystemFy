@@ -11,7 +11,7 @@ class LoginController implements Controller
 
     function __construct()
     {
-        caminho = __DIR__ . '/../../../databaselocal';
+        $caminho = __DIR__ . '/../../../databaselocal';
         $pdo = new PDO("mysql:$caminho");
         $this->pdo = new PDO("sqlite:$caminho");
     }
