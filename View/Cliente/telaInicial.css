@@ -65,16 +65,15 @@ html {
 .fundoSemiTransparente {
     width: 90%;
     max-width: 1750px;
-    height: 90vh;
+    height: 90vh; /* Altura fixa para controle visual */
     position: relative;
     background: rgba(213.53, 205.82, 179.63, 0.43);
     border-radius: 28px;
-    padding: 0; 
+    padding: 30px; 
     box-sizing: border-box;
-    overflow: hidden; 
+    overflow: hidden; /* Mantém o conteúdo dentro da borda */
     margin-left: 0; 
     
-    /* CORREÇÃO CHAVE: Desloca o bloco para a direita para afastar da logo */
     transform: translateX(2.5%); 
 }
 
@@ -106,10 +105,10 @@ html {
 }
 
 /* ========================================================= */
-/* GRID INTERNO (Para espaçamento uniforme) */
+/* GRID INTERNO (Layout Principal) */
 /* ========================================================= */
 .main-content-grid {
-    height: 90%;
+    height: 100%; /* Ocupa a altura líquida do .fundoSemiTransparente */
     display: grid;
     
     grid-template-areas:
@@ -117,14 +116,12 @@ html {
         "main meta"
         "main percentuals";
 
-    /* Colunas: [Principal 70%] [Lateral 30%] */
-    /* grid-template-columns: 70% 30%; */
-    grid-template-rows: 100px auto auto;
+    /* Colunas: 70% (Agenda) | 30% (Lateral) */
+    grid-template-columns: 70% 30%; 
+    /* Linhas: 100px (Nav/Perfil) | 1fr (Meta Peso) | 1fr (Percentuais) */
+    grid-template-rows: 100px 1fr 1fr;
     
     grid-gap: 20px; 
-    
-    /* Padding uniforme para espaçamento interno */
-    padding: 30px; 
 }
 
 /* Posicionamento da Navbar (Esquerda) */
@@ -133,8 +130,6 @@ html {
     align-self: center;
     justify-self: start;
     padding-left: 0; 
-    
-    /* CORREÇÃO: Remove o margin-left excessivo, confiando no transform do pai para afastar */
     margin-left: 0; 
 }
 
@@ -160,13 +155,31 @@ html {
     margin-right: 0; 
 }
 
-/* Card Conteúdo Principal */
-.cardConteudoPrincipal {
-    grid-area: main;
-    background: #FFFAE6;
+/* ========================================================= */
+/* AGENDA / CALENDÁRIO (main) - NOVO CONTÊINER */
+/* ========================================================= */
+.calendar-api-container {
+    grid-area: main; /* Ocupa a área principal */
+    background-color: white; /* Cor de fundo da agenda */
     border-radius: 28px;
-    padding: 20px;
+    padding: 10px; /* Padding interno para separar o iframe da borda do contêiner */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    width: 100%;
+    height: 100%; /* Preenche a altura total da área 'main' */
+    box-sizing: border-box;
+    overflow: hidden; /* Esconde barras de rolagem desnecessárias no contêiner */
 }
+
+/* Iframe do Google Calendar */
+.frame_agenda {
+    width: 100%;
+    height: 100%; /* Preenche 100% do .calendar-api-container */
+    border: none;
+    border-radius: 20px;
+}
+/* ========================================================= */
+
 
 /* Card Meta Peso */
 .cardMetaPeso {
