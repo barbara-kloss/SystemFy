@@ -4,21 +4,21 @@ html {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: 'Alata', sans-serif;
+    font-family: 'Alata', 'Akshar', sans-serif;
+    background: #2A2A2A;
 }
 
 .background {
     position: relative;
     width: 100%;
     height: 100vh;
-    background: #2A2A2A;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
 }
 
-/* Bolinhas decorativas (Sem Alterações) */
+/* Bolinhas decorativas */
 .bolinha {
     position: absolute;
     border-radius: 50%;
@@ -26,67 +26,80 @@ html {
 }
 
 .bolinha1 {
-    width: 20vw; height: 15vh;
-    top: -5vh; left: 3vw;
+    width: 20vw;
+    height: 15vh;
+    top: -5vh;
+    left: 3vw;
     background: rgba(221, 179, 94, 0.85);
 }
 
 .bolinha2 {
-    width: 20vw; height: 20vh;
-    bottom: -5vh; right: 10vw;
+    width: 20vw;
+    height: 20vh;
+    bottom: -5vh;
+    right: 10vw;
     background: rgba(221, 179, 94, 0.95);
 }
 
 .bolinha3 {
-    width: 8vw; height: 8vw;
-    bottom: 12vh; left: 10vw;
+    width: 8vw;
+    height: 8vw;
+    bottom: 12vh;
+    left: 10vw;
     background: rgba(221, 179, 94, 0.59);
 }
 
 .bolinha4 {
-    width: 8vw; height: 8vw;
-    top: 5vh; right: 20vw;
+    width: 8vw;
+    height: 8vw;
+    top: 5vh;
+    right: 20vw;
     background: rgba(221, 179, 94, 0.85);
 }
 
 .bolinha5 {
-    width: 8vw; height: 8vw;
-    top: 40vh; left: 55%;
+    width: 8vw;
+    height: 8vw;
+    top: 40vh;
+    left: 55%;
     background: rgba(221, 179, 94, 0.85);
 }
 
 .bolinha6 {
-    width: 15vw; height: 15vh;
-    top: 50vh; left: -5vw;
+    width: 15vw;
+    height: 15vh;
+    top: 50vh;
+    left: -5vw;
     background: #DDB35E;
 }
 
-/* Fundo Semi Transparente (Contêiner principal) */
+/* Fundo Semi Transparente - Altura fixa e Padding garantido */
 .fundoSemiTransparente {
     width: 90%;
     max-width: 1750px;
     height: 90vh;
+    /* Altura fixa para controlar o espaço na tela */
     position: relative;
     background: rgba(213.53, 205.82, 179.63, 0.43);
     border-radius: 28px;
-    padding: 0; 
     box-sizing: border-box;
-    overflow: hidden; 
-    margin-left: 0; 
-    
-    /* CORREÇÃO CHAVE: Desloca o bloco para a direita para afastar da logo */
-    transform: translateX(2.5%); 
+    overflow: hidden;
+    /* Mantém o conteúdo dentro da borda, evitando o vazamento */
+    transform: translateX(2.5%);
+    padding: 30px;
+    /* GARANTE O ESPAÇO INTERNO EM CIMA, LADOS E EMBAIXO */
 }
 
-/* Logos de Canto (Mais à esquerda) */
+/* Logos de Canto */
 .logoCantoInferior {
     position: absolute;
     width: 3.5vw;
     height: auto;
-    left: 1.5vw; 
-    top: 3vh; 
-    z-index: 20; 
+    left: 1.5vw;
+    top: 3vh;
+    z-index: 20;
 }
+
 .logoCantoInferior img {
     width: 100%;
     height: auto;
@@ -98,44 +111,39 @@ html {
     height: 3.5vw;
     left: 1.5vw;
     bottom: 3vh;
-    z-index: 20; 
+    z-index: 20;
 }
+
 .logoWhatsApp img {
     width: 100%;
     height: 100%;
 }
 
 /* ========================================================= */
-/* GRID INTERNO (Para espaçamento uniforme) */
+/* GRID LAYOUT PRINCIPAL */
 /* ========================================================= */
 .main-content-grid {
-    height: 90%;
+    height: 100%;
+    /* Ocupa a altura líquida do .fundoSemiTransparente */
     display: grid;
-    
+
     grid-template-areas:
         "nav profile_box"
         "main meta"
         "main percentuals";
 
-    /* Colunas: [Principal 70%] [Lateral 30%] */
-    /* grid-template-columns: 70% 30%; */
-    grid-template-rows: 100px auto auto;
-    
-    grid-gap: 20px; 
-    
-    /* Padding uniforme para espaçamento interno */
-    padding: 30px; 
+    grid-template-columns: 70% 30%;
+    /* 100px para o nav, e 1fr/1.5fr para dividir o espaço vertical restante */
+    grid-template-rows: 100px 1fr 1.5fr;
+
+    grid-gap: 20px;
 }
 
-/* Posicionamento da Navbar (Esquerda) */
+/* --- NAV BAR --- */
 .navBar {
     grid-area: nav;
     align-self: center;
     justify-self: start;
-    padding-left: 0; 
-    
-    /* CORREÇÃO: Remove o margin-left excessivo, confiando no transform do pai para afastar */
-    margin-left: 0; 
 }
 
 .navBar ul {
@@ -144,43 +152,7 @@ html {
     margin: 0;
     display: flex;
     gap: 40px;
-    align-items: center;
-    justify-content: flex-start; 
 }
-
-/* Container de Perfil (Direita/Empilhado) */
-.profile-box-container {
-    grid-area: profile_box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    justify-self: end; 
-    align-self: center; 
-    margin-right: 0; 
-}
-
-
-
-
-
-
-/* Outros Estilos de Componentes (Sem Alterações) */
-.cardVerPerfil {
-    width: 50px;
-    height: 50px;
-    border-radius: 9999px;
-    border: 2px #D4D2C8 solid;
-    margin-bottom: 5px;
-}
-
-.textocardVerPerfil {
-    font-weight: 800;
-    color: #2A2A2A;
-    font-size: 0.8em; 
-}
-
-
 
 .navBar a {
     text-decoration: none;
@@ -206,4 +178,148 @@ html {
 .navBar a:hover::after,
 .navBar a.active::after {
     width: 100%;
+}
+
+/* --- PERFIL (profile_box) --- */
+.profile-box-container {
+    grid-area: profile_box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-self: end;
+    align-self: center;
+}
+
+.cardVerPerfil {
+    width: 50px;
+    height: 50px;
+    border-radius: 9999px;
+    border: 2px #D4D2C8 solid;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2A2A2A;
+    font-size: 1.5em;
+}
+
+.textocardVerPerfil {
+    font-weight: 400;
+    color: #2A2A2A;
+    font-size: 16px;
+    font-family: Alata;
+}
+
+/* ========================================================= */
+/* AGENDA / CALENDÁRIO (main) - NOVO CONTÊINER */
+/* ========================================================= */
+.calendar-api-container {
+    grid-area: main;
+    /* Ocupa a área principal */
+    background-color: white;
+    border-radius: 30px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    /* Ocupa a altura total do Grid Cell (subtraindo o gap) */
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    /* Importante para o iframe */
+}
+
+/* Iframe do Google Calendar */
+.frame_agenda {
+    width: 100%;
+    height: 100%;
+    /* Preenche 100% do .calendar-api-container */
+    border: none;
+    border-radius: 20px;
+}
+
+
+/* ========================================================= */
+/* CLIENTES ATIVOS (meta) */
+/* ========================================================= */
+.clientes-ativos-card {
+    grid-area: meta;
+    background: rgba(221, 179, 94, 0.95);
+    border-radius: 28px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-sizing: border-box;
+}
+
+.clientes-ativos-card .card-title {
+    font-size: 35px;
+    font-family: Akshar;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.active-count {
+    font-size: 140px;
+    font-family: Akshar;
+    font-weight: 700;
+    line-height: 1em;
+    margin: 0;
+}
+
+/* ========================================================= */
+/* NOTIFICAÇÕES (percentuals) */
+/* ========================================================= */
+.notifications-container {
+    grid-area: percentuals;
+    background: #FFFAE6;
+    border-radius: 28px;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Adiciona uma rolagem se as notificações excederem o espaço vertical */
+    overflow-y: auto;
+}
+
+.notifications-container .card-title {
+    font-size: 24px;
+    font-family: Akshar;
+    font-weight: 700;
+    color: #1E1E1E;
+    margin-bottom: 15px;
+    align-self: center;
+}
+
+.notification-item {
+    width: 100%;
+    background: #EDE7D1;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 17px;
+    border: 1px black solid;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    text-align: left;
+    color: #1E1E1E;
+    line-height: 1.2;
+}
+
+.client-name {
+    font-size: 24px;
+    font-family: Akshar;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.notification-text {
+    font-size: 20px;
+    font-family: Akshar;
+    font-weight: 400;
 }
