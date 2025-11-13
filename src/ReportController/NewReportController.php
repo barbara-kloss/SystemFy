@@ -59,7 +59,12 @@ class NewReportController implements Controller
             header('Location: /booklist?sucesso=0');
             exit();
         }
-        $result = $this->reportRepository->add(new Report($id_user, $id_personal, $id_nutri, $anotacao, $dia, $exe_feito, $menu_feito, $objetivo, $plano));
+        $titulo = filter_input(INPUT_POST, 'titulo');
+        if ($titulo === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
+        $result = $this->reportRepository->add(new Report($id_user, $id_personal, $id_nutri, $anotacao, $dia, $exe_feito, $menu_feito, $objetivo, $plano, $titulo));
 
         if ($result === false){
             header('Location: /booklist?sucesso=0');

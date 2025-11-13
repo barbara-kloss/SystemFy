@@ -63,8 +63,13 @@ class EditReportController implements Controller
             header('Location: /booklist?sucesso=0');
             exit();
         }
+        $titulo = filter_input(INPUT_POST, 'titulo');
+        if($titulo === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
 
-        $report = new Report($id_user, $id_personal, $id_nutri, $anotacao, $dia, $exe_feito, $menu_feito, $objetivo, $plano);
+        $report = new Report($id_user, $id_personal, $id_nutri, $anotacao, $dia, $exe_feito, $menu_feito, $objetivo, $plano, $titulo);
         $report->setId($id);
 
         $result = $this->reportRepository->update($report);
