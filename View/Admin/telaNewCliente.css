@@ -62,18 +62,15 @@ html {
     display: grid;
     
     grid-template-areas:
-        "nav profile_box profile_box"
-        "header_title header_title header_title"
-        "main main meta"
-        "main main percentuals";
+        "nav top_bar"
+        "main meta"
+        "main percentuals";
 
-    /* Colunas: 45% (Form) | 30% (Form) | 25% (Lateral Data/Buttons) */
-    grid-template-columns: 35% 35% 30%; 
-    /* Linhas: 100px (Nav) | 60px (Título/Busca) | 1fr (Conteúdo) | auto (Botões) */
-    grid-template-rows: 100px 60px 1fr auto;
+    grid-template-columns: 70% 30%; 
+    grid-template-rows: 100px 1fr auto; 
     
     grid-gap: 20px; 
-    padding: 0; /* O padding já está no .fundoSemiTransparente */
+    padding: 0; 
 }
 
 /* --- NAV BAR --- */
@@ -89,15 +86,24 @@ html {
 }
 .navBar a:hover::after, .navBar a.active::after { width: 100%; }
 
+/* ========================================================= */
+/* BARRA SUPERIOR (Busca + Perfil) */
+/* ========================================================= */
+.top-bar-container {
+    grid-area: top_bar;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+    padding-right: 10px;
+}
+
 /* --- PERFIL (profile_box) --- */
 .profile-box-container {
-    grid-area: profile_box;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    justify-self: end; 
-    align-self: center; 
 }
 .cardVerPerfil {
     width: 50px; height: 50px; border-radius: 9999px;
@@ -105,25 +111,7 @@ html {
 }
 .textocardVerPerfil { font-weight: 800; color: #2A2A2A; font-size: 0.8em; }
 
-/* ========================================================= */
-/* CABEÇALHO DA PÁGINA E BUSCA */
-/* ========================================================= */
-.client-header-area {
-    grid-area: header_title;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10px; /* Pequeno padding para alinhar com o conteúdo */
-}
-
-.page-title {
-    color: black;
-    font-size: 32px;
-    font-family: Akshar;
-    font-weight: 700;
-    margin: 0;
-}
-
+/* --- BUSCA (search-bar) --- */
 .search-bar {
     display: flex;
     align-items: center;
@@ -140,7 +128,7 @@ html {
     color: #666363;
     padding: 5px;
     outline: none;
-    width: 250px; /* Ajuste a largura do campo de busca */
+    width: 200px;
 }
 
 .search-icon {
@@ -156,34 +144,38 @@ html {
 .client-form-main {
     grid-area: main;
     display: flex;
-    flex-wrap: wrap; /* Permite que os campos se alinhem em duas colunas */
+    flex-direction: column;
     background: #FFFAE6;
     border-radius: 28px;
     padding: 20px;
     box-sizing: border-box;
     height: 100%;
-    overflow-y: auto; /* Adiciona rolagem se o formulário for muito grande */
+    overflow-y: auto; 
+}
+
+.page-title {
+    color: black;
+    font-size: 32px;
+    font-family: Akshar;
+    font-weight: 700;
+    margin: 0 0 20px 0;
 }
 
 #client-form {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 30px;
     width: 100%;
-    gap: 15px 30px; /* Espaço vertical e horizontal entre os grupos */
 }
 
 .input-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
 }
 
-.input-group.full-width {
-    width: calc(50% - 15px); /* Dois campos por linha */
-}
-
-.input-group.half-width {
-    width: calc(25% - 15px); /* Quatro campos por linha */
+/* Campo Observações: Ocupa apenas a Coluna 1 */
+.input-group.full-row {
+    grid-column: 1 / 2; 
 }
 
 label {
@@ -207,31 +199,28 @@ input, select, textarea {
     width: 100%;
 }
 
-textarea {
-    height: 131px; /* Altura da caixa de observações */
+/* Altura da Observações - Diminuída */
+textarea#observacoes {
+    height: 70px; 
     padding-top: 10px;
     resize: vertical;
+    width: 100%;
 }
 
 /* Sobrescreve o estilo do select para ficar como a imagem */
 select {
     appearance: none;
     -webkit-appearance: none;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%20173.5c-1.3%201.3-3.4%201.3-4.7%200L146.2%2037.1%209.6%20173.5c-1.3%201.3-3.4%201.3-4.7%200l-4.7-4.7c-1.3-1.3-1.3-3.4%200-4.7l139.7-139.7c1.3-1.3%203.4-1.3%204.7%200l139.7%20139.7c1.3%201.3%201.3%203.4%200%204.7l-4.7%204.7z%22%2F%3E%3C%2Fsvg%3E'); /* Seta de lista suspensa */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%20173.5c-1.3%201.3-3.4%201.3-4.7%200L146.2%2037.1%209.6%20173.5c-1.3%201.3-3.4%201.3-4.7%200l-4.7-4.7c-1.3-1.3-1.3-3.4%200-4.7l139.7-139.7c1.3-1.3%203.4-1.3%204.7%200l139.7%20139.7c1.3%201.3%201.3%203.4%200%204.7l-4.7%204.7z%22%2F%3E%3C%2Fsvg%3E');
     background-size: 12px;
     background-position: right 15px center;
     background-repeat: no-repeat;
     padding-right: 35px;
 }
 
-/* Ajuste específico para a Observações (Ocupa o bloco todo) */
-#observacoes {
-    grid-column: 1 / -1; /* Ocupa todas as colunas */
-}
-
 
 /* ========================================================= */
-/* 2. DADOS FÍSICOS (CLIENT-FORM-META) */
+/* 2. DADOS FÍSICOS (CLIENT-FORM-META) - AJUSTADO PARA 3 COLUNAS */
 /* ========================================================= */
 .client-form-meta {
     grid-area: meta;
@@ -239,10 +228,12 @@ select {
     border-radius: 28px;
     padding: 20px;
     box-sizing: border-box;
+    
     display: flex;
     flex-wrap: wrap;
-    gap: 20px 10px;
-    height: 100%; /* Ocupa a altura do grid */
+    /* Reduzimos o gap horizontal para garantir que os 3 itens caibam */
+    gap: 20px 5px; 
+    height: 100%;
 }
 
 .data-section-title {
@@ -250,12 +241,19 @@ select {
     font-size: 25px;
     font-family: Akshar;
     font-weight: 700;
-    width: 100%;
+    width: 100%; /* O título sempre ocupa a linha toda */
     margin-bottom: 5px;
 }
 
 .input-group.half-group {
-    width: calc(50% - 5px); /* Duas colunas lado a lado */
+    /* AJUSTE CRÍTICO: Reduz a largura para 3 itens por linha */
+    width: calc(33.33% - 5px); 
+}
+
+/* Garante que os campos de porcentagem voltem a ter 100% de largura,
+   forçando-os a quebrar a linha abaixo dos 3 campos de dados fixos. */
+.input-group.full-width {
+    width: 100%;
 }
 
 .input-with-unit {
@@ -292,7 +290,7 @@ select {
     grid-area: percentuals;
     display: flex;
     gap: 15px;
-    align-items: flex-start; /* Alinha os botões ao topo da área */
+    align-items: flex-start;
     justify-content: space-around;
     padding: 10px;
 }
@@ -310,13 +308,13 @@ select {
 }
 
 .confirm-button {
-    background: #1E1E1E; /* Preto */
-    color: #DDB35E; /* Dourado */
+    background: #1E1E1E;
+    color: #DDB35E;
 }
 
 .cancel-button {
-    background: #1E1E1E; /* Preto */
-    color: #DDB35E; /* Dourado */
+    background: #1E1E1E;
+    color: #DDB35E;
 }
 
 .confirm-button:hover, .cancel-button:hover {

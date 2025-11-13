@@ -25,7 +25,7 @@
         <div class="logoWhatsApp">
             <img src="../../imgFy/whatsapp (3).png" alt="logoWhatsApp">
         </div>
-        
+
         <div class="fundoSemiTransparente">
 
             <div class="main-content-grid">
@@ -37,67 +37,81 @@
                             <li class="nav-item"><a href="telaNutricional.html">Nutricional</a></li>
                             <li class="nav-item"><a href="telaTreinos.html">Treinos</a></li>
                             <li class="nav-item"><a href="telaNewCliente.html" class="active">Clientes</a></li>
+                            <li class="nav-item"><a href="telaRelatorios.html">Relatorios</a></li>
+
                         </ul>
                     </nav>
                 </div>
 
-                <div class="profile-box-container">
-                    <div class="cardVerPerfil"> </div>
-                    <div class="textocardVerPerfil"> Ver perfil</div>
-                </div>
-                
-                <div class="client-header-area">
-                    <h1 class="page-title">Clientes</h1>
+                <div class="top-bar-container">
+
                     <div class="search-bar">
                         <input type="text" placeholder="Digite aqui o Cliente" class="search-input">
                         <i class="fas fa-search search-icon"></i>
                     </div>
+
+                    <div class="profile-box-container">
+                        <div class="cardVerPerfil"> </div>
+                        <div class="textocardVerPerfil"> Ver perfil</div>
+                    </div>
                 </div>
 
                 <div class="client-form-main">
-                    
+
+                    <h1 class="page-title">Clientes</h1>
+
                     <form id="client-form">
-                        <div class="input-group full-width">
+                        <div class="input-group">
                             <label for="nome">Nome completo</label>
                             <input type="text" id="nome" value="Shreck">
                         </div>
-                        <div class="input-group full-width">
+                        <div class="input-group">
                             <label for="email">E-mail</label>
                             <input type="email" id="email" value="shreck@gmail.com">
                         </div>
-                        <div class="input-group full-width">
+
+                        <div class="input-group">
                             <label for="genero">Gênero</label>
-                            <select id="genero"><option>Lista Suspensa</option></select>
+                            <select id="genero">
+                                <option value="" disabled selected>Selecione</option>
+                                <option value="Feminino">Feminino</option>
+                                <option value="Masculino">Masculino</option>
+                            </select>
                         </div>
-                        <div class="input-group full-width">
+                        <div class="input-group">
                             <label for="telefone">Telefone</label>
                             <input type="tel" id="telefone" value="(00) 0 0000-0000">
                         </div>
-
-                        <div class="input-group half-width">
+                        <div class="input-group">
                             <label for="dataNasc">Data Nascimento</label>
                             <input type="date" id="dataNasc" value="1600-12-01">
                         </div>
-                        <div class="input-group half-width">
+
+                        <div class="input-group">
                             <label for="plano">Plano</label>
-                            <select id="plano"><option>Lista Suspensa</option></select>
+                            <select id="plano">
+                                <option value="" disabled selected>Selecione</option>
+                                <option value="Basico">Básico</option>
+                                <option value="Premium">Premium</option>
+                            </select>
                         </div>
-                        
-                        <div class="input-group full-width">
-                            <label for="objetivo">Objetivo</label>
-                            <select id="objetivo"><option>Ganho de Massa</option></select>
-                        </div>
-                        
-                        <div class="input-group full-width">
+
+                        <div class="input-group full-row">
                             <label for="observacoes">Observações</label>
-                            <textarea id="observacoes" rows="3"></textarea>
+                            <textarea id="observacoes"></textarea>
                         </div>
+
+                        <div class="input-group">
+                            <label for="objetivo">Objetivo</label>
+                            <input type="text" id="objetivo" value="Ganho de Massa">
+                        </div>
+
                     </form>
                 </div>
 
                 <div class="client-form-meta">
                     <div class="data-section-title">Dados Físicos</div>
-                    
+
                     <div class="input-group half-group">
                         <label for="peso">Peso</label>
                         <div class="input-with-unit">
@@ -105,7 +119,7 @@
                             <span class="unit-label">Kg</span>
                         </div>
                     </div>
-                    
+
                     <div class="input-group half-group">
                         <label for="altura">Altura</label>
                         <div class="input-with-unit">
@@ -114,17 +128,24 @@
                         </div>
                     </div>
 
+                    <div class="input-group half-group">
+                        <label for="metaPeso">Meta Peso</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="metaPeso" value="65">
+                            <span class="unit-label">Kg</span>
+                        </div>
+                    </div>
+                    
                     <div class="input-group full-width">
                         <label for="gordura">% Gordura Corporal:</label>
                         <input type="text" id="gordura" value="%50">
                     </div>
-                    
+
                     <div class="input-group full-width">
                         <label for="magra">% Massa Magra:</label>
                         <input type="text" id="magra" value="%15">
                     </div>
                 </div>
-
                 <div class="client-form-buttons">
                     <button class="action-button confirm-button">Confirmar</button>
                     <button class="action-button cancel-button">Cancelar</button>
@@ -134,4 +155,5 @@
         </div>
     </div>
 </body>
+
 </html>
