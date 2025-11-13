@@ -1,36 +1,51 @@
 <?php
 
 
-use SceneReads\Mvc\Controller\{
-    MainController,
-    AboutController
+use Systemfy\App\Controller\{
+    MainController
 };
 
-use SceneReads\Mvc\ControllerBook\{
-    BookListController,
-    BookFormController,
-    NewBookController,
-    EditBookController,
-    DeleteBookController
+use Systemfy\App\AgendaController\{
+    AgendaListController,
+    AgendaFormController,
+    NewAgendaController,
+    EditAgendaController,
+    DeleteAgendaController
 };
 
-use SceneReads\Mvc\ControllerFilm\{
-    FilmListController,
-    FilmFormController,
-    EditFilmController,
-    DeleteFilmController,
-    NewFilmController
+use Systemfy\App\ExerciseController\{
+    ExerciseListController,
+    ExerciseFormController,
+    EditExerciseController,
+    DeleteExerciseController,
+    NewExerciseController
 };
 
-use \SceneReads\Mvc\ControllerTable\{
-    TableListController,
-    TableFormController,
-    NewTableController,
-    EditTableController,
-    DeleteTableController
+use Systemfy\App\MenuController\{
+    MenuListController,
+    MenuFormController,
+    NewMenuController,
+    EditMenuController,
+    DeleteMenuController
 };
 
-use \SceneReads\Mvc\ControllerLogin\{
+use Systemfy\App\PlanoController\{
+    PlanoListController,
+    PlanoFormController,
+    NewPlanoController,
+    EditPlanoController,
+    DeletePlanoController
+};
+
+use Systemfy\App\ReportController\{
+    ReportListController,
+    ReportFormController,
+    NewReportController,
+    EditReportController,
+    DeleteReportController
+};
+
+use Systemfy\App\ControllerLogin\{
     LoginFormController,
     LoginController,
     LogoutController,
@@ -40,7 +55,6 @@ use \SceneReads\Mvc\ControllerLogin\{
 
 return [
     'GET|/' => MainController::class,
-    'GET|/about' => AboutController::class,
     'GET|/booklist' => BookListController::class,
     'GET|/savebook' => BookFormController::class,
     'POST|/savebook' => NewBookController::class,

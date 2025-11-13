@@ -74,8 +74,10 @@ class NewExerciseController implements Controller
             header('Location: /booklist?sucesso=0');// decidir se insere ou busca
             exit();
         }
+        $video = filter_input(INPUT_POST, 'video', FILTER_VALIDATE_BOOLEAN);
 
-        $result = $this->exerciseRepository->add(new Exercise($id_user, $peso, $tempo_descanso, $repeticao, $tipo_exercicio, $objetivo, $dia, $observacao, $categoria, $id_personal));
+
+        $result = $this->exerciseRepository->add(new Exercise($id_user, $peso, $tempo_descanso, $repeticao, $tipo_exercicio, $objetivo, $dia, $observacao, $categoria, $id_personal, $video));
 
         if ($result === false){
             header('Location: /booklist?sucesso=0');

@@ -29,15 +29,15 @@ class ReportRepository
         $report->setId(intval($id));
         return $result;
     }
-    public function remove(int $id): bool
-    {
-        $sql = 'DELETE FROM report WHERE id = ?';
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(1, $id);
-
-        return $stmt->execute();
-
-    }
+//    public function remove(int $id): bool
+//    {
+//        $sql = 'DELETE FROM report WHERE id = ?';
+//        $stmt = $this->pdo->prepare($sql);
+//        $stmt->bindValue(1, $id);
+//
+//        return $stmt->execute();
+//
+//    }
 
     public function update(Report $report): bool
     {

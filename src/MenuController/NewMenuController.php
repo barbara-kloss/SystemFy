@@ -63,7 +63,13 @@ class NewMenuController implements Controller
             exit();
         }
 
-        $result = $this->menuRepository->add(new Menu($horario, $objetivo, $restricao, $dia, $categoria, $observacao, $id_user, $id_nutri));
+        $titulo = filter_input(INPUT_POST, 'titulo');
+        if ($titulo === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
+
+        $result = $this->menuRepository->add(new Menu($horario, $objetivo, $restricao, $dia, $categoria, $observacao, $id_user, $id_nutri, $titulo));
 
         if ($result === false){
             header('Location: /booklist?sucesso=0');

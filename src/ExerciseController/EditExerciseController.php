@@ -77,8 +77,9 @@ class EditExerciseController implements Controller
             header('Location: /booklist?sucesso=0');// decidir se insere ou busca
             exit();
         }
+        $video = filter_input(INPUT_POST, 'video', FILTER_VALIDATE_BOOLEAN);
 
-        $exercise = new Exercise($id_user, $peso, $tempo_descanso, $repeticao, $tipo_exercicio, $objetivo, $dia, $observacao, $categoria, $id_personal);
+        $exercise = new Exercise($id_user, $peso, $tempo_descanso, $repeticao, $tipo_exercicio, $objetivo, $dia, $observacao, $categoria, $id_personal, $video);
         $exercise->setId($id);
 
         $result = $this->exerciseRepository->update($exercise);

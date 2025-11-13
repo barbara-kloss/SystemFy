@@ -67,8 +67,13 @@ class EditMenuController implements Controller
             header('Location: /booklist?sucesso=0');
             exit();
         }
+        $titulo = filter_input(INPUT_POST, 'titulo');
+        if ($titulo === false) {
+            header('Location: /booklist?sucesso=0');
+            exit();
+        }
 
-        $menu = new Menu($horario, $objetivo, $restricao, $dia, $categoria, $observacao, $id_user, $id_nutri);
+        $menu = new Menu($horario, $objetivo, $restricao, $dia, $categoria, $observacao, $id_user, $id_nutri, $titulo);
         $menu->setId($id);
 
         $result = $this->menuRepository->update($menu);

@@ -32,8 +32,10 @@ class NewPlanoController implements Controller
             header('Location: /booklist?sucesso=0');
             exit();
         }
+
+        $ativo = filter_input(INPUT_POST, 'ativo', FILTER_VALIDATE_BOOL);
 // categoria, preco, descricao
-        $result = $this->planoRepository->add(new Plano($categoria, $preco, $descricao));
+        $result = $this->planoRepository->add(new Plano($categoria, $preco, $descricao, $ativo));
 
         if ($result === false){
             header('Location: /booklist?sucesso=0');

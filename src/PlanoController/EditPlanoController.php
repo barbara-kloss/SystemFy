@@ -38,8 +38,10 @@ class EditPlanoController implements Controller
             exit();
         }
 
+        $ativo = filter_input(INPUT_POST, 'ativo', FILTER_VALIDATE_BOOL);
 
-        $plano = new Plano($categoria, $preco, $descricao);
+
+        $plano = new Plano($categoria, $preco, $descricao, $ativo);
         $plano->setId($id);
 
         $result = $this->planoRepository->update($plano);
