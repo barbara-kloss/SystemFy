@@ -3,11 +3,14 @@
 namespace Systemfy\App\Repository;
 
 use PDO;
-use Systemfy\App\Model\Exercise;    
+use Systemfy\App\Model\Exercise;
+use Systemfy\App\config\database;
 class ExerciseRepository
 {
-    function __construct(private PDO $pdo)
+    private PDO $pdo;
+    function __construct()
     {
+        $this->pdo = database::getConnection();
     }
 
     public function add(Exercise $exercise) : bool

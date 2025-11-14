@@ -3,11 +3,14 @@
 namespace Systemfy\App\Repository;
 
 use PDO;
+use Systemfy\App\config\database;
 use Systemfy\App\Model\Agenda;
 class AgendaRepository
 {
-    function __construct(private PDO $pdo)
+    private PDO $pdo;
+    function __construct()
     {
+        $this->pdo = database::getConnection();
     }
 
     public function add(Agenda $agenda) : bool
