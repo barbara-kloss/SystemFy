@@ -46,7 +46,7 @@ class LoginController implements Controller
         }
 
         if ($userData['permissao'] === 'cliente') {
-            header('Location: /cliente');
+            header('Location: /client');
             return;
         }
 
