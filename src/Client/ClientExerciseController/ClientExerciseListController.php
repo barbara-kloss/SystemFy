@@ -1,6 +1,6 @@
 <?php
 
-namespace Systemfy\App\Admin\ExerciseController;
+namespace Systemfy\App\Client\ClientExerciseController;
 
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Repository\ExerciseRepository;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Systemfy\App\Admin\AgendaController;
+namespace Systemfy\App\Client\ClientAgendaController;
 
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Repository\AgendaRepository;
