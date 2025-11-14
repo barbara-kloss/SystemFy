@@ -2,8 +2,8 @@
 
 namespace Systemfy\App\ControllerLogin;
 
-use Systemfy\App\Controller\Controller;
 use PDO;
+use Systemfy\App\Controller\Controller;
 
 class LoginController implements Controller
 {

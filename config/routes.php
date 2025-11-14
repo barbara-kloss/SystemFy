@@ -1,55 +1,46 @@
 <?php
 
 
-use Systemfy\App\Controller\{
-    MainAdminController
-};
-
-use Systemfy\App\AgendaController\{
-    AgendaListController,
-    AgendaFormController,
-    NewAgendaController,
-    EditAgendaController,
-    DeleteAgendaController
-};
-
-use Systemfy\App\ExerciseController\{
+use Systemfy\App\Admin\ExerciseController\{
     ExerciseListController,
-    ExerciseFormController,
-    EditExerciseController,
     DeleteExerciseController,
+    EditExerciseController,
+    ExerciseFormController,
     NewExerciseController
 };
 
-use Systemfy\App\MenuController\{
-    MenuListController,
-    MenuFormController,
+use Systemfy\App\Admin\MenuController\{
     NewMenuController,
+    DeleteMenuController,
     EditMenuController,
-    DeleteMenuController
+    MenuFormController,
+    MenuListController
 };
 
-use Systemfy\App\PlanoController\{
-    PlanoListController,
-    PlanoFormController,
+use Systemfy\App\Admin\PlanoController\{
+    EditPlanoController,
     NewPlanoController,
-    EditPlanoController
+    PlanoFormController
 };
 
-use Systemfy\App\ReportController\{
+use Systemfy\App\Admin\ReportController\{
     ReportListController,
-    ReportFormController,
     NewReportController,
-    EditReportController,
+    ReportFormController
 };
 
-use Systemfy\App\ControllerLogin\{
-    LoginFormController,
-    LoginController,
-    LogoutController,
-    RegisterController,
-    NewUserController
+use Systemfy\App\Controller\{
+    MainAdminController,
+    MainClienteController
 };
+use Systemfy\App\ControllerLogin\{
+    NewUserController,
+    RegisterController,
+    LoginController,
+    LoginFormController,
+    LogoutController
+};
+
 
 return [
     'GET|/admin' => MainAdminController::class,

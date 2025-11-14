@@ -1,6 +1,6 @@
 <?php
 
-namespace Systemfy\App\Controller\ControllerLogin;
+namespace Systemfy\App\ControllerLogin;
 
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Model\User;

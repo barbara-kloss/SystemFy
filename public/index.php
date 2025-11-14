@@ -1,23 +1,17 @@
 <?php
 
-use Systemfy\App\Controller\{
-    Error404Controller,
-    Controller
-};
-
-use Systemfy\App\Repository\{
-    AgendaRepository,
-    ExerciseRepository,
-    ReportRepository,
-    UserRepository,
-    PlanoRepository,
-    MenuRepository
-};
-use Systemfy\App\ReportController;
-use Systemfy\App\PlanoController;
-use Systemfy\App\MenuController;
-use Systemfy\App\ExerciseController;
 use Systemfy\App\AgendaController;
+use Systemfy\App\Controller\{Controller, Error404Controller};
+use Systemfy\App\ExerciseController;
+use Systemfy\App\MenuController;
+use Systemfy\App\PlanoController;
+use Systemfy\App\ReportController;
+use Systemfy\App\Repository\{AgendaRepository,
+    ExerciseRepository,
+    MenuRepository,
+    PlanoRepository,
+    ReportRepository,
+    UserRepository};
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -52,70 +46,70 @@ if (array_key_exists($key, $routes)) {
 
     //Elseif para não haver colisão de rotas e tatefas
 
-    if ($controllerClass === AgendaController\NewAgendaController::class) {
+    if ($controllerClass === \Systemfy\App\Admin\AgendaController\NewAgendaController::class) {
         $controller = new $controllerClass($agendaRepository);
     
-    }elseif ($controllerClass === ReportController\NewReportController::class) {
+    }elseif ($controllerClass === \Systemfy\App\Admin\ReportController\NewReportController::class) {
         $controller = new $controllerClass($reportRepository);
     
-    }elseif ($controllerClass === ReportController\ReportFormController::class) {
+    }elseif ($controllerClass === \Systemfy\App\Admin\ReportController\ReportFormController::class) {
         $controller = new $controllerClass($reportRepository);
     
-    }elseif ($controllerClass === ReportController\ReportListController::class) {
+    }elseif ($controllerClass === \Systemfy\App\Admin\ReportController\ReportListController::class) {
         $controller = new $controllerClass($reportRepository);
     
     }elseif ($controllerClass === ReportController\DeleteReportController::class) {
         $controller = new $controllerClass($reportRepository);
     
-    }elseif ($controllerClass === ReportController\EditReportController::class) {
+    }elseif ($controllerClass === \Systemfy\App\Admin\ReportController\EditReportController::class) {
         $controller = new $controllerClass($reportRepository);
     
     } elseif ($controllerClass === PlanoController\PlanoListController::class) {
         $controller = new $controllerClass($planoRepository);
     
-    } elseif ($controllerClass === PlanoController\PlanoFormController::class) {
+    } elseif ($controllerClass === \Systemfy\App\Admin\PlanoController\PlanoFormController::class) {
         $controller = new $controllerClass($planoRepository);
     
     } elseif ($controllerClass === PlanoController\DeletePlanoController::class) {
         $controller = new $controllerClass($planoRepository);
     
-    } elseif ($controllerClass === PlanoController\EditPlanoController::class) {
+    } elseif ($controllerClass === \Systemfy\App\Admin\PlanoController\EditPlanoController::class) {
         $controller = new $controllerClass($planoRepository);
     
-    } elseif ($controllerClass === PlanoController\NewPlanoController::class) {
+    } elseif ($controllerClass === \Systemfy\App\Admin\PlanoController\NewPlanoController::class) {
         $controller = new $controllerClass($planoRepository);
     
-    } elseif ($controllerClass === MenuController\MenuListController::class) {
+    } elseif ($controllerClass === \Systemfy\App\Admin\MenuController\MenuListController::class) {
         $controller = new $controllerClass($menuRepository);
     
-    } elseif ($controllerClass === MenuController\MenuFormController::class) {
+    } elseif ($controllerClass === \Systemfy\App\Admin\MenuController\MenuFormController::class) {
         $controller = new $controllerClass($menuRepository);
     
-    } elseif ($controllerClass === MenuController\DeleteMenuController::class) {
+    } elseif ($controllerClass === \Systemfy\App\Admin\MenuController\DeleteMenuController::class) {
         $controller = new $controllerClass($menuRepository);
     
-    } elseif ($controllerClass === MenuController\EditMenuController::class) {
+    } elseif ($controllerClass === \Systemfy\App\Admin\MenuController\EditMenuController::class) {
         $controller = new $controllerClass($menuRepository);
     
-    } elseif ($controllerClass === MenuController\NewMenuController::class) {
+    } elseif ($controllerClass === \Systemfy\App\Admin\MenuController\NewMenuController::class) {
         $controller = new $controllerClass($menuRepository);
     
-    } elseif ($controllerClass === ExerciseController\ExerciseFormController::class) {
+    } elseif ($controllerClass === \Systemfy\App\Admin\ExerciseController\ExerciseFormController::class) {
         $controller = new $controllerClass($exerciseRepository);
     
-    } elseif ($controllerClass === ExerciseController\ExerciseListController::class) {
+    } elseif ($controllerClass === \Systemfy\App\Admin\ExerciseController\ExerciseListController::class) {
         $controller = new $controllerClass($exerciseRepository);
     
-    } elseif ($controllerClass === ExerciseController\DeleteExerciseController::class) {
+    } elseif ($controllerClass === \Systemfy\App\Admin\ExerciseController\DeleteExerciseController::class) {
         $controller = new $controllerClass($exerciseRepository);
     
-    } elseif ($controllerClass === ExerciseController\NewExerciseController::class) {
+    } elseif ($controllerClass === \Systemfy\App\Admin\ExerciseController\NewExerciseController::class) {
         $controller = new $controllerClass($exerciseRepository);
     
-    } elseif ($controllerClass === ExerciseController\EditExerciseController::class) {
+    } elseif ($controllerClass === \Systemfy\App\Admin\ExerciseController\EditExerciseController::class) {
         $controller = new $controllerClass($exerciseRepository);
     
-    } elseif ($controllerClass === Systemfy\App\Controller\ControllerLogin\NewUserController::class) {
+    } elseif ($controllerClass === \Systemfy\App\ControllerLogin\NewUserController::class) {
         $controller = new $controllerClass($userRepository);
     
     } else {
