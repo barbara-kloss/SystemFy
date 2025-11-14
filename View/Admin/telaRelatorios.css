@@ -102,16 +102,16 @@ html {
 .textocardVerPerfil { font-weight: 800; color: inherit; font-size: 0.8em; }
 
 /* ========================================================= */
-/* CONTEÚDO PRINCIPAL: CARDS DE RELATÓRIOS */
+/* CONTEÚDO PRINCIPAL: CARDS DE RELATÓRIOS (AJUSTADO) */
 /* ========================================================= */
 .content-cards-wrapper {
     grid-area: content;
     display: flex;
-    flex-direction: row; /* Força o alinhamento em linha em telas grandes */
+    flex-direction: row; 
     flex-wrap: wrap; 
-    justify-content: center; /* Centraliza o grupo de cards */
+    justify-content: center; 
     align-items: stretch;
-    gap: 30px; 
+    gap: 20px; /* Mantém o gap reduzido */
     width: 100%;
     box-sizing: border-box;
     padding: 10px 0; 
@@ -131,10 +131,11 @@ html {
 .relatorio-card {
     background: #FFFAE6;
     border-radius: 28px;
-    padding: 30px;
-    /* Garante 3 colunas em telas grandes */
-    flex-basis: calc(33.33% - 20px); 
-    min-width: 250px; 
+    /* REDUÇÃO CHAVE: Diminui o padding para encolher o card */
+    padding: 20px; 
+    /* AJUSTE CHAVE: Garante que os 3 cards caibam facilmente */
+    flex-basis: calc(30% - 10px); 
+    min-width: 200px; /* Reduz o mínimo para dar mais flexibilidade */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
@@ -148,45 +149,32 @@ html {
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
-.card-icon { font-size: 4em; color: #DDB35E; margin-bottom: 20px; }
-.card-title { color: #2A2A2A; font-size: 28px; font-family: 'Akshar', sans-serif; font-weight: 700; margin-bottom: 10px; }
-.card-description { color: #666; font-size: 16px; margin-bottom: auto; flex-grow: 1; padding: 0 10px; }
+/* REDUÇÃO CHAVE: Diminui o tamanho do ícone */
+.card-icon { font-size: 3.5em; color: #DDB35E; margin-bottom: 10px; }
+.card-title { color: #2A2A2A; font-size: 24px; font-family: 'Akshar', sans-serif; font-weight: 700; margin-bottom: 15px; }
 
-/* Botão Principal de Geração */
-.btn-gerar-relatorio {
-    background: #2A2A2A;
-    color: #DDB35E;
-    border-radius: 28px;
-    padding: 10px 20px;
-    font-size: 18px;
-    font-family: 'Akshar', sans-serif;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    margin-top: 20px; 
-    width: 100%;
-    transition: background-color 0.3s, color 0.3s;
-}
+/* REMOVIDO NO HTML, mas mantendo a regra CSS de descrição inativa:
+.card-description { display: none; }
+*/
 
-.btn-gerar-relatorio:hover {
-    background-color: #DDB35E;
-    color: #2A2A2A;
-}
+/* REMOVIDO NO HTML, mas mantendo a regra CSS de botão inativa:
+.btn-gerar-relatorio { display: none; } 
+*/
 
 /* Container dos Botões de Exportação */
 .export-options {
     display: flex;
     gap: 10px;
     width: 100%;
-    margin-top: 15px; 
+    margin-top: 10px; /* Reduz a margem */
 }
 
 .btn-export {
     background: #D4D2C8; 
     color: #2A2A2A;
     border-radius: 28px;
-    padding: 10px 15px;
-    font-size: 16px;
+    padding: 8px 12px; /* Reduz o padding do botão */
+    font-size: 15px; /* Reduz o tamanho da fonte */
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
     border: none;
@@ -201,19 +189,11 @@ html {
 
 
 /* ========================================================= */
-/* RESPONSIVIDADE (AJUSTADA PARA PRIORIZAR O LAYOUT DE 3 COLUNAS) */
+/* RESPONSIVIDADE */
 /* ========================================================= */
 
-@media (max-width: 1250px) { 
-    .relatorio-card {
-        /* Permite que o card seja um pouco mais estreito, facilitando caber 3 lado a lado */
-        flex-basis: calc(30% - 15px); 
-    }
-}
-
-@media (max-width: 900px) { /* Quebra para 2 colunas em telas médias */
+@media (max-width: 1000px) { /* Quebra para 2 colunas mais cedo */
      .relatorio-card {
-        /* Para telas médias, 2 colunas */
         flex-basis: calc(50% - 15px); 
     }
 }
@@ -268,7 +248,7 @@ html {
     /* 2. Reiniciar o corpo e o fundo principal */
     body, html {
         background: white !important;
-        height: auto; /* Permite rolar para todo o conteúdo */
+        height: auto; 
     }
 
     /* 3. Fundo Semi Transparente e Grid (Torna-se o novo corpo) */
@@ -284,7 +264,7 @@ html {
     }
 
     .main-content-grid {
-        display: block !important; /* Remove o grid para layout de impressão simples */
+        display: block !important; 
         padding: 0 !important;
     }
 
@@ -296,19 +276,19 @@ html {
     }
 
     .content-cards-wrapper {
-        display: block !important; /* Empilha os cards para melhor leitura */
+        display: block !important; 
         gap: 0 !important;
     }
 
     .relatorio-card {
-        background: #F0F0F0 !important; /* Cor clara para economizar tinta, mas visível */
+        background: #F0F0F0 !important; 
         border: 1px solid #ccc;
         border-radius: 10px !important;
         margin-bottom: 15px;
         padding: 15px;
         box-shadow: none !important;
-        flex-basis: 100% !important; /* Ocupa a largura total */
-        page-break-inside: avoid; /* Evita que o card seja quebrado no meio de uma página */
+        flex-basis: 100% !important; 
+        page-break-inside: avoid; 
     }
 
     /* Ocultar botões que não são úteis na impressão */
