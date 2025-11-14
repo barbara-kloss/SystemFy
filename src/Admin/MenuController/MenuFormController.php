@@ -5,9 +5,6 @@ namespace Systemfy\App\Admin\MenuController;
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Repository\MenuRepository;
 
-$caminho = __DIR__ . '/../../../databaselocal';
-$pdo = new \PDO("mysql:$caminho");
-
 class MenuFormController implements Controller
 {
 

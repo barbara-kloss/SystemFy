@@ -5,8 +5,6 @@ namespace Systemfy\App\Admin\ExerciseController;
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Repository\ExerciseRepository;
 
-$caminho = __DIR__ . '/../../../databaselocal';
-$pdo = new \PDO("mysql:$caminho");
 
 class ExerciseFormController implements Controller
 {

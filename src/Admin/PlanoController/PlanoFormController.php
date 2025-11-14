@@ -5,9 +5,6 @@ namespace Systemfy\App\Admin\PlanoController;
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Repository\PlanoRepository;
 
-$caminho = __DIR__ . '/../../../databaselocal';
-$pdo = new \PDO("mysql:$caminho");
-
 class PlanoFormController implements Controller
 {
 

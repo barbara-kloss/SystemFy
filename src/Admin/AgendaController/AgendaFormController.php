@@ -5,9 +5,6 @@ namespace Systemfy\App\Admin\AgendaController;
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Repository\AgendaRepository;
 
-$caminho = __DIR__ . '/../../../databaselocal';
-$pdo = new \PDO("mysql:$caminho");
-
 class AgendaFormController implements Controller
 {
 
