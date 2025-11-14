@@ -73,37 +73,48 @@
 
                 </div>
                 
-                <div class="relatorios-container">
-                    <h1>Relatórios</h1>
-                    <button class="botao-relatorio">Relatório de Clientes</button>
-                    <button class="botao-relatorio">Relatório de Agenda</button>
-                    <button class="botao-relatorio">Relatório de Faturamento</button>
-                </div>
+                
 
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const imageUpload = document.getElementById('lapis');
-            const profileImage = document.getElementById('profileImage');
+    document.addEventListener('DOMContentLoaded', function() {
+        // CORREÇÃO AQUI: As variáveis devem apontar para os elementos certos.
+        const imageUploadInput = document.getElementById('profileImageUpload'); // INPUT DE ARQUIVO
+        const profileImage = document.getElementById('profileImage');
+        const editIcon = document.getElementById('lapis'); // ÍCONE LÁPIS
 
-            imageUpload.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                
-                if (file) {
-                    const reader = new FileReader();
-                    
-                    reader.onload = function(e) {
-                        profileImage.src = e.target.result;
-                    }
-                    
-                    reader.readAsDataURL(file);
-                }
-            });
+        // 1. FUNCIONALIDADE: Clique no lápis SIMULA o clique no input de arquivo
+        editIcon.addEventListener('click', function(e) {
+            e.preventDefault(); 
+            imageUploadInput.click(); // Dispara o seletor de arquivos
         });
-    </script>
+
+        // 2. PRÉ-VISUALIZAÇÃO: Quando o arquivo for selecionado (evento 'change' no input)
+        imageUploadInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    profileImage.src = e.target.result;
+                    // Garante que a imagem preencha o círculo
+                    profileImage.style.display = 'block'; 
+                }
+                
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // 3. OCULTAR FUNDO INICIAL
+        if (!profileImage.src || profileImage.src === window.location.href) {
+             profileImage.style.display = 'none';
+        }
+    });
+</script>
 </body>
 
 </html>

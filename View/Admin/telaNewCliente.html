@@ -38,27 +38,28 @@
                             <li class="nav-item"><a href="telaTreinos.html">Treinos</a></li>
                             <li class="nav-item"><a href="telaNewCliente.html" class="active">Clientes</a></li>
                             <li class="nav-item"><a href="telaRelatorios.html">Relatorios</a></li>
-
                         </ul>
                     </nav>
                 </div>
 
                 <div class="top-bar-container">
-
+                    
                     <div class="search-bar">
                         <input type="text" placeholder="Digite aqui o Cliente" class="search-input">
                         <i class="fas fa-search search-icon"></i>
                     </div>
 
                     <div class="profile-box-container">
-                        <div class="cardVerPerfil"> </div>
-                        <div class="textocardVerPerfil"> Ver perfil</div>
+                        <a href="telaPerfilAdmin.html" class="profile-link">
+                            <div class="cardVerPerfil"> <i class="fas fa-user"></i> </div>
+                            <div class="textocardVerPerfil"> Ver perfil </div>
+                        </a>
                     </div>
                 </div>
 
                 <div class="client-form-main">
 
-                    <h1 class="page-title">Clientes</h1>
+                    <h1 class="page-title" id="client-page-title">Clientes: Shreck</h1> 
 
                     <form id="client-form">
                         <div class="input-group">
@@ -84,7 +85,7 @@
                         </div>
                         <div class="input-group">
                             <label for="dataNasc">Data Nascimento</label>
-                            <input type="date" id="dataNasc" value="1600-12-01">
+                            <input type="date" id="dataNasc" value="2000-12-01">
                         </div>
 
                         <div class="input-group">
@@ -98,7 +99,7 @@
 
                         <div class="input-group full-row">
                             <label for="observacoes">Observações</label>
-                            <textarea id="observacoes"></textarea>
+                            <textarea id="observacoes">Texto de observação</textarea>
                         </div>
 
                         <div class="input-group">
@@ -146,14 +147,50 @@
                         <input type="text" id="magra" value="%15">
                     </div>
                 </div>
+                
                 <div class="client-form-buttons">
-                    <button class="action-button confirm-button">Confirmar</button>
-                    <button class="action-button cancel-button">Cancelar</button>
+                    <button class="action-button-edit-button" id="bottom-edit-button">Editar</button>
+                    <button class="action-button-excluir-button" id="bottom-delete-button">Excluir</button>
                 </div>
 
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // --- NOVO CÓDIGO PARA ATUALIZAR O TÍTULO ---
+            const clientNameInput = document.getElementById('nome');
+            const pageTitleElement = document.getElementById('client-page-title');
+
+            function updatePageTitle() {
+                const nome = clientNameInput.value.trim();
+                if (nome) {
+                    pageTitleElement.textContent = `Cliente: ${nome}`;
+                } else {
+                    pageTitleElement.textContent = 'Novo Cliente'; // Caso o campo esteja vazio
+                }
+            }
+            updatePageTitle();
+            clientNameInput.addEventListener('input', updatePageTitle);            
+
+            // 2. Botão Inferior "Excluir" (Antigo Cancelar)
+            document.getElementById('bottom-delete-button').addEventListener('click', function() {
+                const nomeCliente = document.getElementById('nome').value;
+                const confirmDelete = confirm(`ATENÇÃO! Tem certeza que deseja excluir o cliente ${nomeCliente}?`);
+                
+                if (confirmDelete) {
+                    alert(`Cliente ${nomeCliente} excluído com sucesso! (Ação simulada)`);
+                }
+            });
+            
+            // 1. Botão Inferior "Editar" (Antigo Confirmar)
+            document.getElementById('bottom-edit-button').addEventListener('click', function() {
+                alert('Formulário de cliente editado e salvo! (Ação simulada)');
+            });
+        });
+    </script>
 </body>
 
 </html>

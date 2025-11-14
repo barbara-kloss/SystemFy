@@ -4,7 +4,7 @@ html {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: 'Alata', sans-serif;
+    font-family: 'Alata', 'Akshar', sans-serif;
 }
 
 .background {
@@ -25,41 +25,12 @@ html {
     filter: blur(45px);
 }
 
-.bolinha1 {
-    width: 20vw; height: 15vh;
-    top: -5vh; left: 3vw;
-    background: rgba(221, 179, 94, 0.85);
-}
-
-.bolinha2 {
-    width: 20vw; height: 20vh;
-    bottom: -5vh; right: 10vw;
-    background: rgba(221, 179, 94, 0.95);
-}
-
-.bolinha3 {
-    width: 8vw; height: 8vw;
-    bottom: 12vh; left: 10vw;
-    background: rgba(221, 179, 94, 0.59);
-}
-
-.bolinha4 {
-    width: 8vw; height: 8vw;
-    top: 5vh; right: 20vw;
-    background: rgba(221, 179, 94, 0.85);
-}
-
-.bolinha5 {
-    width: 8vw; height: 8vw;
-    top: 40vh; left: 55%;
-    background: rgba(221, 179, 94, 0.85);
-}
-
-.bolinha6 {
-    width: 15vw; height: 15vh;
-    top: 50vh; left: -5vw;
-    background: #DDB35E;
-}
+.bolinha1 { width: 20vw; height: 15vh; top: -5vh; left: 3vw; background: rgba(221, 179, 94, 0.85); }
+.bolinha2 { width: 20vw; height: 20vh; bottom: -5vh; right: 10vw; background: rgba(221, 179, 94, 0.95); }
+.bolinha3 { width: 8vw; height: 8vw; bottom: 12vh; left: 10vw; background: rgba(221, 179, 94, 0.59); }
+.bolinha4 { width: 8vw; height: 8vw; top: 5vh; right: 20vw; background: rgba(221, 179, 94, 0.85); }
+.bolinha5 { width: 8vw; height: 8vw; top: 40vh; left: 55%; background: rgba(221, 179, 94, 0.85); }
+.bolinha6 { width: 15vw; height: 15vh; top: 50vh; left: -5vw; background: #DDB35E; }
 
 /* Fundo Semi Transparente (Contêiner principal) */
 .fundoSemiTransparente {
@@ -69,141 +40,469 @@ html {
     position: relative;
     background: rgba(213.53, 205.82, 179.63, 0.43);
     border-radius: 28px;
-    padding: 0; 
+    padding: 30px;
     box-sizing: border-box;
-    overflow: hidden; 
-    margin-left: 0; 
-    
-    /* CORREÇÃO CHAVE: Desloca o bloco para a direita para afastar da logo */
-    transform: translateX(2.5%); 
+    overflow: hidden;
+    margin-left: 0;
+    transform: translateX(2.5%);
 }
 
-/* Logos de Canto (Mais à esquerda) */
-.logoCantoInferior {
-    position: absolute;
-    width: 3.5vw;
-    height: auto;
-    left: 1.5vw; 
-    top: 3vh; 
-    z-index: 20; 
-}
-.logoCantoInferior img {
-    width: 100%;
-    height: auto;
-}
-
-.logoWhatsApp {
-    position: absolute;
-    width: 3.5vw;
-    height: 3.5vw;
-    left: 1.5vw;
-    bottom: 3vh;
-    z-index: 20; 
-}
-.logoWhatsApp img {
-    width: 100%;
-    height: 100%;
-}
+/* Logos de Canto */
+.logoCantoInferior { position: absolute; width: 3.5vw; height: auto; left: 1.5vw; top: 3vh; z-index: 20; }
+.logoCantoInferior img { width: 100%; height: auto; }
+.logoWhatsApp { position: absolute; width: 3.5vw; height: 3.5vw; left: 1.5vw; bottom: 3vh; z-index: 20; }
+.logoWhatsApp img { width: 100%; height: 100%; }
 
 /* ========================================================= */
-/* GRID INTERNO (Para espaçamento uniforme) */
+/* GRID LAYOUT PRINCIPAL */
 /* ========================================================= */
 .main-content-grid {
-    height: 90%;
+    height: 100%;
     display: grid;
-    
+
     grid-template-areas:
-        "nav profile_box"
-        "main meta"
-        "main percentuals";
+        "nav top_right" 
+        "cards cards"; 
 
-    /* Colunas: [Principal 70%] [Lateral 30%] */
-    /* grid-template-columns: 70% 30%; */
-    grid-template-rows: 100px auto auto;
-    
+    grid-template-columns: auto 1fr; 
+    grid-template-rows: 60px 1fr; 
+
     grid-gap: 20px; 
-    
-    /* Padding uniforme para espaçamento interno */
-    padding: 30px; 
+    padding: 0; 
 }
 
-/* Posicionamento da Navbar (Esquerda) */
-.navBar {
-    grid-area: nav;
-    align-self: center;
-    justify-self: start;
-    padding-left: 0; 
-    
-    /* CORREÇÃO: Remove o margin-left excessivo, confiando no transform do pai para afastar */
-    margin-left: 0; 
+/* --- NAV BAR (HOVER CORRIGIDO) --- */
+.navBar { grid-area: nav; align-self: center; justify-self: start; }
+.navBar ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 40px; }
+.navBar a {
+    text-decoration: none; 
+    color: white; /* Cor padrão do texto */
+    font-size: 24px; 
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700; 
+    position: relative; 
+    transition: color 0.3s ease;
 }
 
-.navBar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 40px;
+.navBar a.active { 
+    color: white; /* Cor do texto ativo (mantém branco) */
+}
+
+/* O sublinhado */
+.navBar a::after {
+    content: ''; 
+    position: absolute; 
+    left: 0; 
+    bottom: -5px; 
+    width: 0; 
+    height: 2px;
+    background-color: black; /* Cor do sublinhado (preto) */
+    transition: width 0.3s ease;
+}
+
+/* Efeito de hover: Sublinhado aparece 100% */
+.navBar a:hover::after {
+    width: 100%;
+}
+
+/* Efeito ativo: Sublinhado permanece 100% */
+.navBar a.active::after { 
+    width: 100%;
+    background-color: #2A2A2A; /* Cor de destaque (preto escuro) para o sublinhado ativo */
+}
+
+/* ========================================================= */
+/* BARRA SUPERIOR (Busca + Perfil) */
+/* ========================================================= */
+.top-right-bar { 
+    grid-area: top_right;
+    display: flex; 
     align-items: center;
-    justify-content: flex-start; 
+    justify-content: flex-end; 
+    gap: 30px;
+    padding-right: 10px;
 }
 
-/* Container de Perfil (Direita/Empilhado) */
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 28px;
+    border: 3px rgba(255, 255, 255, 0.62) solid;
+    padding: 5px 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    color: #666363;
+    padding: 5px;
+    outline: none;
+    width: 200px;
+}
+
+.search-icon {
+    color: #666363;
+    font-size: 20px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+/* --- PERFIL --- */
 .profile-box-container {
-    grid-area: profile_box;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    justify-self: end; 
-    align-self: center; 
-    margin-right: 0; 
 }
-
-
-
-
-
-
-/* Outros Estilos de Componentes (Sem Alterações) */
 .cardVerPerfil {
-    width: 50px;
-    height: 50px;
-    border-radius: 9999px;
-    border: 2px #D4D2C8 solid;
+    width: 50px; height: 50px; 
+    border-radius: 50%;
+    border: 2px #D4D2C8 solid; 
     margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D4D2C8; 
+    color: #2A2A2A; 
+    font-size: 1.5em;
+}
+.textocardVerPerfil { font-weight: 800; color: #2A2A2A; font-size: 0.8em; }
+
+
+/* ========================================================= */
+/* CONTEÚDO PRINCIPAL: CARDS DE EDIÇÃO E LISTA */
+/* ========================================================= */
+.content-cards-wrapper {
+    grid-area: cards;
+    display: flex;
+    gap: 40px; 
+    width: 100%;
+    height: 100%; 
+    box-sizing: border-box;
+    align-items: stretch; 
+    padding-top: 20px; 
 }
 
-.textocardVerPerfil {
-    font-weight: 800;
-    color: #2A2A2A;
-    font-size: 0.8em; 
+/* --- ESTILO GERAL DO CARD INDIVIDUAL (CORREÇÃO DE BORDER) --- */
+.card-edicao-refeicao,
+.card-lista-refeicoes {
+    border-radius: 28px;
+    background: #FFFAE6;
+    padding: 25px; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 90%; 
+    overflow: hidden; 
 }
 
+/* --- CARD ESQUERDO: EDIÇÃO --- */
+.card-edicao-refeicao {
+    width: 45%; 
+    flex-shrink: 0; 
+}
 
-
-.navBar a {
-    text-decoration: none;
-    color: white;
+.cliente-nome {
+    color: black;
     font-size: 24px;
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
-    position: relative;
-    transition: color 0.3s ease;
+    margin-bottom: 25px;
 }
 
-.navBar a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 0;
-    height: 2px;
-    background-color: black;
-    transition: width 0.3s ease;
+/* **CORREÇÃO:** Formulário que ROLA */
+.refeicao-form {
+    display: flex;
+    flex-direction: column;
+    
+    /* DEFININDO A ALTURA MÁXIMA PARA LIBERAR ESPAÇO PARA O BOTÃO */
+    max-height: calc(100% - 150px); 
+    
+    overflow-y: auto; 
+    padding-right: 5px; 
+    gap: 15px; 
+    margin-bottom: 5px;
 }
 
-.navBar a:hover::after,
-.navBar a.active::after {
+/* NOVO: Estilo para alinhar Tipo de Refeição e Horário */
+.input-group-grid-row {
+    display: flex;
+    gap: 20px; 
     width: 100%;
+}
+
+.input-group-grid-row .input-group {
+    flex-basis: 50%;
+    margin-bottom: 0;
+    width: 100%; 
+}
+
+.refeicao-form .input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px; 
+}
+
+.refeicao-form label {
+    color: black;
+    font-size: 20px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+/* Estilo unificado para inputs, textareas e selects */
+.refeicao-form input,
+.refeicao-form textarea,
+.refeicao-form select {
+    background: #EDE7D1; 
+    border-radius: 28px;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    color: #1E1E1E;
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px; 
+}
+
+.refeicao-form textarea {
+    min-height: 100px;
+    height: auto; 
+    resize: vertical;
+}
+
+/* Botão Confirmar (FIXO na base do card) */
+.btn-confirmar {
+    background: #2A2A2A;
+    color: #DDB35E;
+    border-radius: 28px;
+    padding: 15px 30px;
+    font-size: 24px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px; 
+    flex-shrink: 0; 
+    transition: background-color 0.3s;
+}
+
+.btn-confirmar:hover {
+    background-color: #DDB35E;
+    color: #2A2A2A;
+}
+
+
+/* --- CARD DIREITO: LISTA --- */
+.card-lista-refeicoes {
+    width: 55%; 
+    flex-grow: 1;
+    position: relative; /* ESSENCIAL para o botão flutuante */
+}
+
+/* NOVO: Estilo para o cabeçalho do card da lista (Título e Filtro) */
+.lista-header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 0 10px; 
+}
+
+.lista-titulo {
+    color: black;
+    font-size: 24px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    text-align: left; 
+    margin: 0;
+}
+
+/* NOVO: Estilo e HOVER para o filtro de seleção */
+.filtro-refeicao-select {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #D4D2C8;
+    padding: 8px 15px;
+    font-size: 18px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    color: #1E1E1E;
+    cursor: pointer; 
+    
+    transition: background-color 0.2s, border-color 0.2s; 
+    
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232A2A2A%22%20d%3D%22M287%20173.5c-1.3%201.3-3.4%201.3-4.7%200L146.2%2037.1%209.6%20173.5c-1.3%201.3-3.4%201.3-4.7%200l-4.7-4.7c-1.3-1.3-1.3-3.4%200-4.7l139.7-139.7c1.3-1.3%203.4-1.3%204.7%200l139.7%20139.7c1.3%201.3%201.3%203.4%200%204.7l-4.7%204.7z%22%2F%3E%3C%2Fsvg%3E');
+    background-size: 12px;
+    background-position: right 15px center;
+    background-repeat: no-repeat;
+    padding-right: 35px;
+}
+
+.filtro-refeicao-select:hover {
+    background-color: #F8F4E6; 
+    border-color: #DDB35E;
+}
+
+
+.lista-itens-scroll {
+    overflow-y: auto; 
+    flex-grow: 1; 
+    padding-right: 5px;
+}
+
+.refeicao-item {
+    background: #EDE7D1;
+    border-radius: 28px;
+    padding: 15px 25px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #1E1E1E;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    position: relative;
+}
+
+.refeicao-item.clickable-item {
+    cursor: pointer;
+}
+
+.refeicao-horario {
+    font-size: 24px;
+    width: 15%;
+    text-align: left;
+}
+
+.refeicao-nome {
+    font-size: 24px;
+    flex-grow: 1;
+    margin-left: 20px;
+}
+
+.btn-excluir {
+    background: transparent;
+    border: none;
+    color: #2A2A2A;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.2s;
+    margin-left: 20px;
+}
+
+.btn-excluir:hover {
+    color: red;
+}
+
+/* Estilo do Botão de Adicionar (+) */
+.btn-adicionar-refeicao {
+    position: absolute;
+    bottom: 25px; 
+    right: 35px; 
+    
+    background: #2A2A2A;
+    color: #FFFAE6;
+    border: none;
+    border-radius: 50%;
+    width: 50px; 
+    height: 50px;
+    font-size: 24px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 5; 
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-adicionar-refeicao:hover {
+    background-color: #DDB35E;
+    color: #2A2A2A;
+    transform: scale(1.1); 
+}
+
+/* ========================================================= */
+/* RESPONSIVIDADE */
+/* ========================================================= */
+
+@media (max-width: 1050px) {
+    .content-cards-wrapper {
+        flex-direction: column;
+        gap: 20px;
+        max-width: 80%; 
+        margin: 0 auto;
+        align-items: center; 
+    }
+
+    .card-edicao-refeicao,
+    .card-lista-refeicoes {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content-grid {
+        grid-template-areas:
+            "nav nav"
+            "top_right top_right"
+            "cards cards";
+        grid-template-columns: 1fr;
+        grid-template-rows: 60px auto 1fr;
+        padding: 20px;
+    }
+    
+    .top-right-bar {
+        justify-content: space-between;
+        gap: 15px;
+        margin-top: 10px;
+        padding: 0 10px;
+    }
+
+    .search-bar {
+        flex-grow: 1;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    .navBar ul {
+        gap: 20px;
+    }
+}
+
+/* ESTILO DO LINK DE PERFIL */
+.profile-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none; /* ESSENCIAL: Remove o sublinhado do link */
+    color: #2A2A2A; /* ESSENCIAL: Define a cor do texto para preto/cinza */
+    /* Garante que o link ocupe o espaço e seja clicável */
+    width: auto;
+    height: auto;
+}
+
+/* Garante que o texto 'Ver perfil' use a cor definida no .profile-link */
+.textocardVerPerfil { 
+    font-weight: 800; 
+    color: inherit; /* Herda a cor do link pai (#2A2A2A) */
+    font-size: 0.8em; 
+}
+
+/* Opcional: Efeito de hover para indicar que é clicável */
+.profile-link:hover .textocardVerPerfil {
+    text-decoration: underline; /* Adiciona sublinhado no hover, se desejar */
+    color: #000000;
 }
