@@ -13,8 +13,9 @@ class Report
     public readonly string $objetivo;
     public readonly User $user;
     public readonly Plano $plano;
+    public readonly string $titulo;
 
-    public function __construct(int $id, User $user, User $personal_id, User $nutri_id, string $anotacao, Date $data, bool $exe_feito, bool $menu_feito, string $objetivo, Plano $plano)
+    public function __construct(int $id, User $user, User $personal_id, User $nutri_id, string $anotacao, Date $data, bool $exe_feito, bool $menu_feito, string $objetivo, Plano $plano, string $titulo)
     {
         $this->id = $id;
         $this->user = $user;
@@ -26,6 +27,7 @@ class Report
         $this->menu_feito = $menu_feito;
         $this->objetivo = $objetivo;
         $this->plano = $plano;
+        $this->titulo = $titulo;
     }
 
     public function setId(int $id)
@@ -78,6 +80,11 @@ class Report
         $this->plano = $plano;
     }
 
+    public function setTitulo(string $titulo)
+    {
+        $this->titulo = $titulo;
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -125,6 +132,11 @@ class Report
     public function getPlano(): Plano
     {
         return $this->plano;
+    }
+
+    public function getTitulo(): string
+    {
+        return $this->titulo;
     }
 }
 

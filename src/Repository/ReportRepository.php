@@ -12,7 +12,7 @@ class ReportRepository
 
     public function add(Report $report) : bool
     {
-        $sql = "INSERT INTO report(id_user, id_personal, id_nutri, anotacao, dia, exe_feito, menu_feito, objetivo, plano) values(?,?,?,?,?,?,?,?,?);";
+        $sql = "INSERT INTO report(id_user, id_personal, id_nutri, anotacao, dia, exe_feito, menu_feito, objetivo, plano, titulo) values(?,?,?,?,?,?,?,?,?,?);";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(1, $report->id_user);
         $stmt->bindValue(2, $report->id_personal);
@@ -23,28 +23,29 @@ class ReportRepository
         $stmt->bindValue(7, $report->menu_feito);
         $stmt->bindValue(8, $report->objetivo);
         $stmt->bindValue(9, $report->plano);
+        $stmt->bindValue(10, $report->titulo);
 
         $result = $stmt->execute();
         $id = $this->pdo->lastInsertId();
         $report->setId(intval($id));
         return $result;
     }
-    public function remove(int $id): bool
-    {
-        $sql = 'DELETE FROM report WHERE id = ?';
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(1, $id);
-
-        return $stmt->execute();
-
-    }
+//    public function remove(int $id): bool
+//    {
+//        $sql = 'DELETE FROM report WHERE id = ?';
+//        $stmt = $this->pdo->prepare($sql);
+//        $stmt->bindValue(1, $id);
+//
+//        return $stmt->execute();
+//
+//    }
 
     public function update(Report $report): bool
     {
         $sql = 'UPDATE report SET id_user = :id_user, 
         id_personal= :id_personal, id_nutri= :id_nutri,
         anotacao = :anotacao, dia = :dia, 
-        exe_feito = :exe_feito, menu_feito = :menu_feito, objetivo = :objetivo, plano = :plano  WHERE id = :id;';
+        exe_feito = :exe_feito, menu_feito = :menu_feito, objetivo = :objetivo, plano = :plano, titulo = :titulo  WHERE id = :id;';
         $stmt = $this->pdo->prepare($sql);
         // $stmt->bindValue(':id_user', $report->id_user);
         $stmt->bindValue(':id_personal', $report->id_personal);
@@ -55,6 +56,7 @@ class ReportRepository
         $stmt->bindValue(':menu_feito', $report->menu_feito);
         $stmt->bindValue(':objetivo', $report->objetivo);
         $stmt->bindValue(':plano', $report->plano);
+        $stmt->bindValue(':titulo', $report->titulo);
         $stmt->bindValue(':id', $report->id);
 
         return $stmt->execute();
@@ -90,7 +92,8 @@ class ReportRepository
             $ReportData['exe_feito'],
             $ReportData['menu_feito'],
             $ReportData['objetivo'],
-            $ReportData['plano']);
+            $ReportData['plano'],
+        $ReportData['titulo']);
         $report->setId($ReportData['id']);
         return $report;
     }

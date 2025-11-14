@@ -1,6 +1,6 @@
 <?php
 
-namespace Systemfy\App\Controller\ControllerLogin;
+namespace Systemfy\App\ControllerLogin;
 
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Model\User;
@@ -85,7 +85,12 @@ class NewUserController implements Controller
             exit();
         }
 
-        $result = $this->userRepository->add(new User($nome, $data_nasc, $genero, $telefone, $senha, $permissao, $altura, $peso, $objetivos, $status, $observacao, $massa, $gordura, $plano_id, $email,));
+        $foto = $_FILES['foto'] ?? null;
+
+        $peso_meta = filter_input(INPUT_POST, 'peso_meta', FILTER_VALIDATE_FLOAT);
+
+
+        $result = $this->userRepository->add(new User($nome, $data_nasc, $genero, $telefone, $senha, $permissao, $altura, $peso, $objetivos, $status, $observacao, $massa, $gordura, $plano_id, $email, $foto, $peso_meta));
         if ($result === false) {
             header('Location: /?sucesso=0');
         } else {

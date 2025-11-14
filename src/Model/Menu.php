@@ -1,4 +1,7 @@
 <?php
+
+use Cassandra\Time;
+
 class Menu
 {
     public readonly int $id;
@@ -9,10 +12,11 @@ class Menu
     public readonly User $id_usuario;
     public readonly User $id_nutri;
     public readonly string $restricao;
+    public readonly string $titulo;
 
 
     function __construct(
-        int $id, Time $horario, string $restricao, string $dia, string $categoria, string $observacao, User $id_usuario, User $id_nutri
+        int $id, Time $horario, string $restricao, string $dia, string $categoria, string $observacao, User $id_usuario, User $id_nutri, string $titulo
     ) {
         $this->id = $id;
         $this->horario = $horario;
@@ -22,6 +26,7 @@ class Menu
         $this->observacao = $observacao;
         $this->id_usuario = $id_usuario;
         $this->id_nutri = $id_nutri;
+        $this->titulo = $titulo;
     }
 
     public function setDia(string $dia)
@@ -62,6 +67,14 @@ class Menu
             throw new \InvalidArgumentException("Horário inválido!");
         }
         $this->horario = $horario;
+    }
+
+    public function setTitulo(string $titulo)
+    {
+        if (!$titulo) {
+            throw new \InvalidArgumentException("Título inválido!");
+        }
+        $this->titulo = $titulo;
     }
 
     public function setIdUsuario(User $id_usuario)
@@ -123,6 +136,11 @@ class Menu
     public function getRestricao(): string
     {
         return $this->restricao;
+    }
+
+    public function getTitulo(): string
+    {
+        return $this->titulo;
     }
 }
 

@@ -15,7 +15,7 @@ class MenuRepository
         $sql = "INSERT INTO menu(horario, 
          objetivo, restricao, 
          dia, categoria, 
-         observação, id_user, id_nutri) values(?,?,?,?,?,?,?,?)";
+         observação, id_user, id_nutri, titulo) values(?,?,?,?,?,?,?,?,?)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(1, $menu->horario);
         $stmt->bindValue(2, $menu->objetivo);
@@ -25,6 +25,7 @@ class MenuRepository
         $stmt->bindValue(6, $menu->observacao);
         $stmt->bindValue(7, $menu->id_user);
         $stmt->bindValue(8, $menu->id_nutri);
+        $stmt->bindValue(9, $menu->titulo);
 
         $result = $stmt->execute();
         $id = $this->pdo->lastInsertId();
@@ -47,7 +48,7 @@ class MenuRepository
         objetivo = :objetivo, restricao = :restricao,
         dia = :dia, categoria = :categoria, 
         observacao = :observacao, id_user = :id_user,
-        id_nutri = :id_nutri WHERE id = :id;';
+        id_nutri = :id_nutri, titulo = :titulo WHERE id = :id;';
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':horario', $menu->horario);
         $stmt->bindValue(':objetivo', $menu->objetivo);
@@ -57,6 +58,7 @@ class MenuRepository
         $stmt->bindValue(':observacao', $menu->observacao);
         $stmt->bindValue(':id_user', $menu->id_user);
         $stmt->bindValue(':id_nutri', $menu->id_nutri);
+        $stmt->bindValue(':titulo', $menu->titulo);
         $stmt->bindValue(':id', $menu->id);
 
         return $stmt->execute();
@@ -91,7 +93,8 @@ class MenuRepository
             $MenuData['categoria'],
             $MenuData['observacao'],
             $MenuData['id_user'],
-            $MenuData['id_nutri']);
+            $MenuData['id_nutri'],
+        $MenuData['titulo']);
         $menu->setId($MenuData['id']);
         return $menu;
     }

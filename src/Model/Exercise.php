@@ -13,7 +13,8 @@ class Exercise
     public readonly string $obs;
     public readonly string $categoria;
     public readonly User $id_personal;
- 
+
+    public readonly string $video;
     public function __construct(
         int $id,
         User $id_usuario,
@@ -25,7 +26,8 @@ class Exercise
         string $dia,
         string $obs,
         string $categoria,
-        User $id_personal
+        User $id_personal,
+        string $video
     ) {
         $this->id = $id;
         $this->id_usuario = $id_usuario;
@@ -38,6 +40,7 @@ class Exercise
         $this->dia = $dia;
         $this->obs = $obs;
         $this->id_personal = $id_personal;
+        $this->video = $video;
     }
     
     public function setId(int $id)
@@ -125,6 +128,13 @@ class Exercise
         $this->id_personal = $id_personal;
     }
 
+    public function setVideo(string $video)
+    {
+        if (empty($video)) {
+            throw new \InvalidArgumentException("Insira um vídeo!");
+        }
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -178,6 +188,10 @@ class Exercise
     public function getIdPersonal(): User
     {
         return $this->id_personal;
+    }
+    public function getVideo(): string
+    {
+        return $this->video;
     }
 }
 ?>

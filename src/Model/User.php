@@ -18,9 +18,11 @@ class User
     public readonly float $gordura;
     public readonly Plano $plano_id;
     public readonly string $objetivo;
+    public readonly string $foto;
+    public readonly float $peso_meta;
 
     function __construct(
-        int $id, string $nome, Date $data_nasc, string $genero, string $telefone, string $senha, string $permissao, float $altura, int $peso, string $objetivo, bool $status, string $observacao, float $massa, float $gordura, Plano $plano_id, string $email
+        int $id, string $nome, Date $data_nasc, string $genero, string $telefone, string $senha, string $permissao, float $altura, int $peso, string $objetivo, bool $status, string $observacao, float $massa, float $gordura, Plano $plano_id, string $email, string $foto, float $peso_meta
     ) {
         $this->id = $id;
         $this->nome = $nome;
@@ -38,6 +40,8 @@ class User
         $this->gordura = $gordura;
         $this->plano_id = $plano_id;
         $this->email = $email;
+        $this->foto = $foto;
+        $this->peso_meta = $peso_meta;
     }
 
     public function setEmail(string $email): void
@@ -120,6 +124,16 @@ class User
         $this->objetivo = $objetivo;
     }
 
+    public function setFoto(string $foto)
+    {
+        $this->foto = $foto;
+    }
+
+    public function setPesoMeta(float $peso_meta)
+    {
+        $this->peso_meta = $peso_meta;
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -198,6 +212,15 @@ class User
     public function getObjetivo(): string
     {
         return $this->objetivo;
+    }
+
+    public function getFoto(): string
+    {
+        return $this->foto;
+    }
+    public function getPesoMeta(): float
+    {
+        return $this->peso_meta;
     }
 }
 

@@ -18,7 +18,7 @@ class UserRepository
         nome_completo, data_nascimento, genero, 
         telefone, senha, permissao, 
         altura, peso, objetivos, status, observacao,
-        massa, gordura, plano_id, email) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        massa, gordura, plano_id, email, foto, peso_meta) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(1, $user->nome_completo);
         $stmt->bindValue(2, $user->data_nascimento);
@@ -35,6 +35,8 @@ class UserRepository
         $stmt->bindValue(13, $user->gordura);
         $stmt->bindValue(14, $user->plano_id);
         $stmt->bindValue(15, $user->email);
+        $stmt->bindValue(16, $user->foto);
+        $stmt->bindValue(17, $user->peso_meta);
 
         $result = $stmt->execute();
         $id = $this->pdo->lastInsertId();
@@ -48,7 +50,7 @@ class UserRepository
         telefone = :telefone, senha = :senha, 
         altura = :altura, peso = :peso, objetivos = :objetivos,
         status = :status, observacao = :observacao,
-        massa = :massa, gordura = :gordura, plano_id = :plano_id, emil = :email
+        massa = :massa, gordura = :gordura, plano_id = :plano_id, email = :email, foto = :foto, peso_meta = :peso_meta
         WHERE id = :id;'; // sem mudança de permissao
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':nome_completo', $user->nome_completo);
@@ -65,6 +67,8 @@ class UserRepository
         $stmt->bindValue(':gordura', $user->gordura);
         $stmt->bindValue(':plano_id', $user->plano_id);
         $stmt->bindValue(':email', $user->email);
+        $stmt->bindValue(':foto', $user->foto);
+        $stmt->bindValue(':peso_meta', $user->peso_meta);
         $stmt->bindValue(':id', $user->id);
 
         return $stmt->execute();
@@ -106,7 +110,9 @@ class UserRepository
             $UserData['massa'],
             $UserData['gordura'],
             $UserData['plano_id'],
-            $UserData['email']);
+            $UserData['email'],
+         $UserData['foto'],
+         $UserData['peso_meta']);
         $user->setId($UserData['id']);
         return $user;
     }
