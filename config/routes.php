@@ -2,7 +2,7 @@
 
 
 use Systemfy\App\Controller\{
-    MainController
+    MainAdminController
 };
 
 use Systemfy\App\AgendaController\{
@@ -33,8 +33,7 @@ use Systemfy\App\PlanoController\{
     PlanoListController,
     PlanoFormController,
     NewPlanoController,
-    EditPlanoController,
-    DeletePlanoController
+    EditPlanoController
 };
 
 use Systemfy\App\ReportController\{
@@ -42,7 +41,6 @@ use Systemfy\App\ReportController\{
     ReportFormController,
     NewReportController,
     EditReportController,
-    DeleteReportController
 };
 
 use Systemfy\App\ControllerLogin\{
@@ -54,25 +52,35 @@ use Systemfy\App\ControllerLogin\{
 };
 
 return [
-    'GET|/' => MainController::class,
-    'GET|/booklist' => BookListController::class,
-    'GET|/savebook' => BookFormController::class,
-    'POST|/savebook' => NewBookController::class,
-    'GET|/editbook' => BookFormController::class,
-    'POST|/editbook' => EditBookController::class,
-    'GET|/deletebook' => DeleteBookController::class,
-    'GET|/filmlist' => FilmListController::class,
-    'GET|/savefilm' => FilmFormController::class,
-    'POST|/savefilm' => NewFilmController::class,
-    'GET|/editfilm' => FilmFormController::class,
-    'POST|/editfilm' => EditFilmController::class,
-    'GET|/deletefilm' => DeleteFilmController::class,
-    'GET|/others' => TableListController::class,
-    'GET|/savetable' => TableFormController::class,
-    'POST|/savetable' => NewTableController::class,
-    'GET|/edittable' => TableFormController::class,
-    'POST|/edittable' => EditTableController::class,
-    'GET|/deletetable' => DeleteTableController::class,
+    'GET|/admin' => MainAdminController::class,
+    'GET|/cliente' => MainClienteController::class,
+    'GET|/exercise/list' => ExerciseListController::class,
+    'GET|/exercise/save' => ExerciseFormController::class,
+    'POST|/exercise/save' => NewExerciseController::class,
+    'GET|/exercise/edit' => ExerciseFormController::class,
+    'POST|/exercise/edit' => EditExerciseController::class,
+    'GET|/exercise/delete' => DeleteExerciseController::class,
+    // exercise
+    'GET|/menu/list' => MenuListController::class,
+    'GET|/menu/save' => MenuFormController::class,
+    'POST|/menu/save' => NewMenuController::class,
+    'GET|/menu/edit' => MenuFormController::class,
+    'POST|/menu/edit' => EditMenuController::class,
+    'GET|/menu/delete' => DeleteMenuController::class,
+    // menu
+//    'GET|/others' => TableListController::class,
+    //
+    'GET|/plano/save' => PlanoFormController::class,
+    'POST|/plano/save' => NewPlanoController::class,
+    'GET|/plano/edit' => PlanoFormController::class,
+    'POST|/plano/edit' => EditPlanoController::class,
+    // plano
+    'GET|/report/save' => ReportFormController::class,
+    'POST|/report/save' => NewReportController::class,
+    'GET|/report/edit' => ReportFormController::class,
+    'POST|/report/edit' => EditPlanoController::class,
+    'GET|/report/list' => ReportListController::class,
+    // report
     'GET|/login' => LoginFormController::class,
     'POST|/login' => LoginController::class,
     'GET|/logout' => LogoutController::class,
