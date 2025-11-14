@@ -5,7 +5,7 @@ namespace Systemfy\App\Admin\AgendaController;
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Repository\AgendaRepository;
 
-class AgendaListController implements Controller
+class ClientAgendaListController implements Controller
 {
 
     function __construct(private AgendaRepository $agendaRepository)

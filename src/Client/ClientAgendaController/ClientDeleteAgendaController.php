@@ -5,7 +5,7 @@ namespace Systemfy\App\Admin\AgendaController;
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Repository\AgendaRepository;
 
-class DeleteAgendaController implements Controller
+class ClientDeleteAgendaController implements Controller
 {
     function __construct(private readonly AgendaRepository $agendaRepository)
     {

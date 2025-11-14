@@ -6,20 +6,16 @@ use Systemfy\App\Controller\Controller;
 use Systemfy\App\Model\Agenda;
 use Systemfy\App\Repository\AgendaRepository;
 
-class EditAgendaController implements Controller
+class ClientNewAgendaController implements Controller
 {
     function __construct(private AgendaRepository $agendaRepository)
     {
+       
     }
+
     public function processaRequisicao(): void
     {
-        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        if ($id === false) {
-            header('Location: /booklist?sucesso=0');
-            exit();
-        }
-
-         $data_reuniao = filter_input(INPUT_POST, 'data_reuniao');
+        $data_reuniao = filter_input(INPUT_POST, 'data_reuniao');
         if ($data_reuniao === false) {
             header('Location: /booklist?sucesso=0');// decidir se insere ou busca
             exit();
@@ -67,17 +63,12 @@ class EditAgendaController implements Controller
             exit();
         }
 
-        $agenda = new Agenda($data_reuniao, $horario, $duracao, $assunto, $usuario_id, $personal_id, $nutri_id, $titulo);
-        $agenda->setId($id);
+        $result = $this->agendaRepository->add(new Agenda($data_reuniao, $horario, $duracao, $assunto, $usuario_id, $personal_id, $nutri_id, $titulo));
 
-        $result = $this->agendaRepository->update($agenda);
-
-        if ($result === false) {
-            header('Location: /booklist?sucesso=0');// tela de report
-
+        if ($result === false){
+            header('Location: /booklist?sucesso=0');
         }else{
             header('Location: /booklist?sucesso=1');
         }
-
     }
 }

@@ -5,7 +5,7 @@ namespace Systemfy\App\Admin\ExerciseController;
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Repository\ExerciseRepository;
 
-class ExerciseListController implements Controller
+class ClientExerciseListController implements Controller
 {
 
     function __construct(private ExerciseRepository $exerciseRepository)

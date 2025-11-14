@@ -8,7 +8,7 @@ use Systemfy\App\Repository\AgendaRepository;
 $caminho = __DIR__ . '/../../../databaselocal';
 $pdo = new \PDO("mysql:$caminho");
 
-class AgendaFormController implements Controller
+class ClientAgendaFormController implements Controller
 {
 
     function __construct(private AgendaRepository $agendaRepository)
