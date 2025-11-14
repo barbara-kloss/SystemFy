@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-        <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinos</title>
     <link rel="stylesheet" href="telaPersonal.css">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Akshar:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-
- <div class="background">
+<body>
+    <div class="background">
         <div class="bolinha bolinha1"></div>
         <div class="bolinha bolinha2"></div>
         <div class="bolinha bolinha3"></div>
@@ -22,7 +26,7 @@
         <div class="logoWhatsApp">
             <img src="../../imgFy/whatsapp (3).png" alt="logoWhatsApp">
         </div>
-        
+
         <div class="fundoSemiTransparente">
 
             <div class="main-content-grid">
@@ -38,22 +42,253 @@
                             </li>
                             <li class="nav-item">
                                 <a href="" class="active">Treinos</a>
-
                             </li>
                             <li class="nav-item">
                                 <a href="telaNewCliente.html">Clientes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="telaRelatorios.html">Relatorios</a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
 
-                <div class="profile-box-container">
-                    <div class="cardVerPerfil"> </div>
-                    <div class="textocardVerPerfil"> Ver perfil</div>
-                </div>
-                
-     
+                <div class="top-right-bar">
 
-<body>
-    
+                    <div class="search-bar search-cliente">
+                        <input type="text" placeholder="Cliente" class="search-input">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+
+                    <div class="profile-box-container">
+                        <a href="telaPerfilAdmin.html" class="profile-link">
+                            <div class="cardVerPerfil"> <i class="fas fa-user"></i> </div>
+                            <div class="textocardVerPerfil"> Ver perfil </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="content-cards-wrapper">
+
+                    <div class="card-edicao-treino"> 
+                        
+                        <h3 class="cliente-nome">(Nome do Cliente)</h3>
+
+                        <form class="exercicio-form">
+
+                            <div class="input-group">
+                                <label for="nomeExercicio">Nome do Exercício</label>
+                                <input type="text" id="nomeExercicio" value="Rosca">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="observacao">Observações</label>
+                                <textarea id="observacao">Descanso de 15 segundos entre series</textarea>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="linkVideo">Link</label>
+                                <input type="url" id="linkVideo" value="https://youtu.be/nC-US9v0hz8?si=3JSXeeklb9ICMKh">
+                            </div>
+
+                            <div class="input-group-grid-row">
+
+                                <div class="input-group half-width-field">
+                                    <label for="series">Séries</label>
+                                    <input type="text" id="series" value="3x12">
+                                </div>
+
+                                <div class="input-group half-width-field peso-input-group">
+                                    <label for="peso">Peso</label>
+                                    <div class="peso-wrapper">
+                                        <input type="number" id="peso" value="5" min="0">
+                                        <span class="kg-unit">KG</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <button type="submit" class="btn-confirmar">Confirmar</button>
+                    </div>
+
+                    <div class="card-lista-treinos">
+
+                        <div class="lista-header">
+                            <h3 class="lista-titulo">Treinos Recomendados</h3>
+                        </div>
+
+                        <div class="lista-itens-scroll" id="listaTreinosScroll">
+                            <div class="treino-item clickable-item" data-id="1" data-tipo="Superiores" data-link="link1" data-obs="obs1" data-series="3x12" data-peso="10">
+                                <span class="treino-label">Treino</span>
+                                <span class="treino-nome">Superiores</span>
+                                <button class="btn-excluir"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="treino-item clickable-item" data-id="2" data-tipo="Inferiores" data-link="link2" data-obs="obs2" data-series="3x15" data-peso="20">
+                                <span class="treino-label">Treino</span>
+                                <span class="treino-nome">Inferiores</span>
+                                <button class="btn-excluir"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="treino-item clickable-item" data-id="3" data-tipo="Repetição" data-link="link3" data-obs="obs3" data-series="4x10" data-peso="5">
+                                <span class="treino-label">Treino</span>
+                                <span class="treino-nome">Repetição</span>
+                                <button class="btn-excluir"><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-adicionar-treino" title="Adicionar Novo Treino">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Elementos principais
+            const listaItensScroll = document.getElementById('listaTreinosScroll');
+            const confirmButton = document.querySelector('.btn-confirmar');
+            const exercicioForm = document.querySelector('.exercicio-form');
+            const btnAdicionarTreino = document.querySelector('.btn-adicionar-treino');
+            
+            // IDs para os campos do formulário
+            const nomeExercicioInput = document.getElementById('nomeExercicio');
+            const observacaoTextarea = document.getElementById('observacao');
+            const linkVideoInput = document.getElementById('linkVideo');
+            const seriesInput = document.getElementById('series');
+            const pesoInput = document.getElementById('peso');
+                    
+            // Variável de controle para o modo de edição
+            let currentEditingItem = null;
+
+            // --- FUNÇÃO PARA RESETAR O FORMULÁRIO E O MODO ---
+            function resetForm() {
+                exercicioForm.reset();
+                nomeExercicioInput.value = '';
+                observacaoTextarea.value = '';
+                linkVideoInput.value = '';
+                seriesInput.value = '';
+                pesoInput.value = '';
+                document.querySelector('.cliente-nome').textContent = '(Cadastrando Novo Exercício)';
+                currentEditingItem = null;
+            }
+
+            // --- FUNÇÃO PARA ADICIONAR EVENT LISTENERS (USADA NA CRIAÇÃO E CARREGAMENTO INICIAL) ---
+            function attachEventListeners(itemElement) {
+                // 1. Exclusão
+                const excluirBtn = itemElement.querySelector('.btn-excluir');
+                if (excluirBtn) {
+                    excluirBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        const nomeTreino = itemElement.querySelector('.treino-nome').textContent.trim();
+                        const confirmExclusao = confirm(`Tem certeza que deseja excluir o treino "${nomeTreino}"?`);
+                        if (confirmExclusao) {
+                            itemElement.remove();
+                            alert('Treino excluído com sucesso! (Ação simulada)');
+                            if (itemElement === currentEditingItem) {
+                                resetForm();
+                            }
+                        }
+                    });
+                }
+
+
+                // 2. Edição (Clique no item)
+                itemElement.addEventListener('click', function () {
+                    currentEditingItem = this; // Define o item atual para edição
+                        
+                    // Captura os dados do atributo data-*
+                    const nome = this.querySelector('.treino-nome').textContent.trim();
+                    const link = this.getAttribute('data-link');
+                    const obs = this.getAttribute('data-obs');
+                    const series = this.getAttribute('data-series');
+                    const peso = this.getAttribute('data-peso');
+
+                    // Preenche o formulário
+                    nomeExercicioInput.value = 'Rosca'; // Mantido como 'Rosca' conforme imagem de referência
+                    observacaoTextarea.value = obs || '';
+                    linkVideoInput.value = link || '';
+                    seriesInput.value = series || '';
+                    pesoInput.value = peso || '';
+                    
+                    document.querySelector('.cliente-nome').textContent = `(Editando Exercício no Treino: ${nome})`;
+                });
+            }
+
+            // Anexar listeners aos itens existentes ao carregar
+            document.querySelectorAll('.treino-item.clickable-item').forEach(attachEventListeners);
+                    
+            // --- AÇÃO DE CONFIRMAR (Edição/Criação) ---
+            confirmButton.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const nomeExercicio = nomeExercicioInput.value.trim();
+                const observacao = observacaoTextarea.value.trim();
+                const linkVideo = linkVideoInput.value.trim();
+                const series = seriesInput.value.trim();
+                const peso = pesoInput.value.trim();
+                
+                let message;
+
+                if (currentEditingItem === null) {
+                    // === AÇÃO DE CRIAÇÃO (Novo Treino ou Exercício) ===
+                    
+                    const novoItem = document.createElement('div');
+                    const novoId = listaItensScroll.children.length + 1;
+
+                    // O novo item é o Treino, cujo nome foi preenchido no campo Nome do Exercício (ex: Novo Treino)
+                    const novoTreinoNome = nomeExercicio; 
+
+                    novoItem.className = 'treino-item clickable-item';
+                    novoItem.setAttribute('data-id', novoId);
+                    novoItem.setAttribute('data-tipo', novoTreinoNome); 
+                    novoItem.setAttribute('data-link', linkVideo);
+                    novoItem.setAttribute('data-obs', observacao);
+                    novoItem.setAttribute('data-series', series);
+                    novoItem.setAttribute('data-peso', peso);
+
+                    novoItem.innerHTML = `
+                        <span class="treino-label">Treino</span>
+                        <span class="treino-nome">${novoTreinoNome}</span>
+                        <button class="btn-excluir"><i class="fas fa-times"></i></button>
+                    `;
+
+                    listaItensScroll.prepend(novoItem); // Adiciona no topo
+                    attachEventListeners(novoItem); 
+                    
+                    message = `Treino '${novoTreinoNome}' cadastrado com sucesso!`;
+                    resetForm();
+
+                } else {
+                    // Lógica de Edição: Atualiza os atributos do item da lista
+                    
+                    currentEditingItem.setAttribute('data-tipo', nomeExercicio); 
+                    currentEditingItem.setAttribute('data-link', linkVideo);
+                    currentEditingItem.setAttribute('data-obs', observacao);
+                    currentEditingItem.setAttribute('data-series', series);
+                    currentEditingItem.setAttribute('data-peso', peso);
+                    
+                    // Atualiza o nome exibido na lista (Se necessário)
+                    // currentEditingItem.querySelector('.treino-nome').textContent = nomeExercicio;
+                    
+                    message = `Exercício no Treino '${currentEditingItem.querySelector('.treino-nome').textContent}' atualizado com sucesso!`;
+                    resetForm();
+                }
+
+                alert('Ação registrada: ' + message);
+            });
+
+            // --- Funcionalidade do Botão Adicionar (+) ---
+            btnAdicionarTreino.addEventListener('click', function () {
+                resetForm();
+                nomeExercicioInput.value = ''; // Começa limpo para o novo nome de treino
+                document.querySelector('.cliente-nome').textContent = '(Cadastrando Novo Treino)';
+                alert('Pronto para cadastrar um novo treino ou exercício!');
+            });
+        });
+    </script>
 </body>
+
 </html>

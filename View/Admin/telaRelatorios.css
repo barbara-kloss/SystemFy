@@ -1,3 +1,6 @@
+/* Importação de Fontes */
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Akshar:wght@700&display=swap');
+
 /* Fundo principal */
 body,
 html {
@@ -18,48 +21,19 @@ html {
     overflow: hidden;
 }
 
-/* Bolinhas decorativas (Sem Alterações) */
+/* Bolinhas decorativas */
 .bolinha {
     position: absolute;
     border-radius: 50%;
     filter: blur(45px);
 }
 
-.bolinha1 {
-    width: 20vw; height: 15vh;
-    top: -5vh; left: 3vw;
-    background: rgba(221, 179, 94, 0.85);
-}
-
-.bolinha2 {
-    width: 20vw; height: 20vh;
-    bottom: -5vh; right: 10vw;
-    background: rgba(221, 179, 94, 0.95);
-}
-
-.bolinha3 {
-    width: 8vw; height: 8vw;
-    bottom: 12vh; left: 10vw;
-    background: rgba(221, 179, 94, 0.59);
-}
-
-.bolinha4 {
-    width: 8vw; height: 8vw;
-    top: 5vh; right: 20vw;
-    background: rgba(221, 179, 94, 0.85);
-}
-
-.bolinha5 {
-    width: 8vw; height: 8vw;
-    top: 40vh; left: 55%;
-    background: rgba(221, 179, 94, 0.85);
-}
-
-.bolinha6 {
-    width: 15vw; height: 15vh;
-    top: 50vh; left: -5vw;
-    background: #DDB35E;
-}
+.bolinha1 { width: 20vw; height: 15vh; top: -5vh; left: 3vw; background: rgba(221, 179, 94, 0.85); }
+.bolinha2 { width: 20vw; height: 20vh; bottom: -5vh; right: 10vw; background: rgba(221, 179, 94, 0.95); }
+.bolinha3 { width: 8vw; height: 8vw; bottom: 12vh; left: 10vw; background: rgba(221, 179, 94, 0.59); }
+.bolinha4 { width: 8vw; height: 8vw; top: 5vh; right: 20vw; background: rgba(221, 179, 94, 0.85); }
+.bolinha5 { width: 8vw; height: 8vw; top: 40vh; left: 55%; background: rgba(221, 179, 94, 0.85); }
+.bolinha6 { width: 15vw; height: 15vh; top: 50vh; left: -5vw; background: #DDB35E; }
 
 /* Fundo Semi Transparente (Contêiner principal) */
 .fundoSemiTransparente {
@@ -73,40 +47,17 @@ html {
     box-sizing: border-box;
     overflow: hidden; 
     margin-left: 0; 
-    
-    /* CORREÇÃO CHAVE: Desloca o bloco para a direita para afastar da logo */
     transform: translateX(2.5%); 
 }
 
-/* Logos de Canto (Mais à esquerda) */
-.logoCantoInferior {
-    position: absolute;
-    width: 3.5vw;
-    height: auto;
-    left: 1.5vw; 
-    top: 3vh; 
-    z-index: 20; 
-}
-.logoCantoInferior img {
-    width: 100%;
-    height: auto;
-}
-
-.logoWhatsApp {
-    position: absolute;
-    width: 3.5vw;
-    height: 3.5vw;
-    left: 1.5vw;
-    bottom: 3vh;
-    z-index: 20; 
-}
-.logoWhatsApp img {
-    width: 100%;
-    height: 100%;
-}
+/* Logos de Canto */
+.logoCantoInferior { position: absolute; width: 3.5vw; height: auto; left: 1.5vw; top: 3vh; z-index: 20; }
+.logoCantoInferior img { width: 100%; height: auto; }
+.logoWhatsApp { position: absolute; width: 3.5vw; height: 3.5vw; left: 1.5vw; bottom: 3vh; z-index: 20; }
+.logoWhatsApp img { width: 100%; height: 100%; }
 
 /* ========================================================= */
-/* GRID INTERNO (Para espaçamento uniforme) */
+/* GRID LAYOUT PRINCIPAL */
 /* ========================================================= */
 .main-content-grid {
     height: 90%;
@@ -114,74 +65,18 @@ html {
     
     grid-template-areas:
         "nav profile_box"
-        "main meta"
-        "main percentuals";
+        "content content"; 
 
-    /* Colunas: [Principal 70%] [Lateral 30%] */
-    /* grid-template-columns: 70% 30%; */
-    grid-template-rows: 100px auto auto;
+    grid-template-columns: 1fr auto; 
+    grid-template-rows: 100px 1fr;
     
     grid-gap: 20px; 
-    
-    /* Padding uniforme para espaçamento interno */
     padding: 30px; 
 }
 
-/* Posicionamento da Navbar (Esquerda) */
-.navBar {
-    grid-area: nav;
-    align-self: center;
-    justify-self: start;
-    padding-left: 0; 
-    
-    /* CORREÇÃO: Remove o margin-left excessivo, confiando no transform do pai para afastar */
-    margin-left: 0; 
-}
-
-.navBar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 40px;
-    align-items: center;
-    justify-content: flex-start; 
-}
-
-/* Container de Perfil (Direita/Empilhado) */
-.profile-box-container {
-    grid-area: profile_box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    justify-self: end; 
-    align-self: center; 
-    margin-right: 0; 
-}
-
-
-
-
-
-
-/* Outros Estilos de Componentes (Sem Alterações) */
-.cardVerPerfil {
-    width: 50px;
-    height: 50px;
-    border-radius: 9999px;
-    border: 2px #D4D2C8 solid;
-    margin-bottom: 5px;
-}
-
-.textocardVerPerfil {
-    font-weight: 800;
-    color: #2A2A2A;
-    font-size: 0.8em; 
-}
-
-
-
+/* --- NAV BAR --- */
+.navBar { grid-area: nav; align-self: center; justify-self: start; padding-left: 0; }
+.navBar ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 40px; align-items: center; justify-content: flex-start; }
 .navBar a {
     text-decoration: none;
     color: white;
@@ -191,19 +86,241 @@ html {
     position: relative;
     transition: color 0.3s ease;
 }
+.navBar a.active { color: white; }
+.navBar a::after { content: ''; position: absolute; left: 0; bottom: -5px; width: 0; height: 2px; background-color: black; transition: width 0.3s ease; }
+.navBar a:hover::after,
+.navBar a.active::after { width: 100%; background-color: #2A2A2A; }
 
-.navBar a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 0;
-    height: 2px;
-    background-color: black;
-    transition: width 0.3s ease;
+/* --- PERFIL --- */
+.profile-box-container { grid-area: profile_box; display: flex; flex-direction: column; align-items: center; text-align: center; justify-self: end; align-self: center; }
+.profile-link { display: flex; flex-direction: column; align-items: center; text-align: center; text-decoration: none; color: #2A2A2A; }
+.cardVerPerfil {
+    width: 50px; height: 50px; border-radius: 9999px; border: 2px #D4D2C8 solid; margin-bottom: 5px;
+    display: flex; justify-content: center; align-items: center; background-color: #D4D2C8; 
+    color: #2A2A2A; font-size: 1.5em;
+}
+.textocardVerPerfil { font-weight: 800; color: inherit; font-size: 0.8em; }
+
+/* ========================================================= */
+/* CONTEÚDO PRINCIPAL: CARDS DE RELATÓRIOS */
+/* ========================================================= */
+.content-cards-wrapper {
+    grid-area: content;
+    display: flex;
+    flex-direction: row; /* Força o alinhamento em linha em telas grandes */
+    flex-wrap: wrap; 
+    justify-content: center; /* Centraliza o grupo de cards */
+    align-items: stretch;
+    gap: 30px; 
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 0; 
 }
 
-.navBar a:hover::after,
-.navBar a.active::after {
+.section-title {
     width: 100%;
+    color: #FFFAE6;
+    font-size: 36px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Estilo individual do cartão de Relatório */
+.relatorio-card {
+    background: #FFFAE6;
+    border-radius: 28px;
+    padding: 30px;
+    /* Garante 3 colunas em telas grandes */
+    flex-basis: calc(33.33% - 20px); 
+    min-width: 250px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.relatorio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card-icon { font-size: 4em; color: #DDB35E; margin-bottom: 20px; }
+.card-title { color: #2A2A2A; font-size: 28px; font-family: 'Akshar', sans-serif; font-weight: 700; margin-bottom: 10px; }
+.card-description { color: #666; font-size: 16px; margin-bottom: auto; flex-grow: 1; padding: 0 10px; }
+
+/* Botão Principal de Geração */
+.btn-gerar-relatorio {
+    background: #2A2A2A;
+    color: #DDB35E;
+    border-radius: 28px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px; 
+    width: 100%;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-gerar-relatorio:hover {
+    background-color: #DDB35E;
+    color: #2A2A2A;
+}
+
+/* Container dos Botões de Exportação */
+.export-options {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin-top: 15px; 
+}
+
+.btn-export {
+    background: #D4D2C8; 
+    color: #2A2A2A;
+    border-radius: 28px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    flex-grow: 1; 
+    transition: background-color 0.3s;
+}
+
+.btn-export:hover {
+    background-color: #DDB35E;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVIDADE (AJUSTADA PARA PRIORIZAR O LAYOUT DE 3 COLUNAS) */
+/* ========================================================= */
+
+@media (max-width: 1250px) { 
+    .relatorio-card {
+        /* Permite que o card seja um pouco mais estreito, facilitando caber 3 lado a lado */
+        flex-basis: calc(30% - 15px); 
+    }
+}
+
+@media (max-width: 900px) { /* Quebra para 2 colunas em telas médias */
+     .relatorio-card {
+        /* Para telas médias, 2 colunas */
+        flex-basis: calc(50% - 15px); 
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content-grid {
+        grid-template-areas:
+            "nav"
+            "profile_box"
+            "content";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr;
+    }
+
+    .navBar ul {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .profile-box-container {
+        justify-self: center;
+    }
+
+    .relatorio-card {
+        /* Para telas pequenas, 1 coluna */
+        flex-basis: 90%; 
+        max-width: 400px; 
+    }
+    
+    .content-cards-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* ========================================================= */
+/* ESTILOS PARA IMPRESSÃO (@MEDIA PRINT) */
+/* ========================================================= */
+@media print {
+    
+    /* 1. Ocultar todos os elementos desnecessários */
+    .background, 
+    .bolinha, 
+    .logoCantoInferior, 
+    .logoWhatsApp, 
+    .navBar,
+    .profile-box-container {
+        display: none !important;
+    }
+    
+    /* 2. Reiniciar o corpo e o fundo principal */
+    body, html {
+        background: white !important;
+        height: auto; /* Permite rolar para todo o conteúdo */
+    }
+
+    /* 3. Fundo Semi Transparente e Grid (Torna-se o novo corpo) */
+    .fundoSemiTransparente {
+        width: 100% !important;
+        height: auto !important;
+        position: static !important;
+        background: white !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 20px !important;
+        transform: none !important;
+    }
+
+    .main-content-grid {
+        display: block !important; /* Remove o grid para layout de impressão simples */
+        padding: 0 !important;
+    }
+
+    /* 4. Otimizar a exibição dos cards */
+    .section-title {
+        color: #2A2A2A !important;
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .content-cards-wrapper {
+        display: block !important; /* Empilha os cards para melhor leitura */
+        gap: 0 !important;
+    }
+
+    .relatorio-card {
+        background: #F0F0F0 !important; /* Cor clara para economizar tinta, mas visível */
+        border: 1px solid #ccc;
+        border-radius: 10px !important;
+        margin-bottom: 15px;
+        padding: 15px;
+        box-shadow: none !important;
+        flex-basis: 100% !important; /* Ocupa a largura total */
+        page-break-inside: avoid; /* Evita que o card seja quebrado no meio de uma página */
+    }
+
+    /* Ocultar botões que não são úteis na impressão */
+    .btn-gerar-relatorio, 
+    .export-options {
+        display: none !important;
+    }
+    
+    .card-title {
+        color: #2A2A2A !important;
+        border-bottom: 1px solid #DDB35E;
+        padding-bottom: 5px;
+        margin-top: 0;
+    }
 }
