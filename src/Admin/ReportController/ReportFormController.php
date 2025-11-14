@@ -5,9 +5,6 @@ namespace Systemfy\App\Admin\ReportController;
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Repository\ReportRepository;
 
-$caminho = __DIR__ . '/../../../databaselocal';
-$pdo = new \PDO("mysql:$caminho");
-
 class ReportFormController implements Controller
 {
 
