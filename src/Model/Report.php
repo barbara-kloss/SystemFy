@@ -4,40 +4,32 @@ use Plano;
 class Report
 {
     public readonly int $id;
-    public readonly string $anotacao;
     public readonly Date $data;
     public readonly User $personal_id;
     public readonly User $nutri_id;
-    public readonly bool $exe_feito;
-    public readonly bool $menu_feito;
-    public readonly string $objetivo;
-    public readonly User $user;
-    public readonly Plano $plano;
-    public readonly string $titulo;
 
-    public function __construct(int $id, User $user, User $personal_id, User $nutri_id, string $anotacao, Date $data, bool $exe_feito, bool $menu_feito, string $objetivo, Plano $plano, string $titulo)
+    public readonly User $objetivo;
+
+    public readonly User $user;
+
+    public readonly Plano $plano;
+
+    public function __construct(int $id,
+    User $user, User $personal_id, User $nutri_id,
+        Date $data, User $objetivo, Plano $plano)
     {
         $this->id = $id;
         $this->user = $user;
         $this->personal_id = $personal_id;
         $this->nutri_id = $nutri_id;
-        $this->anotacao = $anotacao;
         $this->data = $data;
-        $this->exe_feito = $exe_feito;
-        $this->menu_feito = $menu_feito;
         $this->objetivo = $objetivo;
         $this->plano = $plano;
-        $this->titulo = $titulo;
     }
 
     public function setId(int $id)
     {
         $this->id = $id;
-    }
-
-    public function setAnotacao(string $anotacao)
-    {
-        $this->anotacao = $anotacao;
     }
 
     public function setData(Date $data)
@@ -55,17 +47,8 @@ class Report
         $this->nutri_id = $nutri_id;
     }
 
-    public function setExeFeito(bool $exe_feito)
-    {
-        $this->exe_feito = $exe_feito;
-    }
 
-    public function setMenuFeito(bool $menu_feito)
-    {
-        $this->menu_feito = $menu_feito;
-    }
-
-    public function setObjetivo(string $objetivo)
+    public function setObjetivo(User $objetivo)
     {
         $this->objetivo = $objetivo;
     }
@@ -80,20 +63,12 @@ class Report
         $this->plano = $plano;
     }
 
-    public function setTitulo(string $titulo)
-    {
-        $this->titulo = $titulo;
-    }
 
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getAnotacao(): string
-    {
-        return $this->anotacao;
-    }
 
     public function getData(): Date
     {
@@ -110,16 +85,7 @@ class Report
         return $this->nutri_id;
     }
 
-    public function getExeFeito(): bool
-    {
-        return $this->exe_feito;
-    }
-    public function getMenuFeito(): bool
-    {
-        return $this->menu_feito;
-    }
-
-    public function getObjetivo(): string
+    public function getObjetivo(): User
     {
         return $this->objetivo;
     }
@@ -132,11 +98,6 @@ class Report
     public function getPlano(): Plano
     {
         return $this->plano;
-    }
-
-    public function getTitulo(): string
-    {
-        return $this->titulo;
     }
 }
 

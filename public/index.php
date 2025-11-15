@@ -58,10 +58,8 @@ if (array_key_exists($key, $routes)) {
         $controller = new $controllerClass($agendaRepository);
 
     } elseif (
-        $controllerClass === \Systemfy\App\Admin\ReportController\NewReportController::class
-        || $controllerClass === \Systemfy\App\Admin\ReportController\ReportFormController::class
-        || $controllerClass === \Systemfy\App\Admin\ReportController\ReportListController::class
-        || $controllerClass === \Systemfy\App\Admin\ReportController\EditReportController::class
+
+         $controllerClass === \Systemfy\App\Admin\ReportController\ReportListController::class
     ) {
         $controller = new $controllerClass($reportRepository);
 

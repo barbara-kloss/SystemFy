@@ -90,29 +90,30 @@
 
     <div class="input-group-grid-row">
         <div class="input-group half-width-field">
-            <label for="categoriaTreino">Categoria</label>
-            <select id="categoriaTreino">
-                <option value="Superiores">Superiores</option>
-                <option value="Inferiores">Inferiores</option>
-                <option value="Full Body">Full Body</option>
-                <option value="Cardio">Cardio</option>
-            </select>
+            <label for="categoria">Categoria</label>
+            <input type="text" id="categoria" value="Superiores">
         </div>
+
         <div class="input-group half-width-field">
-            <label for="diaSemana">Dia da Semana</label>
-            <select id="diaSemana">
-                <option value="2">Segunda</option>
-                <option value="1">Terça</option>
-                <option value="3">Quarta</option>
-                <option value="4">Quinta</option>
-                <option value="5">Sexta</option>
-                <option value="6">Sábado</option>
-                <option value="7">Domingo</option>
+            <label for="tipoRefeicao">Dia da Semana</label>
+            <select id="tipoRefeicao">
+                <option value="2" selected>Segunda-Feira</option>
+                <option value="3">Terça-Feira</option>
+                <option value="4">Quarta-Feira</option>
+                <option value="5">Quinta-Feira</option>
+                <option value="6">Sexta-Feira</option>
+                <option value="7">Sabado</option>
+                <option value="1">Domingo</option>
             </select>
         </div>
     </div>
-    <div class="input-group-grid-row">
+    <div class="input-group">
+        <label for="observacao">Observações</label>
+        <textarea id="observacao">Descanso de 15 segundos entre series</textarea>
+    </div>
 
+
+    <div class="input-group-grid-row">
         <div class="input-group half-width-field">
             <label for="series">Séries</label>
             <input type="text" id="series" value="3x12">
@@ -126,10 +127,6 @@
             </div>
         </div>
     </div>
-    <div class="input-group">
-        <label for="observacao">Observações</label>
-        <textarea id="observacao">Descanso de 15 segundos entre series</textarea>
-    </div>
 </form>
 
                         <button type="submit" class="btn-confirmar">Confirmar</button>
@@ -142,19 +139,19 @@
                         </div>
 
                         <div class="lista-itens-scroll" id="listaTreinosScroll">
-                            <div class="treino-item clickable-item" data-id="1" data-nome-treino="Treino A" data-categoria="Superiores" data-dia="Segunda" data-link="link1" data-obs="obs1" data-series="3x12" data-peso="10">
-                                <span class="treino-label">Treino</span>
-                                <!-- <span class="treino-nome">Superiores</span> -->
+                            <div class="treino-item clickable-item" data-id="1" data-nome-treino="Rosca" data-categoria="Superiores" data-dia="2" data-link="link1" data-obs="obs1" data-series="3x12" data-peso="10">
+                                <span class="treino-label">Segunda</span>
+                                <span class="treino-nome">Rosca (Superiores)</span>
                                 <button class="btn-excluir"><i class="fas fa-times"></i></button>
                             </div>
-                            <div class="treino-item clickable-item" data-id="2" data-nome-treino="Treino B" data-categoria="Inferiores" data-dia="Quarta" data-link="link2" data-obs="obs2" data-series="3x15" data-peso="20">
-                                <span class="treino-label">Treino</span>
-                                    <!-- <span class="treino-nome">Inferiores</span> -->
+                            <div class="treino-item clickable-item" data-id="2" data-nome-treino="Agachamento" data-categoria="Inferiores" data-dia="4" data-link="link2" data-obs="obs2" data-series="3x15" data-peso="20">
+                                <span class="treino-label">Quarta</span>
+                                <span class="treino-nome">Agachamento (Inferiores)</span>
                                 <button class="btn-excluir"><i class="fas fa-times"></i></button>
                             </div>
-                            <div class="treino-item clickable-item" data-id="3" data-nome-treino="Treino C" data-categoria="Cardio" data-dia="Sexta" data-link="link3" data-obs="obs3" data-series="4x10" data-peso="5">
-                                <span class="treino-label">Treino</span>
-                                <!-- <span class="treino-nome">Repetição</span> -->
+                            <div class="treino-item clickable-item" data-id="3" data-nome-treino="Corrida" data-categoria="Cardio" data-dia="6" data-link="link3" data-obs="obs3" data-series="4x10" data-peso="0">
+                                <span class="treino-label">Sexta</span>
+                                <span class="treino-nome">Corrida (Cardio)</span>
                                 <button class="btn-excluir"><i class="fas fa-times"></i></button>
                             </div>
                         </div>
@@ -174,12 +171,12 @@
         // --- MAPA PARA TRADUÇÃO DE NÚMERO PARA NOME DO DIA ---
         const diaMap = {
             '2': 'Segunda', // Respeitando a ordem do seu HTML
-            '1': 'Terça',
-            '3': 'Quarta',
-            '4': 'Quinta',
-            '5': 'Sexta',
-            '6': 'Sábado',
-            '7': 'Domingo'
+            '1': 'Domingo', // Corrigido a ordem para o valor (value) do HTML
+            '3': 'Terça',
+            '4': 'Quarta',
+            '5': 'Quinta',
+            '6': 'Sexta',
+            '7': 'Sábado'
         };
 
         function getDiaName(diaValue) {
@@ -196,8 +193,10 @@
         const nomeExercicioInput = document.getElementById('nomeExercicio');
         const observacaoTextarea = document.getElementById('observacao');
         const linkVideoInput = document.getElementById('linkVideo');
-        const categoriaTreinoSelect = document.getElementById('categoriaTreino'); 
-        const diaSemanaSelect = document.getElementById('diaSemana'); 
+        // Observação: 'categoria' e 'tipoRefeicao' (Dia da Semana) não existem no HTML,
+        // mas vamos tentar usar os IDs disponíveis: 'categoria' e 'tipoRefeicao'
+        const categoriaInput = document.getElementById('categoria'); 
+        const diaSemanaSelect = document.getElementById('tipoRefeicao'); 
         const seriesInput = document.getElementById('series');
         const pesoInput = document.getElementById('peso');
 
@@ -207,14 +206,14 @@
         // --- FUNÇÃO PARA RESETAR O FORMULÁRIO E O MODO ---
         function resetForm() {
             exercicioForm.reset();
-            nomeExercicioInput.value = '';
-            observacaoTextarea.value = '';
-            linkVideoInput.value = '';
-            categoriaTreinoSelect.value = 'Superiores'; // Valor padrão
-            diaSemanaSelect.value = '2'; // Valor numérico padrão do SELECT (Segunda)
-            seriesInput.value = '';
-            pesoInput.value = '';
-            document.querySelector('.cliente-nome').textContent = '(Cadastrando Novo Exercício)';
+            nomeExercicioInput.value = 'Rosca';
+            observacaoTextarea.value = 'Descanso de 15 segundos entre series';
+            linkVideoInput.value = 'https://youtu.be/nC-US9v0hz8?si=3JSXeeklb9ICMKh';
+            categoriaInput.value = 'Superiores';
+            diaSemanaSelect.value = '2'; 
+            seriesInput.value = '3x12';
+            pesoInput.value = '5';
+            document.querySelector('.cliente-nome').textContent = '(Nome do Cliente)';
             currentEditingItem = null;
         }
 
@@ -243,24 +242,24 @@
                 currentEditingItem = this; // Define o item atual para edição
                     
                 // Captura os dados do atributo data-*
-                const nome = this.querySelector('.treino-nome').textContent.trim();
+                const nome = this.getAttribute('data-nome-treino');
                 const link = this.getAttribute('data-link');
                 const obs = this.getAttribute('data-obs');
                 const categoria = this.getAttribute('data-categoria'); 
-                const dia = this.getAttribute('data-dia'); // Captura o valor NUMÉRICO
+                const dia = this.getAttribute('data-dia'); 
                 const series = this.getAttribute('data-series');
                 const peso = this.getAttribute('data-peso');
 
                 // Preenche o formulário
-                nomeExercicioInput.value = 'Rosca'; 
+                nomeExercicioInput.value = nome || ''; 
                 observacaoTextarea.value = obs || '';
                 linkVideoInput.value = link || '';
-                categoriaTreinoSelect.value = categoria || 'Superiores'; 
-                diaSemanaSelect.value = dia || '2'; // Preenche o SELECT com o valor NUMÉRICO
+                categoriaInput.value = categoria || 'Superiores'; 
+                diaSemanaSelect.value = dia || '2'; 
                 seriesInput.value = series || '';
                 pesoInput.value = peso || '';
                     
-                document.querySelector('.cliente-nome').textContent = `(Editando Exercício no Treino: ${nome})`;
+                document.querySelector('.cliente-nome').textContent = `(Editando Exercício: ${nome})`;
             });
         }
 
@@ -274,9 +273,9 @@
             const nomeExercicio = nomeExercicioInput.value.trim();
             const observacao = observacaoTextarea.value.trim();
             const linkVideo = linkVideoInput.value.trim();
-            const categoria = categoriaTreinoSelect.value; 
-            const dia = diaSemanaSelect.value; // Captura o valor NUMÉRICO (2, 1, 3, etc.)
-            const diaDisplayName = getDiaName(dia); // Converte para o nome do dia (Segunda, Terça, etc.)
+            const categoria = categoriaInput.value.trim(); 
+            const dia = diaSemanaSelect.value; 
+            const diaDisplayName = getDiaName(dia); 
             const series = seriesInput.value.trim();
             const peso = pesoInput.value.trim();
             
@@ -294,7 +293,7 @@
                 novoItem.setAttribute('data-id', novoId);
                 novoItem.setAttribute('data-nome-treino', novoTreinoNome); 
                 novoItem.setAttribute('data-categoria', categoria); 
-                novoItem.setAttribute('data-dia', dia); // SALVA o valor NUMÉRICO no data-attribute
+                novoItem.setAttribute('data-dia', dia); 
                 novoItem.setAttribute('data-link', linkVideo);
                 novoItem.setAttribute('data-obs', observacao);
                 novoItem.setAttribute('data-series', series);
@@ -309,14 +308,17 @@
                 listaItensScroll.prepend(novoItem); 
                 attachEventListeners(novoItem); 
                     
-                message = `Novo treino/exercício '${novoTreinoNome}' cadastrado com sucesso!`;
-                resetForm();
+                message = `Novo exercício '${novoTreinoNome}' cadastrado com sucesso!`;
+                
+                // Não reseta automaticamente para manter o foco
+                // resetForm(); 
 
             } else {
                 // Lógica de Edição: Atualiza os atributos do item da lista
                 
+                currentEditingItem.setAttribute('data-nome-treino', nomeExercicio);
                 currentEditingItem.setAttribute('data-categoria', categoria); 
-                currentEditingItem.setAttribute('data-dia', dia); // SALVA o valor NUMÉRICO no data-attribute
+                currentEditingItem.setAttribute('data-dia', dia); 
                 currentEditingItem.setAttribute('data-link', linkVideo);
                 currentEditingItem.setAttribute('data-obs', observacao);
                 currentEditingItem.setAttribute('data-series', series);
@@ -324,10 +326,10 @@
                     
                 // Atualiza o nome exibido na lista com o nome do dia por extenso
                 currentEditingItem.querySelector('.treino-label').textContent = diaDisplayName;
-                currentEditingItem.querySelector('.treino-nome').textContent = `${currentEditingItem.getAttribute('data-nome-treino')} (${categoria})`;
+                currentEditingItem.querySelector('.treino-nome').textContent = `${nomeExercicio} (${categoria})`;
 
-                message = `Treino '${currentEditingItem.querySelector('.treino-nome').textContent}' atualizado com sucesso!`;
-                resetForm();
+                message = `Exercício '${nomeExercicio}' atualizado com sucesso!`;
+                // resetForm();
             }
 
             alert('Ação registrada: ' + message);
@@ -336,12 +338,11 @@
         // --- Funcionalidade do Botão Adicionar (+) ---
         btnAdicionarTreino.addEventListener('click', function () {
             resetForm();
-            nomeExercicioInput.value = ''; 
-            document.querySelector('.cliente-nome').textContent = '(Cadastrando Novo Treino)';
-            alert('Pronto para cadastrar um novo treino ou exercício!');
+            document.querySelector('.cliente-nome').textContent = '(Cadastrando Novo Exercício)';
+            alert('Pronto para cadastrar um novo exercício!');
         });
     });
-</script>
+    </script>
 </body>
 
 </html>
