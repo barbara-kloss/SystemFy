@@ -25,12 +25,53 @@ html {
     filter: blur(45px);
 }
 
-.bolinha1 { width: 20vw; height: 15vh; top: -5vh; left: 3vw; background: rgba(221, 179, 94, 0.85); }
-.bolinha2 { width: 20vw; height: 20vh; bottom: -5vh; right: 10vw; background: rgba(221, 179, 94, 0.95); }
-.bolinha3 { width: 8vw; height: 8vw; bottom: 12vh; left: 10vw; background: rgba(221, 179, 94, 0.59); }
-.bolinha4 { width: 8vw; height: 8vw; top: 5vh; right: 20vw; background: rgba(221, 179, 94, 0.85); }
-.bolinha5 { width: 8vw; height: 8vw; top: 40vh; left: 55%; background: rgba(221, 179, 94, 0.85); }
-.bolinha6 { width: 15vw; height: 15vh; top: 50vh; left: -5vw; background: #DDB35E; }
+.bolinha1 {
+    width: 20vw;
+    height: 15vh;
+    top: -5vh;
+    left: 3vw;
+    background: rgba(221, 179, 94, 0.85);
+}
+
+.bolinha2 {
+    width: 20vw;
+    height: 20vh;
+    bottom: -5vh;
+    right: 10vw;
+    background: rgba(221, 179, 94, 0.95);
+}
+
+.bolinha3 {
+    width: 8vw;
+    height: 8vw;
+    bottom: 12vh;
+    left: 10vw;
+    background: rgba(221, 179, 94, 0.59);
+}
+
+.bolinha4 {
+    width: 8vw;
+    height: 8vw;
+    top: 5vh;
+    right: 20vw;
+    background: rgba(221, 179, 94, 0.85);
+}
+
+.bolinha5 {
+    width: 8vw;
+    height: 8vw;
+    top: 40vh;
+    left: 55%;
+    background: rgba(221, 179, 94, 0.85);
+}
+
+.bolinha6 {
+    width: 15vw;
+    height: 15vh;
+    top: 50vh;
+    left: -5vw;
+    background: #DDB35E;
+}
 
 /* Fundo Semi Transparente (Contêiner principal) */
 .fundoSemiTransparente {
@@ -48,10 +89,33 @@ html {
 }
 
 /* Logos de Canto */
-.logoCantoInferior { position: absolute; width: 3.5vw; height: auto; left: 1.5vw; top: 3vh; z-index: 20; }
-.logoCantoInferior img { width: 100%; height: auto; }
-.logoWhatsApp { position: absolute; width: 3.5vw; height: 3.5vw; left: 1.5vw; bottom: 3vh; z-index: 20; }
-.logoWhatsApp img { width: 100%; height: 100%; }
+.logoCantoInferior {
+    position: absolute;
+    width: 3.5vw;
+    height: auto;
+    left: 1.5vw;
+    top: 3vh;
+    z-index: 20;
+}
+
+.logoCantoInferior img {
+    width: 100%;
+    height: auto;
+}
+
+.logoWhatsApp {
+    position: absolute;
+    width: 3.5vw;
+    height: 3.5vw;
+    left: 1.5vw;
+    bottom: 3vh;
+    z-index: 20;
+}
+
+.logoWhatsApp img {
+    width: 100%;
+    height: 100%;
+}
 
 /* ========================================================= */
 /* GRID LAYOUT PRINCIPAL */
@@ -61,42 +125,54 @@ html {
     display: grid;
 
     grid-template-areas:
-        "nav top_right" 
-        "cards cards"; 
+        "nav top_right"
+        "cards cards";
 
-    grid-template-columns: auto 1fr; 
-    grid-template-rows: 60px 1fr; 
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 60px 1fr;
 
-    grid-gap: 20px; 
-    padding: 0; 
+    grid-gap: 20px;
+    padding: 0;
 }
 
 /* --- NAV BAR --- */
-.navBar { grid-area: nav; align-self: center; justify-self: start; }
-.navBar ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 40px; }
+.navBar {
+    grid-area: nav;
+    align-self: center;
+    justify-self: start;
+}
+
+.navBar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 40px;
+}
+
 .navBar a {
-    text-decoration: none; 
+    text-decoration: none;
     color: white;
-    font-size: 24px; 
+    font-size: 24px;
     font-family: 'Akshar', sans-serif;
-    font-weight: 700; 
-    position: relative; 
+    font-weight: 500;
+    position: relative;
     transition: color 0.3s ease;
 }
 
-.navBar a.active { 
+.navBar a.active {
     color: white;
 }
 
 /* O sublinhado */
 .navBar a::after {
-    content: ''; 
-    position: absolute; 
-    left: 0; 
-    bottom: -5px; 
-    width: 0; 
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
     height: 2px;
-    background-color: black; 
+    background-color: black;
     transition: width 0.3s ease;
 }
 
@@ -106,19 +182,19 @@ html {
 }
 
 /* Efeito ativo: Sublinhado permanece 100% */
-.navBar a.active::after { 
+.navBar a.active::after {
     width: 100%;
-    background-color: #2A2A2A; 
+    background-color: #2A2A2A;
 }
 
 /* ========================================================= */
 /* BARRA SUPERIOR (Busca + Perfil) */
 /* ========================================================= */
-.top-right-bar { 
+.top-right-bar {
     grid-area: top_right;
-    display: flex; 
+    display: flex;
     align-items: center;
-    justify-content: flex-end; 
+    justify-content: flex-end;
     gap: 30px;
     padding-right: 10px;
 }
@@ -157,19 +233,26 @@ html {
     align-items: center;
     text-align: center;
 }
+
 .cardVerPerfil {
-    width: 50px; height: 50px; 
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    border: 2px #D4D2C8 solid; 
+    border: 2px #D4D2C8 solid;
     margin-bottom: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #D4D2C8; 
-    color: #2A2A2A; 
+    background-color: #D4D2C8;
+    color: #2A2A2A;
     font-size: 1.5em;
 }
-.textocardVerPerfil { font-weight: 800; color: #2A2A2A; font-size: 0.8em; }
+
+.textocardVerPerfil {
+    font-weight: 800;
+    color: #2A2A2A;
+    font-size: 0.8em;
+}
 
 /* ESTILO DO LINK DE PERFIL */
 .profile-link {
@@ -177,20 +260,20 @@ html {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    text-decoration: none; 
-    color: #2A2A2A; 
+    text-decoration: none;
+    color: #2A2A2A;
     width: auto;
     height: auto;
 }
 
-.textocardVerPerfil { 
-    font-weight: 800; 
-    color: inherit; 
-    font-size: 0.8em; 
+.textocardVerPerfil {
+    font-weight: 800;
+    color: inherit;
+    font-size: 0.8em;
 }
 
 .profile-link:hover .textocardVerPerfil {
-    text-decoration: underline; 
+    text-decoration: underline;
     color: #000000;
 }
 
@@ -201,12 +284,12 @@ html {
 .content-cards-wrapper {
     grid-area: cards;
     display: flex;
-    gap: 40px; 
+    gap: 40px;
     width: 100%;
-    height: 100%; 
+    height: 100%;
     box-sizing: border-box;
-    align-items: stretch; 
-    padding-top: 20px; 
+    align-items: stretch;
+    padding-top: 20px;
 }
 
 /* --- ESTILO GERAL DO CARD INDIVIDUAL --- */
@@ -218,14 +301,14 @@ html {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    height: 70%; 
+    height: 75%; /* Corrigido de 70% para 100% */
     overflow: hidden; 
 }
 
 /* --- CARD ESQUERDO: EDIÇÃO DO EXERCÍCIO --- */
 .card-edicao-treino {
-    width: 45%; 
-    flex-shrink: 0; 
+    width: 45%;
+    flex-shrink: 0;
 }
 
 .cliente-nome {
@@ -237,33 +320,34 @@ html {
 }
 
 /* Formulário de Exercício */
-.exercicio-form { 
+.exercicio-form {
     display: flex;
     flex-direction: column;
-    max-height: calc(100% - 150px); 
-    overflow-y: auto; 
-    padding-right: 5px; 
-    gap: 15px; 
+    max-height: calc(100% - 150px);
+    overflow-y: auto;
+    padding-right: 5px;
+    gap: 15px;
     margin-bottom: 5px;
 }
+
 
 /* Estilo para alinhar Séries e Peso */
 .input-group-grid-row {
     display: flex;
-    gap: 20px; 
+    gap: 20px;
     width: 100%;
 }
 
 .input-group-grid-row .input-group {
     flex-basis: 50%;
     margin-bottom: 0;
-    width: 100%; 
+    width: 100%;
 }
 
 .exercicio-form .input-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 5px; 
+    margin-bottom: 5px;
 }
 
 .exercicio-form label {
@@ -274,10 +358,12 @@ html {
     margin-bottom: 5px;
 }
 
-/* Estilo unificado para inputs e textareas */
+/* Estilo unificado para inputs, textareas e selects */
 .exercicio-form input,
-.exercicio-form textarea {
-    background: #EDE7D1; 
+.exercicio-form textarea,
+.exercicio-form select {
+    /* ADICIONADO: , .exercicio-form select */
+    background: #EDE7D1;
     border-radius: 28px;
     border: none;
     padding: 15px;
@@ -285,12 +371,13 @@ html {
     color: #1E1E1E;
     box-sizing: border-box;
     width: 100%;
-    height: 50px; 
+    height: 90%;
+ 
 }
 
 .exercicio-form textarea {
     min-height: 100px;
-    height: auto; 
+    height: auto;
     resize: vertical;
 }
 
@@ -306,7 +393,7 @@ html {
 .peso-input-group .peso-wrapper input {
     flex-grow: 1;
     padding-right: 5px;
-    background: transparent; 
+    background: transparent;
     border-radius: 28px 0 0 28px;
 }
 
@@ -328,8 +415,8 @@ html {
     font-weight: 700;
     border: none;
     cursor: pointer;
-    margin-top: 15px; 
-    flex-shrink: 0; 
+    margin-top: 15px;
+    flex-shrink: 0;
     transition: background-color 0.3s;
 }
 
@@ -340,19 +427,19 @@ html {
 
 
 /* --- CARD DIREITO: LISTA DE TREINOS --- */
-.card-lista-treinos { 
-    width: 55%; 
+.card-lista-treinos {
+    width: 55%;
     flex-grow: 1;
-    position: relative; 
+    position: relative;
 }
 
 /* Estilo para o cabeçalho do card da lista */
 .lista-header {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
-    padding: 0 10px; 
+    padding: 0 10px;
 }
 
 .lista-titulo {
@@ -360,19 +447,19 @@ html {
     font-size: 24px;
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
-    text-align: left; 
+    text-align: left;
     margin: 0;
 }
 
 
-.lista-itens-scroll { 
-    overflow-y: auto; 
-    flex-grow: 1; 
+.lista-itens-scroll {
+    overflow-y: auto;
+    flex-grow: 1;
     padding-right: 5px;
 }
 
 /* Estilo para o Item de Treino */
-.treino-item { 
+.treino-item {
     background: #EDE7D1;
     border-radius: 28px;
     padding: 15px 25px;
@@ -390,13 +477,15 @@ html {
     cursor: pointer;
 }
 
-.treino-label { /* Novo elemento "Treino" na lista */
+.treino-label {
+    /* Novo elemento "Treino" na lista */
     font-size: 20px;
     width: 15%;
     text-align: left;
 }
 
-.treino-nome { /* Nome do treino (Superiores, Inferiores) */
+.treino-nome {
+    /* Nome do treino (Superiores, Inferiores) */
     font-size: 24px;
     flex-grow: 1;
     margin-left: 20px;
@@ -418,31 +507,31 @@ html {
 }
 
 /* Estilo do Botão de Adicionar (+) */
-.btn-adicionar-treino { 
+.btn-adicionar-treino {
     position: absolute;
-    bottom: 25px; 
-    right: 35px; 
-    
+    bottom: 25px;
+    right: 35px;
+
     background: #2A2A2A;
     color: #FFFAE6;
     border: none;
     border-radius: 50%;
-    width: 50px; 
+    width: 50px;
     height: 50px;
-    font-size: 24px; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 5; 
+    z-index: 5;
     transition: background-color 0.2s, transform 0.2s;
 }
 
 .btn-adicionar-treino:hover {
     background-color: #DDB35E;
     color: #2A2A2A;
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
 
 /* ========================================================= */
@@ -453,9 +542,9 @@ html {
     .content-cards-wrapper {
         flex-direction: column;
         gap: 20px;
-        max-width: 80%; 
+        max-width: 80%;
         margin: 0 auto;
-        align-items: center; 
+        align-items: center;
     }
 
     .card-edicao-treino,
@@ -475,7 +564,7 @@ html {
         grid-template-rows: 60px auto 1fr;
         padding: 20px;
     }
-    
+
     .top-right-bar {
         justify-content: space-between;
         gap: 15px;

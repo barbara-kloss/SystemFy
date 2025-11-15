@@ -180,35 +180,83 @@ html {
     width: 100%;
 }
 
-/* --- PERFIL (profile_box) --- */
+/* ========================================================= */
+/* BARRA SUPERIOR (Busca + Perfil) */
+/* ========================================================= */
+/* .top-right-bar {
+    grid-area: top_right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 30px;
+    padding-right: 10px;
+} */
+
+
+
+/* --- PERFIL --- */
 .profile-box-container {
+    /* CORREÇÃO AQUI: Garante que o contêiner ocupe toda a largura da célula do grid. */
+    width: 100%;
+
     grid-area: profile_box;
+    /* Alinha o conteúdo interno do container para o final (direita) */
+    justify-self: end;
+    /* Alinha o conteúdo interno verticalmente (centro) */
+    align-self: center;
+
+    /* Usa o display flex para organizar o conteúdo interno (o ícone e o texto) */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    justify-self: end;
-    align-self: center;
+
+    /* Alinha os itens flexíveis internos (ícone e texto) ao final (direita) */
+    align-items: flex-end;
+    /* Alterado de 'center' para 'flex-end' */
+    text-align: right;
+    /* Alinha o texto à direita */
 }
 
 .cardVerPerfil {
     width: 50px;
     height: 50px;
-    border-radius: 9999px;
+    border-radius: 50%;
     border: 2px #D4D2C8 solid;
     margin-bottom: 5px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    background-color: #D4D2C8;
     color: #2A2A2A;
     font-size: 1.5em;
 }
 
 .textocardVerPerfil {
-    font-weight: 400;
+    font-weight: 800;
     color: #2A2A2A;
-    font-size: 16px;
-    font-family: Alata;
+    font-size: 0.8em;
+}
+
+/* ESTILO DO LINK DE PERFIL */
+.profile-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: #2A2A2A;
+    width: auto;
+    height: auto;
+}
+
+.textocardVerPerfil {
+    font-weight: 800;
+    color: inherit;
+    font-size: 0.8em;
+}
+
+.profile-link:hover .textocardVerPerfil {
+    text-decoration: underline;
+    color: #000000;
 }
 
 /* ========================================================= */
