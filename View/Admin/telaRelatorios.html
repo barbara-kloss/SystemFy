@@ -102,7 +102,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const generateButtons = document.querySelectorAll('.btn-gerar-relatorio');
         const exportButtons = document.querySelectorAll('.btn-export');
-        const { jsPDF } = window.jspdf;
+        const { jsPDF } = window.jspdf; 
 
         // Função para simular o download de um arquivo (usada para CSV)
         function simulateTextDownload(filename, text, mimeType) {
@@ -149,7 +149,7 @@
                 } else if (format === 'pdf') {
                     
                     if (typeof jsPDF !== 'undefined') {
-                        alert(`Gerando PDF bonito para ${type}...`);
+                        alert(`Gerando PDF  para ${type}...`);
                         
                         const doc = new jsPDF();
                         const title = `Relatório de ${type}`;
