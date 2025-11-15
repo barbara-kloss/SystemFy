@@ -94,8 +94,6 @@ return [
     // plano
     'GET|/admin/report/save' => ReportFormController::class,
     'POST|/admin/report/save' => NewReportController::class,
-    'GET|/admin/report/edit' => ReportFormController::class,
-    'POST|/admin/report/edit' => EditReportController::class,
     'GET|/admin/report/list' => ReportListController::class,
     // report
     // -- parte do cliente:
