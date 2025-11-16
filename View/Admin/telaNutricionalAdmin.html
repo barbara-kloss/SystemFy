@@ -59,8 +59,9 @@
                 <div class="top-right-bar">
 
                     <div class="search-bar search-cliente">
-                        <input type="text" placeholder="Cliente" class="search-input">
-                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" placeholder="Buscar Cliente (Nome ou Email)" class="search-input" id="clienteSearchInput">
+                        <i class="fas fa-search search-icon" id="searchIcon"></i>
+                        <div id="suggestionsList" class="suggestions-dropdown"></div> 
                     </div>
 
                     <div class="profile-box-container">
@@ -77,7 +78,7 @@
 
                     <div class="card-edicao-refeicao">
 
-                        <h3 class="cliente-nome">(Cadastrando Nova Refeição)</h3>
+                        <h3 class="cliente-nome" id="clienteNomeDisplay">(Nenhum Cliente Carregado)</h3>
 
                         <form class="refeicao-form">
 
@@ -116,7 +117,6 @@
                             <h3 class="lista-titulo">Refeições</h3>
 
                             <select id="filtroRefeicao" class="filtro-refeicao-select">
-                                <!-- <option value="todos">Todos</option> -->
                                 <option value="Geral">Refeições Geral</option>
                                 <option value="Livre">Refeições Livre</option>
                             </select>
@@ -150,132 +150,221 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
+        // =========================================================
+        // DADOS SIMULADOS PARA BUSCA
+        // =========================================================
+        const clientesSimulados = [
+            { id: 1, nome: "ANA MARIA DA SILVA", email: "ana.maria@email.com", refeicoes: [] },
+            { id: 2, nome: "JOÃO PEDRO SOUZA", email: "joao.pedro@email.com", refeicoes: [] },
+            { id: 3, nome: "PEDRO ALMEIDA", email: "pedro.almeida@email.com", refeicoes: [] },
+            { id: 4, nome: "MARCIA FAGUNDES", email: "marcia.fagundes@email.com", refeicoes: [] },
+        ];
 
-        const listaItensScroll = document.querySelector('.lista-itens-scroll');
-        const filtroRefeicao = document.getElementById('filtroRefeicao'); // Novo seletor
+        let clienteCarregadoId = null; 
 
-        // --- FUNÇÃO DE FILTRAGEM ---
-        function applyFilter(filterValue) {
-            const itens = document.querySelectorAll('.refeicao-item');
-            
-            itens.forEach(item => {
-                const tipo = item.getAttribute('data-tipo');
-                
-                if (filterValue === 'todos' || tipo === filterValue) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-
-        // --- FUNÇÃO PARA ADICIONAR EVENT LISTENERS (USADA NA CRIAÇÃO E CARREGAMENTO INICIAL) ---
-        function attachEventListeners(itemElement) {
-            // 1. Exclusão
-            itemElement.querySelector('.btn-excluir').addEventListener('click', function (e) {
-                e.stopPropagation();
-                const nomeRefeicao = itemElement.querySelector('.refeicao-nome').textContent.trim();
-                const confirmExclusao = confirm(`Tem certeza que deseja excluir a refeição "${nomeRefeicao}"?`);
-                if (confirmExclusao) {
-                    itemElement.remove();
-                    alert('Refeição excluída com sucesso! (Ação simulada)');
-                }
-            });
-
-            // 2. Edição
-            itemElement.addEventListener('click', function () {
-                const nome = this.querySelector('.refeicao-nome').textContent.trim();
-                const horaString = this.querySelector('.refeicao-horario').textContent.trim();
-                const tipo = this.getAttribute('data-tipo'); // Captura o tipo para edição
-                const hora = horaString.padStart(5, '0');
-
-                document.getElementById('categoriaNome').value = nome;
-                document.getElementById('horario').value = hora;
-                document.getElementById('tipoRefeicao').value = tipo; // Define o tipo no formulário
-                document.querySelector('.cliente-nome').textContent = `(Editando: ${nome})`;
-            });
-        }
-
-        // Anexar listeners aos itens existentes ao carregar
-        document.querySelectorAll('.refeicao-item.clickable-item').forEach(attachEventListeners);
+        // =========================================================
+        // FUNÇÕES DE BUSCA E UI
+        // =========================================================
         
-        // --- EVENTO DO FILTRO ---
-        filtroRefeicao.addEventListener('change', function() {
-            applyFilter(this.value);
-        });
+        /**
+         * Busca o cliente por substring no nome ou email.
+         * @param {string} termo Termo de busca.
+         * @returns {Array} Array de clientes correspondentes.
+         */
+        function buscarClientesParcial(termo) {
+            const termoUpper = termo.toUpperCase().trim();
+
+            return clientesSimulados.filter(cliente => {
+                const nomeUpper = cliente.nome.toUpperCase();
+                const emailUpper = cliente.email.toUpperCase();
+
+                // Lógica de substring (LIKE %TERMO%)
+                return nomeUpper.includes(termoUpper) || emailUpper.includes(termoUpper);
+            });
+        }
+        
+        /**
+         * Retorna o primeiro cliente encontrado com base no termo.
+         * Usado para a busca final (Enter ou clique no ícone).
+         */
+        function buscarCliente(termo) {
+            const resultados = buscarClientesParcial(termo);
+            return resultados.length > 0 ? resultados[0] : null;
+        }
 
 
-        // --- AÇÃO DE CONFIRMAR (Edição/Criação) ---
-        const confirmButton = document.querySelector('.btn-confirmar');
-        const refeicaoForm = document.querySelector('.refeicao-form');
+        // FUNÇÃO PARA CARREGAR DADOS DO CLIENTE (Simulação)
+        function carregarDadosCliente(cliente) {
+            document.getElementById('clienteNomeDisplay').textContent = `Cliente: ${cliente.nome}`;
+            clienteCarregadoId = cliente.id;
+            // Aqui você adicionaria a lógica para carregar as refeições do cliente ID
+            console.log(`Cliente ${cliente.nome} (ID: ${cliente.id}) carregado. Carregando refeições...`);
+            // Limpa o campo de busca
+            document.getElementById('clienteSearchInput').value = cliente.nome;
+        }
 
-        confirmButton.addEventListener('click', function (e) {
-            e.preventDefault();
 
-            const horario = document.getElementById('horario').value;
-            const nomeRefeicao = document.getElementById('categoriaNome').value;
-            const tipoRefeicao = document.getElementById('tipoRefeicao').value; // Captura o tipo
+        // FUNÇÃO PARA RENDERIZAR E EXIBIR A LISTA DE SUGESTÕES
+        function renderSuggestions(matches) {
+            const listContainer = document.getElementById('suggestionsList');
+            listContainer.innerHTML = ''; // Limpa sugestões antigas
             
-            const isCreating = document.querySelector('.cliente-nome').textContent.includes('Cadastrando');
-
-            let message;
-
-            if (isCreating) {
-                // === AÇÃO CRÍTICA: INSERIR O NOVO ITEM NA LISTA ===
-                
-                const novoItem = document.createElement('div');
-                const novoId = listaItensScroll.children.length + 1;
-
-                novoItem.className = 'refeicao-item clickable-item';
-                novoItem.setAttribute('data-id', novoId);
-                novoItem.setAttribute('data-tipo', tipoRefeicao); // **CRÍTICO: Adiciona o atributo para o filtro**
-
-                novoItem.innerHTML = `
-                    <span class="refeicao-horario">${horario}</span>
-                    <span class="refeicao-nome">${nomeRefeicao}</span>
-                    <button class="btn-excluir"><i class="fas fa-times"></i></button>
-                `;
-
-                listaItensScroll.prepend(novoItem); 
-                attachEventListeners(novoItem); 
-                
-                // Aplica o filtro atual ao novo item
-                if (filtroRefeicao.value !== 'todos' && filtroRefeicao.value !== tipoRefeicao) {
-                     novoItem.style.display = 'none';
-                }
-
-                message = `Refeição '${nomeRefeicao}' cadastrada com sucesso!`;
-
-                // Limpa e volta ao padrão
-                refeicaoForm.reset();
-                document.getElementById('horario').value = '08:00';
-                document.getElementById('tipoRefeicao').value = 'Geral';
-                document.getElementById('categoriaNome').value = '';
-                document.getElementById('observacao').value = '';
-                document.querySelector('.cliente-nome').textContent = '(Nome do Cliente)';
-
+            if (matches.length > 0) {
+                matches.forEach(cliente => {
+                    const item = document.createElement('div');
+                    item.className = 'suggestion-item';
+                    item.textContent = `${cliente.nome} (${cliente.email.split('@')[0]}...)`;
+                    
+                    // CRÍTICO: Adiciona evento para carregar o cliente ao clicar na sugestão
+                    item.addEventListener('click', function() {
+                        carregarDadosCliente(cliente);
+                        listContainer.style.display = 'none';
+                    });
+                    
+                    listContainer.appendChild(item);
+                });
+                listContainer.style.display = 'block';
             } else {
-                // Lógica de Edição (Você precisaria encontrar o ID e atualizar o item da lista)
-                message = `Refeição de ${nomeRefeicao} (${horario}) editada com sucesso!`;
+                listContainer.style.display = 'none';
+            }
+        }
+
+
+        // FUNÇÃO PRINCIPAL DE BUSCA/INPUT (CHAMADA EM TEMPO REAL)
+        function handleAutocomplete(event) {
+            const termo = event.target.value.trim();
+            const listContainer = document.getElementById('suggestionsList');
+
+            if (termo.length < 2) { // Começa a sugerir após 2 caracteres
+                listContainer.style.display = 'none';
+                return;
             }
 
-            alert('Ação registrada: ' + message);
-        });
+            const resultados = buscarClientesParcial(termo);
 
-        // --- Funcionalidade do Botão Adicionar (+) ---
-        document.querySelector('.btn-adicionar-refeicao').addEventListener('click', function () {
-            const form = document.querySelector('.refeicao-form');
-            form.reset();
-            document.getElementById('horario').value = '08:00';
-            document.getElementById('tipoRefeicao').value = 'Geral';
-            document.getElementById('categoriaNome').value = '';
-            document.getElementById('observacao').value = '';
-            document.querySelector('.cliente-nome').textContent = '(Cadastrando Nova Refeição)';
-            alert('Pronto para cadastrar uma nova refeição!');
+            renderSuggestions(resultados);
+        }
+        
+        // FUNÇÃO PARA LIDAR COM BUSCA COMPLETA (ENTER ou ÍCONE)
+        function handleSearch() {
+            const searchInput = document.getElementById('clienteSearchInput');
+            const termo = searchInput.value;
+            
+            if (termo.length < 2) {
+                 alert("Digite um nome ou e-mail para buscar.");
+                 return;
+            }
+
+            const cliente = buscarCliente(termo); 
+
+            document.getElementById('suggestionsList').style.display = 'none'; // Esconde a lista
+
+            if (cliente) {
+                carregarDadosCliente(cliente);
+                alert(`Cliente encontrado: ${cliente.nome}`);
+            } else {
+                document.getElementById('clienteNomeDisplay').textContent = '(Cliente Não Encontrado)';
+                clienteCarregadoId = null;
+                alert(`Nenhum cliente encontrado para o termo: "${termo}"`);
+            }
+        }
+
+
+        // =========================================================
+        // EVENT LISTENERS
+        // =========================================================
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const searchInput = document.getElementById('clienteSearchInput');
+            const searchIcon = document.getElementById('searchIcon');
+
+            // 1. Disparar autocompletar em tempo real
+            searchInput.addEventListener('input', handleAutocomplete);
+
+            // 2. Disparar a busca completa (Enter ou Ícone)
+            searchIcon.addEventListener('click', handleSearch);
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); 
+                    handleSearch();
+                }
+            });
+
+            // 3. Ocultar sugestões quando clicar fora do campo (boa prática de UX)
+            document.addEventListener('click', function(e) {
+                const searchBar = document.querySelector('.search-bar');
+                if (!searchBar.contains(e.target)) {
+                    document.getElementById('suggestionsList').style.display = 'none';
+                }
+            });
+
+
+            // --- CÓDIGO ORIGINAL DAS REFEIÇÕES (Mantido) ---
+            const listaItensScroll = document.querySelector('.lista-itens-scroll');
+            const filtroRefeicao = document.getElementById('filtroRefeicao'); 
+
+            function applyFilter(filterValue) {
+                const itens = document.querySelectorAll('.refeicao-item');
+                itens.forEach(item => {
+                    const tipo = item.getAttribute('data-tipo');
+                    if (filterValue === 'todos' || tipo === filterValue) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+
+            function attachEventListeners(itemElement) {
+                // 1. Exclusão
+                itemElement.querySelector('.btn-excluir').addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const nomeRefeicao = itemElement.querySelector('.refeicao-nome').textContent.trim();
+                    const confirmExclusao = confirm(`Tem certeza que deseja excluir a refeição "${nomeRefeicao}"?`);
+                    if (confirmExclusao) {
+                        itemElement.remove();
+                        alert('Refeição excluída com sucesso! (Ação simulada)');
+                    }
+                });
+
+                // 2. Edição
+                itemElement.addEventListener('click', function () {
+                    const nome = this.querySelector('.refeicao-nome').textContent.trim();
+                    const horaString = this.querySelector('.refeicao-horario').textContent.trim();
+                    const tipo = this.getAttribute('data-tipo');
+                    const hora = horaString.padStart(5, '0');
+
+                    document.getElementById('categoriaNome').value = nome;
+                    document.getElementById('horario').value = hora;
+                    document.getElementById('tipoRefeicao').value = tipo;
+                    document.querySelector('.cliente-nome').textContent = `(Editando: ${nome})`;
+                });
+            }
+
+            document.querySelectorAll('.refeicao-item.clickable-item').forEach(attachEventListeners);
+            
+            filtroRefeicao.addEventListener('change', function() {
+                applyFilter(this.value);
+            });
+
+            const confirmButton = document.querySelector('.btn-confirmar');
+            const refeicaoForm = document.querySelector('.refeicao-form');
+
+            confirmButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                // Simulação da lógica de confirmação...
+                alert('Ação registrada: Confirmar Edição/Criação (Simulado)');
+                refeicaoForm.reset();
+            });
+
+            document.querySelector('.btn-adicionar-refeicao').addEventListener('click', function () {
+                const form = document.querySelector('.refeicao-form');
+                form.reset();
+                document.querySelector('.cliente-nome').textContent = '(Cadastrando Nova Refeição)';
+                alert('Pronto para cadastrar uma nova refeição!');
+            });
         });
-    });
-</script>
+    </script>
 </body>
 
 </html>

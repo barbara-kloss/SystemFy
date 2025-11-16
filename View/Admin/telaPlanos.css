@@ -1,5 +1,5 @@
 /* Importação de Fontes */
-@import url('https://fonts.googleapis.com/css2?family=Alata&family=Akshar:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Akshar:wght@400;700&family=Alatsi&display=swap');
 
 /* Fundo principal */
 body,
@@ -22,12 +22,7 @@ html {
 }
 
 /* Bolinhas decorativas */
-.bolinha {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(45px);
-}
-
+.bolinha { position: absolute; border-radius: 50%; filter: blur(45px); }
 .bolinha1 { width: 20vw; height: 15vh; top: -5vh; left: 3vw; background: rgba(221, 179, 94, 0.85); }
 .bolinha2 { width: 20vw; height: 20vh; bottom: -5vh; right: 10vw; background: rgba(221, 179, 94, 0.95); }
 .bolinha3 { width: 8vw; height: 8vw; bottom: 12vh; left: 10vw; background: rgba(221, 179, 94, 0.59); }
@@ -65,10 +60,11 @@ html {
     
     grid-template-areas:
         "nav profile_box"
+        "header header" 
         "content content"; 
 
     grid-template-columns: 1fr auto; 
-    grid-template-rows: 100px 1fr;
+    grid-template-rows: 100px auto 1fr; 
     
     grid-gap: 20px; 
     padding: 30px; 
@@ -78,13 +74,7 @@ html {
 .navBar { grid-area: nav; align-self: center; justify-self: start; padding-left: 0; }
 .navBar ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 40px; align-items: center; justify-content: flex-start; }
 .navBar a {
-    text-decoration: none;
-    color: white;
-    font-size: 24px;
-    font-family: 'Akshar', sans-serif;
-    font-weight: 700;
-    position: relative;
-    transition: color 0.3s ease;
+    text-decoration: none; color: white; font-size: 24px; font-family: 'Akshar', sans-serif; font-weight: 700; position: relative; transition: color 0.3s ease;
 }
 .navBar a.active { color: white; }
 .navBar a::after { content: ''; position: absolute; left: 0; bottom: -5px; width: 0; height: 2px; background-color: black; transition: width 0.3s ease; }
@@ -102,209 +92,254 @@ html {
 .textocardVerPerfil { font-weight: 800; color: inherit; font-size: 0.8em; }
 
 /* ========================================================= */
-/* CONTEÚDO PRINCIPAL: CARDS DE RELATÓRIOS (AJUSTADO) */
+/* HEADER E BOTÃO NOVO PLANO */
 /* ========================================================= */
-.content-cards-wrapper {
-    grid-area: content;
+.header-content {
+    grid-area: header;
     display: flex;
-    flex-direction: row; 
-    flex-wrap: wrap; 
-    justify-content: center; 
-    align-items: stretch;
-    gap: 20px; /* Mantém o gap reduzido */
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    box-sizing: border-box;
-    padding: 10px 0; 
+    margin-bottom: 10px;
 }
 
-.section-title {
-    width: 100%;
-    color: #FFFAE6;
-    font-size: 36px;
+.page-title {
+    color: #2A2A2A;
+    font-size: 32px;
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
-    margin-bottom: 20px;
-    text-align: center;
+    margin: 0;
 }
 
-/* Estilo individual do cartão de Relatório */
-.relatorio-card {
-    background: #FFFAE6;
-    border-radius: 28px;
-    /* REDUÇÃO CHAVE: Diminui o padding para encolher o card */
-    padding: 20px; 
-    /* AJUSTE CHAVE: Garante que os 3 cards caibam facilmente */
-    flex-basis: calc(30% - 10px); 
-    min-width: 200px; /* Reduz o mínimo para dar mais flexibilidade */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.relatorio-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* REDUÇÃO CHAVE: Diminui o tamanho do ícone */
-.card-icon { font-size: 3.5em; color: #DDB35E; margin-bottom: 10px; }
-.card-title { color: #2A2A2A; font-size: 24px; font-family: 'Akshar', sans-serif; font-weight: 700; margin-bottom: 15px; }
-
-.card-description {
-    color: #504f4f;
- }
-
-/* REMOVIDO NO HTML, mas mantendo a regra CSS de descrição inativa:
-.card-description { display: none; }
-*/
-
-/* REMOVIDO NO HTML, mas mantendo a regra CSS de botão inativa:
-.btn-gerar-relatorio { display: none; } 
-*/
-
-/* Container dos Botões de Exportação */
-.export-options {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    margin-top: 10px; /* Reduz a margem */
-}
-
-.btn-export {
-    background: #D4D2C8; 
+.btn-novo-plano {
+    background: #DDB35E;
     color: #2A2A2A;
     border-radius: 28px;
-    padding: 8px 12px; /* Reduz o padding do botão */
-    font-size: 15px; /* Reduz o tamanho da fonte */
+    padding: 10px 20px;
+    font-size: 20px;
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
     border: none;
     cursor: pointer;
-    flex-grow: 1; 
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-novo-plano:hover {
+    background-color: #f7d188;
+    transform: translateY(-2px);
+}
+
+/* ========================================================= */
+/* CONTEÚDO PRINCIPAL: FORMULÁRIO E LISTA */
+/* ========================================================= */
+.content-cards-wrapper {
+    grid-area: content;
+    display: flex;
+    gap: 30px; 
+    width: 100%;
+    height: 100%; 
+    box-sizing: border-box;
+    align-items: flex-start; 
+}
+
+/* --- CARD 1: FORMULÁRIO (ESQUERDA) --- */
+.card-plano-form {
+    width: 35%; 
+    background: #FFFAE6;
+    border-radius: 28px;
+    padding: 30px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.form-title {
+    color: #2A2A2A;
+    font-size: 26px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #DDB35E;
+    padding-bottom: 5px;
+}
+
+#planoForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group label {
+    color: #2A2A2A;
+    font-size: 18px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    margin-bottom: 5px;
+    display: block;
+}
+
+#planoForm input,
+#planoForm select,
+#planoForm textarea {
+    background: #EDE7D1;
+    border-radius: 12px;
+    border: none;
+    padding: 12px 15px;
+    font-size: 16px;
+    color: #1E1E1E;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#planoForm textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-confirmar, .btn-cancelar {
+    flex-grow: 1;
+    height: 45px;
+    border-radius: 28px;
+    font-size: 18px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
     transition: background-color 0.3s;
 }
 
-.btn-export:hover {
+.btn-confirmar {
+    background: #2A2A2A;
+    color: #DDB35E;
+}
+
+.btn-cancelar {
+    background: #D4D2C8;
+    color: #2A2A2A;
+}
+
+.btn-confirmar:hover { background-color: #3d3d3d; }
+.btn-cancelar:hover { background-color: #c5c3b9; }
+
+
+/* --- CARD 2: LISTA DE PLANOS (DIREITA) --- */
+.planos-list-container {
+    width: 65%; 
+    background: #FFFAE6;
+    border-radius: 28px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.list-title {
+    color: #2A2A2A;
+    font-size: 26px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #DDB35E;
+    padding-bottom: 5px;
+}
+
+/* Estilo Individual do Plano */
+.plano-card {
+    background: #EDE7D1;
+    border-radius: 15px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.plano-card:hover {
     background-color: #DDB35E;
 }
+
+.plano-info {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.plano-info h4 {
+    color: #2A2A2A;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    margin: 0;
+}
+
+.plano-info p {
+    color: #504f4f;
+    font-size: 14px;
+    margin: 3px 0 0 0;
+}
+
+.plano-status-badge {
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 15px;
+    width: 60px; 
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.status-ativo { background-color: #4CAF50; color: white; }
+.status-inativo { background-color: #F44336; color: white; }
+
+.plano-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 15px;
+    flex-shrink: 0;
+}
+
+.btn-action {
+    background: #D4D2C8;
+    color: #2A2A2A;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-action:hover {
+    background-color: #c5c3b9;
+}
+
+.btn-edit:hover { background-color: #5bc0de; color: white; }
+.btn-toggle-status:hover { background-color: #ff9800; color: white; }
 
 
 /* ========================================================= */
 /* RESPONSIVIDADE */
 /* ========================================================= */
 
-@media (max-width: 1000px) { /* Quebra para 2 colunas mais cedo */
-     .relatorio-card {
-        flex-basis: calc(50% - 15px); 
-    }
-}
-
-@media (max-width: 768px) {
-    .main-content-grid {
-        grid-template-areas:
-            "nav"
-            "profile_box"
-            "content";
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr;
-    }
-
-    .navBar ul {
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-
-    .profile-box-container {
-        justify-self: center;
-    }
-
-    .relatorio-card {
-        /* Para telas pequenas, 1 coluna */
-        flex-basis: 90%; 
-        max-width: 400px; 
-    }
-    
+@media (max-width: 1000px) { 
     .content-cards-wrapper {
         flex-direction: column;
         align-items: center;
     }
-}
-
-/* ========================================================= */
-/* ESTILOS PARA IMPRESSÃO (@MEDIA PRINT) */
-/* ========================================================= */
-@media print {
-    
-    /* 1. Ocultar todos os elementos desnecessários */
-    .background, 
-    .bolinha, 
-    .logoCantoInferior, 
-    .logoWhatsApp, 
-    .navBar,
-    .profile-box-container {
-        display: none !important;
-    }
-    
-    /* 2. Reiniciar o corpo e o fundo principal */
-    body, html {
-        background: white !important;
-        height: auto; 
-    }
-
-    /* 3. Fundo Semi Transparente e Grid (Torna-se o novo corpo) */
-    .fundoSemiTransparente {
-        width: 100% !important;
-        height: auto !important;
-        position: static !important;
-        background: white !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        padding: 20px !important;
-        transform: none !important;
-    }
-
-    .main-content-grid {
-        display: block !important; 
-        padding: 0 !important;
-    }
-
-    /* 4. Otimizar a exibição dos cards */
-    .section-title {
-        color: #2A2A2A !important;
-        text-align: left;
-        margin-bottom: 20px;
-    }
-
-    .content-cards-wrapper {
-        display: block !important; 
-        gap: 0 !important;
-    }
-
-    .relatorio-card {
-        background: #F0F0F0 !important; 
-        border: 1px solid #ccc;
-        border-radius: 10px !important;
-        margin-bottom: 15px;
-        padding: 15px;
-        box-shadow: none !important;
-        flex-basis: 100% !important; 
-        page-break-inside: avoid; 
-    }
-
-    /* Ocultar botões que não são úteis na impressão */
-    .btn-gerar-relatorio, 
-    .export-options {
-        display: none !important;
-    }
-    
-    .card-title {
-        color: #2A2A2A !important;
-        border-bottom: 1px solid #DDB35E;
-        padding-bottom: 5px;
-        margin-top: 0;
+    .card-plano-form, .planos-list-container {
+        width: 80%;
+        max-width: 600px;
     }
 }
