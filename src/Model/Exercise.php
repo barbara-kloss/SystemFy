@@ -24,7 +24,7 @@ class Exercise
         string $observacao,
         int $categoria,
         User $personal,
-        string $video = null
+        string $video
     ) {
         $this->id = $id;
         $this->user = $user;
