@@ -16,25 +16,25 @@ class EditPlanoController implements Controller
     {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         if ($id === false) {
-            header('Location: /booklist?sucesso=0');
+            header('Location: /admin/plano/list?sucesso=0');
             exit();
         }
 
         $categoria = filter_input(INPUT_POST, 'categoria');
         if ($categoria === false) {
-            header('Location: /booklist?sucesso=0');
+            header('Location: /admin/plano/list?sucesso=0');
             exit();
         }
 
         $preco = filter_input(INPUT_POST, 'preco', FILTER_VALIDATE_FLOAT);
         if ($preco === false) {
-            header('Location: /booklist?sucesso=0');
+            header('Location: /admin/plano/list?sucesso=0');
             exit();
         }
 
         $descricao = filter_input(INPUT_POST, 'descricao');
         if ($descricao === false) {
-            header('Location: /booklist?sucesso=0');
+            header('Location: /admin/plano/list?sucesso=0');
             exit();
         }
 
@@ -47,10 +47,10 @@ class EditPlanoController implements Controller
         $result = $this->planoRepository->update($plano);
 
         if ($result === false) {
-            header('Location: /booklist?sucesso=0');// tela de plano
+            header('Location: /admin/plano/list?sucesso=0');// tela de plano
 
         }else{
-            header('Location: /booklist?sucesso=1');
+            header('Location: /admin/plano/list?sucesso=1');
         }
 
     }

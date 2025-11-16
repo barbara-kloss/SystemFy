@@ -17,19 +17,19 @@ class NewPlanoController implements Controller
     {
         $categoria = filter_input(INPUT_POST, 'categoria');
         if ($categoria === false) {
-            header('Location: /booklist?sucesso=0');
+            header('Location: /admin/plano/list?sucesso=0');
             exit();
         }
 
         $preco = filter_input(INPUT_POST, 'preco', FILTER_SANITIZE_NUMBER_FLOAT);
         if ($preco === false) {
-            header('Location: /booklist?sucesso=0');
+            header('Location: /admin/plano/list?sucesso=0');
             exit();
         }
 
         $descricao = filter_input(INPUT_POST, 'descricao');
         if ($descricao === false) {
-            header('Location: /booklist?sucesso=0');
+            header('Location: /admin/plano/list?sucesso=0');
             exit();
         }
 
@@ -38,9 +38,9 @@ class NewPlanoController implements Controller
         $result = $this->planoRepository->add(new Plano($categoria, $preco, $descricao, $ativo));
 
         if ($result === false){
-            header('Location: /booklist?sucesso=0');
+            header('Location: /admin/plano/list?sucesso=0');
         }else{
-            header('Location: /booklist?sucesso=1');
+            header('Location: /admin/plano/list?sucesso=1');
         }
     }
 }

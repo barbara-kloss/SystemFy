@@ -1,11 +1,10 @@
 <?php
 
 namespace Systemfy\App\Admin\PlanoController;
-
 use Systemfy\App\Controller\Controller;
 use Systemfy\App\Repository\PlanoRepository;
 
-class PlanoFormController implements Controller
+class PlanoListController implements Controller
 {
 
     function __construct(private PlanoRepository $planoRepository)
@@ -15,12 +14,8 @@ class PlanoFormController implements Controller
 
     public function processaRequisicao(): void
     {
-        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-
-        $plano = null;
-        if ($id !== false && $id !== null) {
-            $plano = $this->planoRepository->find($id);
-        }
+        $planoList = $this->planoRepository->all();
         require_once __DIR__ . '/../../View/Admin/telaPlanos.html';
     }
+
 }

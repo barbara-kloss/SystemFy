@@ -24,10 +24,7 @@ use Systemfy\App\Admin\PlanoController\{
 };
 
 use Systemfy\App\Admin\ReportController\{
-    ReportListController,
-    NewReportController,
-    ReportFormController,
-    EditReportController
+    ReportListController
 };
 
 use Systemfy\App\Admin\AgendaController\{
@@ -91,9 +88,8 @@ return [
     'POST|/admin/plano/save' => NewPlanoController::class,
     'GET|/admin/plano/edit' => PlanoFormController::class,
     'POST|/admin/plano/edit' => EditPlanoController::class,
+    'GET|/admin/plano/list' => \Systemfy\App\Admin\PlanoController\PlanoListController::class,
     // plano
-    'GET|/admin/report/save' => ReportFormController::class,
-    'POST|/admin/report/save' => NewReportController::class,
     'GET|/admin/report/list' => ReportListController::class,
     // report
     // -- parte do cliente:
