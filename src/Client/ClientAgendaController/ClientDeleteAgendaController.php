@@ -16,16 +16,16 @@ class ClientDeleteAgendaController implements Controller
     {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         if ($id === false) {
-            header('Location: /booklist?sucesso=0'); // pagina de registro de report
+            header('Location: /client/agenda/list?sucesso=0'); // pagina de registro de report
             exit();
         }
 
         $result = $this->agendaRepository->remove($id);
         if ($result === false) {
-            header('Location: /booklist?sucesso=0');
+            header('Location: /client/agenda/list?sucesso=0');
 
         }else{
-            header('Location: /booklist?sucesso=1' );
+            header('Location: /client/agenda/list?sucesso=1' );
         }
     }
 }

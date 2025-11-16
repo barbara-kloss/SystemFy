@@ -2,24 +2,24 @@
 
 class User
 {
-    public readonly int $id;
-    public readonly string $nome;
-    public readonly string $email;
-    public readonly Date $data_nasc;
-    public readonly string $genero;
-    public readonly string $telefone;
-    public readonly string $senha;
-    public readonly string $permissao;
-    public readonly float $altura;
-    public readonly int $peso;
-    public readonly bool $status;
-    public readonly string $observacao;
-    public readonly float $massa;
-    public readonly float $gordura;
-    public readonly Plano $plano_id;
-    public readonly string $objetivo;
-    public readonly string $foto;
-    public readonly float $peso_meta;
+    private  int $id;
+    private  string $nome;
+    private  string $email;
+    private  Date $data_nasc;
+    private  string $genero;
+    private  string $telefone;
+    private  string $senha;
+    private  string $permissao;
+    private  float $altura;
+    private int $peso;
+    private bool $status;
+    private string $observacao;
+    private float $massa;
+    private float $gordura;
+    private Plano $plano_id;
+    private string $objetivo;
+    private string $foto;
+    private float $peso_meta;
 
     function __construct(
         int $id, string $nome, Date $data_nasc, string $genero, string $telefone, string $senha, string $permissao, float $altura, int $peso, string $objetivo, bool $status, string $observacao, float $massa, float $gordura, Plano $plano_id, string $email, string $foto, float $peso_meta

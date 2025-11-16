@@ -3,16 +3,16 @@ use User;
 use Plano;
 class Report
 {
-    public readonly int $id;
-    public readonly Date $data;
-    public readonly User $personal_id;
-    public readonly User $nutri_id;
+    private int $id;
+    private Date $data;
+    private User $personal_id;
+    private User $nutri_id;
 
-    public readonly User $objetivo;
+    private User $objetivo;
 
-    public readonly User $user;
+    private User $user;
 
-    public readonly Plano $plano;
+    private Plano $plano;
 
     public function __construct(int $id,
     User $user, User $personal_id, User $nutri_id,
@@ -27,33 +27,33 @@ class Report
         $this->plano = $plano;
     }
 
-    public function setId(int $id)
+    public function setId(int $id) : void
     {
         $this->id = $id;
     }
 
-    public function setData(Date $data)
+    public function setData(Date $data) : void
     {
         $this->data = $data;
     }
 
-    public function setPersonalId(User $personal_id)
+    public function setPersonalId(User $personal_id) : void
     {
         $this->personal_id = $personal_id;
     }
 
-    public function setNutriId(User $nutri_id)
+    public function setNutriId(User $nutri_id) : void
     {
         $this->nutri_id = $nutri_id;
     }
 
 
-    public function setObjetivo(User $objetivo)
+    public function setObjetivo(User $objetivo) : void
     {
         $this->objetivo = $objetivo;
     }
 
-    public function setUser(User $user)
+    public function setUser(User $user) : void
     {
         $this->user = $user;
     }

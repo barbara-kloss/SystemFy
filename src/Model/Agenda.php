@@ -2,27 +2,27 @@
 use User;
  class Agenda{
 
-    public readonly int $id;
-    public readonly Date $data_reuniao;
-    public readonly Time $horario;
-    public readonly Time $duracao;
-    public readonly string $assunto;
-    public readonly User $usuario_id;
-    public readonly User $personal_id;
-    public readonly User $nutri_id;
-    public readonly string $titulo;
-    public readonly User $google_event_id;
+    private int $id;
+    private Date $data_reuniao;
+    private Time $horario;
+    private string $assunto;
+    private User $usuario_id;
+    private User $personal_id;
+    private User $nutri_id;
+    private string $titulo;
+    private User $google_event_id;
 
-    public function __construct(int $id, Date $data_reuniao, Time $horario, Time $duracao, string $assunto, User $usuario_id, User $personal_id, User $nutri_id, User $google_event_id, string $titulo){
+    public function __construct(int $id,
+    Date $data_reuniao, Time $horario,
+    string $assunto, User $usuario_id,
+    User $personal_id, User $nutri_id, string $titulo){
         $this->id = $id;      
         $this->data_reuniao = $data_reuniao;
         $this->horario = $horario;
-        $this->duracao = $duracao;
         $this->assunto = $assunto;
         $this->usuario_id = $usuario_id;
         $this->personal_id = $personal_id;
         $this->nutri_id = $nutri_id;
-        $this->google_event_id = $google_event_id;
         $this->titulo = $titulo;
     }
         // Getters
@@ -88,5 +88,9 @@ use User;
         public function setTitulo(string $titulo): void {
             $this->titulo = $titulo;
         }
+     public function getObjetivo(): int
+     {
+         return $this->usuario->getObjetivo();
+     }
  }
 ?>

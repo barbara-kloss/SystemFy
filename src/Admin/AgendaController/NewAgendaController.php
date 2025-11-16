@@ -27,12 +27,6 @@ class NewAgendaController implements Controller
             exit();
         }
 
-        $duracao = filter_input(INPUT_POST, 'duracao');
-        if ($duracao === false) {
-            header('Location: /admin/agenda/list?sucesso=0');
-            exit();
-        }
-
         $assunto  = filter_input(INPUT_POST, 'assunto');
         if ($assunto === false) {
             header('Location: /admin/agenda/list?sucesso=0');
@@ -63,7 +57,7 @@ class NewAgendaController implements Controller
             exit();
         }
 
-        $result = $this->agendaRepository->add(new Agenda($data_reuniao, $horario, $duracao, $assunto, $usuario_id, $personal_id, $nutri_id, $titulo));
+        $result = $this->agendaRepository->add(new Agenda($data_reuniao, $horario, $assunto, $usuario_id, $personal_id, $nutri_id, $titulo));
 
         if ($result === false){
             header('Location: /admin/agenda/list?sucesso=0');
