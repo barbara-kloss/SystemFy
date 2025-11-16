@@ -163,11 +163,11 @@ html {
     transition: color 0.3s ease;
 }
 
-.navBar a.active {
+/* .navBar a.active {
     color: #FFFAE6; 
-}
+} */
 
-.navBar a::after {
+/* .navBar a::after {
     content: '';
     position: absolute;
     left: 0;
@@ -176,11 +176,19 @@ html {
     height: 2px;
     background-color: #2A2A2A; 
     transition: width 0.3s ease;
-}
+} */
 
-.navBar a.active::after {
+/* Sublinhado da aba ativa/hover    */
+.navBar .nav-link::after {
+    content: ''; position: absolute; left: 0; bottom: -5px; width: 0;
+    height: 2px;
+    background-color: #2A2A2A;
+    transition: width 0.3s ease;
+} 
+.navBar .nav-item:hover::after,
+.navBar .nav-item.active::after {
     width: 100%;
-    background-color: white;
+    background-color: #2A2A2A; 
 }
 
 /* Outros Estilos de Componentes */

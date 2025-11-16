@@ -6,15 +6,16 @@ body,
 html {
     margin: 0;
     padding: 0;
-    height: 100%;
-    font-family: 'Alata', sans-serif;
+    /* Remover height: 100% para evitar problemas de scrollbar */
+    font-family: 'Akshar', 'Alata', sans-serif;
+    background: #2A2A2A; /* Adicionado background para consistência */
 }
 
 .background {
     position: relative;
     width: 100%;
-    height: 100vh;
-    background: #2A2A2A;
+    /* Alterado de 100vh para min-height para permitir que o conteúdo cresça */
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,9 +81,12 @@ html {
 .navBar a {
     text-decoration: none;
     color: white;
-    font-size: 24px;
+    
+    /* ALTERAÇÃO: Usa Akshar e unidade relativa (VW) */
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
+    font-size: 1.5vw; /* Tamanho responsivo */
+    
     position: relative;
     transition: color 0.3s ease;
 }
@@ -92,7 +96,7 @@ html {
 .navBar a.active::after { width: 100%; background-color: #2A2A2A; }
 
 /* --- PERFIL --- */
-.profile-box-container { grid-area: profile_box; display: flex; flex-direction: column; align-items: center; text-align: center; justify-self: end; align-self: center; }
+.profile-box-container { grid-area: profile_box; display: flex; flex-direction: column; align-items: flex-end; text-align: right; justify-self: end; align-self: center; }
 .profile-link { display: flex; flex-direction: column; align-items: center; text-align: center; text-decoration: none; color: #2A2A2A; }
 .cardVerPerfil {
     width: 50px; height: 50px; border-radius: 9999px; border: 2px #D4D2C8 solid; margin-bottom: 5px;
@@ -111,7 +115,7 @@ html {
     flex-wrap: wrap; 
     justify-content: center; 
     align-items: stretch;
-    gap: 20px; /* Mantém o gap reduzido */
+    gap: 20px; 
     width: 100%;
     box-sizing: border-box;
     padding: 10px 0; 
@@ -131,11 +135,9 @@ html {
 .relatorio-card {
     background: #FFFAE6;
     border-radius: 28px;
-    /* REDUÇÃO CHAVE: Diminui o padding para encolher o card */
     padding: 20px; 
-    /* AJUSTE CHAVE: Garante que os 3 cards caibam facilmente */
     flex-basis: calc(30% - 10px); 
-    min-width: 200px; /* Reduz o mínimo para dar mais flexibilidade */
+    min-width: 200px; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
@@ -149,7 +151,6 @@ html {
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* REDUÇÃO CHAVE: Diminui o tamanho do ícone */
 .card-icon { font-size: 3.5em; color: #DDB35E; margin-bottom: 10px; }
 .card-title { color: #2A2A2A; font-size: 24px; font-family: 'Akshar', sans-serif; font-weight: 700; margin-bottom: 15px; }
 
@@ -157,28 +158,20 @@ html {
     color: #504f4f;
  }
 
-/* REMOVIDO NO HTML, mas mantendo a regra CSS de descrição inativa:
-.card-description { display: none; }
-*/
-
-/* REMOVIDO NO HTML, mas mantendo a regra CSS de botão inativa:
-.btn-gerar-relatorio { display: none; } 
-*/
-
 /* Container dos Botões de Exportação */
 .export-options {
     display: flex;
     gap: 10px;
     width: 100%;
-    margin-top: 10px; /* Reduz a margem */
+    margin-top: 10px; 
 }
 
 .btn-export {
     background: #D4D2C8; 
     color: #2A2A2A;
     border-radius: 28px;
-    padding: 8px 12px; /* Reduz o padding do botão */
-    font-size: 15px; /* Reduz o tamanho da fonte */
+    padding: 8px 12px; 
+    font-size: 15px; 
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
     border: none;
@@ -197,7 +190,7 @@ html {
 /* ========================================================= */
 
 @media (max-width: 1000px) { /* Quebra para 2 colunas mais cedo */
-     .relatorio-card {
+    .relatorio-card {
         flex-basis: calc(50% - 15px); 
     }
 }
@@ -210,6 +203,11 @@ html {
             "content";
         grid-template-columns: 1fr;
         grid-template-rows: auto auto 1fr;
+    }
+
+    .navBar a {
+        /* Garante um tamanho legível em dispositivos menores */
+        font-size: 20px; 
     }
 
     .navBar ul {
