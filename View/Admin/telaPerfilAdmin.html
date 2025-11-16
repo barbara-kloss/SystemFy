@@ -57,8 +57,8 @@
 
 
                 <div class="profile-box-container">
-                    
-                    <label for="profileImageUpload" class="cardVerPerfil" > 
+
+                    <label for="profileImageUpload" class="cardVerPerfil">
                         <img id="profileImage" src="" alt="Foto de Perfil">
                         <i class="fas fa-pencil-alt edit-icon" id="lapis"></i>
                     </label>
@@ -67,60 +67,93 @@
 
                     <div class="profile-field">
                         <div class="minicardNometit"> Nome completo </div>
-                        <div class="minicardNome"> </div>
+                        <div class="minicardNome"> Nome do Administrador </div>
                     </div>
 
                     <div class="profile-field">
                         <div class="minicardEmailtit"> E-mail </div>
-                        <div class="minicarEmail"> </div>
+                        <div class="minicarEmail"> admin@sistema.com </div>
                     </div>
 
-                    <button class="bt_editar"> Editar </button> 
+                    <button class="bt_editar"> Editar Perfil </button>
 
                 </div>
-                
-                
 
+
+                <div class="dashboard-area">
+                    <h2 class="area-title"> Atividade Recente do Sistema</h2>
+                    
+                    <div class="recent-actions-container">
+                        <div class="action-item">
+                            <i class="fas fa-user-check icon-log success"></i>
+                            <p class="action-text">Cliente **Maria Souza** adicionado ao plano **Premium**.</p>
+                            <span class="action-time">2 minutos atrás</span>
+                        </div>
+                        <div class="action-item">
+                            <i class="fas fa-dumbbell icon-log info"></i>
+                            <p class="action-text">Treino **Glúteos Avançado** foi criado e salvo como modelo.</p>
+                            <span class="action-time">1 hora atrás</span>
+                        </div>
+                        <div class="action-item">
+                            <i class="fas fa-sign-out-alt icon-log default"></i>
+                            <p class="action-text">Logout automático por inatividade do sistema.</p>
+                            <span class="action-time">Ontem, 18:30h</span>
+                        </div>
+                        <div class="action-item">
+                            <i class="fas fa-chart-line icon-log info"></i>
+                            <p class="action-text">Gerou Relatório de Desempenho do mês de **Outubro**.</p>
+                            <span class="action-time">1 semana atrás</span>
+                        </div>
+                        <div class="action-item">
+                            <i class="fas fa-utensils icon-log info"></i>
+                            <p class="action-text">Dieta de **João Silva** foi atualizada e enviada.</p>
+                            <span class="action-time">3 semanas atrás</span>
+                        </div>
+                        <div class="action-item">
+                            <i class="fas fa-user-plus icon-log success"></i>
+                            <p class="action-text">Novo cliente **Pedro Almeida** se cadastrou.</p>
+                            <span class="action-time">1 mês atrás</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // CORREÇÃO AQUI: As variáveis devem apontar para os elementos certos.
-        const imageUploadInput = document.getElementById('profileImageUpload'); // INPUT DE ARQUIVO
-        const profileImage = document.getElementById('profileImage');
-        const editIcon = document.getElementById('lapis'); // ÍCONE LÁPIS
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageUploadInput = document.getElementById('profileImageUpload');
+            const profileImage = document.getElementById('profileImage');
+            const editIcon = document.getElementById('lapis');
 
-        // 1. FUNCIONALIDADE: Clique no lápis SIMULA o clique no input de arquivo
-        editIcon.addEventListener('click', function(e) {
-            e.preventDefault(); 
-            imageUploadInput.click(); // Dispara o seletor de arquivos
-        });
+            // 1. Funcionalidade de clique no ícone
+            editIcon.addEventListener('click', function(e) {
+                e.preventDefault();
+                imageUploadInput.click();
+            });
 
-        // 2. PRÉ-VISUALIZAÇÃO: Quando o arquivo for selecionado (evento 'change' no input)
-        imageUploadInput.addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            
-            if (file) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    profileImage.src = e.target.result;
-                    // Garante que a imagem preencha o círculo
-                    profileImage.style.display = 'block'; 
+            // 2. Pré-visualização da imagem
+            imageUploadInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        profileImage.src = e.target.result;
+                        profileImage.style.display = 'block';
+                    }
+
+                    reader.readAsDataURL(file);
                 }
-                
-                reader.readAsDataURL(file);
+            });
+
+            // 3. Ocultar fundo inicial se não houver imagem
+            if (!profileImage.src || profileImage.src === window.location.href) {
+                profileImage.style.display = 'none';
             }
         });
-        
-        // 3. OCULTAR FUNDO INICIAL
-        if (!profileImage.src || profileImage.src === window.location.href) {
-             profileImage.style.display = 'none';
-        }
-    });
-</script>
+    </script>
 </body>
 
 </html>

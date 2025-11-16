@@ -1,14 +1,15 @@
 /* Importação de Fontes */
-@import url('https://fonts.googleapis.com/css2?family=Alata&family=Akshar:wght@700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Akshar:wght@700&display=swap');
 /* Fundo principal */
 body,
 html {
     margin: 0;
     padding: 0;
     /* Remover height: 100% para evitar problemas de scrollbar */
-    font-family: 'Akshar', 'Alata', sans-serif;
-    background: #2A2A2A; /* Adicionado background para consistência */
+    
+    font-family: 'Alata',  sans-serif; 
+    
+    background: #2A2A2A; 
 }
 
 .background {
@@ -81,14 +82,12 @@ html {
 .navBar a {
     text-decoration: none;
     color: white;
-    
-    /* ALTERAÇÃO: Usa Akshar e unidade relativa (VW) */
+    font-size: 24px;
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
-    font-size: 1.5vw; /* Tamanho responsivo */
-    
     position: relative;
-    transition: color 0.3s ease;
+    transition: color 0.3s 
+ease;
 }
 .navBar a.active { color: white; }
 .navBar a::after { content: ''; position: absolute; left: 0; bottom: -5px; width: 0; height: 2px; background-color: black; transition: width 0.3s ease; }
@@ -125,7 +124,7 @@ html {
     width: 100%;
     color: #FFFAE6;
     font-size: 36px;
-    font-family: 'Akshar', sans-serif;
+    font-family: 'Alata',  sans-serif; 
     font-weight: 700;
     margin-bottom: 20px;
     text-align: center;
@@ -151,9 +150,9 @@ html {
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
-.card-icon { font-size: 3.5em; color: #DDB35E; margin-bottom: 10px; }
-.card-title { color: #2A2A2A; font-size: 24px; font-family: 'Akshar', sans-serif; font-weight: 700; margin-bottom: 15px; }
-
+            .card-icon { font-size: 3.5em; color: #DDB35E; margin-bottom: 10px; }
+            .card-title { color: #2A2A2A; font-size: 24px; font-family: 'Alata', sans-serif; font-weight: 700; margin-bottom: 15px; }
+    
 .card-description {
     color: #504f4f;
  }
@@ -172,7 +171,7 @@ html {
     border-radius: 28px;
     padding: 8px 12px; 
     font-size: 15px; 
-    font-family: 'Akshar', sans-serif;
+    font-family: 'Alata',  sans-serif; 
     font-weight: 700;
     border: none;
     cursor: pointer;

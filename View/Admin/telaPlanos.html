@@ -49,7 +49,7 @@
                             <li class="nav-item">
                                 <a href="telaRelatorios.html">Relatorios</a>
                             </li>
-                             <li class="nav-item">
+                            <li class="nav-item">
                                 <a href="" class="active">Planos</a>
                             </li>
                         </ul>
@@ -63,172 +63,241 @@
                     </a>
                 </div>
 
+                <div class="header-content">
+                    <h1 class="page-title">Gestão de Planos</h1>
+                    <button class="btn-novo-plano" id="btnNovoPlano">
+                        <i class="fas fa-plus"></i> Novo Plano
+                    </button>
+                </div>
+
                 <div class="content-cards-wrapper">
 
-    <!-- <h2 class="section-title">Escolha o Tipo de Relatório</h2>
+                    <div class="card-plano-form" id="formPlanoCard">
+                        <h3 class="form-title" id="formTitle">Cadastrar Novo Plano</h3>
+                        
+                        <form id="planoForm">
+                            <input type="hidden" id="planoId" value="">
 
-    <div class="relatorio-card">
-        <i class="fas fa-users card-icon"></i>
-        <h4 class="card-title">Clientes</h4>
-        <h4 class="card-description">Relatorio de Clientes Ativos</h4>
+                            <div class="input-group">
+                                <label for="nomePlano">Nome do Plano</label>
+                                <input type="text" id="nomePlano" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="valor">Valor Mensal (R$)</label>
+                                <input type="number" id="valor" step="0.01" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="descricao">Descrição / Detalhes</label>
+                                <textarea id="descricao" rows="3"></textarea>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="status">Status</label>
+                                <select id="status">
+                                    <option value="Ativo">Ativo</option>
+                                    <option value="Inativo">Inativo</option>
+                                </select>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn-confirmar">Salvar</button>
+                                <button type="button" class="btn-cancelar">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="planos-list-container" id="planosListContainer">
+                        <h3 class="list-title">Planos Atuais:</h3>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // Simulação de Banco de Dados de Planos
+    let planos = [
+        { id: 1, nome: 'Plano Básico', valor: 99.90, descricao: 'Acesso a treinos e acompanhamento semanal.', status: 'Ativo' },
+        { id: 2, nome: 'Plano Premium', valor: 199.90, descricao: 'Tudo do básico mais plano nutricional e suporte 24h.', status: 'Ativo' },
+        { id: 3, nome: 'Plano Arquivado', valor: 0.00, descricao: 'Plano antigo, sem novas adesões.', status: 'Inativo' }
+    ];
+
+    let isEditing = false;
+    let planoToEditId = null;
+
+    // =========================================================
+    // FUNÇÕES DE UI E CARREGAMENTO
+    // =========================================================
+
+    /**
+     * Carrega a lista de planos no container.
+     */
+    function renderPlanosList() {
+        const container = document.getElementById('planosListContainer');
+        container.innerHTML = '<h3 class="list-title">Planos Atuais:</h3>';
         
-        <div class="export-options">
-            <button class="btn-export" data-export="pdf"><i class="fas fa-file-pdf"></i> PDF</button>
-            <button class="btn-export" data-export="csv"><i class="fas fa-file-csv"></i> CSV</button>
-        </div>
-    </div>
-
-    <div class="relatorio-card">
-        <i class="fas fa-dollar-sign card-icon"></i>
-        <h3 class="card-title">Faturamento</h3>
-        <h4 class="card-description">Relatorio de Faturamento</h4>
-
-        
-        <div class="export-options">
-            <button class="btn-export" data-export="pdf"><i class="fas fa-file-pdf"></i> PDF</button>
-            <button class="btn-export" data-export="csv"><i class="fas fa-file-csv"></i> CSV</button>
-        </div>
-    </div>
-
-    <div class="relatorio-card">
-        <i class="fas fa-calendar-alt card-icon"></i>
-        <h3 class="card-title">Agenda</h3>
-        <h4 class="card-description">Relatorio de Agenda</h4>
-
-        
-        <div class="export-options">
-            <button class="btn-export" data-export="pdf"><i class="fas fa-file-pdf"></i> PDF</button>
-            <button class="btn-export" data-export="csv"><i class="fas fa-file-csv"></i> CSV</button>
-        </div>
-    </div>
-
-</div>
-        </div>
-    </div>
-
- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const exportButtons = document.querySelectorAll('.btn-export');
-        const { jsPDF } = window.jspdf;
-
-        // Função para simular o download de um arquivo (usada para CSV)
-        function simulateTextDownload(filename, text, mimeType) {
-            const element = document.createElement('a');
-            element.setAttribute('href', `data:${mimeType};charset=utf-8,${encodeURIComponent(text)}`);
-            element.setAttribute('download', filename);
+        planos.forEach(plano => {
+            const badgeClass = plano.status === 'Ativo' ? 'status-ativo' : 'status-inativo';
+            const badgeText = plano.status === 'Ativo' ? 'ATIVO' : 'INATIVO';
+            const statusIcon = plano.status === 'Ativo' ? 'fa-ban' : 'fa-check'; // Ban = Desativar, Check = Ativar
             
-            element.style.display = 'none';
-            document.body.appendChild(element);
+            const planoCard = document.createElement('div');
+            planoCard.className = 'plano-card';
+            planoCard.innerHTML = `
+                <div class="plano-info">
+                    <h4>${plano.nome} (R$ ${plano.valor.toFixed(2).replace('.', ',')})</h4>
+                    <p>${plano.descricao}</p>
+                </div>
+                <div class="plano-status-badge ${badgeClass}">${badgeText}</div>
+                <div class="plano-actions">
+                    <button class="btn-action btn-edit" data-id="${plano.id}" title="Editar Plano">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="btn-action btn-toggle-status" data-id="${plano.id}" data-status="${plano.status}" title="${plano.status === 'Ativo' ? 'Desativar' : 'Ativar'}">
+                        <i class="fas ${statusIcon}"></i>
+                    </button>
+                </div>
+            `;
+            container.appendChild(planoCard);
+        });
 
-            element.click(); 
+        attachPlanActions();
+    }
 
-            document.body.removeChild(element); 
-        }
-
-        // 1. Lógica dos Botões de Exportação (PDF/CSV)
-        exportButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const format = this.getAttribute('data-export');
-                const card = this.closest('.relatorio-card');
-                const type = card.querySelector('.card-title').textContent.trim();
-                
-                // CORREÇÃO: Removemos a tentativa de buscar .card-description que não existe.
-                const description = `Dados detalhados do relatório de ${type}.`; 
-
-                const now = new Date().toLocaleDateString('pt-BR'); 
-                let fileName = `Relatorio_${type.replace(/\s/g, '')}_${new Date().toISOString().slice(0, 10)}`;
-                
-                if (format === 'csv') {
-                    // Conteúdo CSV real
-                    let csvContent = "ID,Nome/Mês,Status,Valor\n";
-                    csvContent += "1,Cliente A,Ativo,R$ 150,00\n";
-                    csvContent += "2,Cliente B,Ativo,R$ 200,00\n";
-                    csvContent += "3,Cliente C,Inativo,R$ 0,00\n";
-
-                    alert(`Preparando exportação de ${type} como CSV...`);
-                    simulateTextDownload(fileName + '.csv', csvContent, 'text/csv');
-
-                } else if (format === 'pdf') {
-                    
-                    if (typeof jsPDF !== 'undefined') {
-                        alert(`Gerando PDF bonito para ${type}...`);
-                        
-                        const doc = new jsPDF();
-                        const title = `Relatório de ${type}`;
-                        
-                        // ESTRUTURAÇÃO TESTE
-                        const head = [["ID", "Nome/Compromisso", "Status", "Valor/Data"]];
-                        let body = [];
-
-                        if (type === "Clientes") {
-                             body = [
-                                 ["1", "João Silva", "Ativo", "R$ 150,00"],
-                                 ["2", "Maria Santos", "Ativo", "R$ 200,00"],
-                                 ["3", "Pedro Souza", "Inativo", "R$ 0,00"]
-                             ];
-                        } else if (type === "Faturamento") {
-                            body = [
-                                ["Mensal Previsto", "---", "Ativo", "R$ 350,00"],
-                                ["Anual (Estimado)", "---", "---", "R$ 4.200,00"]
-                            ];
-                        } else if (type === "Agenda") {
-                            body = [
-                                ["4", "Treino c/ João", "Confirmado", "25/Dez 10:00"],
-                                ["5", "Consulta Nutri", "Pendente", "26/Dez 14:00"]
-                            ];
-                        }
-
-
-                        // Configuração do PDF (Estilo Básico)
-                        doc.setFont('helvetica', 'bold');
-                        doc.setFontSize(18);
-                        doc.setTextColor(42, 42, 42); 
-                        doc.text(title, 105, 20, null, null, "center");
-                        
-                        doc.setFontSize(10);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(102, 102, 102);
-                        // Usando a descrição corrigida:
-                        doc.text(`Descrição: ${description}`, 20, 30, { maxWidth: 170 });
-                        doc.text(`Gerado em: ${now}`, 190, 10, null, null, "right");
-                        
-                        // Geração da Tabela (Você deve incluir o CDN de jspdf-autotable para isso funcionar)
-                        if (typeof doc.autoTable === 'function') {
-                            doc.autoTable({
-                                head: head,
-                                body: body,
-                                startY: 40,
-                                theme: 'striped', 
-                                headStyles: { fillColor: [42, 42, 42], textColor: 255 }, 
-                                styles: { cellPadding: 3, fontSize: 10 },
-                                columnStyles: { 3: { halign: 'right' } } 
-                            });
-                        } else {
-                            // Fallback Simples se autoTable não estiver disponível
-                            let y = 45;
-                            doc.setFontSize(12);
-                            doc.text("Dados de Exemplo (Instale o plugin jspdf-autotable para melhor visualização):", 20, y);
-                            y += 8;
-                            head[0].forEach((h, i) => doc.text(h, 20 + i * 40, y));
-                            y += 5;
-                            doc.setLineWidth(0.5);
-                            doc.line(20, y, 190, y);
-                            y += 5;
-                            body.forEach(row => {
-                                row.forEach((cell, i) => doc.text(cell, 20 + i * 40, y));
-                                y += 7;
-                            });
-                        }
-
-                        doc.save(fileName + '.pdf'); 
-
-                    } else {
-                        alert("ERRO: A biblioteca jsPDF não está pronta. Certifique-se de que os CDNs da jsPDF e do jspdf-autotable foram incluídos corretamente no <head>.");
-                    }
+    /**
+     * Atribui eventos de clique aos botões de edição e status.
+     */
+    function attachPlanActions() {
+        // Editar
+        document.querySelectorAll('.btn-edit').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = parseInt(this.getAttribute('data-id'));
+                const plano = planos.find(p => p.id === id);
+                if (plano) {
+                    loadPlanForEdit(plano);
                 }
             });
         });
+
+        // Alternar Status (Ativar/Desativar)
+        document.querySelectorAll('.btn-toggle-status').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = parseInt(this.getAttribute('data-id'));
+                const currentStatus = this.getAttribute('data-status');
+                const newStatus = currentStatus === 'Ativo' ? 'Inativo' : 'Ativo';
+                
+                if (confirm(`Tem certeza que deseja ${newStatus === 'Ativo' ? 'ATIVAR' : 'DESATIVAR'} o plano?`)) {
+                    togglePlanStatus(id, newStatus);
+                }
+            });
+        });
+    }
+
+    /**
+     * Carrega os dados de um plano no formulário para edição.
+     * @param {object} plano O objeto plano a ser editado.
+     */
+    function loadPlanForEdit(plano) {
+        document.getElementById('formTitle').textContent = `Editar Plano: ${plano.nome}`;
+        document.getElementById('planoId').value = plano.id;
+        document.getElementById('nomePlano').value = plano.nome;
+        document.getElementById('valor').value = plano.valor;
+        document.getElementById('descricao').value = plano.descricao;
+        document.getElementById('status').value = plano.status;
+        
+        isEditing = true;
+        planoToEditId = plano.id;
+        document.querySelector('.btn-confirmar').textContent = 'Atualizar';
+        document.getElementById('formPlanoCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // =========================================================
+    // FUNÇÕES DE MANIPULAÇÃO DE DADOS
+    // =========================================================
+
+    /**
+     * Alterna o status do plano e atualiza a lista.
+     * @param {number} id ID do plano.
+     * @param {string} newStatus 'Ativo' ou 'Inativo'.
+     */
+    function togglePlanStatus(id, newStatus) {
+        const planoIndex = planos.findIndex(p => p.id === id);
+        if (planoIndex !== -1) {
+            // ** Ação no Backend: Aqui você enviaria a requisição PUT/PATCH para o PHP **
+            planos[planoIndex].status = newStatus;
+            
+            // Simulação:
+            alert(`Plano ${planos[planoIndex].nome} foi ${newStatus.toLowerCase()}! (Ação simulada)`);
+            renderPlanosList();
+        }
+    }
+    
+    /**
+     * Reseta o formulário para o modo de novo cadastro.
+     */
+    function resetForm() {
+        document.getElementById('planoForm').reset();
+        document.getElementById('formTitle').textContent = 'Cadastrar Novo Plano';
+        document.querySelector('.btn-confirmar').textContent = 'Salvar';
+        document.getElementById('planoId').value = '';
+        isEditing = false;
+        planoToEditId = null;
+    }
+
+    // =========================================================
+    // EVENTOS PRINCIPAIS
+    // =========================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        renderPlanosList();
+
+        const form = document.getElementById('planoForm');
+        const btnNovoPlano = document.getElementById('btnNovoPlano');
+        const btnCancelar = document.querySelector('.btn-cancelar');
+
+        // EVENTO: Submissão do Formulário (Salvar/Atualizar)
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('planoId').value ? parseInt(document.getElementById('planoId').value) : null;
+            const nomePlano = document.getElementById('nomePlano').value.trim();
+            const valor = parseFloat(document.getElementById('valor').value);
+            const descricao = document.getElementById('descricao').value.trim();
+            const status = document.getElementById('status').value;
+
+            const novoPlano = {
+                nome: nomePlano,
+                valor: valor,
+                descricao: descricao,
+                status: status
+            };
+
+            if (isEditing) {
+                // ** Ação no Backend: Requisição PUT/PATCH para atualizar plano (id) **
+                const index = planos.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    planos[index] = { id: id, ...novoPlano };
+                    alert(`Plano '${nomePlano}' atualizado com sucesso! (Ação simulada)`);
+                }
+            } else {
+                // ** Ação no Backend: Requisição POST para novo plano **
+                const newId = planos.length > 0 ? Math.max(...planos.map(p => p.id)) + 1 : 1;
+                planos.push({ id: newId, ...novoPlano });
+                alert(`Plano '${nomePlano}' cadastrado com sucesso! (Ação simulada)`);
+            }
+
+            resetForm();
+            renderPlanosList();
+        });
+
+        // EVENTO: Botão Novo Plano (Limpa o formulário)
+        btnNovoPlano.addEventListener('click', resetForm);
+        
+        // EVENTO: Botão Cancelar
+        btnCancelar.addEventListener('click', resetForm);
     });
-</script> -->
+</script>
 </body>
 </html>

@@ -1,3 +1,6 @@
+/* Importação de fontes */
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Akshar:wght@400;700&family=Alatsi&display=swap');
+
 /* Fundo principal */
 body,
 html {
@@ -18,13 +21,8 @@ html {
     overflow: hidden;
 }
 
-/* Bolinhas decorativas (Sem Alterações) */
-.bolinha {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(45px);
-}
-
+/* Bolinhas decorativas (Mantido o estilo original) */
+.bolinha { position: absolute; border-radius: 50%; filter: blur(45px); }
 .bolinha1 { width: 20vw; height: 15vh; top: -5vh; left: 3vw; background: rgba(221, 179, 94, 0.85); }
 .bolinha2 { width: 20vw; height: 20vh; bottom: -5vh; right: 10vw; background: rgba(221, 179, 94, 0.95); }
 .bolinha3 { width: 8vw; height: 8vw; bottom: 12vh; left: 10vw; background: rgba(221, 179, 94, 0.59); }
@@ -62,11 +60,10 @@ html {
 
     grid-template-areas:
         "nav top_bar"
-        "main meta"
-        "main percentuals";
+        "main meta"; 
 
     grid-template-columns: 70% 30%; 
-    grid-template-rows: 100px 1fr auto; 
+    grid-template-rows: 100px 1fr; 
     
     grid-gap: 20px; 
     padding: 0; 
@@ -84,45 +81,19 @@ html {
     background-color: black; transition: width 0.3s ease;
 }
 .navBar a:hover::after, .navBar a.active::after { width: 100%; }
+.navBar a.active { color: white; }
 
 /* ========================================================= */
-/* BARRA SUPERIOR (Busca + Perfil + Ações) */
+/* BARRA SUPERIOR (Busca + Perfil) */
 /* ========================================================= */
 .top-bar-container {
     grid-area: top_bar;
     display: flex;
     align-items: center;
-    /* Alinha a busca, ações e perfil */
     justify-content: flex-end; 
     gap: 20px;
     padding-right: 10px;
 }
-
-/* NOVO: Contêiner para os botões de ação no topo (REMOVIDO DO HTML) */
-.client-actions {
-    display: flex;
-    gap: 10px; /* Espaçamento entre Editar e Excluir */
-}
-
-/* Estilo para os botões do topo (manter para o hover) */
-.top-edit-button, .top-delete-button {
-    height: 40px; 
-    padding: 0 15px; 
-    border-radius: 20px;
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s, color 0.3s;
-    background: #1E1E1E;
-    color: #DDB35E;
-}
-
-.top-edit-button:hover, .top-delete-button:hover {
-    background-color: #DDB35E;
-    color: #1E1E1E;
-}
-
 
 /* --- BUSCA (search-bar) --- */
 .search-bar {
@@ -134,7 +105,6 @@ html {
     padding: 5px 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .search-input {
     border: none;
     background: transparent;
@@ -143,15 +113,9 @@ html {
     color: black;
     padding: 5px;
     outline: none;
-    width: 200px;
+    width: 250px;
 }
-
-.search-icon {
-    color: #666363;
-    font-size: 20px;
-    margin-left: 10px;
-    cursor: pointer;
-}
+.search-icon { color: #666363; font-size: 20px; margin-left: 10px; cursor: pointer; }
 
 /* --- PERFIL --- */
 .profile-box-container {
@@ -162,38 +126,20 @@ html {
 }
 .cardVerPerfil {
     width: 50px; height: 50px; 
-    border-radius: 9999px;
-    border: 2px #D4D2C8 solid; 
+    border-radius: 9999px; border: 2px #D4D2C8 solid; 
     margin-bottom: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #D4D2C8; 
-    color: #2A2A2A; 
-    font-size: 1.5em;
+    display: flex; justify-content: center; align-items: center;
+    background-color: #D4D2C8; color: #2A2A2A; font-size: 1.5em;
 }
 .textocardVerPerfil { font-weight: 800; color: #2A2A2A; font-size: 0.8em; }
-
-/* Estilo do link de perfil */
 .profile-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    text-decoration: none; 
-    color: #2A2A2A; 
-    width: auto;
-    height: auto;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    text-decoration: none; color: #2A2A2A; width: auto; height: auto;
 }
-.profile-link:hover .textocardVerPerfil {
-    text-decoration: underline; 
-    color: #000000;
-}
-
-
+.profile-link:hover .textocardVerPerfil { text-decoration: underline; color: #000000; }
 
 /* ========================================================= */
-/* 1. CAMPOS PRINCIPAIS (CLIENT-FORM-MAIN) */
+/* 1. CAMPOS PRINCIPAIS (client-form-main) - Lado Esquerdo */
 /* ========================================================= */
 .client-form-main {
     grid-area: main;
@@ -203,7 +149,7 @@ html {
     border-radius: 28px;
     padding: 20px;
     box-sizing: border-box;
-    height: 100%;
+    height: 95%;
     overflow-y: auto; 
 }
 
@@ -222,28 +168,16 @@ html {
     width: 100%;
 }
 
-.input-group {
-    display: flex;
-    flex-direction: column;
-}
+.input-group { display: flex; flex-direction: column; }
 
-/* Campo Observações: Ocupa apenas a Coluna 1 */
-.input-group.full-row {
-    grid-column: 1 / 2; 
-}
-
-/* CORREÇÃO: Estilo do Label (Título do Campo) */
 label {
-    color: black;
-    font-size: 20px; 
-    font-family: 'Akshar', sans-serif;
-    font-weight: 700;
-    margin-bottom: 5px;
+    color: black; font-size: 20px; font-family: 'Akshar', sans-serif;
+    font-weight: 700; margin-bottom: 5px;
 }
 
-/* CORREÇÃO: Estilo dos Inputs/Selects/Textarea (Fundo #EDE7D1 e Altura 50px) */
+/* Estilo Padrão para Inputs/Selects/Textarea */
 input, select, textarea {
-    background: #EDE7D1; /* Fundo bege claro (Padrão Nutricional) */
+    background: #EDE7D1; 
     border-radius: 28px;
     border: none;
     height: 50px; 
@@ -255,15 +189,13 @@ input, select, textarea {
     width: 100%;
 }
 
-/* Altura da Observações - Diminuída */
 textarea#observacoes {
-    height: 70px; 
+    height: 100px; 
     padding-top: 10px;
     resize: vertical;
-    width: 100%;
 }
 
-/* Sobrescreve o estilo do select */
+/* Estilo do Select (Seta Customizada) */
 select {
     appearance: none;
     -webkit-appearance: none;
@@ -276,7 +208,7 @@ select {
 
 
 /* ========================================================= */
-/* 2. DADOS FÍSICOS (CLIENT-FORM-META) */
+/* 2. DADOS FÍSICOS (client-form-meta) - Lado Direito */
 /* ========================================================= */
 .client-form-meta {
     grid-area: meta;
@@ -287,8 +219,12 @@ select {
     
     display: flex;
     flex-wrap: wrap;
-    gap: 20px 5px; 
+    gap: 15px 5px; 
     height: 100%;
+    
+    flex-direction: column; 
+    justify-content: space-between; 
+    align-content: flex-start;
 }
 
 .data-section-title {
@@ -297,14 +233,26 @@ select {
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
     width: 100%; 
+    margin-bottom: 20px;
+}
+
+/* ****************************************************** */
+/* NOVO AGRUPAMENTO PARA LINHAS DE 50% (50/50/50) */
+/* ****************************************************** */
+.client-form-meta .input-group-half-row { 
+    display: flex;
+    width: 100%;
+    gap: 15px; 
     margin-bottom: 5px;
+    flex-shrink: 0;
+}
+.client-form-meta .input-group.half-group-meta {
+    width: calc(50% - 7.5px); /* Divide a linha em 2 */
+    flex-shrink: 0;
 }
 
-.input-group.half-group {
-    width: calc(33.33% - 5px); 
-}
 
-/* CORRIGINDO FUNDO DOS INPUTS COM UNIDADE */
+/* Estilo da Unidade de Medida */
 .input-with-unit {
     display: flex;
     align-items: center;
@@ -330,20 +278,43 @@ select {
     margin-left: auto;
 }
 
-
-/* ========================================================= */
-/* 3. BOTÕES (CLIENT-FORM-BUTTONS) - RÓTULOS MODIFICADOS */
-/* ========================================================= */
-.client-form-buttons {
-    grid-area: percentuals;
-    display: flex;
-    gap: 15px;
-    align-items: flex-start;
-    justify-content: space-around;
-    padding: 10px;
+/* Estilo para destacar o resultado do IMC */
+.imc-result {
+    background: #DDB35E !important; 
+    font-weight: 700;
+    color: #2A2A2A;
+    text-align: center;
+    padding: 15px;
 }
 
-/* Aplicando tamanho e estilo aos botões filhos */
+/* Largura para os campos de percentual (Gordura e Magra) */
+.client-form-meta .input-group.half-width-percentual {
+    width: calc(50% - 5px); /* 2 itens por linha */
+}
+
+
+/* Campos de largura total */
+.client-form-meta .input-group.full-width {
+    width: 100%;
+}
+
+
+/* ========================================================= */
+/* 3. BOTÕES (client-form-buttons) */
+/* ========================================================= */
+.client-form-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: space-around;
+    
+    margin-top: auto; 
+    width: 100%;
+    padding: 10px 0; 
+    flex-shrink: 0; 
+}
+
+/* Estilo dos Botões de Ação */
 .action-button-edit-button, .action-button-excluir-button {
     height: 53px; 
     width: 48%; 

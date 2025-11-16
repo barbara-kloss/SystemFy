@@ -124,6 +124,8 @@ html {
 }
 
 .search-bar {
+    position: relative; /* CRÍTICO para o dropdown */
+    overflow: visible; /* Permite que o dropdown saia da barra */
     display: flex;
     align-items: center;
     background: white;
@@ -149,6 +151,42 @@ html {
     margin-left: 10px;
     cursor: pointer;
 }
+
+/* --- ESTILOS DE AUTOCOMPLETAR --- */
+.suggestions-dropdown {
+    position: absolute;
+    top: 100%; 
+    left: -3px; /* Alinha com a borda esquerda */
+    width: calc(100% + 6px); /* Aumenta um pouco a largura para cobrir a barra inteira */
+    z-index: 1000; 
+    background: #FFFFFF; 
+    border: 1px solid #DDB35E;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    display: none; 
+}
+
+.suggestion-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #2A2A2A;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background-color: #EDE7D1;
+}
+/* --- FIM ESTILOS DE AUTOCOMPLETAR --- */
+
 
 /* --- PERFIL --- */
 .profile-box-container {
@@ -487,22 +525,19 @@ html {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    text-decoration: none; /* ESSENCIAL: Remove o sublinhado do link */
-    color: #2A2A2A; /* ESSENCIAL: Define a cor do texto para preto/cinza */
-    /* Garante que o link ocupe o espaço e seja clicável */
+    text-decoration: none; 
+    color: #2A2A2A; 
     width: auto;
     height: auto;
 }
 
-/* Garante que o texto 'Ver perfil' use a cor definida no .profile-link */
 .textocardVerPerfil { 
     font-weight: 800; 
-    color: inherit; /* Herda a cor do link pai (#2A2A2A) */
+    color: inherit; 
     font-size: 0.8em; 
 }
 
-/* Opcional: Efeito de hover para indicar que é clicável */
 .profile-link:hover .textocardVerPerfil {
-    text-decoration: underline; /* Adiciona sublinhado no hover, se desejar */
+    text-decoration: underline; 
     color: #000000;
 }

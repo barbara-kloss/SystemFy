@@ -1,3 +1,6 @@
+/* Importação de fontes */
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Akshar:wght@400;700&family=Alatsi&display=swap');
+
 /* Fundo principal */
 body,
 html {
@@ -12,13 +15,14 @@ html {
     width: 100%;
     height: 100vh;
     background: #2A2A2A;
+    /* Preto/Cinza Escuro Principal */
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
 }
 
-/* Bolinhas decorativas (Sem Alterações) */
+/* Bolinhas decorativas (Mantido o estilo original) */
 .bolinha {
     position: absolute;
     border-radius: 50%;
@@ -85,11 +89,12 @@ html {
     box-sizing: border-box;
     overflow: hidden;
     margin-left: 0;
-
     transform: translateX(2.5%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
-/* Logos de Canto (Mais à esquerda) */
+/* Logos de Canto (Mantido o estilo original) */
 .logoCantoInferior {
     position: absolute;
     width: 3.5vw;
@@ -122,16 +127,13 @@ html {
 /* GRID INTERNO (Layout Principal) */
 /* ========================================================= */
 .main-content-grid {
-    height: 90%;
+    height: 100%;
     display: grid;
-
     grid-template-areas:
         "nav nav"
-        "profile_content main_area";
-
-    grid-template-columns: 45% 55%; 
-    grid-template-rows: 100px auto; 
-
+        "profile_content dashboard_area";
+    grid-template-columns: 45% 55%;
+    grid-template-rows: 100px auto;
     grid-gap: 20px;
     padding: 30px;
 }
@@ -159,8 +161,8 @@ html {
     text-decoration: none;
     color: white;
     font-size: 24px;
-    font-family: 'Akshar', sans-serif;
-    font-weight: 700;
+    font-family: 'Alata', sans-serif;
+    /* font-weight: 600; */
     position: relative;
     transition: color 0.3s ease;
 }
@@ -182,84 +184,98 @@ html {
 }
 
 /* ========================================================= */
-/* ESTILOS DO PERFIL (profile_content) */
+/* ESTILOS DO PERFIL (profile_content) - LADO ESQUERDO */
 /* ========================================================= */
 
+/* ========================================================= */
+/* ESTILOS DO PERFIL (profile_content) - LADO ESQUERDO */
+/* ========================================================= */
+
+/* No bloco .profile-box-container */
 .profile-box-container {
     grid-area: profile_content;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-self: start;
-    align-self: start;
-    width: 100%;
+    justify-self: center;
+    align-self: flex-start;
+    width: 90%;
     max-width: 500px;
-    padding: 12px 16px;
-    gap: 1px;
-    /* margin-top: 15%; */
-    margin-left: 100px;
+    padding: 20px 30px;
+    /* Diminuído o espaçamento entre os elementos dentro da caixa */
+    gap: 5px;
+    /* Reduzido para ficar bem no topo */
+    margin-top: 0;
+    margin-left: 0;
     position: relative;
     background: transparent;
     border-radius: 12px;
 }
 
-/* ========================================================= */
-/* ESTILOS DO PERFIL (profile_content) */
-/* ========================================================= */
-
-/* Círculo do Avatar - REMOVENDO overflow: hidden */
-.cardVerPerfil {
-    width: 180px;
-    height: 180px;
-    border-radius: 9999px;
-    border: 2px #D4D2C8 solid;
-    margin-bottom: 30px; 
+/* No bloco .bt_editar */
+.bt_editar {
+    background-color: #2A2A2A;
+    border-radius: 30px;
+    padding: 12px 30px;
+    border: none;
+    cursor: pointer;
+    color: #DDB35E;
+    font-size: 22px;
+    font-family: 'Alatsi', sans-serif;
+    font-weight: 400;
+    line-height: 24px;
+    /* Ajustado para garantir o espaço do botão */
+    /* margin-top: 30px;  */
     align-self: center;
-    
-    position: relative; 
-    
-    /* REMOVEMOS O 'overflow: hidden' para que o ícone posicionado absolutamente (fora) seja visível. */
-    /* overflow: hidden; */ 
-    
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* No bloco .cardVerPerfil */
+.cardVerPerfil {
+    /* Diminuído de 180px para 150px */
+    width: 150px;
+    height: 150px;
+    border-radius: 9999px;
+    border: 3px #DDB35E solid;
+    /* Reduzida a margem inferior */
+    margin-bottom: 20px;
+    align-self: center;
+    position: relative;
     display: block;
     cursor: pointer;
-    background-color: #D4D2C8; 
+    background-color: #D4D2C8;
 }
 
 /* Estilo da Imagem de Perfil */
 .cardVerPerfil img {
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    border-radius: 9999px; /* Adiciona border-radius na imagem também */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 9999px;
     display: block;
 }
 
-/* Estilo do Ícone de Edição (Ajustado para ficar na ponta) */
+/* No bloco .edit-icon */
 .edit-icon {
     position: absolute;
-    /* Move o ícone para que metade dele comece exatamente na borda */
-    bottom: 0; 
-    right: 0; 
-    
-    /* Ajuste fino: move o ícone pela metade de seu próprio tamanho para que ele se sobreponha à borda. */
-    transform: translate(25%, 25%); /* Move 25% do seu tamanho para a direita e 25% para baixo. Ajuste se for necessário (ex: 50%, 50%) */
-    
-    z-index: 10; 
-    
-    color: #2A2A2A; 
-    background-color: #DDB35E; 
-    border-radius: 50%; 
-    padding: 8px; 
-    font-size: 20px; 
-    line-height: 1; 
+    bottom: 0;
+    right: 0;
+    /* Alterado o translate para garantir que fique na ponta do círculo menor */
+    transform: translate(30%, 30%);
+    z-index: 10;
+    color: white;
+    background-color: #2A2A2A;
+    border: 3px solid #DDB35E;
+    border-radius: 50%;
+    /* Ajustado o padding para um tamanho menor */
+    padding: 6px;
+    font-size: 16px;
+    line-height: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    pointer-events: none; 
+    pointer-events: none;
 }
-
 
 /* Agrupamento Título + Mini Card */
 .profile-field {
@@ -270,17 +286,15 @@ html {
     margin-bottom: 20px;
 }
 
-/* Títulos dos Mini Cards (Nome e E-mail) */
+/* Títulos dos Mini Cards */
 .minicardNometit,
 .minicardEmailtit {
-    color: black;
-    font-size: 22px;
-    font-family: Akshar;
+    color: #2A2A2A;
+    font-size: 20px;
+    font-family: 'Akshar', sans-serif;
     font-weight: 700;
     line-height: 22px;
-    word-wrap: break-word;
-    margin-bottom: 8px;
-    margin-left: 0;
+    margin-bottom: 5px;
 }
 
 /* Mini Cards de Dados */
@@ -288,81 +302,151 @@ html {
 .minicarEmail {
     width: 100%;
     max-width: 453px;
-    height: 41px;
-    background: #FFFAE6;
-    border-radius: 28px;
-    margin-top: 0;
+    height: auto;
+    min-height: 48px;
+    background: #E8E5D3;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-family: 'Alatsi', sans-serif;
+    font-weight: 500;
+    color: #2A2A2A;
+    display: flex;
+    align-items: center;
 }
 
-/* Botão Editar */
+/* Botão Editar
 .bt_editar {
-    background-color: #2A2A2A; 
+    background-color: #2A2A2A;
     border-radius: 30px;
-    padding: 15px 35px;
+    padding: 12px 30px;
     border: none;
-    cursor: pointer; 
-    
+    cursor: pointer;
     color: #DDB35E;
-    font-size: 24px;
-    font-family: Alatsi; 
+    font-size: 22px;
+    font-family: 'Alatsi', sans-serif;
     font-weight: 400;
     line-height: 24px;
-
-    margin-top: 30px; 
+    margin-top: 40px;
     align-self: center;
-    
     transition: background-color 0.3s ease, color 0.3s ease;
-}
+} */
 
 .bt_editar:hover {
-    background-color: #DDB35E; 
-    color: #2A2A2A;
-}
-
-/* ========================================================= */
-/* ESTILOS DOS RELATÓRIOS (main_area) */
-/* ========================================================= */
-
-.relatorios-container {
-    grid-area: main_area; 
-    display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: flex-start;
-    margin-top: 15%; 
-    padding: 20px;
-}
-
-.relatorios-container h1 {
-    color: black;
-    font-size: 32px;
-    font-family: Akshar;
-    font-weight: 700;
-    margin-bottom: 30px;
-}
-
-.botao-relatorio {
-    background-color: #2A2A2A; 
-    border-radius: 30px; 
-    border: none;
-    cursor: pointer; 
-    
-    padding: 18px 45px; 
-    width: 320px; 
-    text-align: center;
-    margin-bottom: 25px;
-
-    color: #DDB35E;
-    font-size: 24px;
-    font-family: Alatsi; 
-    font-weight: 400;
-    line-height: 24px;
-
-    transition: background-color 0.3s ease, transform 0.1s ease, color 0.3s ease;
-}
-
-.botao-relatorio:hover {
     background-color: #DDB35E;
-    transform: translateY(-2px);
     color: #2A2A2A;
+}
+
+/* ========================================================= */
+/* ESTILOS DO DASHBOARD (dashboard-area) - LADO DIREITO */
+/* ========================================================= */
+
+.dashboard-area {
+    grid-area: dashboard_area;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Centraliza o conteúdo verticalmente para preencher o espaço */
+    justify-content: center;
+    padding: 20px;
+    /* Reduz a margem superior para harmonizar com o lado esquerdo */
+    margin-top: -80px;
+    overflow-y: auto;
+    max-height: calc(100vh - 130px);
+}
+
+.area-title {
+    color: #2A2A2A;
+    font-size: 28px;
+    font-family: 'Akshar', sans-serif;
+    font-weight: 700;
+    /* Aumentar o margin-bottom para criar mais espaço para a linha */
+    margin-bottom: 20px;
+    /* Define o display como inline-block para que a borda se ajuste ao conteúdo */
+    /* REMOVA esta linha, pois o border-bottom é o que estamos usando. */
+    /* Em vez disso, vamos usar um truque com o padding e a largura do contêiner. */
+
+    /* Alinha o texto do título ao centro (HORIZONTALMENTE) */
+    text-align: center;
+
+    /* Configura o elemento para ser um bloco com largura ajustável */
+    display: block;
+    width: 100%;
+    /* Garante que o título ocupe a largura total disponível */
+
+    /* O border-bottom se torna a linha amarela */
+    border-bottom: 3px solid #DDB35E;
+
+    /* Padding para afastar o texto da linha (se necessário) */
+    padding-bottom: 5px;
+}
+
+/* NOVO: Para centralizar o título SOBRE a linha, vamos usar um pseudo-elemento.
+   O truque é remover a borda do .area-title e aplicar a linha ao contêiner,
+   mas isso complica o alinhamento.
+   
+   A melhor abordagem é fazer o título ocupar a largura total e centralizar o TEXTO. */
+
+/* ========================================================= */
+/* ESTILOS DE AÇÕES RECENTES */
+/* ========================================================= */
+
+.recent-actions-container {
+    /* Aumentado de 95% para 100% para combinar com a largura do título */
+    width: 97%;
+    margin-top: 0;
+    padding: 15px;
+    /* Aumentei o padding para dar mais espaço interno */
+    background-color: #E8E5D3;
+    border-radius: 12px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.action-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.496);
+}
+
+.action-item:last-child {
+    border-bottom: none;
+}
+
+.icon-log {
+    font-size: 18px;
+    margin-right: 15px;
+    width: 25px;
+    text-align: center;
+}
+
+/* Cores de status para os ícones */
+.icon-log.success {
+    color: #4CAF50;
+    /* Verde */
+}
+
+.icon-log.info {
+    color: #2196F3;
+    /* Azul */
+}
+
+.icon-log.default {
+    color: #9E9E9E;
+    /* Cinza */
+}
+
+.action-text {
+    flex-grow: 1;
+    color: #2A2A2A;
+    font-size: 16px;
+    margin: 0;
+    font-family: 'Alata', sans-serif;
+}
+
+.action-time {
+    color: #555;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
 }
