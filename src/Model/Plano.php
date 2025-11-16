@@ -1,11 +1,11 @@
 <?php
 class Plano
 {
-    public readonly int $id;
-    public readonly string $categoria;
-    public readonly float $preco;
-    public readonly string $descricao;
-    public readonly bool $ativo;
+    private int $id;
+    private string $categoria;
+    private float $preco;
+    private string $descricao;
+    private bool $ativo;
 
     public function __construct(int $id, string $categoria, float $preco, string $descricao, bool $ativo)
     {
