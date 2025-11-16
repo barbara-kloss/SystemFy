@@ -1,143 +1,94 @@
 <?php
 use User;
+
 class Exercise
 {
-    public readonly int $id;
-    public readonly User $id_usuario;
-    public readonly float $peso;
-    public readonly int $tempo_descanso;
-    public readonly int $repeticao;
-    public readonly string $exercicio;
-    public readonly string $objetivo;
-    public readonly string $dia;
-    public readonly string $obs;
-    public readonly string $categoria;
-    public readonly User $id_personal;
+    private int $id;
+    private User $user;
+    private float $peso;
+    private string $repeticao;
+    private string $tipo_exercicio;
+    private int $dia;
+    private string $observacao;
+    private string $categoria;
+    private User $personal;
+    private string $video; // blob convertido em string binária
 
-    public readonly string $video;
     public function __construct(
         int $id,
-        User $id_usuario,
+        User $user,
         float $peso,
-        int $tempo_descanso,
-        int $repeticao,
-        string $exercicio,
-        string $objetivo,
-        string $dia,
-        string $obs,
-        string $categoria,
-        User $id_personal,
-        string $video
+        string $repeticao,
+        string $tipo_exercicio,
+        int $dia,
+        string $observacao,
+        int $categoria,
+        User $personal,
+        string $video = null
     ) {
         $this->id = $id;
-        $this->id_usuario = $id_usuario;
+        $this->user = $user;
         $this->peso = $peso;
-        $this->tempo_descanso = $tempo_descanso;
         $this->repeticao = $repeticao;
-        $this->exercicio = $exercicio;
-        $this->objetivo = $objetivo;
-        $this->categoria = $categoria;
+        $this->tipo_exercicio = $tipo_exercicio;
         $this->dia = $dia;
-        $this->obs = $obs;
-        $this->id_personal = $id_personal;
+        $this->observacao = $observacao;
+        $this->categoria = $categoria;
+        $this->personal = $personal;
         $this->video = $video;
     }
-    
-    public function setId(int $id)
-    {
-        if ($id <= 0) {
-            throw new \InvalidArgumentException("ID deve ser positivo!");
-        }
-        $this->id = $id;
-    }
 
-    public function setPeso(float $peso)
+    // SETTERS
+    public function setPeso(float $peso): void
     {
-        if ($peso < 0) {
-            throw new \InvalidArgumentException("Peso não pode ser negativo!");
-        }
         $this->peso = $peso;
     }
 
-    public function setTempoDescanso(int $tempo_descanso)
+    public function setRepeticao(string $repeticao): void
     {
-        if ($tempo_descanso < 0) {
-            throw new \InvalidArgumentException("Tempo de descanso não pode ser negativo!");
-        }
-        $this->tempo_descanso = $tempo_descanso;
-    }
-
-    public function setRepeticao(string $repeticao)
-    {
-        if (empty($repeticao)) {
-            throw new \InvalidArgumentException("Repetição não pode ser vazia!");
-        }
         $this->repeticao = $repeticao;
     }
 
-    public function setExercicio(string $exercicio)
+    public function setTipoExercicio(string $tipo): void
     {
-        if (empty($exercicio)) {
-            throw new \InvalidArgumentException("Exercício não pode ser vazio!");
-        }
-        $this->exercicio = $exercicio;
+        $this->tipo_exercicio = $tipo;
     }
 
-    public function setObjetivo(string $objetivo)
-    {
-        if (empty($objetivo)) {
-            throw new \InvalidArgumentException("Objetivo não pode ser vazio!");
-        }
-        $this->objetivo = $objetivo;
-    }
 
-    public function setCategoria(string $categoria)
+    public function setDia(int $dia): void
     {
-        if (empty($categoria)) {
-            throw new \InvalidArgumentException("Categoria não pode ser vazia!");
-        }
-        $this->categoria = $categoria;
-    }
-
-    public function setDia(string $dia)
-    {
-        if (empty($dia)) {
-            throw new \InvalidArgumentException("Dia não pode ser vazio!");
-        }
         $this->dia = $dia;
     }
 
-    public function setObs(string $obs)
+    public function setObservacao(string $observacao): void
     {
-        $this->obs = $obs;
+        $this->observacao = $observacao;
     }
 
-    public function setIdUsuario(User $id_usuario)
+    public function setCategoria(int $categoria): void
     {
-        if (!$id_usuario) {
-            throw new \InvalidArgumentException("Usuário inválido!");
-        }
-        $this->id_usuario = $id_usuario;
+        $this->categoria = $categoria;
     }
 
-    public function setIdPersonal(User $id_personal)
+    public function setPersonal(User $personal): void
     {
-        if (!$id_personal) {
-            throw new \InvalidArgumentException("Personal inválido!");
-        }
-        $this->id_personal = $id_personal;
+        $this->personal = $personal;
     }
 
-    public function setVideo(string $video)
+    public function setVideo(string $video): void
     {
-        if (empty($video)) {
-            throw new \InvalidArgumentException("Insira um vídeo!");
-        }
+        $this->video = $video;
     }
 
+    // GETTERS
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
     }
 
     public function getPeso(): float
@@ -150,48 +101,39 @@ class Exercise
         return $this->repeticao;
     }
 
-    public function getTempoDescanso(): int
+    public function getTipoExercicio(): string
     {
-        return $this->tempo_descanso;
+        return $this->tipo_exercicio;
     }
 
-    public function getExercicio(): string
-    {
-        return $this->exercicio;
-    }
 
-    public function getObjetivo(): string
-    {
-        return $this->objetivo;
-    }
-
-    public function getCategoria(): string
-    {
-        return $this->categoria;
-    }
-
-    public function getDia(): string
+    public function getDia(): int
     {
         return $this->dia;
     }
 
-    public function getObs(): string
+    public function getObservacao(): string
     {
-        return $this->obs;
+        return $this->observacao;
     }
 
-    public function getIdUsuario(): User
+    public function getCategoria(): int
     {
-        return $this->id_usuario;
+        return $this->categoria;
     }
 
-    public function getIdPersonal(): User
+    public function getPersonal(): User
     {
-        return $this->id_personal;
+        return $this->personal;
     }
-    public function getVideo(): string
+
+    public function getVideo(): ?string
     {
         return $this->video;
+    }
+    public function getObjetivo(): int
+    {
+        return $this->usuario->getObjetivo();
     }
 }
 ?>

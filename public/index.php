@@ -67,6 +67,7 @@ if (array_key_exists($key, $routes)) {
         $controllerClass === \Systemfy\App\Admin\PlanoController\PlanoFormController::class
         || $controllerClass === \Systemfy\App\Admin\PlanoController\EditPlanoController::class
         || $controllerClass === \Systemfy\App\Admin\PlanoController\NewPlanoController::class
+        || $controllerClass === \Systemfy\App\Admin\PlanoController\PlanoListController::class
     ) {
         $controller = new $controllerClass($planoRepository);
 

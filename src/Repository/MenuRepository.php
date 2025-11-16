@@ -16,19 +16,17 @@ class MenuRepository
     public function add(Menu $menu) : bool
     {
         $sql = "INSERT INTO menu(horario, 
-         objetivo, restricao, 
-         dia, categoria, 
-         observação, id_user, id_nutri, titulo) values(?,?,?,?,?,?,?,?,?)";
+         objetivo,  
+         categoria, 
+         observação, id_user, id_nutri, titulo) values(?,?,?,?,?,?,?)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(1, $menu->horario);
         $stmt->bindValue(2, $menu->objetivo);
-        $stmt->bindValue(3, $menu->restricao);
-        $stmt->bindValue(4, $menu->dia);
-        $stmt->bindValue(5, $menu->categoria);
-        $stmt->bindValue(6, $menu->observacao);
-        $stmt->bindValue(7, $menu->id_user);
-        $stmt->bindValue(8, $menu->id_nutri);
-        $stmt->bindValue(9, $menu->titulo);
+        $stmt->bindValue(3, $menu->categoria);
+        $stmt->bindValue(4, $menu->observacao);
+        $stmt->bindValue(5, $menu->id_user);
+        $stmt->bindValue(6, $menu->id_nutri);
+        $stmt->bindValue(7, $menu->titulo);
 
         $result = $stmt->execute();
         $id = $this->pdo->lastInsertId();
@@ -48,15 +46,12 @@ class MenuRepository
     public function update(Menu $menu): bool
     {
         $sql = 'UPDATE menu SET horario = :horario, 
-        objetivo = :objetivo, restricao = :restricao,
-        dia = :dia, categoria = :categoria, 
+        objetivo = :objetivo, categoria = :categoria, 
         observacao = :observacao, id_user = :id_user,
         id_nutri = :id_nutri, titulo = :titulo WHERE id = :id;';
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':horario', $menu->horario);
         $stmt->bindValue(':objetivo', $menu->objetivo);
-        $stmt->bindValue(':restricao', $menu->restricao);
-        $stmt->bindValue(':dia', $menu->dia);
         $stmt->bindValue(':categoria', $menu->categoria);
         $stmt->bindValue(':observacao', $menu->observacao);
         $stmt->bindValue(':id_user', $menu->id_user);
@@ -91,8 +86,6 @@ class MenuRepository
     {
         $menu = new Menu($MenuData['horario'],
             $MenuData['objetivo'],
-            $MenuData['restricao'],
-            $MenuData['dia'],
             $MenuData['categoria'],
             $MenuData['observacao'],
             $MenuData['id_user'],

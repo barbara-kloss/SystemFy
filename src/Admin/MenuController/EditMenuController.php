@@ -26,25 +26,7 @@ class EditMenuController implements Controller
             exit();
         }
 
-        $objetivo = filter_input(INPUT_POST, 'objetivo');
-        if ($objetivo === false) {
-            header('Location: /admin/menu/list?sucesso=0');
-            exit();
-        }
-
-        $restricao = filter_input(INPUT_POST, 'restricao');
-        if ($restricao === false) {
-            header('Location: /admin/menu/list?sucesso=0');
-            exit();
-        }
-
-        $dia = filter_input(INPUT_POST, 'dia');
-        if ($dia === null || $dia === '') {
-            header('Location: /admin/menu/list?sucesso=0');
-            exit();
-        }
-
-        $categoria = filter_input(INPUT_POST, 'categoria');
+        $categoria = filter_input(INPUT_POST, 'categoria', FILTER_VALIDATE_INT);
         if ($categoria === false) {
             header('Location: /admin/menu/list?sucesso=0');
             exit();
@@ -73,7 +55,7 @@ class EditMenuController implements Controller
             exit();
         }
 
-        $menu = new Menu($horario, $objetivo, $restricao, $dia, $categoria, $observacao, $id_user, $id_nutri, $titulo);
+        $menu = new Menu($horario, $categoria, $observacao, $id_user, $id_nutri, $titulo);
         $menu->setId($id);
 
         $result = $this->menuRepository->update($menu);
