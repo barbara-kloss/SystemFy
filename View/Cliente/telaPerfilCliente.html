@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Tela Perfil - Usuário</title>
     <link rel="stylesheet" href="telaPerfilCliente.css">
-    </head>
+</head>
 
 <body>
     <div class="background">
@@ -24,26 +24,21 @@
         
         <div class="fundoSemiTransparente profile-screen">
 
-            <!-- <header class="main-header-profile">
-                <span class="screen-title">Tela Perfil - Usuário</span> -->
-                
-                <div class="navBar">
-                    <nav>
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a href="telaInicial.html" class="nav-link">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="telaNutricional.html" class="nav-link">Nutricional</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="telaTreinos.html" class="nav-link">Treinos</a>
-                            </li>
-                            
-                        </ul>
-                    </nav>
-                </div>
-           
+            <div class="navBar top-floating-nav">
+                <nav>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="telaInicial.html" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="telaNutricional.html" class="nav-link">Nutricional</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="telaTreinos.html" class="nav-link active">Treinos</a> 
+                        </li>
+                    </ul>
+                </nav>
+            </div>
 
             <div class="user-profile-and-content">
                 <div class="user-info">
@@ -55,29 +50,31 @@
                     
                     <div class="personal-data-column">
                         
-                        <div class="input-group">
-                            <label for="nome">Nome completo</label>
-                            <input type="text" id="nome" value="Shreck" readonly>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="email">E-mail</label>
-                            <input type="email" id="email" value="shreck@gmail.com" readonly>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="genero">Gênero</label>
-                            <div class="custom-select-wrapper">
-                                <select id="genero" disabled>
-                                    <option value="lista">Lista Suspensa</option>
-                                </select>
-                                <span class="select-arrow"></span>
+                        <div class="row-group">
+                            <div class="input-group">
+                                <label for="nome">Nome completo</label>
+                                <input type="text" id="nome" value="Shreck" readonly>
+                            </div>
+                            <div class="input-group">
+                                <label for="email">E-mail</label>
+                                <input type="email" id="email" value="shreck@gmail.com" readonly>
                             </div>
                         </div>
 
-                        <div class="input-group">
-                            <label for="telefone">Telefone</label>
-                            <input type="text" id="telefone" value="(00) 0 0000-0000" readonly>
+                        <div class="row-group">
+                            <div class="input-group">
+                                <label for="genero">Gênero</label>
+                                <div class="custom-select-wrapper">
+                                    <select id="genero" disabled>
+                                        <option value="lista">Lista Suspensa</option>
+                                    </select>
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label for="telefone">Telefone</label>
+                                <input type="text" id="telefone" value="(00) 0 0000-0000" readonly>
+                            </div>
                         </div>
 
                         <div class="row-group">
@@ -90,20 +87,27 @@
                                 <input type="text" id="plano" value="Premium" readonly>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="metrics-column">
-                        
                         <div class="textarea-group">
                             <label for="observacoes">Observações</label>
                             <textarea id="observacoes" readonly></textarea>
                         </div>
+                    </div>
 
-                        <div class="input-group">
-                            <label for="objetivo">Objetivo</label>
-                            <input type="text" id="objetivo" value="Ganho de Massa" readonly>
+                    <div class="metrics-column">
+                        
+                        <label class="section-title-metrics" for="objetivo">Dados Físicos</label>
+
+                        <div class="row-group-half">
+                            <div class="input-group">
+                                <label for="objetivo">Objetivo</label>
+                                <input type="text" id="objetivo" value="Ganho de Massa" readonly>
+                            </div>
+                            <div class="input-group">
+                                <label for="imc">IMC</label>
+                                <input type="text" id="imc" value="20.0" readonly>
+                            </div>
                         </div>
-
                         <div class="row-group-half">
                             <div class="input-group">
                                 <label for="peso">Peso</label>
@@ -129,14 +133,5 @@
                             </div>
                         </div>
                     </div>
-                <!-- </div> </div> <div class="bottom-actions">
-                <a href="#" class="back-button">
-                    <img src="https://placehold.co/45x45" alt="Voltar" />
-                </a>
-                <a href="#" class="edit-button">
-                    <img src="https://placehold.co/45x45" alt="Editar" />
-                </a> -->
-            </div>
-
-        </div> </div> </body>
+                </div> </div> </div> </div> </body>
 </html>

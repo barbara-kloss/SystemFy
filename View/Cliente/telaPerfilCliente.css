@@ -1,110 +1,89 @@
-/* Fundo principal e Resets */
+/* ========================================================= */
+/* BASE E RESETS */
+/* ========================================================= */
+
 body,
 html {
     margin: 0;
     padding: 0;
-    height: 100%;
-    /* Use 'Akshar' ou 'Alata' conforme preferência, mas Akshar parece dominar a imagem */
     font-family: 'Akshar', sans-serif; 
+    /* SOLUÇÃO FORÇADA: Esconde qualquer barra de rolagem geral no body/html */
+    overflow: hidden; 
 }
 
-/* Base do Fundo Preto/Cinza com bolhas (Manter) */
+/* Esconde a barra de rolagem (WebKit - Chrome/Safari) */
+::-webkit-scrollbar {
+    width: 0px; 
+    background: transparent; 
+}
+/* Esconde a barra de rolagem (Firefox) */
+html {
+    scrollbar-width: none;
+}
+
+
+/* CONTAINER PRINCIPAL: Fundo escuro */
 .background {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 100vh; 
     background: #2A2A2A;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    /* ALTERAÇÃO CHAVE: Alinha o conteúdo à extrema direita */
+    justify-content: flex-end; 
+    /* Centraliza o box principal verticalmente */
+    align-items: center; 
+    overflow: hidden; 
+    padding: 0; 
 }
 
-/* Bolinhas decorativas (Manter) */
+/* Bolinhas decorativas (Elementos visuais) */
 .bolinha {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(45px);
-    background: rgba(221, 179, 94, 0.85);
+    position: absolute; border-radius: 50%; filter: blur(45px); background: rgba(221, 179, 94, 0.85);
 }
-
 .bolinha1 { width: 20vw; height: 15vh; top: -5vh; left: 3vw; background: rgba(221, 179, 94, 0.75); }
 .bolinha2 { width: 20vw; height: 20vh; bottom: -5vh; right: 10vw; background: rgba(221, 179, 94, 0.77); }
-.bolinha3 { width: 8vw; height: 8vw; bottom: 12vh; left: 10vw; background: rgba(221, 179, 94, 0.59); }
-.bolinha4 { width: 8vw; height: 8vw; top: 5vh; right: 20vw; background: rgba(221, 179, 94, 0.85); }
-.bolinha5 { width: 8vw; height: 8vw; top: 40vh; left: 55%; }
 .bolinha6 { width: 15vw; height: 15vh; top: 50vh; left: -5vw; background: #DDB35E; }
 
 /* Logos de Canto (Posicionamento Fixo) */
-.logoCantoInferior {
-    position: absolute;
-    width: 3.5vw;
-    height: auto;
-    left: 1.5vw; 
-    top: 3vh; 
-    z-index: 20; 
-}
+.logoCantoInferior { position: absolute; width: 3.5vw; height: auto; left: 1.5vw; top: 3vh; z-index: 20; }
 .logoCantoInferior img { width: 100%; height: auto; }
-
-.logoWhatsApp {
-    position: absolute;
-    width: 3.5vw;
-    height: 3.5vw;
-    left: 1.5vw;
-    bottom: 3vh;
-    z-index: 20; 
-}
+.logoWhatsApp { position: absolute; width: 3.5vw; height: 3.5vw; left: 1.5vw; bottom: 3vh; z-index: 20; }
 .logoWhatsApp img { width: 100%; height: 100%; }
 
 /* ========================================================= */
-/* Fundo Semi Transparente (Contêiner principal - Responsivo) */
+/* BOX PRINCIPAL DO CONTEÚDO (Fundo semi-transparente) */
 /* ========================================================= */
 .fundoSemiTransparente {
     width: 90%;
     max-width: 1400px; 
     min-width: 700px;
-    height: 90vh;
+    /* Altura ajustada para caber no viewport */
+    max-height: 95vh; 
+    height: auto; 
+    
     background: rgba(213, 205, 179, 0.43);
     border-radius: 28px;
-    padding: 2vw; /* Usa unidade relativa para padding */
+    padding: 2vw; 
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     position: relative;
     gap: 1.5vw; 
+    
+    /* Adiciona margem à direita e remove margem esquerda */
+    margin-right: 5vw; 
+    margin-left: 0; 
 }
 
-/* 1. HEADER COM TÍTULO E NAV BAR
-.main-header-profile {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2vw; 
-} */
-
-.screen-title {
-    color: white;
-    font-size: 1.5vw; 
-    font-weight: 400; 
-}
-
-/* Estrutura da Nav Bar */
+/* BARRA DE NAVEGAÇÃO */
 .navBar {
     width: 100%;
-    /* background: rgba(213, 205, 179, 0.43);  */
+    background: none; 
     padding: 0.8vw 0;
     border-radius: 10px;
 }
-
-.navBar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 2.5vw;
-    align-items: center;
-    padding-left: 1.5vw; 
-}
-
+.navBar ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 2.5vw; align-items: center; padding-left: 1.5vw; }
 .navBar .nav-link {
     text-decoration: none;
     color: white;
@@ -117,267 +96,131 @@ html {
 
 /* Sublinhado da aba ativa/hover */
 .navBar .nav-link::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 0;
-    height: 5px; 
+    content: ''; position: absolute; left: 0; bottom: -5px; width: 0;
+    height: 2px;
     background-color: #2A2A2A;
     transition: width 0.3s ease;
 }
-
 .navBar .nav-link:hover::after,
 .navBar .nav-link.active::after {
     width: 100%;
     background-color: #2A2A2A; 
 }
 
-
 /* 2. USER INFO E CONTEÚDO */
 .user-profile-and-content {
+    margin-top: 0.5vw; 
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     gap: 1.5vw; 
 }
+.user-info { display: flex; align-items: center; gap: 1vw; padding-bottom: 0.5vw; }
+.user-avatar { width: 4.5vw; height: 4.5vw; max-width: 60px; max-height: 60px; border-radius: 50%; border: 2px solid #D4D2C8; background-color: rgba(255, 255, 255, 0.7); object-fit: cover;}
+.user-name { color: black; font-size: 1.8vw; font-weight: 700; }
 
-.user-info {
+/* GRID DE 2 COLUNAS PARA O FORMULÁRIO */
+.profile-main-content {
+    flex-grow: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 3vw; 
+    padding-top: 1.5vw; 
+}
+
+/* Colunas (Personal Data e Metrics) */
+.personal-data-column, .metrics-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2vw; 
+}
+
+/* Estilo para campos em geral */
+.input-group { display: flex; flex-direction: column; width: 100%; }
+.input-group label { 
+    color: black; 
+    font-size: 1.5vw; 
+    font-weight: 700; 
+    margin-bottom: 0.3vw; 
+    height: 1.8vw;
     display: flex;
     align-items: center;
-    gap: 1vw;
-    padding-bottom: 0.5vw; 
 }
-
-.user-avatar {
-    width: 4.5vw;
-    height: 4.5vw;
-    max-width: 60px;
-    max-height: 60px;
-    border-radius: 50%;
-    border: 2px solid #D4D2C8;
-    background-color: rgba(255, 255, 255, 0.7);
-    object-fit: cover;
-}
-
-.user-name {
-    color: black;
-    font-size: 1.8vw;
+.metrics-column .section-title-metrics {
+    color: black; 
+    font-size: 1.6vw; 
     font-weight: 700;
+    margin-bottom: 0.3vw; 
+    width: 100%; 
+    display: block; 
 }
-
-/* Grid de 2 Colunas para o Formulário */
-.profile-main-content {
-    flex-grow: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr; 
-    gap: 3vw; 
-    padding-top: 0.5vw; 
-}
-
-.personal-data-column,
-.metrics-column {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5vw;
-}
-
-/* Estilo para cada grupo de input */
-.input-group {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.input-group label {
-    color: black;
-    font-size: 1.5vw; 
-    font-weight: 700;
-    margin-bottom: 0.3vw;
-}
-
-/* Estilo dos campos de texto (Responsivo) */
-.input-group input[type="text"],
-.input-group input[type="email"],
-.input-group select,
-.input-group .input-with-unit input {
-    background: #FFFAE6;
-    border-radius: 28px;
-    border: none;
-    padding: 0.8vw 1.2vw;
-    font-size: 1vw; 
-    color: black;
-    font-weight: 400;
-    height: auto;
-    min-height: 40px; /* Altura mínima para legibilidade */
+.input-group input, .input-group select {
+    background: #FFFAE6; border-radius: 28px; border: none; 
+    padding: 0.7vw 1.2vw; 
+    font-size: 1vw; color: black; font-weight: 400; 
+    min-height: 38px;
+    height: 38px; 
     box-sizing: border-box;
 }
 
-.input-group select {
-    appearance: none; 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    cursor: pointer;
-}
+/* SELECT (LISTA SUSPENSA) */
+.input-group select { appearance: none; -webkit-appearance: none; -moz-appearance: none; cursor: pointer; }
+.custom-select-wrapper { position: relative; height: 38px; }
+.custom-select-wrapper select { width: 100%; height: 100%; }
+.select-arrow { position: absolute; top: 50%; right: 1.2vw; transform: translateY(-50%); width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid #2A2A2A; pointer-events: none; }
 
-/* Wrapper para o Select e seta customizada (Lista Suspensa) */
-.custom-select-wrapper {
-    position: relative;
-    height: auto;
-}
+/* INPUT COM UNIDADE (PESO) */
+.input-with-unit { display: flex; align-items: center; background: #FFFAE6; border-radius: 28px; padding-right: 1.2vw; height: 38px; }
+.input-with-unit input { flex-grow: 1; background: none; border-radius: 28px 0 0 28px; height: 100%; padding-right: 0.5vw;}
+.unit-label { font-size: 1vw; font-weight: 700; color: black; white-space: nowrap; height: 100%; display: flex; align-items: center;}
 
-.custom-select-wrapper select {
-    width: 100%;
-    height: 100%;
-}
+/* CAMPOS LADO A LADO */
+.row-group, .row-group-half { display: flex; gap: 1.5vw; }
+.row-group .input-group { width: 50%; flex-basis: 50%; max-width: 50%; } 
+.row-group-half .input-group { width: 50%; flex-basis: 50%; max-width: 50%; }
+.row-group-half .input-group label { font-size: 1.4vw; }
 
-.select-arrow {
-    position: absolute;
-    top: 50%;
-    right: 1.2vw;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid #2A2A2A; 
-    pointer-events: none; 
-}
-
-
-/* Input com unidade (Peso) */
-.input-with-unit {
-    display: flex;
-    align-items: center;
-    background: #FFFAE6;
-    border-radius: 28px;
-    padding-right: 1.2vw;
-    height: auto;
-    min-height: 40px;
-}
-.input-with-unit input {
-    flex-grow: 1;
-    background: none;
-    border-radius: 28px 0 0 28px;
-    height: 100%;
-    padding-right: 0.5vw;
-}
-.unit-label {
-    font-size: 1vw;
-    font-weight: 700;
-    color: black;
-    white-space: nowrap;
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-
-/* Campos alinhados na mesma linha (Responsivo) */
-.row-group, .row-group-half {
-    display: flex;
-    gap: 1.5vw;
-}
-.row-group .input-group, .row-group-half .input-group {
-    width: 50%; 
-    flex-basis: 50%;
-    max-width: 50%;
-}
-.row-group-half .input-group label {
-    font-size: 1.4vw; 
-}
-
-/* Área de Observações */
-.textarea-group {
-    display: flex;
-    flex-direction: column;
-}
-.textarea-group label {
+/* ÁREA DE OBSERVAÇÕES (TEXTAREA) */
+.textarea-group { display: flex; flex-direction: column; }
+.textarea-group label { 
     font-size: 1.5vw;
+    font-weight: 700;
+    height: 1.8vw; 
+    display: flex;
+    align-items: center;
 }
 .textarea-group textarea {
-    background: rgba(255, 250, 230, 0.76);
-    border-radius: 28px;
-    border: none;
-    padding: 1vw 1.2vw;
-    min-height: 20vh; 
-    resize: none;
-    font-size: 1vw;
-    color: black;
-    box-sizing: border-box;
+    background: rgba(255, 250, 230, 0.76); border-radius: 28px; border: none; padding: 1vw 1.2vw;
+    min-height: 15vh; 
+    height: 15vh;
+    resize: none; font-size: 1vw; color: black; box-sizing: border-box;
 }
 
-/* 3. Ações de Canto (Botões Voltar e Editar) */
-.bottom-actions {
-    position: absolute;
-    bottom: 2vw;
-    left: 2vw; 
-    right: 2vw; 
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    pointer-events: none; 
-}
-
-.back-button, .edit-button {
-    width: 45px;
-    height: 45px;
-    pointer-events: all; 
-}
 
 /* ========================================================= */
-/* 🚀 MEDIA QUERIES: Responsividade em Telas Menores (Desktop Estreito) */
+/* 🚀 MEDIA QUERIES: Responsividade */
 /* ========================================================= */
 
 @media (max-width: 1024px) {
-    /* Reduz o tamanho de fontes para evitar quebra de linha em telas mais apertadas */
-    .screen-title { font-size: 2.2vw; }
-    .user-name { font-size: 2.5vw; }
+    /* REVERTE O ALINHAMENTO À DIREITA E CENTRALIZA EM TELAS MENORES */
+    .background { justify-content: center; }
+    .fundoSemiTransparente { margin: 0; }
+    
+    .input-group label, .textarea-group label { height: auto; }
     .navBar .nav-link { font-size: 2vw; }
     .input-group label { font-size: 2.2vw; }
-    .input-group input[type="text"],
-    .input-group textarea,
-    .input-group select { font-size: 1.8vw; }
-    .unit-label { font-size: 1.8vw; }
-
-    /* Campos em linha única para melhor legibilidade */
-    .row-group, .row-group-half {
-        flex-direction: column;
-        gap: 15px;
-    }
-    .row-group .input-group, .row-group-half .input-group {
-        width: 100%;
-        max-width: 100%;
-    }
+    .input-group input, .input-group select, .unit-label { font-size: 1.8vw; }
+    .metrics-column .section-title-metrics { font-size: 2.3vw; }
+    
+    /* Todos os row-groups passam a ser empilhados em telas menores */
+    .row-group, .row-group-half { flex-direction: column; gap: 15px; }
+    .row-group .input-group, .row-group-half .input-group { width: 100%; max-width: 100%; }
 }
 
 @media (max-width: 800px) {
-    /* Mudar para layout de coluna única */
-    .fundoSemiTransparente {
-        min-width: 90%;
-        padding: 4vw;
-        gap: 4vw;
-    }
-    
-    .profile-main-content {
-        grid-template-columns: 1fr; /* Mudar para uma única coluna */
-        gap: 30px;
-    }
-
-    /* Ajuste final de fontes para telas menores */
-    .screen-title { font-size: 4vw; }
-    .user-name { font-size: 4.5vw; }
-    .navBar ul { flex-wrap: wrap; } /* Permite quebrar a nav bar em duas linhas */
+    /* Mudar para layout de coluna única e ajustes finais */
+    .fundoSemiTransparente { min-width: 90%; padding: 4vw; gap: 4vw; }
+    .profile-main-content { grid-template-columns: 1fr; gap: 30px; }
+    .navBar ul { flex-wrap: wrap; } 
     .navBar .nav-link { font-size: 3.5vw; }
     .input-group label { font-size: 3.5vw; }
-    .input-group input[type="text"],
-    .input-group textarea,
-    .input-group select { font-size: 3vw; }
-    .unit-label { font-size: 3vw; }
-    
-    /* Botões de Ação na base */
-    .bottom-actions {
-        bottom: 15px;
-        left: 15px;
-        right: 15px;
-    }
+    .input-group input, .input-group select, .unit-label { font-size: 3vw; }
+    .metrics-column .section-title-metrics { font-size: 4.5vw; }
 }
