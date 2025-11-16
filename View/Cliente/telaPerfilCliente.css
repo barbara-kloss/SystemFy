@@ -1,12 +1,13 @@
-/* Fundo principal */
+/* Fundo principal e Resets */
 body,
 html {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: 'Alata', sans-serif;
+    font-family: 'Akshar', sans-serif; /* Usando Akshar conforme a imagem sugere */
 }
 
+/* Base do Fundo Preto/Cinza com bolhas (Manter) */
 .background {
     position: relative;
     width: 100%;
@@ -18,67 +19,22 @@ html {
     overflow: hidden;
 }
 
-/* Bolinhas decorativas (Sem Alterações) */
+/* Bolinhas decorativas (Manter) */
 .bolinha {
     position: absolute;
     border-radius: 50%;
     filter: blur(45px);
-}
-
-.bolinha1 {
-    width: 20vw; height: 15vh;
-    top: -5vh; left: 3vw;
     background: rgba(221, 179, 94, 0.85);
 }
 
-.bolinha2 {
-    width: 20vw; height: 20vh;
-    bottom: -5vh; right: 10vw;
-    background: rgba(221, 179, 94, 0.95);
-}
+.bolinha1 { width: 20vw; height: 15vh; top: -5vh; left: 3vw; background: rgba(221, 179, 94, 0.75); }
+.bolinha2 { width: 20vw; height: 20vh; bottom: -5vh; right: 10vw; background: rgba(221, 179, 94, 0.77); }
+.bolinha3 { width: 8vw; height: 8vw; bottom: 12vh; left: 10vw; background: rgba(221, 179, 94, 0.59); }
+.bolinha4 { width: 8vw; height: 8vw; top: 5vh; right: 20vw; background: rgba(221, 179, 94, 0.85); }
+.bolinha5 { width: 8vw; height: 8vw; top: 40vh; left: 55%; }
+.bolinha6 { width: 15vw; height: 15vh; top: 50vh; left: -5vw; background: #DDB35E; }
 
-.bolinha3 {
-    width: 8vw; height: 8vw;
-    bottom: 12vh; left: 10vw;
-    background: rgba(221, 179, 94, 0.59);
-}
-
-.bolinha4 {
-    width: 8vw; height: 8vw;
-    top: 5vh; right: 20vw;
-    background: rgba(221, 179, 94, 0.85);
-}
-
-.bolinha5 {
-    width: 8vw; height: 8vw;
-    top: 40vh; left: 55%;
-    background: rgba(221, 179, 94, 0.85);
-}
-
-.bolinha6 {
-    width: 15vw; height: 15vh;
-    top: 50vh; left: -5vw;
-    background: #DDB35E;
-}
-
-/* Fundo Semi Transparente (Contêiner principal) */
-.fundoSemiTransparente {
-    width: 90%;
-    max-width: 1750px;
-    height: 90vh;
-    position: relative;
-    background: rgba(213.53, 205.82, 179.63, 0.43);
-    border-radius: 28px;
-    padding: 0; 
-    box-sizing: border-box;
-    overflow: hidden; 
-    margin-left: 0; 
-    
-    /* CORREÇÃO CHAVE: Desloca o bloco para a direita para afastar da logo */
-    transform: translateX(2.5%); 
-}
-
-/* Logos de Canto (Mais à esquerda) */
+/* Logos de Canto (Ajustar para posicionamento na tela de perfil) */
 .logoCantoInferior {
     position: absolute;
     width: 3.5vw;
@@ -105,105 +61,226 @@ html {
     height: 100%;
 }
 
-/* ========================================================= */
-/* GRID INTERNO (Para espaçamento uniforme) */
-/* ========================================================= */
-.main-content-grid {
-    height: 90%;
-    display: grid;
-    
-    grid-template-areas:
-        "nav profile_box"
-        "main meta"
-        "main percentuals";
-
-    /* Colunas: [Principal 70%] [Lateral 30%] */
-    /* grid-template-columns: 70% 30%; */
-    grid-template-rows: 100px auto auto;
-    
-    grid-gap: 20px; 
-    
-    /* Padding uniforme para espaçamento interno */
+/* Fundo Semi Transparente (Contêiner principal - Ajuste) */
+.fundoSemiTransparente {
+    width: 90%;
+    max-width: 1200px; /* Largura máxima ajustada para o layout de perfil */
+    height: 90vh;
+    background: rgba(213, 205, 179, 0.43);
+    border-radius: 28px;
     padding: 30px; 
-}
-
-/* Posicionamento da Navbar (Esquerda) */
-.navBar {
-    grid-area: nav;
-    align-self: center;
-    justify-self: start;
-    padding-left: 0; 
-    
-    /* CORREÇÃO: Remove o margin-left excessivo, confiando no transform do pai para afastar */
-    margin-left: 0; 
-}
-
-.navBar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 40px;
-    align-items: center;
-    justify-content: flex-start; 
-}
-
-/* Container de Perfil (Direita/Empilhado) */
-.profile-box-container {
-    grid-area: profile_box;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    justify-self: end; 
-    align-self: center; 
-    margin-right: 0; 
+    position: relative; /* Para posicionar os botões de canto */
 }
 
+/* 1. Header (Título e Informações do Usuário) */
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
 
+.screen-title {
+    color: white;
+    font-size: 20px;
+    font-weight: 400; /* Parece mais sutil que o Akshar 700 */
+    margin-bottom: 10px;
+}
 
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
+.user-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #D4D2C8;
+    background-color: rgba(255, 255, 255, 0.7);
+    object-fit: cover;
+}
 
+.user-name {
+    color: black;
+    font-size: 22px;
+    font-weight: 700;
+}
 
-/* Outros Estilos de Componentes (Sem Alterações) */
-.cardVerPerfil {
-    width: 50px;
-    height: 50px;
-    border-radius: 9999px;
-    border: 2px #D4D2C8 solid;
+/* 2. Conteúdo Principal (Grid de 2 Colunas) */
+.profile-main-content {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+    gap: 50px; /* Espaço entre as colunas */
+    padding-top: 20px;
+}
+
+.personal-data-column,
+.metrics-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Estilo para cada grupo de input */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.input-group label {
+    color: black;
+    font-size: 22px;
+    font-weight: 700;
     margin-bottom: 5px;
 }
 
-.textocardVerPerfil {
-    font-weight: 800;
-    color: #2A2A2A;
-    font-size: 0.8em; 
+/* Estilo dos campos de texto (Nome, Email, Telefone, etc.) */
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group select,
+.input-group .input-with-unit input {
+    background: #FFFAE6;
+    border-radius: 28px;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: black;
+    font-weight: 400;
+    height: 41px;
+    box-sizing: border-box;
 }
 
+.input-group select {
+    appearance: none; /* Remove estilo padrão do select */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
 
-
-.navBar a {
-    text-decoration: none;
-    color: white;
-    font-size: 24px;
-    font-family: 'Akshar', sans-serif;
-    font-weight: 700;
+/* Wrapper para o Select e seta customizada */
+.custom-select-wrapper {
     position: relative;
-    transition: color 0.3s ease;
+    height: 41px;
 }
 
-.navBar a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 0;
-    height: 2px;
-    background-color: black;
-    transition: width 0.3s ease;
-}
-
-.navBar a:hover::after,
-.navBar a.active::after {
+.custom-select-wrapper select {
     width: 100%;
+    height: 100%;
+}
+
+.select-arrow {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #2A2A2A; /* Cor da seta */
+    pointer-events: none; /* Garante que o clique vá para o select */
+}
+
+
+/* Input com unidade (Peso) */
+.input-with-unit {
+    display: flex;
+    align-items: center;
+    background: #FFFAE6;
+    border-radius: 28px;
+    padding-right: 20px;
+    height: 41px;
+}
+.input-with-unit input {
+    flex-grow: 1;
+    background: none;
+    border-radius: 28px 0 0 28px;
+    height: 100%;
+    padding-right: 5px;
+}
+.unit-label {
+    font-size: 18px;
+    font-weight: 700;
+    color: black;
+    white-space: nowrap;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* Campos alinhados na mesma linha (Data Nascimento / Plano) */
+.row-group {
+    display: flex;
+    gap: 30px;
+}
+.row-group .input-group {
+    width: 50%; /* Divide o espaço */
+}
+
+/* Campos na mesma linha (Peso/Altura e Percentuais) */
+.row-group-half {
+    display: flex;
+    gap: 30px;
+}
+.row-group-half .input-group {
+    flex-basis: 50%; /* Metade do espaço */
+    max-width: 50%;
+}
+.row-group-half .input-group label {
+    font-size: 20px; /* Rótulos menores para as métricas */
+}
+
+/* Área de Observações */
+.textarea-group {
+    display: flex;
+    flex-direction: column;
+}
+.textarea-group label {
+    color: black;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+.textarea-group textarea {
+    background: rgba(255, 250, 230, 0.76);
+    border-radius: 28px;
+    border: none;
+    padding: 15px 20px;
+    min-height: 150px; /* Altura conforme a imagem */
+    resize: none;
+    font-size: 18px;
+    color: black;
+    box-sizing: border-box;
+}
+
+/* 3. Ações de Canto (Botões Voltar e Editar) */
+.bottom-actions {
+    position: absolute;
+    bottom: 30px;
+    left: 30px; /* Posição inicial para o voltar */
+    right: 30px; /* Posição inicial para o editar */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    pointer-events: none; /* Permite o clique nos links */
+}
+
+.back-button, .edit-button {
+    width: 45px;
+    height: 45px;
+    pointer-events: all; /* Ativa o clique nos botões */
+}
+
+.back-button {
+    align-self: flex-end;
+}
+.edit-button {
+    align-self: flex-end;
 }

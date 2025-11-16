@@ -1,12 +1,13 @@
-/* Fundo principal */
+/* Fundo principal e Resets */
 body,
 html {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: 'Alata', sans-serif;
+    font-family: 'Akshar', sans-serif; /* Use Akshar conforme a imagem sugere */
 }
 
+/* Base do Fundo Preto/Cinza com bolhas (Manter) */
 .background {
     position: relative;
     width: 100%;
@@ -18,80 +19,22 @@ html {
     overflow: hidden;
 }
 
-/* Bolinhas decorativas (Sem Alterações) */
+/* Bolinhas decorativas (Manter) */
 .bolinha {
     position: absolute;
     border-radius: 50%;
     filter: blur(45px);
+    background: rgba(221, 179, 94, 0.85); /* Cor base para todas */
 }
 
-.bolinha1 {
-    width: 20vw; height: 15vh;
-    top: -5vh; left: 3vw;
-    background: rgba(221, 179, 94, 0.85);
-}
+.bolinha1 { width: 20vw; height: 15vh; top: -5vh; left: 3vw; }
+.bolinha2 { width: 20vw; height: 20vh; bottom: -5vh; right: 10vw; background: rgba(221, 179, 94, 0.95); }
+.bolinha3 { width: 8vw; height: 8vw; bottom: 12vh; left: 10vw; background: rgba(221, 179, 94, 0.59); }
+.bolinha4 { width: 8vw; height: 8vw; top: 5vh; right: 20vw; }
+.bolinha5 { width: 8vw; height: 8vw; top: 40vh; left: 55%; }
+.bolinha6 { width: 15vw; height: 15vh; top: 50vh; left: -5vw; background: #DDB35E; }
 
-.bolinha2 {
-    width: 20vw; height: 20vh;
-    bottom: -5vh; right: 10vw;
-    background: rgba(221, 179, 94, 0.95);
-}
-
-.bolinha3 {
-    width: 8vw; height: 8vw;
-    bottom: 12vh; left: 10vw;
-    background: rgba(221, 179, 94, 0.59);
-}
-
-.bolinha4 {
-    width: 8vw; height: 8vw;
-    top: 5vh; right: 20vw;
-    background: rgba(221, 179, 94, 0.85);
-}
-
-.bolinha5 {
-    width: 8vw; height: 8vw;
-    top: 40vh; left: 55%;
-    background: rgba(221, 179, 94, 0.85);
-}
-
-.bolinha6 {
-    width: 15vw; height: 15vh;
-    top: 50vh; left: -5vw;
-    background: #DDB35E;
-}
-
-/* Fundo Semi Transparente (Contêiner principal) */
-.fundoSemiTransparente {
-    width: 90%;
-    max-width: 1750px;
-    height: 90vh;
-    position: relative;
-    background: rgba(213.53, 205.82, 179.63, 0.43);
-    border-radius: 28px;
-    padding: 0; 
-    box-sizing: border-box;
-    overflow: hidden; 
-    margin-left: 0; 
-    
-    /* CORREÇÃO CHAVE: Desloca o bloco para a direita para afastar da logo */
-    transform: translateX(2.5%); 
-}
-
-/* Logos de Canto (Mais à esquerda) */
-.logoCantoInferior {
-    position: absolute;
-    width: 3.5vw;
-    height: auto;
-    left: 1.5vw; 
-    top: 3vh; 
-    z-index: 20; 
-}
-.logoCantoInferior img {
-    width: 100%;
-    height: auto;
-}
-
+/* Logo de WhatsApp no canto inferior esquerdo (Ajustar) */
 .logoWhatsApp {
     position: absolute;
     width: 3.5vw;
@@ -105,37 +48,42 @@ html {
     height: 100%;
 }
 
-/* ========================================================= */
-/* GRID INTERNO (Para espaçamento uniforme) */
-/* ========================================================= */
-.main-content-grid {
-    height: 90%;
-    display: grid;
-    
-    grid-template-areas:
-        "nav profile_box"
-        "main meta"
-        "main percentuals";
-
-    /* Colunas: [Principal 70%] [Lateral 30%] */
-    /* grid-template-columns: 70% 30%; */
-    grid-template-rows: 100px auto auto;
-    
-    grid-gap: 20px; 
-    
-    /* Padding uniforme para espaçamento interno */
+/* Fundo Semi Transparente (Contêiner principal - Ajuste de dimensões e centralização) */
+.fundoSemiTransparente {
+    width: 90%;
+    max-width: 1400px; /* Limite máximo para telas grandes */
+    height: 90vh;
+    background: rgba(213, 205, 179, 0.43);
+    border-radius: 28px;
     padding: 30px; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
-/* Posicionamento da Navbar (Esquerda) */
+/* 1. Header (Navegação + Perfil) */
+.header-content-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    /* Altura da área do header */
+    height: 60px; 
+}
+
+/* 1a. Navegação */
 .navBar {
-    grid-area: nav;
-    align-self: center;
-    justify-self: start;
-    padding-left: 0; 
-    
-    /* CORREÇÃO: Remove o margin-left excessivo, confiando no transform do pai para afastar */
-    margin-left: 0; 
+    display: flex;
+    align-items: center;
+    gap: 50px; /* Espaço entre o título e a nav */
+}
+
+.screen-title {
+    color: #FFF;
+    font-size: 24px;
+    font-weight: 700;
+    /* Título superior esquerdo (Tela Treinos Cliente) */
 }
 
 .navBar ul {
@@ -145,65 +93,228 @@ html {
     display: flex;
     gap: 40px;
     align-items: center;
-    justify-content: flex-start; 
 }
 
-/* Container de Perfil (Direita/Empilhado) */
+.navBar .nav-link {
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+/* Sublinhado da aba ativa/hover */
+.navBar .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 5px; /* Mais espesso como na imagem */
+    background-color: #2A2A2A;
+    transition: width 0.3s ease;
+}
+
+.navBar .nav-link.active::after {
+    width: 100%;
+    background-color: #2A2A2A; /* Cor escura do sublinhado na ativa */
+}
+.navBar .nav-link:hover::after {
+    width: 100%;
+}
+
+
+/* 1b. Perfil Box */
 .profile-box-container {
-    grid-area: profile_box;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    justify-self: end; 
-    align-self: center; 
-    margin-right: 0; 
+    cursor: pointer;
 }
 
-
-
-
-
-
-/* Outros Estilos de Componentes (Sem Alterações) */
 .cardVerPerfil {
     width: 50px;
     height: 50px;
     border-radius: 9999px;
     border: 2px #D4D2C8 solid;
     margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5); /* Fundo sutil */
+}
+
+.profile-icon {
+    width: 30px;
+    height: 30px;
+    /* Adicionar a cor do ícone, se for um SVG ou imagem colorida */
 }
 
 .textocardVerPerfil {
-    font-weight: 800;
+    font-weight: 400; /* Altere para 400 ou 500 para parecer com Alata */
     color: #2A2A2A;
-    font-size: 0.8em; 
+    font-size: 16px; 
+    font-family: 'Alata', sans-serif;
 }
 
-
-
-.navBar a {
-    text-decoration: none;
-    color: white;
-    font-size: 24px;
-    font-family: 'Akshar', sans-serif;
-    font-weight: 700;
+/* 2. Main Screen Box (Box de Conteúdo Amarelado) */
+.main-screen-box {
+    flex-grow: 1; /* Ocupa o restante da altura */
+    background: #FFFAE6;
+    border-radius: 28px;
+    padding: 20px 40px; /* Espaçamento interno */
     position: relative;
-    transition: color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.navBar a::after {
-    content: '';
+/* Check-in e Seleção de Dias (Organização) */
+.check-in-box {
+    padding-top: 20px;
+}
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #2A2A2A;
+    font-weight: 700;
+}
+.checkbox-wrapper input[type="checkbox"] {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #2A2A2A;
+    border-radius: 4px;
+    margin-right: 10px;
+    background-color: #2A2A2A;
+    position: relative;
+    cursor: pointer;
+}
+.checkbox-wrapper input[type="checkbox"]:checked:after {
+    content: '✓'; /* Ou use um ícone */
     position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 0;
-    height: 2px;
-    background-color: black;
-    transition: width 0.3s ease;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: #FFFAE6; /* Cor do check */
 }
 
-.navBar a:hover::after,
-.navBar a.active::after {
+
+/* Seleção de Dias (Faixa centralizada) */
+.day-selector {
+    display: flex;
+    justify-content: center; /* Centraliza a faixa */
+    background-color: rgba(237, 231, 209, 0.82); /* Cor de fundo da faixa */
+    padding: 15px 0;
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+    margin: -20px -40px 0 -40px; /* Expande para as laterais do main-screen-box */
+    position: relative;
+    z-index: 10;
+}
+
+.day-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70px; /* Largura fixa para cada dia */
+    cursor: pointer;
+    font-weight: 700;
+    color: #2A2A2A;
+    padding: 0 5px;
+}
+
+.day-name {
+    font-size: 20px;
+}
+
+.day-number {
+    font-size: 28px;
+    line-height: 1;
+    margin-top: 5px;
+}
+
+.active-day {
+    background: rgba(255, 255, 255, 0.76);
+    border-radius: 20px;
+    padding: 10px 5px; /* Ajusta o padding para a área ativa */
+    margin: -10px 0; /* Ajusta a posição para sobrepor um pouco */
+}
+
+/* 3. Conteúdo Principal (Treinos e Vídeo) */
+.training-content-grid {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr; /* Coluna de Treinos (menor) e Coluna de Vídeo (maior) */
+    gap: 30px;
+    /* Ajusta o grid para usar o espaço abaixo do seletor de dias */
+    padding-top: 10px; 
+}
+
+/* 3a. Lista de Treinos */
+.training-list-box {
+    background: rgba(237, 231, 209, 0.82);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.training-group-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #413838;
+    font-weight: 700;
+}
+
+.indicator-bar {
+    width: 7px;
+    height: 30px;
+    background: #DDB35E;
+    border-radius: 15px;
+}
+
+.exercise-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+    font-size: 18px;
+    color: #413838;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.play-icon {
+    font-size: 20px;
+    color: #413838;
+}
+
+.info-icon {
+    font-size: 20px;
+    margin-left: auto; /* Empurra o ícone de informação para a direita */
+    color: #413838;
+}
+
+/* 3b. Vídeo */
+.video-container {
+    background-color: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    /* Garante que o container use a altura total disponível no grid */
+    height: 100%; 
+}
+.video-container iframe {
+    /* O iframe agora é 100% do seu container pai (.video-container) */
     width: 100%;
+    height: 100%;
 }
