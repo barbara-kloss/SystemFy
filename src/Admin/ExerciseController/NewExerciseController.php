@@ -27,12 +27,6 @@ class NewExerciseController implements Controller
             exit();
         }
 
-        $tempo_descanso = filter_input(INPUT_POST, 'tempo_descanso');
-        if ($tempo_descanso === false) {
-            header('Location: /admin/exercise/list?sucesso=0');
-            exit();
-        }
-
         $repeticao  = filter_input(INPUT_POST, 'repeticao',FILTER_VALIDATE_INT);
         if ($repeticao === false) {
             header('Location: /admin/exercise/list?sucesso=0');
@@ -45,13 +39,13 @@ class NewExerciseController implements Controller
             exit();
         }
 
-        $objetivo = filter_input(INPUT_POST, 'objetivo');
+        $objetivo = filter_input(INPUT_GET, 'objetivo');
         if ($objetivo === false) {
             header('Location: /admin/exercise/list?sucesso=0');
             exit();
         }
 
-        $dia = filter_input(INPUT_POST, 'dia');
+        $dia = filter_input(INPUT_POST, 'dia', FILTER_VALIDATE_INT);
         if ($dia === false) {
             header('Location: /admin/exercise/list?sucesso=0');
             exit();
@@ -77,7 +71,7 @@ class NewExerciseController implements Controller
         $video = filter_input(INPUT_POST, 'video', FILTER_VALIDATE_BOOLEAN);
 
 
-        $result = $this->exerciseRepository->add(new Exercise($id_user, $peso, $tempo_descanso, $repeticao, $tipo_exercicio, $objetivo, $dia, $observacao, $categoria, $id_personal, $video));
+        $result = $this->exerciseRepository->add(new Exercise($id_user, $peso, $repeticao, $tipo_exercicio, $objetivo, $dia, $observacao, $categoria, $id_personal, $video));
 
         if ($result === false){
             header('Location: /admin/exercise/list?sucesso=0');

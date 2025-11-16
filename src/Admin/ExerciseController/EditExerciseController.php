@@ -31,12 +31,6 @@ class EditExerciseController implements Controller
             exit();
         }
 
-        $tempo_descanso = filter_input(INPUT_POST, 'tempo_descanso');
-        if ($tempo_descanso === false) {
-            header('Location: /admin/exercise/list?sucesso=0');
-            exit();
-        }
-
         $repeticao  = filter_input(INPUT_POST, 'repeticao',FILTER_VALIDATE_INT);
         if ($repeticao === false) {
             header('Location: /admin/exercise/list?sucesso=0');
@@ -49,7 +43,7 @@ class EditExerciseController implements Controller
             exit();
         }
 
-        $objetivo = filter_input(INPUT_POST, 'objetivo');
+        $objetivo = filter_input(INPUT_GET, 'objetivo');
         if ($objetivo === false) {
             header('Location: /admin/exercise/list?sucesso=0');
             exit();
@@ -79,7 +73,7 @@ class EditExerciseController implements Controller
         }
         $video = filter_input(INPUT_POST, 'video');
 
-        $exercise = new Exercise($id_user, $peso, $tempo_descanso, $repeticao, $tipo_exercicio, $objetivo, $dia, $observacao, $categoria, $id_personal, $video);
+        $exercise = new Exercise($id_user, $peso, $repeticao, $tipo_exercicio, $objetivo, $dia, $observacao, $categoria, $id_personal, $video);
         $exercise->setId($id);
 
         $result = $this->exerciseRepository->update($exercise);

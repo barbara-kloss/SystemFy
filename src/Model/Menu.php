@@ -1,111 +1,78 @@
 <?php
 
-use Cassandra\Time;
-
 class Menu
 {
-    public readonly int $id;
-    public readonly string $dia;
-    public readonly string $observacao;
-    public readonly string $categoria;
-    public readonly Time $horario;
-    public readonly User $id_usuario;
-    public readonly User $id_nutri;
-    public readonly string $restricao;
-    public readonly string $titulo;
+    private int $id;
+    private string $horario;         // TIME - armazenado como string "HH:MM:SS"
+    private int $categoria;
+    private string $observacao;
+    private User $usuario;           // id_user
+    private User $nutri;             // id_nutri
+    private string $titulo;
 
-
-    function __construct(
-        int $id, Time $horario, string $restricao, string $dia, string $categoria, string $observacao, User $id_usuario, User $id_nutri, string $titulo
+    public function __construct(
+        int $id,
+        string $horario,
+        int $categoria,
+        string $observacao,
+        User $usuario,
+        User $nutri,
+        string $titulo
     ) {
         $this->id = $id;
         $this->horario = $horario;
-        $this->restricao = $restricao;
-        $this->dia = $dia;
         $this->categoria = $categoria;
         $this->observacao = $observacao;
-        $this->id_usuario = $id_usuario;
-        $this->id_nutri = $id_nutri;
+        $this->usuario = $usuario;
+        $this->nutri = $nutri;
         $this->titulo = $titulo;
     }
 
-    public function setDia(string $dia)
+    // SETTERS
+    public function setHorario(string $horario): void
     {
-        if ($dia === false) {
-            throw new \InvalidArgumentException("dia invalido!");
-        }
-        $this->dia = $dia;
-    }
-
-    public function setId(int $id)
-    {
-        if ($id <= 0) {
-            throw new \InvalidArgumentException("ID deve ser positivo!");
-        }
-        $this->id = $id;
-    }
-
-    public function setObservacao(string $observacao)
-    {
-        if (empty($observacao)) {
-            throw new \InvalidArgumentException("Observação não pode ser vazia!");
-        }
-        $this->observacao = $observacao;
-    }
-
-    public function setCategoria(string $categoria)
-    {
-        if (empty($categoria)) {
-            throw new \InvalidArgumentException("Categoria não pode ser vazia!");
-        }
-        $this->categoria = $categoria;
-    }
-
-    public function setHorario(Time $horario)
-    {
-        if (!$horario) {
-            throw new \InvalidArgumentException("Horário inválido!");
-        }
         $this->horario = $horario;
     }
 
-    public function setTitulo(string $titulo)
+    public function setCategoria(int $categoria): void
     {
-        if (!$titulo) {
-            throw new \InvalidArgumentException("Título inválido!");
-        }
+        $this->categoria = $categoria;
+    }
+
+    public function setObservacao(string $observacao): void
+    {
+        $this->observacao = $observacao;
+    }
+
+    public function setUsuario(User $usuario): void
+    {
+        $this->usuario = $usuario;
+    }
+
+    public function setNutri(User $nutri): void
+    {
+        $this->nutri = $nutri;
+    }
+
+    public function setTitulo(string $titulo): void
+    {
         $this->titulo = $titulo;
     }
 
-    public function setIdUsuario(User $id_usuario)
-    {
-        if (!$id_usuario) {
-            throw new \InvalidArgumentException("Usuário inválido!");
-        }
-        $this->id_usuario = $id_usuario;
-    }
-
-    public function setIdNutri(User $id_nutri)
-    {
-        if (!$id_nutri) {
-            throw new \InvalidArgumentException("Nutricionista inválido!");
-        }
-        $this->id_nutri = $id_nutri;
-    }
-
-    public function setRestricao(string $restricao)
-    {
-        $this->restricao = $restricao;
-    }
-
+    // GETTERS
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getDia(): string
+    public function getHorario(): string
     {
-        return $this->dia;
+        return $this->horario;
+    }
+
+    public function getCategoria(): int
+    {
+        return $this->categoria;
     }
 
     public function getObservacao(): string
@@ -113,35 +80,25 @@ class Menu
         return $this->observacao;
     }
 
-    public function getCategoria(): string
+    public function getUsuario(): User
     {
-        return $this->categoria;
+        return $this->usuario;
     }
 
-    public function getHorario(): Time
+    public function getNutri(): User
     {
-        return $this->horario;
-    }
-
-    public function getIdUsuario(): User
-    {
-        return $this->id_usuario;
-    }
-
-    public function getIdNutri(): User
-    {
-        return $this->id_nutri;
-    }
-
-    public function getRestricao(): string
-    {
-        return $this->restricao;
+        return $this->nutri;
     }
 
     public function getTitulo(): string
     {
         return $this->titulo;
     }
-}
 
+    //  Pega o objetivo vindo da tabela User
+    public function getObjetivo(): int
+    {
+        return $this->usuario->getObjetivo();
+    }
+}
 ?>
