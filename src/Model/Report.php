@@ -1,6 +1,7 @@
 <?php
 use User;
 use Plano;
+namespace Systemfy\App\Model;
 class Report
 {
     private int $id;

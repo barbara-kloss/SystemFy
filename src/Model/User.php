@@ -1,4 +1,5 @@
 <?php
+namespace Systemfy\App\Model;
 
 class User
 {

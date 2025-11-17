@@ -1,5 +1,6 @@
 <?php
 use User;
+namespace Systemfy\App\Model;
 
 class Exercise
 {

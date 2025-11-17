@@ -1,5 +1,6 @@
 <?php
 use User;
+namespace Systemfy\App\Model;
  class Agenda{
 
     private int $id;

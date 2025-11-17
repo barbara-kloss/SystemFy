@@ -1,3 +1,20 @@
+<?php
+
+use Systemfy\App\Model\Menu;
+
+/** @var Menu|null $menu */
+if (!isset($menu)) {
+    $menu = null;
+}
+if (!isset($menuList)) {
+    $menuList = [];
+}
+
+function getCategoriaNome(int $id): string {
+    return $id == 1 ? 'Geral' : 'Livre';
+}
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -59,9 +76,10 @@
                 <div class="top-right-bar">
 
                     <div class="search-bar search-cliente">
-                        <input type="text" placeholder="Buscar Cliente (Nome ou Email)" class="search-input" id="clienteSearchInput">
+                        <input type="text" placeholder="Buscar Cliente (Nome ou Email)" class="search-input"
+                            id="clienteSearchInput">
                         <i class="fas fa-search search-icon" id="searchIcon"></i>
-                        <div id="suggestionsList" class="suggestions-dropdown"></div> 
+                        <div id="suggestionsList" class="suggestions-dropdown"></div>
                     </div>
 
                     <div class="profile-box-container">
@@ -80,36 +98,41 @@
 
                         <h3 class="cliente-nome" id="clienteNomeDisplay">(Nenhum Cliente Carregado)</h3>
 
-                        <form class="refeicao-form">
+                        <form class="refeicao-form" method="post" action="/admin/menu/save"">
 
                             <div class="input-group-grid-row">
 
                                 <div class="input-group half-width-field">
                                     <label for="tipoRefeicao">Tipo de Refeição</label>
                                     <select id="tipoRefeicao">
-                                        <option value="Geral" selected>Refeições Geral</option>
-                                        <option value="Livre">Refeições Livre</option>
+                                        <option  name="categoria" value="1" <?= ($menu?->tipoRefeicaoId == 1) ? 'selected' : ''; ?>>
+                                            Refeições Geral
+                                        </option>
+
+                                        <option name="categoria" value="2" <?= ($menu?->tipoRefeicaoId == 2) ? 'selected' : ''; ?>>
+                                            Refeições Livre
+                                        </option>
                                     </select>
                                 </div>
 
                                 <div class="input-group half-width-field">
                                     <label for="horario">Horário</label>
-                                    <input type="time" id="horario" value="08:00">
+                                    <input type="time" name="horario" id="horario" value="<?= $menu?->horario ?? ''; ?>">
                                 </div>
                             </div>
                             <div class="input-group">
                                 <label for="categoriaNome">Nome da Refeição</label>
-                                <input type="text" id="categoriaNome" value="">
+                                <input type="text" name="titulo" id="categoriaNome" value="<?= $menu?->titulo ?? ''; ?>">
                             </div>
 
                             <div class="input-group">
                                 <label for="observacao">Observação</label>
-                                <textarea id="observacao"></textarea>
+                                <textarea name="observacao" id="observacao"><?= $menu?->observacao ?? ''; ?></textarea>
                             </div>
-                        </form>
-
-                        <button type="submit" class="btn-confirmar">Confirmar</button>
-                    </div>
+                            
+                            <button type="submit" class="btn-confirmar">Confirmar</button>
+                        </div>
+                    </form>
 
                     <div class="card-lista-refeicoes">
 
@@ -121,26 +144,17 @@
                                 <option value="Livre">Refeições Livre</option>
                             </select>
                         </div>
-
                         <div class="lista-itens-scroll">
+                            <?php foreach ($menuList as $menu) {?>
                             <div class="refeicao-item clickable-item" data-id="1" data-tipo="Geral">
-                                <span class="refeicao-horario">6:00</span>
-                                <span class="refeicao-nome">Ao acordar</span>
-                                <button class="btn-excluir"><i class="fas fa-times"></i></button>
+                                <span class="refeicao-horario"><?= $menu->horario; ?></span>
+                                <span class="refeicao-nome"><?= $menu->categoria; ?></span>
+                                <button class="/admin/menu/deleteid=<?= $menu->id; ?>"><i class="fas fa-times"></i></button>
                             </div>
-                            <div class="refeicao-item clickable-item" data-id="2" data-tipo="Geral">
-                                <span class="refeicao-horario">7:00</span>
-                                <span class="refeicao-nome">Café da Manhã</span>
-                                <button class="btn-excluir"><i class="fas fa-times"></i></button>
-                            </div>
-                            <div class="refeicao-item clickable-item" data-id="3" data-id="3" data-tipo="Livre">
-                                <span class="refeicao-horario">8:00</span>
-                                <span class="refeicao-nome">Lanche da Manhã</span>
-                                <button class="btn-excluir"><i class="fas fa-times"></i></button>
-                            </div>
+                            <?php }?>
                         </div>
-
-                        <button class="btn-adicionar-refeicao" title="Adicionar Nova Refeição">
+                        
+                        <button  class="btn-adicionar-refeicao" title="Adicionar Nova Refeição">
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
@@ -160,12 +174,12 @@
             { id: 4, nome: "MARCIA FAGUNDES", email: "marcia.fagundes@email.com", refeicoes: [] },
         ];
 
-        let clienteCarregadoId = null; 
+        let clienteCarregadoId = null;
 
         // =========================================================
         // FUNÇÕES DE BUSCA E UI
         // =========================================================
-        
+
         /**
          * Busca o cliente por substring no nome ou email.
          * @param {string} termo Termo de busca.
@@ -182,7 +196,7 @@
                 return nomeUpper.includes(termoUpper) || emailUpper.includes(termoUpper);
             });
         }
-        
+
         /**
          * Retorna o primeiro cliente encontrado com base no termo.
          * Usado para a busca final (Enter ou clique no ícone).
@@ -208,19 +222,19 @@
         function renderSuggestions(matches) {
             const listContainer = document.getElementById('suggestionsList');
             listContainer.innerHTML = ''; // Limpa sugestões antigas
-            
+
             if (matches.length > 0) {
                 matches.forEach(cliente => {
                     const item = document.createElement('div');
                     item.className = 'suggestion-item';
                     item.textContent = `${cliente.nome} (${cliente.email.split('@')[0]}...)`;
-                    
+
                     // CRÍTICO: Adiciona evento para carregar o cliente ao clicar na sugestão
-                    item.addEventListener('click', function() {
+                    item.addEventListener('click', function () {
                         carregarDadosCliente(cliente);
                         listContainer.style.display = 'none';
                     });
-                    
+
                     listContainer.appendChild(item);
                 });
                 listContainer.style.display = 'block';
@@ -244,18 +258,18 @@
 
             renderSuggestions(resultados);
         }
-        
+
         // FUNÇÃO PARA LIDAR COM BUSCA COMPLETA (ENTER ou ÍCONE)
         function handleSearch() {
             const searchInput = document.getElementById('clienteSearchInput');
             const termo = searchInput.value;
-            
+
             if (termo.length < 2) {
-                 alert("Digite um nome ou e-mail para buscar.");
-                 return;
+                alert("Digite um nome ou e-mail para buscar.");
+                return;
             }
 
-            const cliente = buscarCliente(termo); 
+            const cliente = buscarCliente(termo);
 
             document.getElementById('suggestionsList').style.display = 'none'; // Esconde a lista
 
@@ -283,15 +297,15 @@
 
             // 2. Disparar a busca completa (Enter ou Ícone)
             searchIcon.addEventListener('click', handleSearch);
-            searchInput.addEventListener('keydown', function(e) {
+            searchInput.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter') {
-                    e.preventDefault(); 
+                    e.preventDefault();
                     handleSearch();
                 }
             });
 
             // 3. Ocultar sugestões quando clicar fora do campo (boa prática de UX)
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 const searchBar = document.querySelector('.search-bar');
                 if (!searchBar.contains(e.target)) {
                     document.getElementById('suggestionsList').style.display = 'none';
@@ -301,7 +315,7 @@
 
             // --- CÓDIGO ORIGINAL DAS REFEIÇÕES (Mantido) ---
             const listaItensScroll = document.querySelector('.lista-itens-scroll');
-            const filtroRefeicao = document.getElementById('filtroRefeicao'); 
+            const filtroRefeicao = document.getElementById('filtroRefeicao');
 
             function applyFilter(filterValue) {
                 const itens = document.querySelectorAll('.refeicao-item');
@@ -342,8 +356,8 @@
             }
 
             document.querySelectorAll('.refeicao-item.clickable-item').forEach(attachEventListeners);
-            
-            filtroRefeicao.addEventListener('change', function() {
+
+            filtroRefeicao.addEventListener('change', function () {
                 applyFilter(this.value);
             });
 
