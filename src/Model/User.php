@@ -6,7 +6,7 @@ class User
     private  int $id;
     private  string $nome;
     private  string $email;
-    private  Date $data_nasc;
+    private  \DateTime $data_nasc;
     private  string $genero;
     private  string $telefone;
     private  string $senha;
@@ -23,9 +23,9 @@ class User
     private float $peso_meta;
 
     function __construct(
-        int $id, string $nome, Date $data_nasc, string $genero, string $telefone, string $senha, string $permissao, float $altura, int $peso, string $objetivo, bool $status, string $observacao, float $massa, float $gordura, Plano $plano_id, string $email, string $foto, float $peso_meta
+         string $nome, \DateTime $data_nasc, string $genero, string $telefone, string $senha, string $permissao, float $altura, int $peso, string $objetivo, bool $status, string $observacao, float $massa, float $gordura, Plano $plano_id, string $email, string $foto, float $peso_meta
     ) {
-        $this->id = $id;
+       
         $this->nome = $nome;
         $this->data_nasc = $data_nasc;
         $this->genero = $genero;
@@ -65,7 +65,7 @@ class User
         $this->nome = $nome;
     }
 
-    public function setDate(Date $data_nasc)
+    public function setDate(\DateTime $data_nasc)
     {
         $this->data_nasc = $data_nasc;
     }
@@ -150,7 +150,7 @@ class User
         return $this->email;
     }
 
-    public function getDataNasc(): Date
+    public function getDataNasc(): \DateTime
     {
         return $this->data_nasc;
     }

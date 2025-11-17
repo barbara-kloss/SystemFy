@@ -15,11 +15,11 @@ class Report
 
     private Plano $plano;
 
-    public function __construct(int $id,
+    public function __construct(
     User $user, User $personal_id, User $nutri_id,
         Date $data, User $objetivo, Plano $plano)
     {
-        $this->id = $id;
+        
         $this->user = $user;
         $this->personal_id = $personal_id;
         $this->nutri_id = $nutri_id;

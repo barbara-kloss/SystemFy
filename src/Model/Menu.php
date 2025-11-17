@@ -12,7 +12,6 @@ class Menu
     private string $titulo;
 
     public function __construct(
-        int $id,
         string $horario,
         int $categoria,
         string $observacao,
@@ -20,7 +19,7 @@ class Menu
         User $nutri,
         string $titulo
     ) {
-        $this->id = $id;
+       
         $this->horario = $horario;
         $this->categoria = $categoria;
         $this->observacao = $observacao;
