@@ -55,7 +55,8 @@ use Systemfy\App\ControllerLogin\{
     RegisterController,
     LoginController,
     LoginFormController,
-    LogoutController
+    LogoutController,
+    RegisterAdminController
 };
 
 
@@ -108,5 +109,6 @@ return [
     'POST|/login' => LoginController::class,
     'GET|/logout' => LogoutController::class,
     'GET|/cadastro' => RegisterController::class,
+    'GET|/admin/cadastro' => RegisterAdminController::class,
     'POST|/cadastro' => NewUserController::class,
 ];
