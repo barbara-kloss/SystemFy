@@ -1,3 +1,17 @@
+<?php if (isset($_GET['sucesso']) && $_GET['sucesso'] == 0): ?>
+    <div style="
+        background-color: #ffdddd;
+        border-left: 5px solid #ff4444;
+        padding: 12px;
+        margin-bottom: 15px;
+        color: #b30000;
+        font-weight: bold;
+        border-radius: 4px;
+    ">
+        ❌ Email ou senha incorretos. Tente novamente.
+    </div>
+<?php endif; ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -17,14 +31,14 @@
 
         <div class="container">
             <div class="logo-box">
-                <img src="/public/imgFy/logoSemfundoEscritaBranca.png" alt="Logo" class="logo">
+                <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo" class="logo">
             </div>
 
             <div class="login-box">
-                <form action="" method="POST">
+                <form action="/login" method="POST">
                     <h1>Login</h1>
-                    <input type="email" placeholder="E-mail" name="email">
-                    <input type="password" placeholder="Senha" name="senha">
+                    <input type="email" placeholder="E-mail" name="email" required>
+                    <input type="password" placeholder="Senha" name="senha" required>
                     <a href="/admin" class="forgot">Esqueci a senha</a>
                     <button type="submit"> Entrar </button>
                 </form>

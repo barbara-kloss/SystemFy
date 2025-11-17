@@ -25,7 +25,7 @@
             </div>
             
             <div class="logo-box">
-                <img src="../public/imgFy/logoSemfundoEscritaBranca.png" alt="Logo" class="logo">
+                <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo" class="logo">
             </div>
 
         </div>

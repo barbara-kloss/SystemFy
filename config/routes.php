@@ -60,7 +60,7 @@ use Systemfy\App\ControllerLogin\{
 
 
 return [
-    'GET|/' => LoginFormController::class, // não dar erro 404
+    'GET|/' => MainAdminController::class, // não dar erro 404
     'GET|/admin' => MainAdminController::class,
     'GET|/client' => MainClienteController::class,
     'GET|/admin/exercise/list' => ExerciseListController::class,
