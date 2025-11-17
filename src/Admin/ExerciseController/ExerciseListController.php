@@ -16,7 +16,7 @@ class ExerciseListController implements Controller
     public function processaRequisicao(): void
     {
         $exerciseList = $this->exerciseRepository->all();
-        require_once __DIR__ . '/../../View/Admin/telaPersonal.html';
+        require_once __DIR__ . '/../../View/Admin/telaPersonal.php';
     }
 
 

@@ -21,6 +21,6 @@ class MenuFormController implements Controller
         if ($id !== false && $id !== null) {
             $menu = $this->menuRepository->find($id);
         }
-        require_once __DIR__ . '/../../View/Admin/telaNutricionalAdmin.html';
+        require_once __DIR__ . '/../../View/Admin/telaNutricionalAdmin.php';
     }
 }

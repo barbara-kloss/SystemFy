@@ -21,6 +21,6 @@ class PlanoFormController implements Controller
         if ($id !== false && $id !== null) {
             $plano = $this->planoRepository->find($id);
         }
-        require_once __DIR__ . '/../../View/Admin/telaPlanos.html';
+        require_once __DIR__ . '/../../View/Admin/telaPlanos.php';
     }
 }

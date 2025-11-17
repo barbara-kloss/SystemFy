@@ -15,7 +15,7 @@ class PlanoListController implements Controller
     public function processaRequisicao(): void
     {
         $planoList = $this->planoRepository->all();
-        require_once __DIR__ . '/../../View/Admin/telaPlanos.html';
+        require_once __DIR__ . '/../../View/Admin/telaPlanos.php';
     }
 
 }

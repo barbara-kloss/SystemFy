@@ -22,6 +22,6 @@ class ExerciseFormController implements Controller
         if ($id !== false && $id !== null) {
             $exercise = $this->exerciseRepository->find($id);
         }
-        require_once __DIR__ . '/../../View/Admin/telaPersonal.html';
+        require_once __DIR__ . '/../../View/Admin/telaPersonal.php';
     }
 }
