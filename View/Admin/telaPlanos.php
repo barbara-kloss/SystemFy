@@ -30,7 +30,6 @@
         <div class="fundoSemiTransparente">
 
             <div class="main-content-grid">
-
                 <div class="navBar">
                     <nav>
                         <ul class="navbar-nav">
@@ -73,7 +72,10 @@
                 <div class="content-cards-wrapper">
 
                     <div class="card-plano-form" id="formPlanoCard">
-                        <h3 class="form-title" id="formTitle">Cadastrar Novo Plano</h3>
+                        
+                        <div class="form-title-wrapper">
+                            <h3 class="form-title" id="formTitle">Cadastrar Novo Plano</h3>
+                        </div>
                         
                         <form id="planoForm">
                             <input type="hidden" id="planoId" value="">
@@ -83,9 +85,18 @@
                                 <input type="text" id="nomePlano" required>
                             </div>
                             
-                            <div class="input-group">
-                                <label for="valor">Valor Mensal (R$)</label>
-                                <input type="number" id="valor" step="0.01" required>
+                            <div class="input-group-grid-row">
+                                <div class="input-group half-width-field">
+                                    <label for="valor">Valor Mensal (R$)</label>
+                                    <input type="number" id="valor" step="0.01" required>
+                                </div>
+                                <div class="input-group half-width-field">
+                                    <label for="status">Status</label>
+                                    <select id="status">
+                                        <option value="Ativo">Ativo</option>
+                                        <option value="Inativo">Inativo</option>
+                                    </select>
+                                </div>
                             </div>
                             
                             <div class="input-group">
@@ -93,14 +104,6 @@
                                 <textarea id="descricao" rows="3"></textarea>
                             </div>
                             
-                            <div class="input-group">
-                                <label for="status">Status</label>
-                                <select id="status">
-                                    <option value="Ativo">Ativo</option>
-                                    <option value="Inativo">Inativo</option>
-                                </select>
-                            </div>
-
                             <div class="form-actions">
                                 <button type="submit" class="btn-confirmar">Salvar</button>
                                 <button type="button" class="btn-cancelar">Cancelar</button>
@@ -128,13 +131,7 @@
     let isEditing = false;
     let planoToEditId = null;
 
-    // =========================================================
-    // FUNÇÕES DE UI E CARREGAMENTO
-    // =========================================================
-
-    /**
-     * Carrega a lista de planos no container.
-     */
+    // ... (renderPlanosList, attachPlanActions e togglePlanStatus mantidos) ...
     function renderPlanosList() {
         const container = document.getElementById('planosListContainer');
         container.innerHTML = '<h3 class="list-title">Planos Atuais:</h3>';
@@ -142,7 +139,7 @@
         planos.forEach(plano => {
             const badgeClass = plano.status === 'Ativo' ? 'status-ativo' : 'status-inativo';
             const badgeText = plano.status === 'Ativo' ? 'ATIVO' : 'INATIVO';
-            const statusIcon = plano.status === 'Ativo' ? 'fa-ban' : 'fa-check'; // Ban = Desativar, Check = Ativar
+            const statusIcon = plano.status === 'Ativo' ? 'fa-ban' : 'fa-check'; 
             
             const planoCard = document.createElement('div');
             planoCard.className = 'plano-card';
@@ -167,13 +164,10 @@
         attachPlanActions();
     }
 
-    /**
-     * Atribui eventos de clique aos botões de edição e status.
-     */
     function attachPlanActions() {
-        // Editar
         document.querySelectorAll('.btn-edit').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault(); 
                 const id = parseInt(this.getAttribute('data-id'));
                 const plano = planos.find(p => p.id === id);
                 if (plano) {
@@ -182,7 +176,6 @@
             });
         });
 
-        // Alternar Status (Ativar/Desativar)
         document.querySelectorAll('.btn-toggle-status').forEach(btn => {
             btn.addEventListener('click', function() {
                 const id = parseInt(this.getAttribute('data-id'));
@@ -196,10 +189,6 @@
         });
     }
 
-    /**
-     * Carrega os dados de um plano no formulário para edição.
-     * @param {object} plano O objeto plano a ser editado.
-     */
     function loadPlanForEdit(plano) {
         document.getElementById('formTitle').textContent = `Editar Plano: ${plano.nome}`;
         document.getElementById('planoId').value = plano.id;
@@ -211,33 +200,24 @@
         isEditing = true;
         planoToEditId = plano.id;
         document.querySelector('.btn-confirmar').textContent = 'Atualizar';
-        document.getElementById('formPlanoCard').scrollIntoView({ behavior: 'smooth' });
+        
+        // 💥 CORREÇÃO NO JS: Removendo scrollIntoView para evitar que a tela principal suba
+        // document.getElementById('formPlanoCard').scrollIntoView({ behavior: 'smooth' }); 
+        
+        // Apenas foca no primeiro campo do formulário (opcional)
+        document.getElementById('nomePlano').focus();
     }
 
-    // =========================================================
-    // FUNÇÕES DE MANIPULAÇÃO DE DADOS
-    // =========================================================
-
-    /**
-     * Alterna o status do plano e atualiza a lista.
-     * @param {number} id ID do plano.
-     * @param {string} newStatus 'Ativo' ou 'Inativo'.
-     */
     function togglePlanStatus(id, newStatus) {
         const planoIndex = planos.findIndex(p => p.id === id);
         if (planoIndex !== -1) {
-            // ** Ação no Backend: Aqui você enviaria a requisição PUT/PATCH para o PHP **
             planos[planoIndex].status = newStatus;
             
-            // Simulação:
             alert(`Plano ${planos[planoIndex].nome} foi ${newStatus.toLowerCase()}! (Ação simulada)`);
             renderPlanosList();
         }
     }
     
-    /**
-     * Reseta o formulário para o modo de novo cadastro.
-     */
     function resetForm() {
         document.getElementById('planoForm').reset();
         document.getElementById('formTitle').textContent = 'Cadastrar Novo Plano';
@@ -247,9 +227,7 @@
         planoToEditId = null;
     }
 
-    // =========================================================
-    // EVENTOS PRINCIPAIS
-    // =========================================================
+    // ... (Event Listeners mantidos) ...
     document.addEventListener('DOMContentLoaded', function() {
         renderPlanosList();
 
@@ -275,14 +253,12 @@
             };
 
             if (isEditing) {
-                // ** Ação no Backend: Requisição PUT/PATCH para atualizar plano (id) **
                 const index = planos.findIndex(p => p.id === id);
                 if (index !== -1) {
                     planos[index] = { id: id, ...novoPlano };
                     alert(`Plano '${nomePlano}' atualizado com sucesso! (Ação simulada)`);
                 }
             } else {
-                // ** Ação no Backend: Requisição POST para novo plano **
                 const newId = planos.length > 0 ? Math.max(...planos.map(p => p.id)) + 1 : 1;
                 planos.push({ id: newId, ...novoPlano });
                 alert(`Plano '${nomePlano}' cadastrado com sucesso! (Ação simulada)`);

@@ -68,13 +68,14 @@ html {
     
     grid-gap: 20px; 
     padding: 30px; 
+    overflow: hidden; 
 }
 
 /* --- NAV BAR --- */
 .navBar { grid-area: nav; align-self: center; justify-self: start; padding-left: 0; }
 .navBar ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 40px; align-items: center; justify-content: flex-start; }
 .navBar a {
-    text-decoration: none; color: white; font-size: 24px; font-family: 'Akshar', sans-serif; font-weight: 700; position: relative; transition: color 0.3s ease;
+    text-decoration: none; color: white; font-size: 24px; font-family: 'Akshar', sans-serif; font-weight:600; position: relative; transition: color 0.3s ease;
 }
 .navBar a.active { color: white; }
 .navBar a::after { content: ''; position: absolute; left: 0; bottom: -5px; width: 0; height: 2px; background-color: black; transition: width 0.3s ease; }
@@ -147,27 +148,72 @@ html {
     width: 35%; 
     background: #FFFAE6;
     border-radius: 28px;
-    padding: 30px; 
+    padding: 30px; /* Mantém o padding para os campos */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     flex-shrink: 0;
     box-sizing: border-box;
+    
+    flex: 1; 
+    min-height: 0; 
+    
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden; 
+    height:80%
 }
 
+/* 💥 CORREÇÃO FINAL DA LINHA DO TÍTULO COM PSEUDO-ELEMENTO */
 .form-title {
     color: #2A2A2A;
     font-size: 26px;
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
     margin-top: 0;
-    margin-bottom: 25px;
-    border-bottom: 2px solid #DDB35E;
-    padding-bottom: 5px;
+    margin-bottom: 25px; 
+    
+    /* Remove as bordas problemáticas */
+    border-bottom: none; 
+    padding-bottom: 0; 
+    
+    /* Setup para o ::after */
+    position: relative; 
+    overflow: visible; 
+}
+
+.form-title::after {
+    content: ''; 
+    position: absolute;
+    /* Alinha o início da linha na borda esquerda do card, invadindo o padding de 30px */
+    left: -30px; 
+    /* Calcula a largura para cobrir a largura do H3 (100%) + os 30px de padding de cada lado */
+    width: calc(100% + 60px); 
+    bottom: -5px; 
+    height: 2px; 
+    background-color: #DDB35E; 
+    box-sizing: border-box; 
 }
 
 #planoForm {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    flex-grow: 1; 
+    overflow-y: auto; /* Permite scrollbar no conteúdo do formulário */
+    
+    /* Adiciona um pequeno padding para garantir que o scrollbar não cole na borda direita */
+    padding-right: 15px; 
+}
+
+/* LAYOUT DE DUAS COLUNAS DENTRO DO FORMULÁRIO */
+#planoForm .input-group-grid-row {
+    display: flex;
+    gap: 15px; 
+    width: 100%;
+}
+#planoForm .input-group-grid-row .half-width-field {
+    width: 50%;
+    display: flex; 
+    flex-direction: column; 
 }
 
 .input-group label {
@@ -200,7 +246,11 @@ html {
 .form-actions {
     display: flex;
     gap: 15px;
-    margin-top: 20px;
+    margin-top: auto; 
+    padding-top: 20px;
+    flex-shrink: 0;
+    /* Alinha os botões com o conteúdo (compensando o padding-right do #planoForm) */
+    padding-right: 15px;
 }
 
 .btn-confirmar, .btn-cancelar {
@@ -237,6 +287,7 @@ html {
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     box-sizing: border-box;
+    height: 80%; 
     overflow-y: auto;
 }
 
@@ -333,7 +384,7 @@ html {
 /* RESPONSIVIDADE */
 /* ========================================================= */
 
-@media (max-width: 1000px) { 
+@media (max-width: 1000px) {
     .content-cards-wrapper {
         flex-direction: column;
         align-items: center;
@@ -341,5 +392,14 @@ html {
     .card-plano-form, .planos-list-container {
         width: 80%;
         max-width: 600px;
+        max-height: 400px; 
+    }
+    .card-plano-form {
+        padding: 30px; 
+    }
+    /* Ajusta a linha do título na responsividade também */
+    .form-title::after {
+        left: -30px; 
+        width: calc(100% + 60px); 
     }
 }
