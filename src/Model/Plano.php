@@ -1,7 +1,9 @@
 <?php
+
+namespace Systemfy\App\Model;
 class Plano
 {
-    private int $id;
+   private int $id;
     private string $categoria;
     private float $preco;
     private string $descricao;

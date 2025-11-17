@@ -2,6 +2,7 @@
 
 namespace Systemfy\App\Admin\PlanoController;
 use Systemfy\App\Controller\Controller;
+use Systemfy\App\Model\Plano;
 use Systemfy\App\Repository\PlanoRepository;
 
 class PlanoListController implements Controller
@@ -15,7 +16,7 @@ class PlanoListController implements Controller
     public function processaRequisicao(): void
     {
         $planoList = $this->planoRepository->all();
-        require_once __DIR__ . '/../../View/Admin/telaPlanos.php';
+        require_once __DIR__ . '/../../../View/Admin/telaPlanos.php';
     }
 
 }

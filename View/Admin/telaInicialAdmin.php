@@ -33,12 +33,12 @@
                 <div class="navBar">
                     <nav>
                         <ul class="navbar-nav">
-                            <li class="nav-item"><a href="" class="active">Home</a></li>
-                            <li class="nav-item"><a href="telaNutricionalAdmin.php">Nutricional</a></li>
-                            <li class="nav-item"><a href="telaPersonal.php">Treinos</a></li>
-                            <li class="nav-item"><a href="telaNewCliente.php">Clientes</a></li>
-                            <li class="nav-item"><a href="telaRelatorios.php">Relatorios</a></li>
-                            <li class="nav-item"><a href="telaPlanos.php">Planos</a></li>
+                            <li class="nav-item"><a href="/admin" class="active">Home</a></li>
+                            <li class="nav-item"><a href="/admin/menu/list">Nutricional</a></li>
+                            <li class="nav-item"><a href="/admin/exercise/list">Treinos</a></li>
+                            <li class="nav-item"><a href="/cadastro">Clientes</a></li>
+                            <li class="nav-item"><a href="/admin/report/list">Relatorios</a></li>
+                            <li class="nav-item"><a href="/admin/plano/list">Planos</a></li>
                         </ul>
                     </nav>
                 </div>

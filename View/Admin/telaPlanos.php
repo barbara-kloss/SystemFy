@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planos</title>
-    <link rel="stylesheet" href="../../public/css/telaPlanos.css">
+    <link rel="stylesheet" href="/css/telaPlanos.css">
     <link href="https://fonts.googleapis.com/css2?family=Alata&family=Akshar:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
@@ -20,11 +20,11 @@
         <div class="bolinha bolinha6"></div>
 
         <div class="logoCantoInferior">
-            <img src="../../public/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
+            <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
         </div>
 
         <div class="logoWhatsApp">
-            <img src="../../public/imgFy/whatsapp (3).png" alt="logoWhatsApp">
+            <img src="/imgFy/whatsapp (3).png" alt="logoWhatsApp">
         </div>
 
         <div class="fundoSemiTransparente">
@@ -34,22 +34,22 @@
                     <nav>
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a href="telaInicialAdmphp">Inicio</a>
+                                <a href="/admin">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaNutricionalAdmin.php">Nutricional</a>
+                                <a href="/admin/menu/list">Nutricional</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaPersonal.php">Treinos</a>
+                                <a href="/admin/exercise/list">Treinos</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaNewCliente.php">Clientes</a>
+                                <a href="/cadastro">Clientes</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaRelatorios.php">Relatorios</a>
+                                <a href="/admin/report/list">Relatorios</a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="active">Planos</a>
+                                <a href="/admin/plano/list" class="active">Planos</a>
                             </li>
                         </ul>
                     </nav>

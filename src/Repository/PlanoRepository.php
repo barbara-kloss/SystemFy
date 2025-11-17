@@ -13,7 +13,7 @@ class PlanoRepository
         $this->pdo = Database::getConnection();
     }
 
-    public function add(Plano $plano) : bool
+    public function add(Plano $plano): bool
     {
         $sql = "INSERT INTO plano(categoria, preco, descricao, ativo) values(?,?,?,?)";
         $stmt = $this->pdo->prepare($sql);
@@ -27,7 +27,7 @@ class PlanoRepository
         $plano->setId(intval($id));
         return $result;
     }
-//    public function remove(int $id): bool
+    //    public function remove(int $id): bool
 //    {
 //        $sql = 'DELETE FROM plano WHERE id = ?';
 //        $stmt = $this->pdo->prepare($sql);
@@ -73,11 +73,14 @@ class PlanoRepository
 
     public function hydratePlano(array $PlanoData): Plano
     {
-        $plano = new Plano($PlanoData['categoria'],
-            $PlanoData['preco'],
-            $PlanoData['descricao'],
-            $PlanoData['ativo']);
-        $plano->setId($PlanoData['id']);
+        $plano = new Plano(
+            (int) $PlanoData['id'], // Ensure 'id' is passed and cast to int
+            (string) $PlanoData['categoria'],
+            (float) $PlanoData['preco'],
+            (string) $PlanoData['descricao'],
+            (bool) $PlanoData['ativo'] // Ensure 'ativo' is cast to bool
+        );
+        // Remove $plano->setId($PlanoData['id']); since it's now in the constructor
         return $plano;
     }
 
