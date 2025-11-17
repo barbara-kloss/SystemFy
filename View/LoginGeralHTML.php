@@ -24,7 +24,7 @@
                 <form action="" method="POST">
                     <h1>Login</h1>
                     <input type="email" placeholder="E-mail" name="email">
-                    <input type="password" placeholder="Senha" name="password">
+                    <input type="password" placeholder="Senha" name="senha">
                     <a href="/admin" class="forgot">Esqueci a senha</a>
                     <button type="submit"> Entrar </button>
                 </form>

@@ -4,6 +4,7 @@ namespace Systemfy\App\ControllerLogin;
 
 use PDO;
 use Systemfy\App\Controller\Controller;
+use Systemfy\App\Database;
 
 class LoginController implements Controller
 {
@@ -11,27 +12,25 @@ class LoginController implements Controller
 
     function __construct()
     {
-        $caminho = __DIR__ . '/../../../databaselocal';
-        $this->pdo = new PDO("mysql:$caminho");
+        $this->pdo = database::getConnection();
     }
 
     public function processaRequisicao(): void
     {
-        session_start();
-
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-        $pwd   = filter_input(INPUT_POST, 'password');
+        $pwd   = filter_input(INPUT_POST, 'senha');
 
-        $sql = "SELECT * FROM users WHERE email = ?";
+        $sql = "SELECT * FROM user WHERE email = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(1, $email);
         $stmt->execute();
 
         $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$userData || !password_verify($pwd, $userData['password'])) {
+        if (!$userData || !password_verify($pwd, $userData['senha'])) {
             header('Location: /login?sucesso=0');
-            return;
+            // return;
+
         }
 
         // Salvar sessão

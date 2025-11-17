@@ -3,7 +3,7 @@
 namespace Systemfy\App\Repository;
 
 use PDO;
-use Systemfy\App\config\database;
+use Systemfy\App\Database;
 use Systemfy\App\Model\User;
 class UserRepository
 {

@@ -21,6 +21,6 @@ class AgendaFormController implements Controller
         if ($id !== false && $id !== null) {
             $agenda = $this->agendaRepository->find($id);
         }
-        require_once __DIR__ . '/../../View/Admin/telaInicialAdmin.html';
+        require_once __DIR__ . '/../../View/Admin/telaInicialAdmin.php';
     }
 }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Administrador</title>
-    <link rel="stylesheet" href="../../public/css/telaInicialAdmin.css">
+    <link rel="stylesheet" href="/css/telaInicialAdmin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
@@ -19,11 +19,11 @@
         <div class="bolinha bolinha6"></div>
 
         <div class="logoCantoInferior">
-            <img src="../../public/imgFy/logoSemfundoEscritaBranca.png" alt="Logo FY">
+            <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo FY">
         </div>
 
         <div class="logoWhatsApp">
-            <img src="../../public/imgFy/whatsapp (3).png" alt="logoWhatsApp">
+            <img src="/imgFy/whatsapp (3).png" alt="logoWhatsApp">
         </div>
 
         <div class="fundoSemiTransparente">
