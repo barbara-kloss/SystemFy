@@ -25,67 +25,27 @@ html {
     filter: blur(45px);
 }
 
-.bolinha1 {
-    width: 20vw;
-    height: 15vh;
-    top: -5vh;
-    left: 3vw;
-    background: rgba(221, 179, 94, 0.85);
-}
-
-.bolinha2 {
-    width: 20vw;
-    height: 20vh;
-    bottom: -5vh;
-    right: 10vw;
-    background: rgba(221, 179, 94, 0.95);
-}
-
-.bolinha3 {
-    width: 8vw;
-    height: 8vw;
-    bottom: 12vh;
-    left: 10vw;
-    background: rgba(221, 179, 94, 0.59);
-}
-
-.bolinha4 {
-    width: 8vw;
-    height: 8vw;
-    top: 5vh;
-    right: 20vw;
-    background: rgba(221, 179, 94, 0.85);
-}
-
-.bolinha5 {
-    width: 8vw;
-    height: 8vw;
-    top: 40vh;
-    left: 55%;
-    background: rgba(221, 179, 94, 0.85);
-}
-
-.bolinha6 {
-    width: 15vw;
-    height: 15vh;
-    top: 50vh;
-    left: -5vw;
-    background: #DDB35E;
-}
+.bolinha1 { width: 20vw; height: 15vh; top: -5vh; left: 3vw; background: rgba(221, 179, 94, 0.85); }
+.bolinha2 { width: 20vw; height: 20vh; bottom: -5vh; right: 10vw; background: rgba(221, 179, 94, 0.95); }
+.bolinha3 { width: 8vw; height: 8vw; bottom: 12vh; left: 10vw; background: rgba(221, 179, 94, 0.59); }
+.bolinha4 { width: 8vw; height: 8vw; top: 5vh; right: 20vw; background: rgba(221, 179, 94, 0.85); }
+.bolinha5 { width: 8vw; height: 8vw; top: 40vh; left: 55%; background: rgba(221, 179, 94, 0.85); }
+.bolinha6 { width: 15vw; height: 15vh; top: 50vh; left: -5vw; background: #DDB35E; }
 
 /* Fundo Semi Transparente (Contêiner principal) */
 .fundoSemiTransparente {
-    width: 90%;
+    width: 95%;
     max-width: 1750px;
     height: 90vh;
     position: relative;
     background: rgba(213.53, 205.82, 179.63, 0.43);
     border-radius: 28px;
-    padding: 30px;
     box-sizing: border-box;
-    overflow: hidden;
-    margin-left: 0;
-    transform: translateX(2.5%);
+    overflow: auto;
+    margin: auto;
+    
+    /* Afastamento de toda a área do Grid do logo (90px) e das bordas */
+    padding: 20px 20px 20px 100px; 
 }
 
 /* Logos de Canto */
@@ -124,15 +84,17 @@ html {
     height: 100%;
     display: grid;
 
+    padding: 0; 
+
     grid-template-areas:
         "nav top_right"
         "cards cards";
 
-    grid-template-columns: auto 1fr;
+    /* Nav bar ajusta-se ao conteúdo, busca usa o restante (1fr) */
+    grid-template-columns: auto 1fr; 
     grid-template-rows: 60px 1fr;
 
     grid-gap: 20px;
-    padding: 0;
 }
 
 /* --- NAV BAR --- */
@@ -140,28 +102,39 @@ html {
     grid-area: nav;
     align-self: center;
     justify-self: start;
+
+    /* CORRIGIDO: Removido o fundo escuro para a Nav Bar flutuar sobre o fundo semi-transparente */
+    background: transparent; 
+    margin-left: 0; 
+    padding: 0; 
+    border-radius: 0;
 }
 
 .navBar ul {
     list-style: none;
-    padding: 0;
     margin: 0;
     display: flex;
-    gap: 40px;
+    
+    padding: 0; 
+    /* Mantido o gap de 40px para replicar o modelo de Nutrição */
+    gap: 40px; 
+    justify-content: flex-start;
 }
 
 .navBar a {
     text-decoration: none;
-    color: white;
+    /* Manter branco para contraste com o fundo escuro da Nav Bar */
+    color: white; 
     font-size: 24px;
     font-family: 'Akshar', sans-serif;
-    font-weight: 500;
+    font-weight: 700;
     position: relative;
     transition: color 0.3s ease;
 }
 
+/* Link Ativo */
 .navBar a.active {
-    color: white;
+    color: #DDB35E;
 }
 
 /* O sublinhado */
@@ -172,6 +145,7 @@ html {
     bottom: -5px;
     width: 0;
     height: 2px;
+    /* CORRIGIDO: Muda para preto/dourado para contraste */
     background-color: black;
     transition: width 0.3s ease;
 }
@@ -184,7 +158,7 @@ html {
 /* Efeito ativo: Sublinhado permanece 100% */
 .navBar a.active::after {
     width: 100%;
-    background-color: #2A2A2A;
+    background-color: #DDB35E;
 }
 
 /* ========================================================= */
@@ -195,8 +169,9 @@ html {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 30px;
-    padding-right: 10px;
+    gap: 15px;
+    padding-right: 0;
+    z-index: 10;
 }
 
 .search-bar {
@@ -204,11 +179,14 @@ html {
     align-items: center;
     background: white;
     border-radius: 28px;
-    border: 3px rgba(255, 255, 255, 0.62) solid;
+    /* CORRIGIDO: Reduzido o border para 1px para ser mais sutil, como no modelo de Nutrição */
+    border: 1px rgba(0, 0, 0, 0.2) solid; 
     padding: 5px 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-    /* CORREÇÃO BUSCA: Define o contexto para o dropdown de sugestões */
+    width: 250px;
+    min-width: 200px;
+
     position: relative;
     z-index: 10;
 }
@@ -220,7 +198,7 @@ html {
     color: #666363;
     padding: 5px;
     outline: none;
-    width: 200px;
+    width: 100%;
 }
 
 .search-icon {
@@ -230,21 +208,18 @@ html {
     cursor: pointer;
 }
 
-/* --- ESTILOS PARA O DROPDOWN DE SUGESTÕES (NOVO) --- */
+/* --- ESTILOS PARA O DROPDOWN DE SUGESTÕES --- */
 .suggestions-dropdown {
     position: absolute;
     top: 100%;
-    /* Posiciona abaixo do campo de input */
     left: 0;
     width: 100%;
     max-height: 200px;
     overflow-y: auto;
     background: #FFFAE6;
-    /* Cor de fundo clara para o dropdown */
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: none;
-    /* Inicia escondido */
     margin-top: 5px;
     z-index: 100;
 }
@@ -266,57 +241,22 @@ html {
     color: #2A2A2A;
 }
 
-/* --- PERFIL (Mantido) --- */
+/* --- PERFIL --- */
+/* Ocultado para se adequar ao layout do destino */
 .profile-box-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    display: none;
 }
 
-.cardVerPerfil {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px #D4D2C8 solid;
-    margin-bottom: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #D4D2C8;
-    color: #2A2A2A;
-    font-size: 1.5em;
-}
+/* Estilos de perfil restantes (não precisam de alteração se estiverem ocultos) */
+.cardVerPerfil { width: 50px; height: 50px; border-radius: 50%; border: 2px #D4D2C8 solid; margin-bottom: 5px; display: flex; justify-content: center; align-items: center; background-color: #D4D2C8; color: #2A2A2A; font-size: 1.5em; }
 
-.textocardVerPerfil {
-    font-weight: 800;
-    color: #2A2A2A;
-    font-size: 0.8em;
-}
+.textocardVerPerfil { font-weight: 800; color: #2A2A2A; font-size: 0.8em; }
 
-/* ESTILO DO LINK DE PERFIL */
-.profile-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    text-decoration: none;
-    color: #2A2A2A;
-    width: auto;
-    height: auto;
-}
+.profile-link { display: flex; flex-direction: column; align-items: center; text-align: center; text-decoration: none; color: #2A2A2A; width: auto; height: auto; }
 
-.textocardVerPerfil {
-    font-weight: 800;
-    color: inherit;
-    font-size: 0.8em;
-}
+.textocardVerPerfil { font-weight: 800; color: inherit; font-size: 0.8em; }
 
-.profile-link:hover .textocardVerPerfil {
-    text-decoration: underline;
-    color: #000000;
-}
-
+.profile-link:hover .textocardVerPerfil { text-decoration: underline; color: #000000; }
 
 /* ========================================================= */
 /* CONTEÚDO PRINCIPAL: CARDS DE TREINO/EXERCÍCIO */
@@ -326,11 +266,10 @@ html {
     display: flex;
     gap: 40px;
     width: 100%;
-    height: 80%;
+    height: 100%;
     box-sizing: border-box;
     align-items: stretch;
-    /* Garante que os cards estiquem verticalmente */
-    padding-top: 20px;
+    padding-top: 0;
 }
 
 /* --- ESTILO GERAL DO CARD INDIVIDUAL --- */
@@ -342,7 +281,6 @@ html {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-
     height: 100%;
 }
 
@@ -364,6 +302,7 @@ html {
 .exercicio-form {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     max-height: calc(100% - 150px);
     overflow-y: auto;
     padding-right: 5px;
@@ -454,9 +393,7 @@ html {
     font-weight: 700;
     border: none;
     cursor: pointer;
-
     margin-top: auto;
-
     flex-shrink: 0;
     transition: background-color 0.3s;
 }
@@ -519,7 +456,6 @@ html {
 }
 
 .treino-label {
-    /* Dia da semana */
     font-size: 20px;
     width: 15%;
     text-align: left;
@@ -527,7 +463,6 @@ html {
 }
 
 .treino-nome {
-    /* Nome do treino (Rosca, Agachamento) */
     font-size: 24px;
     flex-grow: 1;
     margin-left: 20px;
@@ -553,7 +488,6 @@ html {
     position: absolute;
     bottom: 25px;
     right: 35px;
-
     background: #2A2A2A;
     color: #FFFAE6;
     border: none;
