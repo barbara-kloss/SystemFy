@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutricional</title>
-    <link rel="stylesheet" href="../../public/css/telaNutricional.css">
+    <link rel="stylesheet" href="/css/telaNutricional.css">
     <link href="https://fonts.googleapis.com/css2?family=Alata&family=Akshar:wght@700&display=swap" rel="stylesheet">
 </head>
 
@@ -19,10 +19,10 @@
         <div class="bolinha bolinha6"></div>
 
         <div class="logoCantoInferior">
-            <img src="../../public/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
+            <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
         </div>
         <div class="logoWhatsApp">
-            <img src="../../public/imgFy/whatsapp (3).png" alt="logoWhatsApp">
+            <img src="/imgFy/whatsapp (3).png" alt="logoWhatsApp">
         </div>
 
         <div class="fundoSemiTransparente">
@@ -32,13 +32,13 @@
                     <nav>
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a href="telaInicial.php">Home</a>
+                                <a href="/client">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="active">Nutricional</a>
+                                <a href="/client/menu/list" class="active">Nutricional</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaTreinos.php">Treinos</a>
+                                <a href="/client/exercise/list">Treinos</a>
                             </li>
                         </ul>
                     </nav>

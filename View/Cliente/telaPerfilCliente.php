@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Tela Perfil - Usuário</title>
-    <link rel="stylesheet" href="../../public/css/telaPerfilCliente.css">
+    <link rel="stylesheet" href="/css/telaPerfilCliente.css">
 </head>
 
 <body>
@@ -16,25 +17,25 @@
         <div class="bolinha bolinha6"></div>
 
         <div class="logoCantoInferior">
-            <img src="../../public/imgFy/logoSemfundoEscritaBranca.png" alt="Logo FY">
+            <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo FY">
         </div>
         <div class="logoWhatsApp">
-            <img src="../../public/imgFy/whatsapp (3).png" alt="logoWhatsApp">
+            <img src="/imgFy/whatsapp (3).png" alt="logoWhatsApp">
         </div>
-        
+
         <div class="fundoSemiTransparente profile-screen">
 
             <div class="navBar top-floating-nav">
                 <nav>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="telaInicial.php" class="nav-link">Home</a>
+                            <a href="/client" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="telaNutricional.php" class="nav-link">Nutricional</a>
+                            <a href="/client/menu/list" class="nav-link">Nutricional</a>
                         </li>
                         <li class="nav-item">
-                            <a href="telaTreinos.php" class="nav-link active">Treinos</a> 
+                            <a href="/client/exercise/list" class="nav-link active">Treinos</a>
                         </li>
                     </ul>
                 </nav>
@@ -47,9 +48,9 @@
                 </div>
 
                 <div class="profile-main-content">
-                    
+
                     <div class="personal-data-column">
-                        
+
                         <div class="row-group">
                             <div class="input-group">
                                 <label for="nome">Nome completo</label>
@@ -95,7 +96,7 @@
                     </div>
 
                     <div class="metrics-column">
-                        
+
                         <label class="section-title-metrics" for="objetivo">Dados Físicos</label>
 
                         <div class="row-group-half">
@@ -133,5 +134,10 @@
                             </div>
                         </div>
                     </div>
-                </div> </div> </div> </div> </body>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>

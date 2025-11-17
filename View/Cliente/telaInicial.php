@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="../../public/css/telaInicial.css">
+    <link rel="stylesheet" href="/css/telaInicial.css">
 </head>
 
 <body>
@@ -18,11 +18,11 @@
         <div class="bolinha bolinha6"></div>
 
         <div class="logoCantoInferior">
-            <img src="../../public/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
+            <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
         </div>
 
         <div class="logoWhatsApp">
-            <img src="../../public/imgFy/whatsapp (3).png" alt="logoWhatsApp">
+            <img src="/imgFy/whatsapp (3).png" alt="logoWhatsApp">
         </div>
         
         <div class="fundoSemiTransparente">
@@ -33,13 +33,13 @@
                     <nav>
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a href="" class="active">Home</a>
+                                <a href="/client" class="active">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaNutricional.php">Nutricional</a>
+                                <a href="/client/menu/list">Nutricional</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaTreinos.php">Treinos</a>
+                                <a href="/client/exercise/list">Treinos</a>
                             </li>
                         </ul>
                     </nav>
@@ -47,7 +47,7 @@
 
                 <div class="profile-box-container">
                     <div class="cardVerPerfil"></a></div>
-                    <div class="textocardVerPerfil"><a href="telaPerfilCliente.php" class="profile-link"> Ver perfil</a></div>
+                    <div class="textocardVerPerfil"><a href="/client/cadastro" class="profile-link"> Ver perfil</a></div>
                 </div>
 
                 <div class="calendar-api-container">

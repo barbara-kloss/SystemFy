@@ -6,6 +6,6 @@ class MainClienteController implements Controller
 {
     public function processaRequisicao(): void
     {
-        require_once __DIR__ . '/../../View/LoginGeralHTML.php';
+        require_once __DIR__ . '/../../View/Cliente/telaInicial.php';
     }
 }

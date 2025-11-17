@@ -16,7 +16,7 @@ class ClientMenuListController implements Controller
     public function processaRequisicao(): void
     {
         $menuList = $this->menuRepository->all();
-        require_once __DIR__ . '/../../views/booklist.php';
+        require_once __DIR__ . '/../../../View/Cliente/telaNutricional.php';
     }
 
 
