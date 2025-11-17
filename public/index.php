@@ -1,6 +1,7 @@
 <?php
 
 use Systemfy\App\Controller\{Controller, Error404Controller};
+use Systemfy\App\Database;
 use Systemfy\App\Repository\{
     AgendaRepository,
     ExerciseRepository,
@@ -13,8 +14,10 @@ use Systemfy\App\Repository\{
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // Conexão
-$caminho = __DIR__ . '/../../../databaselocal';
-$pdo = new \PDO("mysql:$caminho");
+// $caminho = __DIR__ . '/../../../databaselocal';
+// $pdo = new PDO("mysql:$caminho");
+
+$pdo = Database::getConnection();
 
 // Repositories
 $userRepository = new UserRepository($pdo);

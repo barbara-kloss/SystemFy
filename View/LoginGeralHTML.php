@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela Login - Usuário</title>
-    <link rel="stylesheet" href="LoginGeral.css">
+    <link rel="stylesheet" href="css/LoginGeral.css">
     </head>
 <body>
     <div class="background">
@@ -17,16 +17,16 @@
 
         <div class="container">
             <div class="logo-box">
-                <img src="../imgFy/logoSemfundoEscritaBranca.png" alt="Logo" class="logo">
+                <img src="/public/imgFy/logoSemfundoEscritaBranca.png" alt="Logo" class="logo">
             </div>
 
             <div class="login-box">
-                <form action="">
+                <form action="" method="POST">
                     <h1>Login</h1>
-                    <input type="email" placeholder="E-mail">
-                    <input type="password" placeholder="Senha">
-                    <a href="#" class="forgot">Esqueci a senha</a>
-                    <button><a href="telaCriarSenha.html"> Entrar </a></button>
+                    <input type="email" placeholder="E-mail" name="email">
+                    <input type="password" placeholder="Senha" name="password">
+                    <a href="/admin" class="forgot">Esqueci a senha</a>
+                    <button type="submit"> Entrar </button>
                 </form>
             </div>
         </div>

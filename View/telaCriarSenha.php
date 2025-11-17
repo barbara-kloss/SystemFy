@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>Tela Criar Senha</title>
-    <link rel="stylesheet" href="telaCriarSenha.css">
+    <link rel="stylesheet" href="../public/css/telaCriarSenha.css">
     </head>
 <body>
     <div class="background">
@@ -21,11 +21,11 @@
                 <h1>Criar Senha</h1>
                 <input type="password" placeholder="Digite aqui a nova senha">
                 <input type="password" placeholder="Repita a senha">
-                <button> <a href="Cliente/telaInicial.html"> Cadastrar </a></button>
+                <button> <a href="Cliente/telaInicial.php"> Cadastrar </a></button>
             </div>
             
             <div class="logo-box">
-                <img src="../imgFy/logoSemfundoEscritaBranca.png" alt="Logo" class="logo">
+                <img src="../public/imgFy/logoSemfundoEscritaBranca.png" alt="Logo" class="logo">
             </div>
 
         </div>

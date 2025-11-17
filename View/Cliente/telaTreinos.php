@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
         <title>Home</title>
-    <link rel="stylesheet" href="telaTreinos.css">
+    <link rel="stylesheet" href="../../public/css/telaTreinos.css">
 </head>
   
 
@@ -18,7 +18,7 @@
         <div class="bolinha bolinha6"></div>
 
         <div class="logoWhatsApp">
-            <img src="../../imgFy/whatsapp (3).png" alt="logoWhatsApp">
+            <img src="../../public/imgFy/whatsapp (3).png" alt="logoWhatsApp">
         </div>
 
         <div class="fundoSemiTransparente">
@@ -32,10 +32,10 @@
                                 <a href="" class="nav-link">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaNutricional.html" class="nav-link">Nutricional</a>
+                                <a href="telaNutricional.php" class="nav-link">Nutricional</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaTreinos.html" class="nav-link active">Treinos</a>
+                                <a href="telaTreinos.php" class="nav-link active">Treinos</a>
                             </li>
                         </ul>
                     </nav>

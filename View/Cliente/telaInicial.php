@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="telaInicial.css">
+    <link rel="stylesheet" href="../../public/css/telaInicial.css">
 </head>
 
 <body>
@@ -18,11 +18,11 @@
         <div class="bolinha bolinha6"></div>
 
         <div class="logoCantoInferior">
-            <img src="../../imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
+            <img src="../../public/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
         </div>
 
         <div class="logoWhatsApp">
-            <img src="../../imgFy/whatsapp (3).png" alt="logoWhatsApp">
+            <img src="../../public/imgFy/whatsapp (3).png" alt="logoWhatsApp">
         </div>
         
         <div class="fundoSemiTransparente">
@@ -36,10 +36,10 @@
                                 <a href="" class="active">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaNutricional.html">Nutricional</a>
+                                <a href="telaNutricional.php">Nutricional</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaTreinos.html">Treinos</a>
+                                <a href="telaTreinos.php">Treinos</a>
                             </li>
                         </ul>
                     </nav>
@@ -47,7 +47,7 @@
 
                 <div class="profile-box-container">
                     <div class="cardVerPerfil"></a></div>
-                    <div class="textocardVerPerfil"><a href="telaPerfilCliente.html" class="profile-link"> Ver perfil</a></div>
+                    <div class="textocardVerPerfil"><a href="telaPerfilCliente.php" class="profile-link"> Ver perfil</a></div>
                 </div>
 
                 <div class="calendar-api-container">

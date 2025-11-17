@@ -3,14 +3,14 @@
 namespace Systemfy\App\Repository;
 
 use PDO;
-use Systemfy\App\config\database;
+use Systemfy\App\Database;
 use Systemfy\App\Model\Plano;
 class PlanoRepository
 {
     private PDO $pdo;
     function __construct()
     {
-        $this->pdo = database::getConnection();
+        $this->pdo = Database::getConnection();
     }
 
     public function add(Plano $plano) : bool

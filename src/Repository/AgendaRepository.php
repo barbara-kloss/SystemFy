@@ -3,7 +3,7 @@
 namespace Systemfy\App\Repository;
 
 use PDO;
-use Systemfy\App\config\Database;
+use Systemfy\App\Database;
 use Systemfy\App\Model\Agenda;
 
 class AgendaRepository

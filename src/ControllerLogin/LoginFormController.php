@@ -14,7 +14,7 @@ class LoginFormController implements Controller
             return;
         }
         {
-            require_once __DIR__ . '/../../View/LoginGeralHTML.html';
+            require_once __DIR__ . '/../../View/LoginGeralHTML.php';
         }
     }
 }

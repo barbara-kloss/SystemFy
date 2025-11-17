@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Tela Perfil - Usuário</title>
-    <link rel="stylesheet" href="telaPerfilCliente.css">
+    <link rel="stylesheet" href="../../public/css/telaPerfilCliente.css">
 </head>
 
 <body>
@@ -16,10 +16,10 @@
         <div class="bolinha bolinha6"></div>
 
         <div class="logoCantoInferior">
-            <img src="../../imgFy/logoSemfundoEscritaBranca.png" alt="Logo FY">
+            <img src="../../public/imgFy/logoSemfundoEscritaBranca.png" alt="Logo FY">
         </div>
         <div class="logoWhatsApp">
-            <img src="../../imgFy/whatsapp (3).png" alt="logoWhatsApp">
+            <img src="../../public/imgFy/whatsapp (3).png" alt="logoWhatsApp">
         </div>
         
         <div class="fundoSemiTransparente profile-screen">
@@ -28,13 +28,13 @@
                 <nav>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="telaInicial.html" class="nav-link">Home</a>
+                            <a href="telaInicial.php" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="telaNutricional.html" class="nav-link">Nutricional</a>
+                            <a href="telaNutricional.php" class="nav-link">Nutricional</a>
                         </li>
                         <li class="nav-item">
-                            <a href="telaTreinos.html" class="nav-link active">Treinos</a> 
+                            <a href="telaTreinos.php" class="nav-link active">Treinos</a> 
                         </li>
                     </ul>
                 </nav>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatórios</title>
-    <link rel="stylesheet" href="telaRelatorios.css">
+    <link rel="stylesheet" href="../../public/css/telaRelatorios.css">
     <link href="https://fonts.googleapis.com/css2?family=Alata&family=Akshar:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
@@ -20,11 +20,11 @@
         <div class="bolinha bolinha6"></div>
 
         <div class="logoCantoInferior">
-            <img src="../../imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
+            <img src="../../public/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
         </div>
 
         <div class="logoWhatsApp">
-            <img src="../../imgFy/whatsapp (3).png" alt="logoWhatsApp">
+            <img src="../../public/imgFy/whatsapp (3).png" alt="logoWhatsApp">
         </div>
 
         <div class="fundoSemiTransparente">
@@ -35,28 +35,28 @@
                     <nav>
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a href="telaInicialAdmin.html">Inicio</a>
+                                <a href="telaInicialAdmin.php">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaNutricionalAdmin.html">Nutricional</a>
+                                <a href="telaNutricionalAdmin.php">Nutricional</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaPersonal.html">Treinos</a>
+                                <a href="telaPersonal.php">Treinos</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaNewCliente.html">Clientes</a>
+                                <a href="telaNewCliente.php">Clientes</a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="active">Relatorios</a>
+                                <a href="/../telaRelatorios.php" class="active">Relatorios</a>
                             </li>
                             <li class="nav-item">
-                                <a href="telaPlanos.html">Planos</a>
+                                <a href="telaPlanos.php">Planos</a>
                         </ul>
                     </nav>
                 </div>
 
                 <div class="profile-box-container">
-                    <a href="telaPerfilAdmin.html" class="profile-link">
+                    <a href="telaPerfilAdmin.php" class="profile-link">
                         <div class="cardVerPerfil"> <i class="fas fa-user"></i> </div>
                         <div class="textocardVerPerfil"> Ver perfil </div>
                     </a>
