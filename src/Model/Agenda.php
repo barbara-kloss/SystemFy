@@ -13,11 +13,11 @@ namespace Systemfy\App\Model;
     private string $titulo;
     private User $google_event_id;
 
-    public function __construct(
+    public function __construct(int $id,
     Date $data_reuniao, Time $horario,
     string $assunto, User $usuario_id,
     User $personal_id, User $nutri_id, string $titulo){
-            
+        $this->id = $id;      
         $this->data_reuniao = $data_reuniao;
         $this->horario = $horario;
         $this->assunto = $assunto;

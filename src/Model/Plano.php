@@ -9,9 +9,9 @@ class Plano
     private string $descricao;
     private bool $ativo;
 
-    public function __construct( string $categoria, float $preco, string $descricao, bool $ativo)
+    public function __construct(int $id, string $categoria, float $preco, string $descricao, bool $ativo)
     {
-       
+        $this->id = $id;
         $this->categoria = $categoria;
         $this->preco = $preco;
         $this->descricao = $descricao;

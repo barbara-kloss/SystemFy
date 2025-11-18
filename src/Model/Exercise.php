@@ -16,7 +16,7 @@ class Exercise
     private string $video; // blob convertido em string binária
 
     public function __construct(
-       
+        int $id,
         User $user,
         float $peso,
         string $repeticao,
@@ -27,7 +27,7 @@ class Exercise
         User $personal,
         string $video
     ) {
-       
+        $this->id = $id;
         $this->user = $user;
         $this->peso = $peso;
         $this->repeticao = $repeticao;
