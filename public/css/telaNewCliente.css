@@ -48,8 +48,8 @@ html {
 /* Logos de Canto */
 .logoCantoInferior { position: absolute; width: 3.5vw; height: auto; left: 1.5vw; top: 3vh; z-index: 20; }
 .logoCantoInferior img { width: 100%; height: auto; }
-.logoWhatsApp { position: absolute; width: 3.5vw; height: 3.5vw; left: 1.5vw; bottom: 3vh; z-index: 20; }
-.logoWhatsApp img { width: 100%; height: 100%; }
+/* .logoWhatsApp { position: absolute; width: 3.5vw; height: 3.5vw; left: 1.5vw; bottom: 3vh; z-index: 20; }
+.logoWhatsApp img { width: 100%; height: 100%; } */
 
 /* ========================================================= */
 /* GRID LAYOUT PRINCIPAL */
@@ -73,8 +73,8 @@ html {
 .navBar { grid-area: nav; align-self: center; justify-self: start; }
 .navBar ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 40px; }
 .navBar a {
-    text-decoration: none; color: white; font-size: 24px; font-family: 'Akshar', sans-serif;
-    font-weight: 700; position: relative; transition: color 0.3s ease;
+    text-decoration: none; color: white; font-size: 24px; font-family: 'Alata', sans-serif;
+    font-weight: 600; position: relative; transition: color 0.3s ease;
 }
 .navBar a::after {
     content: ''; position: absolute; left: 0; bottom: -5px; width: 0; height: 2px;
@@ -333,4 +333,18 @@ select {
 .action-button-edit-button:hover, .action-button-excluir-button:hover {
     background-color: #DDB35E;
     color: #1E1E1E;
+}
+
+/* Remove a seta (indicador) nativa do datalist/input no Chrome/Edge/Safari (Webkit) */
+.search-input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    pointer-events: none;
+    display: none;
+}
+
+/* Remove a seta nativa no Firefox (Mozilla) */
+.search-input {
+    /* O código específico para Firefox pode variar, mas `appearance: none;` é uma tentativa comum */
+    -moz-appearance: none;
+    appearance: none;
 }

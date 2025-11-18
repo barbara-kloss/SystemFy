@@ -19,9 +19,9 @@
             <div class="bolinha bolinha5"></div>
             <div class="bolinha bolinha6"></div>
 
-            <div class="logoWhatsApp">
+            <!-- <div class="logoWhatsApp">
                 <img src="/imgFy/whatsapp (3).png" alt="logoWhatsApp">
-            </div>
+            </div> -->
 
             <div class="fundoSemiTransparente">
 

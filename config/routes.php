@@ -113,4 +113,6 @@ return [
     'GET|/admin/cadastro' => RegisterAdminController::class,
     'GET|/client/cadastro' => RegisterClientController::class,
     'POST|/cadastro' => NewUserController::class,
+
+    
 ];

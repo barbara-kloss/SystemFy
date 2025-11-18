@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="telaInicial.css">
+</head>
+<style>
+    /* Fundo principal */
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: 'Alata', sans-serif;
+    }
+ 
+    .background {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        background: #2A2A2A;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+ 
+    /* Bolinhas decorativas (Sem Alterações) */
+    .bolinha {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(45px);
+    }
+ 
+    .bolinha1 {
+        width: 20vw;
+        height: 15vh;
+        top: -5vh;
+        left: 3vw;
+        background: rgba(221, 179, 94, 0.85);
+    }
+ 
+    .bolinha2 {
+        width: 20vw;
+        height: 20vh;
+        bottom: -5vh;
+        right: 10vw;
+        background: rgba(221, 179, 94, 0.95);
+    }
+ 
+    .bolinha3 {
+        width: 8vw;
+        height: 8vw;
+        bottom: 12vh;
+        left: 10vw;
+        background: rgba(221, 179, 94, 0.59);
+    }
+ 
+    .bolinha4 {
+        width: 8vw;
+        height: 8vw;
+        top: 5vh;
+        right: 20vw;
+        background: rgba(221, 179, 94, 0.85);
+    }
+ 
+    .bolinha5 {
+        width: 8vw;
+        height: 8vw;
+        top: 40vh;
+        left: 55%;
+        background: rgba(221, 179, 94, 0.85);
+    }
+ 
+    .bolinha6 {
+        width: 15vw;
+        height: 15vh;
+        top: 50vh;
+        left: -5vw;
+        background: #DDB35E;
+    }
+ 
+    /* Fundo Semi Transparente (Contêiner principal) */
+    .fundoSemiTransparente {
+        width: 90%;
+        max-width: 1750px;
+        height: 90vh;
+        /* Altura fixa para controle visual */
+        position: relative;
+        background: rgba(213.53, 205.82, 179.63, 0.43);
+        border-radius: 28px;
+        padding: 30px;
+        box-sizing: border-box;
+        overflow: hidden;
+        /* Mantém o conteúdo dentro da borda */
+        margin-left: 0;
+ 
+        transform: translateX(2.5%);
+    }
+ 
+    /* Logos de Canto (Mais à esquerda) */
+    .logoCantoInferior {
+        position: absolute;
+        width: 3.5vw;
+        height: auto;
+        left: 1.5vw;
+        top: 3vh;
+        z-index: 20;
+    }
+ 
+    .logoCantoInferior img {
+        width: 100%;
+        height: auto;
+    }
+ 
+    .logoWhatsApp {
+        position: absolute;
+        width: 3.5vw;
+        height: 3.5vw;
+        left: 1.5vw;
+        bottom: 3vh;
+        z-index: 20;
+    }
+ 
+    .logoWhatsApp img {
+        width: 100%;
+        height: 100%;
+    }
+ 
+    /* ========================================================= */
+    /* GRID INTERNO (Layout Principal) */
+    /* ========================================================= */
+    .main-content-grid {
+        height: 100%;
+        /* Ocupa a altura líquida do .fundoSemiTransparente */
+        display: grid;
+ 
+        grid-template-areas:
+            "nav profile_box"
+            "main meta"
+            "main percentuals";
+ 
+        /* Colunas: 70% (Agenda) | 30% (Lateral) */
+        grid-template-columns: 70% 30%;
+        /* Linhas: 100px (Nav/Perfil) | 1fr (Meta Peso) | 1fr (Percentuais) */
+        grid-template-rows: 100px 1fr 1fr;
+ 
+        grid-gap: 20px;
+    }
+ 
+    /* Posicionamento da Navbar (Esquerda) */
+    .navBar {
+        grid-area: nav;
+        align-self: center;
+        justify-self: start;
+        padding-left: 0;
+        margin-left: 0;
+    }
+ 
+    .navBar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        gap: 40px;
+        align-items: center;
+        justify-content: flex-start;
+    }
+ 
+    /* Container de Perfil (Direita/Empilhado) */
+    .profile-box-container {
+        grid-area: profile_box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        justify-self: end;
+        align-self: center;
+        margin-right: 0;
+    }
+ 
+    /* ========================================================= */
+    /* AGENDA / CALENDÁRIO (main) - NOVO CONTÊINER */
+    /* ========================================================= */
+    .calendar-api-container {
+        grid-area: main;
+        /* Ocupa a área principal */
+        background-color: white;
+        /* Cor de fundo da agenda */
+        border-radius: 28px;
+        padding: 10px;
+        /* Padding interno para separar o iframe da borda do contêiner */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+ 
+        width: 100%;
+        height: 100%;
+        /* Preenche a altura total da área 'main' */
+        box-sizing: border-box;
+        overflow: hidden;
+        /* Esconde barras de rolagem desnecessárias no contêiner */
+    }
+ 
+    /* Iframe do Google Calendar */
+    .frame_agenda {
+        width: 100%;
+        height: 100%;
+        /* Preenche 100% do .calendar-api-container */
+        border: none;
+        border-radius: 20px;
+    }
+ 
+    /* ========================================================= */
+ 
+ 
+    /* Card Meta Peso */
+    .cardMetaPeso {
+        grid-area: meta;
+        background: #FFFAE6;
+        border-radius: 28px;
+        padding: 20px;
+    }
+ 
+    /* Card Progresso Meta Peso */
+    .cardProgressoMetaPeso {
+        grid-area: percentuals;
+        background: #FFFAE6;
+        border-radius: 28px;
+        padding: 20px;
+    }
+ 
+ 
+    /* Outros Estilos de Componentes (Sem Alterações) */
+    .cardVerPerfil {
+        width: 50px;
+        height: 50px;
+        border-radius: 9999px;
+        border: 2px #D4D2C8 solid;
+        margin-bottom: 5px;
+    }
+ 
+    .textocardVerPerfil {
+        font-weight: 800;
+        color: #2A2A2A;
+        font-size: 0.8em;
+    }
+ 
+    .titulo_peso,
+    .titulo_percentual {
+        color: #1E1E1E;
+        font-size: 24px;
+        font-family: 'Akshar', sans-serif;
+        font-weight: 700;
+        text-align: center;
+    }
+ 
+    .navBar a {
+        text-decoration: none;
+        color: white;
+        font-size: 24px;
+        font-family: 'Akshar', sans-serif;
+        font-weight: 700;
+        position: relative;
+        transition: color 0.3s ease;
+    }
+ 
+    .navBar a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 0;
+        height: 2px;
+        background-color: black;
+        transition: width 0.3s ease;
+    }
+ 
+    .navBar a:hover::after,
+    .navBar a.active::after {
+        width: 100%;
+    }
+ 
+ 
+ 
+ 
+ 
+    .gauge-container {
+        position: relative;
+        width: 280px;
+        height: 140px;
+        margin: 20px auto 40px auto;
+    }
+ 
+    .gauge-bg {
+        position: absolute;
+        width: 280px;
+        height: 140px;
+        overflow: hidden;
+        transform: rotate(180deg);
+    }
+ 
+    .gauge-track,
+    .gauge-fill {
+        width: 260px;
+        height: 260px;
+        border: 20px solid transparent;
+        border-radius: 50%;
+        position: absolute;
+        top: -120px;
+        left: 0;
+        box-sizing: border-box;
+    }
+ 
+    .gauge-track {
+        border-color: #000000ff;
+    }
+ 
+    .gauge-fill {
+        border-top-color: #c0c0c0ff;
+        border-right-color: #ebe7e7ff;
+        clip-path: polygon(50% 100%, 0 100%, 0 0, 100% 0, 100% 100%, 50% 100%);
+        transform: rotate(-135deg);
+    }
+ 
+    .gauge-value {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 32px;
+        font-weight: 600;
+        color: #323130;
+    }
+ 
+ 
+    .scale-label {
+        position: absolute;
+        font-size: 11px;
+        color: #605e5c;
+    }
+ 
+    .scale-label>div {
+        width: max-content;
+        margin-left: -50%;
+    }
+ 
+    .scale-label.min {
+        top: 140px;
+        left: 29px;
+        margin-left: 0;
+    }
+ 
+    .scale-label.mid {
+        top: 70px;
+        left: 155px;
+        transform: translateX(-50%);
+    }
+ 
+    .scale-label.max {
+        top: 140px;
+        right: 1px;
+    }
+ 
+ 
+ 
+ /* cartoes de porcentagem */
+   
+        /* Título */
+        .titulo {
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: bolder;
+            color: #000000; /* Cor escura para o título */
+            margin-bottom: 20px;
+        }
+ 
+        /* Container dos Cartões (Flexbox) */
+        .cartoes-wrapper {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px; /* Espaço entre os cartões */
+        }
+ 
+        /* Estilo Comum dos Cartões */
+        .cartao {
+            background-color: #edeae2; /* Fundo do cartão ligeiramente mais escuro */
+            border-radius: 10px;
+            padding: 50px 10px;
+            flex-basis: 50%; /* Cada cartão ocupa metade do espaço */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+ 
+        /* Título do Cartão */
+        .cartao-titulo {
+            font-size: 1.0em;
+            font-weight: bold;
+            color: #000000; /* Cor que lembra o texto escuro da imagem */
+            margin-bottom: 5px;
+            white-space: nowrap; /* Impede que o texto quebre, se possível */
+        }
+ 
+        /* Porcentagem */
+        .porcentagem {
+            font-size: 2.5em;
+            font-weight: 900; /* Muito negrito */
+            color: #000000; /* Cor escura forte */
+            line-height: 1; /* Para não ter espaço extra em cima/baixo */
+        }
+ 
+</style>
+ 
+<body>
+    <div class="background">
+        <div class="bolinha bolinha1"></div>
+        <div class="bolinha bolinha2"></div>
+        <div class="bolinha bolinha3"></div>
+        <div class="bolinha bolinha4"></div>
+        <div class="bolinha bolinha5"></div>
+        <div class="bolinha bolinha6"></div>
+ 
+        <div class="logoCantoInferior">
+            <img src="../../imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
+        </div>
+ 
+        <div class="logoWhatsApp">
+            <img src="../../imgFy/whatsapp (3).png" alt="logoWhatsApp">
+        </div>
+ 
+        <div class="fundoSemiTransparente">
+ 
+            <div class="main-content-grid">
+ 
+                <div class="navBar">
+                    <nav>
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a href="" class="active">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="telaNutricional.html">Nutricional</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="telaTreinos.html">Treinos</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+ 
+                <div class="profile-box-container">
+                    <div class="cardVerPerfil"> </div>
+                    <div class="textocardVerPerfil"> Ver perfil</div>
+                </div>
+ 
+                <div class="calendar-api-container">
+                    <iframe class="frame_agenda"
+                        src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FSao_Paulo&showPrint=0&mode=WEEK&src=dGhhdWFuYWZleXRoMzRAZ21haWwuY29t&src=cHQuYnJhemlsaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uYnJhemlsaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%230b8043&color=%230b8043%22%22
+                        style="border-width:0" width="100%" height="100%" frameborder="0" scrolling="no">
+                    </iframe>
+                </div>
+ 
+                <div class="cardMetaPeso">
+                    <h1 style="text-decoration: bolder;">Progresso de meta de Peso</h1>
+                    <div class="gauge-container">
+ 
+                        <div class="gauge-bg">
+                            <div class="gauge-track"></div>
+                            <div class="gauge-fill" id="gaugeFill"></div>
+                        </div>
+ 
+                        <div class="gauge-scale">
+                            <div class="scale-label min">
+                                <div>30</div>
+                            </div>
+                            <div class="scale-label mid">
+                                <div>30</div>
+                            </div>
+                            <div class="scale-label max">
+                                <div>20</div>
+                            </div>
+                        </div>
+ 
+                        <div class="gauge-value" id="currentValue"></div>
+                    </div>
+ 
+                </div>
+ 
+                <div class="cardProgressoMetaPeso">
+ 
+ 
+   
+        <div class="titulo">
+            Percentuais
+        </div>
+        <div class="cartoes-wrapper">
+            <div class="cartao">
+                <div class="cartao-titulo">Massa Corporal</div>
+                <div class="porcentagem">%15</div>
+            </div>
+            <div class="cartao">
+                <div class="cartao-titulo">Massa Magra</div>
+                <div class="porcentagem">%20</div>
+            </div>
+        </div>
+   
+ 
+ 
+                </div>
+ 
+            </div>
+        </div>
+    </div>
+
+    <style>
+    .gauge-container {
+        position: relative;
+        width: 280px;
+        height: 140px;
+        margin: 20px auto 40px auto;
+    }
+ 
+    .gauge-bg {
+        position: absolute;
+        width: 280px;
+        height: 140px;
+        overflow: hidden;
+        transform: rotate(180deg);
+    }
+ 
+    .gauge-track,
+    .gauge-fill {
+        width: 260px;
+        height: 260px;
+        border: 50px solid;
+       
+        border-radius: 50%;
+        position: absolute;
+        top: -120px;
+        left: 0;
+        box-sizing: border-box;
+    }
+ 
+    .gauge-track {
+        border-color: rgb(255, 255, 255);
+    }
+ 
+    .gauge-fill {
+        border-top-color: #c0c0c0ff;
+        border-right-color: #ebe7e7ff;
+        clip-path: polygon(50% 100%, 0 100%, 0 0, 100% 0, 100% 100%, 100% 100%);
+        transform: rotate(-135deg);
+    }
+ 
+   
+    .scale-label { /* atualizado */
+        position: absolute;
+        font-size: 30px;
+          font-weight: bold;
+        color: #000000;
+        font-size: 1.0em;
+    }
+ 
+    .scale-label>div {
+        width: max-content;
+        margin-left: -50%;
+    }
+ 
+ /* atualizado */
+    .scale-label.min {
+        top: 140px;
+        left: 29px;
+        margin-left: 0;
+    }
+ 
+    .scale-label.mid {
+        top: 70px;
+        left: 160px;
+        transform: translateX(-50%);
+    }
+ 
+    .scale-label.max {
+        top: 140px;
+        left: 270px;
+    }
+    </style>
+ 
+</body>
+ 
+</html>
