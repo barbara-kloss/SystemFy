@@ -11,79 +11,80 @@ class EditExerciseController implements Controller
     function __construct(private ExerciseRepository $exerciseRepository)
     {
     }
+
     public function processaRequisicao(): void
     {
-        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        if ($id === false) {
+        $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+        if ($id === false || $id === null) {
             header('Location: /admin/exercise/list?sucesso=0');
             exit();
         }
 
-        $id_user = filter_input(INPUT_GET, 'id_user',FILTER_VALIDATE_INT);
-        if ($id_user === false) {
-            header('Location: /admin/exercise/list?sucesso=0');// decidir se insere ou busca
-            exit();
-        }
-
-        $peso = filter_input(INPUT_POST, 'peso',FILTER_VALIDATE_FLOAT);
-        if($peso === false){
+        // id_user é obrigatório (NOT NULL no banco e required no form)
+        $id_user = filter_input(INPUT_POST, 'id_user', FILTER_VALIDATE_INT);
+        if ($id_user === false || $id_user === null) {
             header('Location: /admin/exercise/list?sucesso=0');
             exit();
         }
 
-        $repeticao  = filter_input(INPUT_POST, 'repeticao',FILTER_VALIDATE_INT);
-        if ($repeticao === false) {
-            header('Location: /admin/exercise/list?sucesso=0');
-            exit();
+        // peso é opcional no banco, mas no form pode ser 0
+        $peso = filter_input(INPUT_POST, 'peso', FILTER_VALIDATE_FLOAT);
+        if ($peso === false) {
+            $peso = null;
         }
 
-        $tipo_exercicio  = filter_input(INPUT_POST, 'tipo_exercicio');
-        if ($tipo_exercicio === false) {
-            header('Location: /admin/exercise/list?sucesso=0');
-            exit();
-        }
+        // repeticao é opcional no banco, mas required no form
+        $repeticao = filter_input(INPUT_POST, 'repeticao');
+        $repeticao = $repeticao !== null && trim($repeticao) !== '' ? trim($repeticao) : null;
 
-        $objetivo = filter_input(INPUT_GET, 'objetivo');
-        if ($objetivo === false) {
-            header('Location: /admin/exercise/list?sucesso=0');
-            exit();
-        }
+        // tipo_exercicio é opcional no banco, mas required no form
+        $tipo_exercicio = filter_input(INPUT_POST, 'tipo_exercicio');
+        $tipo_exercicio = $tipo_exercicio !== null && trim($tipo_exercicio) !== '' ? trim($tipo_exercicio) : null;
 
-        $dia = filter_input(INPUT_POST, 'dia');
+        // dia é opcional no banco, mas required no form
+        $dia = filter_input(INPUT_POST, 'dia', FILTER_VALIDATE_INT);
         if ($dia === false) {
-            header('Location: /admin/exercise/list?sucesso=0');
-            exit();
+            $dia = null;
         }
 
+        // observacao é opcional
         $observacao = filter_input(INPUT_POST, 'observacao');
-        if ($observacao === false) {
-            header('Location: /admin/exercise/list?sucesso=0');
-            exit();
-        }
+        $observacao = $observacao !== null && trim($observacao) !== '' ? trim($observacao) : null;
 
+        // categoria é opcional no banco, mas required no form
         $categoria = filter_input(INPUT_POST, 'categoria');
-        if ($categoria === false) {
+        $categoria = $categoria !== null && trim($categoria) !== '' ? trim($categoria) : null;
+
+        // id_personal vem da sessão (obrigatório na prática)
+        $id_personal = $_SESSION['user_id'] ?? null;
+        if ($id_personal === null) {
             header('Location: /admin/exercise/list?sucesso=0');
             exit();
         }
-        $id_personal = filter_input(INPUT_GET, 'id_personal',FILTER_VALIDATE_INT);
-        if ($id_personal === false) {
-            header('Location: /admin/exercise/list?sucesso=0');// decidir se insere ou busca
-            exit();
-        }
-        $video = filter_input(INPUT_POST, 'video');
 
-        $exercise = new Exercise($id_user, $peso, $repeticao, $tipo_exercicio, $objetivo, $dia, $observacao, $categoria, $id_personal, $video);
-        $exercise->setId($id);
+        // video é opcional
+        $video = filter_input(INPUT_POST, 'video');
+        $video = $video !== null && trim($video) !== '' ? trim($video) : null;
+
+        $exercise = new Exercise(
+            $id_user,
+            $peso,
+            $repeticao,
+            $tipo_exercicio,
+            $dia,
+            $observacao,
+            $categoria,
+            $id_personal,
+            $video,
+            $id
+        );
 
         $result = $this->exerciseRepository->update($exercise);
 
         if ($result === false) {
-            header('Location: /admin/exercise/list?sucesso=0');// tela de report
-
-        }else{
+            header('Location: /admin/exercise/list?sucesso=0');
+        } else {
             header('Location: /admin/exercise/list?sucesso=1');
         }
-
     }
 }

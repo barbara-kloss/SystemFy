@@ -3,7 +3,26 @@
 use Systemfy\App\Model\Exercise;
 
 /** @var Exercise|null $exercise */
+/** @var Exercise[] $exerciseList */
 
+$exercise ??= null;
+$exerciseList ??= [];
+$nomeCliente ??= '';
+
+$feedback = filter_input(INPUT_GET, 'sucesso', FILTER_VALIDATE_INT);
+$formAction = $exercise ? '/admin/exercise/edit' : '/admin/exercise/save';
+$categorias = ['Superiores', 'Inferiores', 'Core', 'Cardio'];
+$diasSemana = [
+    1 => 'Domingo',
+    2 => 'Segunda-feira',
+    3 => 'Terça-feira',
+    4 => 'Quarta-feira',
+    5 => 'Quinta-feira',
+    6 => 'Sexta-feira',
+    7 => 'Sábado'
+];
+$selectedCategoria = $exercise?->categoria ?? $categorias[0];
+$selectedDia = $exercise?->dia ?? 2;
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -30,12 +49,8 @@ use Systemfy\App\Model\Exercise;
             <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
         </div>
 
-        
-
         <div class="fundoSemiTransparente">
-
             <div class="main-content-grid">
-
                 <div class="navBar">
                     <nav>
                         <ul class="navbar-nav">
@@ -61,11 +76,6 @@ use Systemfy\App\Model\Exercise;
                 </div>
 
                 <div class="top-right-bar">
-                    <div class="search-bar search-cliente">
-                        <input type="text" placeholder="Cliente" class="search-input" id="clienteSearchInput">
-                        <i class="fas fa-search search-icon" id="searchIcon"></i>
-                        <div id="suggestionsList" class="suggestions-dropdown"></div>
-                    </div>
                     <div class="profile-box-container">
                         <a href="/admin/cadastro" class="profile-link">
                             <div class="cardVerPerfil"> <i class="fas fa-user"></i> </div>
@@ -76,455 +86,205 @@ use Systemfy\App\Model\Exercise;
 
                 <div class="content-cards-wrapper">
 
-                    <div class="card-edicao-treino" data-cliente-id="">
+                    <div class="card-edicao-treino">
+                        <h3 class="cliente-nome">
+                            <?= $exercise ? 'Editar Exercício #' . htmlspecialchars((string) $exercise->getId()) : 'Cadastrar Novo Exercício'; ?>
+                        </h3>
 
-                        <h3 class="cliente-nome">(Nenhum Cliente Carregado)</h3>
+                        <?php if ($feedback !== null): ?>
+                            <div class="alerta-feedback" style="margin-bottom: 16px; padding: 12px; border-radius: 4px; background: <?= $feedback === 1 ? '#d4edda' : '#f8d7da'; ?>;">
+                                <?php if ($feedback === 1): ?>
+                                    <span style="color: #155724;">✓ Operação realizada com sucesso.</span>
+                                <?php else: ?>
+                                    <span style="color: #721c24;">✗ Não foi possível concluir a operação.</span>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
 
-                        <form class="exercicio-form" method="post">
+                        <form class="exercicio-form" method="post" action="<?= $formAction; ?>">
+                            <?php if ($exercise): ?>
+                                <input type="hidden" name="id" value="<?= htmlspecialchars((string) $exercise->getId()); ?>">
+                            <?php endif; ?>
 
-                            <div class="input-group-grid-row">
-                                <div class="input-group half-width-field">
-                                    <label for="nomeExercicio">Nome do Exercício</label>
-                                    <input name="tipo_exercicio" type="text" id="nomeExercicio"
-                                        value="<?= $exercise?->tipo_exercicio; ?>">
+                            <div class="input-group">
+                                <label for="buscaCliente">Buscar Cliente</label>
+                                <div style="position: relative;">
+                                    <input type="text" id="buscaCliente" placeholder="Digite o nome ou email do cliente..." 
+                                        autocomplete="off" style="width: 100%; padding: 8px;"
+                                        value="<?= htmlspecialchars($nomeCliente ?? ''); ?>">
+                                    <input type="hidden" name="id_user" id="id_user" required
+                                        value="<?= htmlspecialchars((string) ($exercise->id_user ?? '')); ?>">
+                                    <div id="suggestionsList" style="position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid #ddd; border-top: none; max-height: 200px; overflow-y: auto; z-index: 1000; display: none;"></div>
                                 </div>
-                                <div class="input-group half-width-field">
-                                    <label for="linkVideo">Link</label>
-                                    <input name="video" type="url" id="linkVideo" value="<?= $exercise?->video; ?>">
-                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="nomeExercicio">Nome do Exercício</label>
+                                <input name="tipo_exercicio" type="text" id="nomeExercicio" required
+                                    value="<?= htmlspecialchars($exercise->tipo_exercicio ?? ''); ?>">
                             </div>
 
                             <div class="input-group-grid-row">
                                 <div class="input-group half-width-field">
                                     <label for="categoriaSelect">Categoria</label>
-                                    <select name="categoria" id="categoriaSelect">
-                                        <option  value="<?= $exercise?->categoria; ?>" selected>
-                                            Superiores</option>
-                                        <option  value="<?= $exercise?->categoria; ?>">Inferiores
-                                        </option>
-                                        <option value="<?= $exercise?->categoria; ?>">Core</option>
-                                        <option value="<?= $exercise?->categoria; ?>">Cardio</option>
+                                    <select name="categoria" id="categoriaSelect" required>
+                                        <?php foreach ($categorias as $categoria): ?>
+                                            <option value="<?= $categoria; ?>" <?= $selectedCategoria === $categoria ? 'selected' : ''; ?>>
+                                                <?= $categoria; ?>
+                                            </option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
 
                                 <div class="input-group half-width-field">
                                     <label for="diaSemanaSelect">Dia da Semana</label>
-                                    <select name="dia" id="diaSemanaSelect">
-                                        <option  value="<?= $exercise?->dia; ?>" selected>Segunda-Feira
-                                        </option>
-                                        <option value="<?= $exercise?->dia; ?>">Terça-Feira</option>
-                                        <option value="<?= $exercise?->dia; ?>">Quarta-Feira</option>
-                                        <option value="<?= $exercise?->dia; ?>">Quinta-Feira</option>
-                                        <option value="<?= $exercise?->dia; ?>">Sexta-Feira</option>
-                                        <option value="<?= $exercise?->dia; ?>">Sabado</option>
-                                        <option value="<?= $exercise?->dia; ?>">Domingo</option>
+                                    <select name="dia" id="diaSemanaSelect" required>
+                                        <?php foreach ($diasSemana as $valor => $nome): ?>
+                                            <option value="<?= $valor; ?>" <?= (int) $selectedDia === $valor ? 'selected' : ''; ?>>
+                                                <?= $nome; ?>
+                                            </option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
+
                             <div class="input-group">
                                 <label for="observacao">Observações</label>
-                                <textarea name="observacao" id="observacao"><?= $exercise?->observacao; ?></textarea>
+                                <textarea name="observacao" id="observacao" rows="3"><?= htmlspecialchars($exercise->observacao ?? ''); ?></textarea>
                             </div>
-
 
                             <div class="input-group-grid-row">
                                 <div class="input-group half-width-field">
                                     <label for="series">Séries</label>
-                                    <input name="repeticao" type="text" id="series" value="<?= $exercise?->repeticao; ?>">
+                                    <input name="repeticao" type="text" id="series" required
+                                        value="<?= htmlspecialchars((string) ($exercise->repeticao ?? '')); ?>">
                                 </div>
 
                                 <div class="input-group half-width-field peso-input-group">
-                                    <label for="peso">Peso</label>
+                                    <label for="peso">Peso (KG)</label>
                                     <div class="peso-wrapper">
-                                        <input name="peso" type="number" id="peso" value="<?= $exercise?->peso; ?>" min="0">
+                                        <input name="peso" type="number" id="peso" step="0.5" min="0" value="<?= htmlspecialchars((string) ($exercise->peso ?? '0')); ?>">
                                         <span class="kg-unit">KG</span>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <button type="submit" class="btn-confirmar">Confirmar</button>
-                        </div>
-                    </form>
+
+                            <div class="input-group">
+                                <label for="video">Link do Vídeo</label>
+                                <input name="video" type="url" id="video" placeholder="https://"
+                                    value="<?= htmlspecialchars($exercise->video ?? ''); ?>">
+                            </div>
+
+                            <button type="submit" class="btn-confirmar">
+                                <?= $exercise ? 'Salvar Alterações' : 'Cadastrar Exercício'; ?>
+                            </button>
+                        </form>
+                    </div>
 
                     <div class="card-lista-treinos">
-
                         <div class="lista-header">
-                            <h3 class="lista-titulo">Treinos Recomendados</h3>
+                            <h3 class="lista-titulo">Treinos cadastrados</h3>
+                            <a class="btn-adicionar-treino" href="/admin/exercise/save" title="Adicionar Novo Treino">
+                                <i class="fas fa-plus"></i>
+                            </a>
                         </div>
 
-                        <div class="lista-itens-scroll" id="listaTreinosScroll">
-                        </div>
-
-                        <button class="btn-adicionar-treino" title="Adicionar Novo Treino">
-                            <i class="fas fa-plus"></i>
-                        </button>
+                        <?php if (count($exerciseList) === 0): ?>
+                            <div class="lista-itens-scroll">
+                                <p style="padding: 24px; text-align:center; color:#555;">Nenhum treino cadastrado.</p>
+                            </div>
+                        <?php else: ?>
+                            <div class="lista-itens-scroll">
+                                <?php foreach ($exerciseList as $item): ?>
+                                    <?php if (!$item instanceof Exercise) { continue; } ?>
+                                    <div class="treino-item">
+                                        <div style="flex: 1;">
+                                            <span class="treino-label"><?= htmlspecialchars($diasSemana[$item->dia] ?? (string) $item->dia); ?></span>
+                                            <span class="treino-nome"><?= htmlspecialchars($item->tipo_exercicio); ?> (<?= htmlspecialchars($item->categoria); ?>)</span>
+                                            <span style="display: block; font-size: 0.85em; color: #666; margin-top: 4px;">
+                                                Séries: <?= htmlspecialchars((string) $item->repeticao); ?> | 
+                                                Peso: <?= htmlspecialchars(number_format($item->peso, 2, ',', '.')); ?> kg
+                                            </span>
+                                        </div>
+                                        <div style="display: flex; gap: 8px;">
+                                            <a href="/admin/exercise/edit?id=<?= $item->getId(); ?>" style="padding: 4px 8px; background: #3498db; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85em;">Editar</a>
+                                            <a href="/admin/exercise/delete?id=<?= $item->getId(); ?>" style="padding: 4px 8px; background: #e74c3c; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85em;" onclick="return confirm('Tem certeza que deseja excluir este exercício?');">Excluir</a>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <script>
-        // CÓDIGO JAVASCRIPT ORIGINAL DE TREINOS (Mantido)
-        // =========================================================
-        // DADOS SIMULADOS PARA BUSCA DE CLIENTE
-        // =========================================================
-        const clientesSimulados = [
-            { id: 1, nome: "ANA MARIA DA SILVA", email: "ana.maria@email.com", treinos: [] },
-            { id: 2, nome: "JOÃO PEDRO SOUZA", email: "joao.pedro@email.com", treinos: [] },
-            { id: 3, nome: "PEDRO ALMEIDA", email: "pedro.almeida@email.com", treinos: [] },
-            { id: 4, nome: "MARCIA FAGUNDES", email: "marcia.fagundes@email.com", treinos: [] },
-        ];
+        const buscaClienteInput = document.getElementById('buscaCliente');
+        const idUserInput = document.getElementById('id_user');
+        const suggestionsList = document.getElementById('suggestionsList');
+        let searchTimeout;
 
-        let clienteCarregadoId = null;
-        const clienteNomeDisplay = document.querySelector('.cliente-nome');
-        const cardEdicaoTreino = document.querySelector('.card-edicao-treino');
-
-        // Simulação de Treinos por Cliente ID
-        const treinosSimulados = {
-            1: [
-                { id: 1, nome: 'Agachamento', categoria: 'Inferiores', dia: '4', link: 'link_ana1', obs: '10 segundos isometria', series: '3x15', peso: '25' },
-                { id: 2, nome: 'Flexão', categoria: 'Superiores', dia: '2', link: 'link_ana2', obs: 'Até a falha', series: '3xMAX', peso: '0' },
-            ],
-            2: [
-                { id: 3, nome: 'Corrida', categoria: 'Cardio', dia: '1', link: 'link_joao1', obs: '40 minutos', series: '1x40', peso: '0' },
-                { id: 4, nome: 'Supino', categoria: 'Superiores', dia: '3', link: 'link_joao2', obs: 'Progressão de carga', series: '4x10', peso: '40' },
-            ],
-        };
-
-        // =========================================================
-        // FUNÇÕES DE BUSCA DE CLIENTE
-        // =========================================================
-
-        function buscarClientesParcial(termo) {
-            const termoUpper = termo.toUpperCase().trim();
-            return clientesSimulados.filter(cliente => {
-                const nomeUpper = cliente.nome.toUpperCase();
-                const emailUpper = cliente.email.toUpperCase();
-                return nomeUpper.includes(termoUpper) || emailUpper.includes(termoUpper);
-            });
-        }
-
-        function buscarCliente(termo) {
-            const resultados = buscarClientesParcial(termo);
-            return resultados.length > 0 ? resultados[0] : null;
-        }
-
-        function renderSuggestions(matches) {
-            const listContainer = document.getElementById('suggestionsList');
-            listContainer.innerHTML = '';
-
-            if (matches.length > 0) {
-                matches.forEach(cliente => {
-                    const item = document.createElement('div');
-                    item.className = 'suggestion-item';
-                    item.textContent = `${cliente.nome} (${cliente.email.split('@')[0]}...)`;
-
-                    item.addEventListener('click', function () {
-                        carregarDadosCliente(cliente);
-                        listContainer.style.display = 'none';
-                    });
-
-                    listContainer.appendChild(item);
-                });
-                listContainer.style.display = 'block';
-            } else {
-                listContainer.style.display = 'none';
-            }
-        }
-
-        function handleAutocomplete(event) {
-            const termo = event.target.value.trim();
-            const listContainer = document.getElementById('suggestionsList');
-
+        buscaClienteInput.addEventListener('input', function() {
+            const termo = this.value.trim();
+            
+            clearTimeout(searchTimeout);
+            
             if (termo.length < 2) {
-                listContainer.style.display = 'none';
+                suggestionsList.style.display = 'none';
+                idUserInput.value = '';
                 return;
             }
 
-            const resultados = buscarClientesParcial(termo);
-            renderSuggestions(resultados);
-        }
-
-        function handleSearch() {
-            const searchInput = document.getElementById('clienteSearchInput');
-            const termo = searchInput.value;
-
-            if (termo.length < 2) {
-                alert("Digite um nome ou e-mail para buscar.");
-                return;
-            }
-
-            const cliente = buscarCliente(termo);
-            document.getElementById('suggestionsList').style.display = 'none';
-
-            if (cliente) {
-                carregarDadosCliente(cliente);
-            } else {
-                clienteNomeDisplay.textContent = '(Cliente Não Encontrado)';
-                cardEdicaoTreino.setAttribute('data-cliente-id', '');
-                clienteCarregadoId = null;
-                renderTreinosList(0);
-                alert(`Nenhum cliente encontrado para o termo: "${termo}"`);
-            }
-        }
-
-        // =========================================================
-        // FUNÇÕES DE TREINOS
-        // =========================================================
-
-        // Mapeamento de Dia da Semana
-        const diaMap = {
-            '2': 'Segunda', '1': 'Domingo', '3': 'Terça', '4': 'Quarta',
-            '5': 'Quinta', '6': 'Sexta', '7': 'Sábado'
-        };
-
-        function getDiaName(diaValue) {
-            return diaMap[diaValue] || 'Dia Indefinido';
-        }
-
-        // Elementos principais
-        const listaItensScroll = document.getElementById('listaTreinosScroll');
-        const confirmButton = document.querySelector('.btn-confirmar');
-        const exercicioForm = document.querySelector('.exercicio-form');
-        const btnAdicionarTreino = document.querySelector('.btn-adicionar-treino');
-
-        // Campos do formulário (IDs corrigidos/unificados)
-        const nomeExercicioInput = document.getElementById('nomeExercicio');
-        const observacaoTextarea = document.getElementById('observacao');
-        const linkVideoInput = document.getElementById('linkVideo');
-        const categoriaSelect = document.getElementById('categoriaSelect'); // USANDO categoriaSelect
-        const diaSemanaSelect = document.getElementById('diaSemanaSelect'); // USANDO diaSemanaSelect
-        const seriesInput = document.getElementById('series');
-        const pesoInput = document.getElementById('peso');
-
-        let currentEditingItem = null;
-
-        // --- FUNÇÃO PARA RENDERIZAR A LISTA DE TREINOS DE UM CLIENTE ---
-        function renderTreinosList(clienteId) {
-            const treinos = treinosSimulados[clienteId] || [];
-            listaItensScroll.innerHTML = '';
-            resetForm();
-
-            if (treinos.length === 0 && clienteId !== 0) {
-                listaItensScroll.innerHTML = '<p style="text-align: center; color: #504f4f; padding: 20px;">Nenhum treino cadastrado para este cliente.</p>';
-                return;
-            }
-
-            treinos.forEach((plano) => {
-                const diaDisplay = getDiaName(plano.dia);
-                const itemElement = document.createElement('div');
-                itemElement.className = 'treino-item clickable-item';
-
-                for (const key in plano) {
-                    if (key !== 'id') {
-                        itemElement.setAttribute(`data-${key.toLowerCase()}`, plano[key]);
-                    }
-                }
-                itemElement.setAttribute('data-id', plano.id);
-
-                itemElement.innerHTML = `
-                <span class="treino-label">${diaDisplay}</span>
-                <span class="treino-nome">${plano.nome} (${plano.categoria})</span>
-                <button class="btn-excluir"><i class="fas fa-times"></i></button>
-            `;
-
-                listaItensScroll.appendChild(itemElement);
-                attachEventListeners(itemElement);
-            });
-        }
-
-        // --- FUNÇÃO PARA CARREGAR O CLIENTE E INICIAR A TELA ---
-        function carregarDadosCliente(cliente) {
-            clienteNomeDisplay.textContent = `Cliente: ${cliente.nome}`;
-            clienteCarregadoId = cliente.id;
-            cardEdicaoTreino.setAttribute('data-cliente-id', cliente.id);
-
-            renderTreinosList(cliente.id);
-
-            document.getElementById('clienteSearchInput').value = cliente.nome;
-        }
-
-
-        function resetForm() {
-            exercicioForm.reset();
-            // Removi os valores iniciais para não poluir o formulário ao carregar um cliente
-            nomeExercicioInput.value = '';
-            observacaoTextarea.value = '';
-            linkVideoInput.value = '';
-            categoriaSelect.value = 'Superiores';
-            diaSemanaSelect.value = '2';
-            seriesInput.value = '';
-            pesoInput.value = '';
-
-            if (clienteCarregadoId) {
-                const clienteAtual = clientesSimulados.find(c => c.id === clienteCarregadoId);
-                clienteNomeDisplay.textContent = `Cliente: ${clienteAtual.nome}`;
-            } else {
-                clienteNomeDisplay.textContent = '(Nenhum Cliente Carregado)';
-            }
-            currentEditingItem = null;
-        }
-
-        function attachEventListeners(itemElement) {
-            // 1. Exclusão
-            const excluirBtn = itemElement.querySelector('.btn-excluir');
-            if (excluirBtn) {
-                excluirBtn.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                    if (!clienteCarregadoId) { alert('Carregue um cliente primeiro!'); return; }
-
-                    const nomeTreino = itemElement.getAttribute('data-nome');
-                    const confirmExclusao = confirm(`Tem certeza que deseja excluir o treino "${nomeTreino}"?`);
-                    if (confirmExclusao) {
-                        itemElement.remove();
-                        const treinoId = parseInt(itemElement.getAttribute('data-id'));
-                        const treinos = treinosSimulados[clienteCarregadoId];
-                        if (treinos) {
-                            treinosSimulados[clienteCarregadoId] = treinos.filter(t => t.id !== treinoId);
+            searchTimeout = setTimeout(() => {
+                fetch(`/admin/exercise/busca-cliente?q=${encodeURIComponent(termo)}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
                         }
-
-                        alert('Treino excluído com sucesso! (Ação simulada)');
-                        if (itemElement === currentEditingItem) {
-                            resetForm();
+                        return response.json();
+                    })
+                    .then(data => {
+                        suggestionsList.innerHTML = '';
+                        if (data.error) {
+                            console.error('Erro na busca:', data.error);
+                            suggestionsList.style.display = 'none';
+                            return;
                         }
-                    }
-                });
-            }
-
-            // 2. Edição (Clique no item)
-            itemElement.addEventListener('click', function () {
-                if (!clienteCarregadoId) { alert('Carregue um cliente primeiro!'); return; }
-
-                currentEditingItem = this;
-
-                const nome = this.getAttribute('data-nome');
-                const link = this.getAttribute('data-link');
-                const obs = this.getAttribute('data-obs');
-                const categoria = this.getAttribute('data-categoria');
-                const dia = this.getAttribute('data-dia');
-                const series = this.getAttribute('data-series');
-                const peso = this.getAttribute('data-peso');
-
-                nomeExercicioInput.value = nome || '';
-                observacaoTextarea.value = obs || '';
-                linkVideoInput.value = link || '';
-                categoriaSelect.value = categoria || 'Superiores';
-                diaSemanaSelect.value = dia || '2';
-                seriesInput.value = series || '';
-                pesoInput.value = peso || '';
-
-                clienteNomeDisplay.textContent = `${clienteNomeDisplay.textContent.split(':')[0]}: (Editando Exercício: ${nome})`;
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            // --- LISTENERS DE BUSCA DE CLIENTE ---
-            const searchInput = document.getElementById('clienteSearchInput');
-            const searchIcon = document.getElementById('searchIcon');
-
-            searchInput.addEventListener('input', handleAutocomplete);
-            searchIcon.addEventListener('click', handleSearch);
-            searchInput.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleSearch();
-                }
-            });
-
-            document.addEventListener('click', function (e) {
-                const searchBar = document.querySelector('.search-bar');
-                const listContainer = document.getElementById('suggestionsList');
-                if (searchBar && listContainer && !searchBar.contains(e.target)) {
-                    listContainer.style.display = 'none';
-                }
-            });
-
-            // Inicializa a lista e o formulário
-            renderTreinosList(0);
-
-            // --- LISTENERS DE TREINOS ---
-            confirmButton.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                if (!clienteCarregadoId) {
-                    alert('Selecione um cliente antes de confirmar!');
-                    return;
-                }
-
-                const nomeExercicio = nomeExercicioInput.value.trim();
-                const observacao = observacaoTextarea.value.trim();
-                const linkVideo = linkVideoInput.value.trim();
-                const categoria = categoriaSelect.value;
-                const dia = diaSemanaSelect.value;
-                const diaDisplayName = getDiaName(dia);
-                const series = seriesInput.value.trim();
-                const peso = pesoInput.value.trim();
-
-                let message;
-
-                if (currentEditingItem === null) {
-                    // AÇÃO DE CRIAÇÃO
-                    const treinos = treinosSimulados[clienteCarregadoId] || [];
-                    const novoId = treinos.length > 0 ? Math.max(...treinos.map(t => t.id)) + 1 : 1;
-
-                    const novoItem = document.createElement('div');
-                    const novoTreinoNome = nomeExercicio || categoria;
-
-                    novoItem.className = 'treino-item clickable-item';
-                    novoItem.setAttribute('data-id', novoId);
-                    novoItem.setAttribute('data-nome', novoTreinoNome);
-                    novoItem.setAttribute('data-categoria', categoria);
-                    novoItem.setAttribute('data-dia', dia);
-                    novoItem.setAttribute('data-link', linkVideo);
-                    novoItem.setAttribute('data-obs', observacao);
-                    novoItem.setAttribute('data-series', series);
-                    novoItem.setAttribute('data-peso', peso);
-
-                    novoItem.innerHTML = `
-                <span class="treino-label">${diaDisplayName}</span> 
-                <span class="treino-nome">${novoTreinoNome} (${categoria})</span>
-                <button class="btn-excluir"><i class="fas fa-times"></i></button>
-                `;
-
-                    listaItensScroll.prepend(novoItem);
-                    attachEventListeners(novoItem);
-
-                    if (!treinosSimulados[clienteCarregadoId]) { treinosSimulados[clienteCarregadoId] = []; }
-                    treinosSimulados[clienteCarregadoId].push({
-                        id: novoId, nome: novoTreinoNome, categoria, dia, link: linkVideo, obs: observacao, series, peso
+                        if (data.length === 0) {
+                            suggestionsList.style.display = 'none';
+                            return;
+                        }
+                        
+                        data.forEach(cliente => {
+                            const item = document.createElement('div');
+                            item.style.cssText = 'padding: 10px; cursor: pointer; border-bottom: 1px solid #eee;';
+                            const nome = cliente.nome_completo || 'Sem nome';
+                            const email = cliente.email || 'Sem email';
+                            item.textContent = `${nome} (${email})`;
+                            item.addEventListener('mouseenter', () => item.style.background = '#f0f0f0');
+                            item.addEventListener('mouseleave', () => item.style.background = 'white');
+                            item.addEventListener('click', () => {
+                                idUserInput.value = cliente.id;
+                                buscaClienteInput.value = cliente.nome_completo || cliente.email || '';
+                                suggestionsList.style.display = 'none';
+                            });
+                            suggestionsList.appendChild(item);
+                        });
+                        suggestionsList.style.display = 'block';
+                    })
+                    .catch(err => {
+                        console.error('Erro na busca:', err);
+                        suggestionsList.innerHTML = '';
+                        suggestionsList.style.display = 'none';
                     });
+            }, 300);
+        });
 
-                    message = `Novo exercício '${novoTreinoNome}' cadastrado com sucesso!`;
-
-                } else {
-                    // AÇÃO DE EDIÇÃO
-                    currentEditingItem.setAttribute('data-nome', nomeExercicio);
-                    currentEditingItem.setAttribute('data-categoria', categoria);
-                    currentEditingItem.setAttribute('data-dia', dia);
-                    currentEditingItem.setAttribute('data-link', linkVideo);
-                    currentEditingItem.setAttribute('data-obs', observacao);
-                    currentEditingItem.setAttribute('data-series', series);
-                    currentEditingItem.setAttribute('data-peso', peso);
-
-                    currentEditingItem.querySelector('.treino-label').textContent = diaDisplayName;
-                    currentEditingItem.querySelector('.treino-nome').textContent = `${nomeExercicio} (${categoria})`;
-
-                    message = `Exercício '${nomeExercicio}' atualizado com sucesso!`;
-                }
-
-                alert('Ação registrada: ' + message);
-            });
-
-            btnAdicionarTreino.addEventListener('click', function () {
-                if (!clienteCarregadoId) {
-                    alert('Selecione um cliente primeiro!');
-                    return;
-                }
-                resetForm();
-                clienteNomeDisplay.textContent = `${clienteNomeDisplay.textContent.split(':')[0]}: (Cadastrando Novo Exercício)`;
-                alert('Pronto para cadastrar um novo exercício!');
-            });
+        document.addEventListener('click', function(e) {
+            if (!buscaClienteInput.contains(e.target) && !suggestionsList.contains(e.target)) {
+                suggestionsList.style.display = 'none';
+            }
         });
     </script>
 </body>

@@ -3,12 +3,14 @@
 use Systemfy\App\Model\Menu;
 
 /** @var Menu|null $menu */
-if (!isset($menu)) {
-    $menu = null;
-}
-if (!isset($menuList)) {
-    $menuList = [];
-}
+/** @var Menu[] $menuList */
+
+$menu ??= null;
+$menuList ??= [];
+$nomeCliente ??= '';
+
+$feedback = filter_input(INPUT_GET, 'sucesso', FILTER_VALIDATE_INT);
+$formAction = $menu ? '/admin/menu/edit' : '/admin/menu/save';
 
 function getCategoriaNome(int $id): string {
     return $id == 1 ? 'Geral' : 'Livre';
@@ -40,12 +42,8 @@ function getCategoriaNome(int $id): string {
             <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
         </div>
 
-        
-
         <div class="fundoSemiTransparente">
-
             <div class="main-content-grid">
-
                 <div class="navBar">
                     <nav>
                         <ul class="navbar-nav">
@@ -72,309 +70,186 @@ function getCategoriaNome(int $id): string {
                 </div>
 
                 <div class="top-right-bar">
-
-                    <div class="search-bar search-cliente">
-                        <input type="text" placeholder="Buscar Cliente (Nome ou Email)" class="search-input"
-                            id="clienteSearchInput">
-                        <i class="fas fa-search search-icon" id="searchIcon"></i>
-                        <div id="suggestionsList" class="suggestions-dropdown"></div>
-                    </div>
-
                     <div class="profile-box-container">
-
                         <a href="/admin/cadastro" class="profile-link">
                             <div class="cardVerPerfil"> <i class="fas fa-user"></i> </div>
                             <div class="textocardVerPerfil"> Ver perfil </div>
                         </a>
-
                     </div>
                 </div>
 
                 <div class="content-cards-wrapper">
 
                     <div class="card-edicao-refeicao">
+                        <h3 class="cliente-nome">
+                            <?= $menu ? 'Editar Refeição #' . htmlspecialchars((string) $menu->getId()) : 'Cadastrar Nova Refeição'; ?>
+                        </h3>
 
-                        <h3 class="cliente-nome" id="clienteNomeDisplay">(Nenhum Cliente Carregado)</h3>
+                        <?php if ($feedback !== null): ?>
+                            <div class="alerta-feedback" style="margin-bottom: 16px; padding: 12px; border-radius: 4px; background: <?= $feedback === 1 ? '#d4edda' : '#f8d7da'; ?>;">
+                                <?php if ($feedback === 1): ?>
+                                    <span style="color: #155724;">✓ Operação realizada com sucesso.</span>
+                                <?php else: ?>
+                                    <span style="color: #721c24;">✗ Não foi possível concluir a operação.</span>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
 
-                        <form class="refeicao-form" method="post" action="/admin/menu/save"">
+                        <form class="refeicao-form" method="post" action="<?= $formAction; ?>">
+                            <?php if ($menu): ?>
+                                <input type="hidden" name="id" value="<?= htmlspecialchars((string) $menu->getId()); ?>">
+                            <?php endif; ?>
+
+                            <div class="input-group">
+                                <label for="buscaCliente">Buscar Cliente</label>
+                                <div style="position: relative;">
+                                    <input type="text" id="buscaCliente" placeholder="Digite o nome ou email do cliente..." 
+                                        autocomplete="off" style="width: 100%; padding: 8px;"
+                                        value="<?= htmlspecialchars($nomeCliente ?? ''); ?>">
+                                    <input type="hidden" name="id_user" id="id_user" required
+                                        value="<?= htmlspecialchars((string) ($menu->id_user ?? '')); ?>">
+                                    <div id="suggestionsList" style="position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid #ddd; border-top: none; max-height: 200px; overflow-y: auto; z-index: 1000; display: none;"></div>
+                                </div>
+                            </div>
 
                             <div class="input-group-grid-row">
-
                                 <div class="input-group half-width-field">
                                     <label for="tipoRefeicao">Tipo de Refeição</label>
-                                    <select id="tipoRefeicao">
-                                        <option  name="categoria" value="1" <?= ($menu?->tipoRefeicaoId == 1) ? 'selected' : ''; ?>>
-                                            Refeições Geral
-                                        </option>
-
-                                        <option name="categoria" value="2" <?= ($menu?->tipoRefeicaoId == 2) ? 'selected' : ''; ?>>
-                                            Refeições Livre
-                                        </option>
+                                    <select name="categoria" id="tipoRefeicao" required>
+                                        <option value="1" <?= ($menu?->categoria ?? 1) == 1 ? 'selected' : ''; ?>>Refeições Geral</option>
+                                        <option value="2" <?= ($menu?->categoria ?? 1) == 2 ? 'selected' : ''; ?>>Refeições Livre</option>
                                     </select>
                                 </div>
 
                                 <div class="input-group half-width-field">
                                     <label for="horario">Horário</label>
-                                    <input type="time" name="horario" id="horario" value="<?= $menu?->horario ?? ''; ?>">
+                                    <input type="time" name="horario" id="horario" required
+                                        value="<?= $menu?->horario ?? ''; ?>">
                                 </div>
                             </div>
+
                             <div class="input-group">
                                 <label for="categoriaNome">Nome da Refeição</label>
-                                <input type="text" name="titulo" id="categoriaNome" value="<?= $menu?->titulo ?? ''; ?>">
+                                <input type="text" name="titulo" id="categoriaNome" required
+                                    value="<?= htmlspecialchars($menu?->titulo ?? ''); ?>">
                             </div>
 
                             <div class="input-group">
                                 <label for="observacao">Observação</label>
-                                <textarea name="observacao" id="observacao"><?= $menu?->observacao ?? ''; ?></textarea>
+                                <textarea name="observacao" id="observacao" rows="3"><?= htmlspecialchars($menu?->observacao ?? ''); ?></textarea>
                             </div>
                             
-                            <button type="submit" class="btn-confirmar">Confirmar</button>
-                        </div>
-                    </form>
+                            <button type="submit" class="btn-confirmar">
+                                <?= $menu ? 'Salvar Alterações' : 'Cadastrar Refeição'; ?>
+                            </button>
+                        </form>
+                    </div>
 
                     <div class="card-lista-refeicoes">
-
                         <div class="lista-header">
-                            <h3 class="lista-titulo">Refeições</h3>
+                            <h3 class="lista-titulo">Refeições cadastradas</h3>
+                            <a class="btn-adicionar-refeicao" href="/admin/menu/save" title="Adicionar Nova Refeição">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
 
-                            <select id="filtroRefeicao" class="filtro-refeicao-select">
-                                <option value="Geral">Refeições Geral</option>
-                                <option value="Livre">Refeições Livre</option>
-                            </select>
-                        </div>
-                        <div class="lista-itens-scroll">
-                            <?php foreach ($menuList as $menu) {?>
-                            <div class="refeicao-item clickable-item" data-id="1" data-tipo="Geral">
-                                <span class="refeicao-horario"><?= $menu->horario; ?></span>
-                                <span class="refeicao-nome"><?= $menu->categoria; ?></span>
-                                <button class="/admin/menu/deleteid=<?= $menu->id; ?>"><i class="fas fa-times"></i></button>
+                        <?php if (count($menuList) === 0): ?>
+                            <div class="lista-itens-scroll">
+                                <p style="padding: 24px; text-align:center; color:#555;">Nenhuma refeição cadastrada.</p>
                             </div>
-                            <?php }?>
-                        </div>
-                        
-                        <button  class="btn-adicionar-refeicao" title="Adicionar Nova Refeição">
-                            <i class="fas fa-plus"></i>
-                        </button>
+                        <?php else: ?>
+                            <div class="lista-itens-scroll">
+                                <?php foreach ($menuList as $item): ?>
+                                    <?php if (!$item instanceof Menu) { continue; } ?>
+                                    <div class="refeicao-item">
+                                        <div style="flex: 1;">
+                                            <span class="refeicao-horario"><?= htmlspecialchars(substr($item->horario, 0, 5)); ?></span>
+                                            <span class="refeicao-nome"><?= htmlspecialchars($item->titulo); ?> (<?= getCategoriaNome($item->categoria); ?>)</span>
+                                            <?php if ($item->observacao): ?>
+                                                <span style="display: block; font-size: 0.85em; color: #666; margin-top: 4px;">
+                                                    <?= htmlspecialchars($item->observacao); ?>
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div style="display: flex; gap: 8px;">
+                                            <a href="/admin/menu/edit?id=<?= $item->getId(); ?>" style="padding: 4px 8px; background: #3498db; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85em;">Editar</a>
+                                            <a href="/admin/menu/delete?id=<?= $item->getId(); ?>" style="padding: 4px 8px; background: #e74c3c; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85em;" onclick="return confirm('Tem certeza que deseja excluir esta refeição?');">Excluir</a>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <script>
-        // =========================================================
-        // DADOS SIMULADOS PARA BUSCA
-        // =========================================================
-        const clientesSimulados = [
-            { id: 1, nome: "ANA MARIA DA SILVA", email: "ana.maria@email.com", refeicoes: [] },
-            { id: 2, nome: "JOÃO PEDRO SOUZA", email: "joao.pedro@email.com", refeicoes: [] },
-            { id: 3, nome: "PEDRO ALMEIDA", email: "pedro.almeida@email.com", refeicoes: [] },
-            { id: 4, nome: "MARCIA FAGUNDES", email: "marcia.fagundes@email.com", refeicoes: [] },
-        ];
+        const buscaClienteInput = document.getElementById('buscaCliente');
+        const idUserInput = document.getElementById('id_user');
+        const suggestionsList = document.getElementById('suggestionsList');
+        let searchTimeout;
 
-        let clienteCarregadoId = null;
-
-        // =========================================================
-        // FUNÇÕES DE BUSCA E UI
-        // =========================================================
-
-        /**
-         * Busca o cliente por substring no nome ou email.
-         * @param {string} termo Termo de busca.
-         * @returns {Array} Array de clientes correspondentes.
-         */
-        function buscarClientesParcial(termo) {
-            const termoUpper = termo.toUpperCase().trim();
-
-            return clientesSimulados.filter(cliente => {
-                const nomeUpper = cliente.nome.toUpperCase();
-                const emailUpper = cliente.email.toUpperCase();
-
-                // Lógica de substring (LIKE %TERMO%)
-                return nomeUpper.includes(termoUpper) || emailUpper.includes(termoUpper);
-            });
-        }
-
-        /**
-         * Retorna o primeiro cliente encontrado com base no termo.
-         * Usado para a busca final (Enter ou clique no ícone).
-         */
-        function buscarCliente(termo) {
-            const resultados = buscarClientesParcial(termo);
-            return resultados.length > 0 ? resultados[0] : null;
-        }
-
-
-        // FUNÇÃO PARA CARREGAR DADOS DO CLIENTE (Simulação)
-        function carregarDadosCliente(cliente) {
-            document.getElementById('clienteNomeDisplay').textContent = `Cliente: ${cliente.nome}`;
-            clienteCarregadoId = cliente.id;
-            // Aqui você adicionaria a lógica para carregar as refeições do cliente ID
-            console.log(`Cliente ${cliente.nome} (ID: ${cliente.id}) carregado. Carregando refeições...`);
-            // Limpa o campo de busca
-            document.getElementById('clienteSearchInput').value = cliente.nome;
-        }
-
-
-        // FUNÇÃO PARA RENDERIZAR E EXIBIR A LISTA DE SUGESTÕES
-        function renderSuggestions(matches) {
-            const listContainer = document.getElementById('suggestionsList');
-            listContainer.innerHTML = ''; // Limpa sugestões antigas
-
-            if (matches.length > 0) {
-                matches.forEach(cliente => {
-                    const item = document.createElement('div');
-                    item.className = 'suggestion-item';
-                    item.textContent = `${cliente.nome} (${cliente.email.split('@')[0]}...)`;
-
-                    // CRÍTICO: Adiciona evento para carregar o cliente ao clicar na sugestão
-                    item.addEventListener('click', function () {
-                        carregarDadosCliente(cliente);
-                        listContainer.style.display = 'none';
-                    });
-
-                    listContainer.appendChild(item);
-                });
-                listContainer.style.display = 'block';
-            } else {
-                listContainer.style.display = 'none';
-            }
-        }
-
-
-        // FUNÇÃO PRINCIPAL DE BUSCA/INPUT (CHAMADA EM TEMPO REAL)
-        function handleAutocomplete(event) {
-            const termo = event.target.value.trim();
-            const listContainer = document.getElementById('suggestionsList');
-
-            if (termo.length < 2) { // Começa a sugerir após 2 caracteres
-                listContainer.style.display = 'none';
-                return;
-            }
-
-            const resultados = buscarClientesParcial(termo);
-
-            renderSuggestions(resultados);
-        }
-
-        // FUNÇÃO PARA LIDAR COM BUSCA COMPLETA (ENTER ou ÍCONE)
-        function handleSearch() {
-            const searchInput = document.getElementById('clienteSearchInput');
-            const termo = searchInput.value;
-
+        buscaClienteInput.addEventListener('input', function() {
+            const termo = this.value.trim();
+            
+            clearTimeout(searchTimeout);
+            
             if (termo.length < 2) {
-                alert("Digite um nome ou e-mail para buscar.");
+                suggestionsList.style.display = 'none';
+                idUserInput.value = '';
                 return;
             }
 
-            const cliente = buscarCliente(termo);
+            searchTimeout = setTimeout(() => {
+                fetch(`/admin/menu/busca-cliente?q=${encodeURIComponent(termo)}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        suggestionsList.innerHTML = '';
+                        if (data.error) {
+                            console.error('Erro na busca:', data.error);
+                            suggestionsList.style.display = 'none';
+                            return;
+                        }
+                        if (data.length === 0) {
+                            suggestionsList.style.display = 'none';
+                            return;
+                        }
+                        
+                        data.forEach(cliente => {
+                            const item = document.createElement('div');
+                            item.style.cssText = 'padding: 10px; cursor: pointer; border-bottom: 1px solid #eee;';
+                            const nome = cliente.nome_completo || 'Sem nome';
+                            const email = cliente.email || 'Sem email';
+                            item.textContent = `${nome} (${email})`;
+                            item.addEventListener('mouseenter', () => item.style.background = '#f0f0f0');
+                            item.addEventListener('mouseleave', () => item.style.background = 'white');
+                            item.addEventListener('click', () => {
+                                idUserInput.value = cliente.id;
+                                buscaClienteInput.value = cliente.nome_completo || cliente.email || '';
+                                suggestionsList.style.display = 'none';
+                            });
+                            suggestionsList.appendChild(item);
+                        });
+                        suggestionsList.style.display = 'block';
+                    })
+                    .catch(err => {
+                        console.error('Erro na busca:', err);
+                        suggestionsList.innerHTML = '';
+                        suggestionsList.style.display = 'none';
+                    });
+            }, 300);
+        });
 
-            document.getElementById('suggestionsList').style.display = 'none'; // Esconde a lista
-
-            if (cliente) {
-                carregarDadosCliente(cliente);
-                alert(`Cliente encontrado: ${cliente.nome}`);
-            } else {
-                document.getElementById('clienteNomeDisplay').textContent = '(Cliente Não Encontrado)';
-                clienteCarregadoId = null;
-                alert(`Nenhum cliente encontrado para o termo: "${termo}"`);
+        document.addEventListener('click', function(e) {
+            if (!buscaClienteInput.contains(e.target) && !suggestionsList.contains(e.target)) {
+                suggestionsList.style.display = 'none';
             }
-        }
-
-
-        // =========================================================
-        // EVENT LISTENERS
-        // =========================================================
-        document.addEventListener('DOMContentLoaded', function () {
-
-            const searchInput = document.getElementById('clienteSearchInput');
-            const searchIcon = document.getElementById('searchIcon');
-
-            // 1. Disparar autocompletar em tempo real
-            searchInput.addEventListener('input', handleAutocomplete);
-
-            // 2. Disparar a busca completa (Enter ou Ícone)
-            searchIcon.addEventListener('click', handleSearch);
-            searchInput.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleSearch();
-                }
-            });
-
-            // 3. Ocultar sugestões quando clicar fora do campo (boa prática de UX)
-            document.addEventListener('click', function (e) {
-                const searchBar = document.querySelector('.search-bar');
-                if (!searchBar.contains(e.target)) {
-                    document.getElementById('suggestionsList').style.display = 'none';
-                }
-            });
-
-
-            // --- CÓDIGO ORIGINAL DAS REFEIÇÕES (Mantido) ---
-            const listaItensScroll = document.querySelector('.lista-itens-scroll');
-            const filtroRefeicao = document.getElementById('filtroRefeicao');
-
-            function applyFilter(filterValue) {
-                const itens = document.querySelectorAll('.refeicao-item');
-                itens.forEach(item => {
-                    const tipo = item.getAttribute('data-tipo');
-                    if (filterValue === 'todos' || tipo === filterValue) {
-                        item.style.display = 'flex';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            }
-
-            function attachEventListeners(itemElement) {
-                // 1. Exclusão
-                itemElement.querySelector('.btn-excluir').addEventListener('click', function (e) {
-                    e.stopPropagation();
-                    const nomeRefeicao = itemElement.querySelector('.refeicao-nome').textContent.trim();
-                    const confirmExclusao = confirm(`Tem certeza que deseja excluir a refeição "${nomeRefeicao}"?`);
-                    if (confirmExclusao) {
-                        itemElement.remove();
-                        alert('Refeição excluída com sucesso! (Ação simulada)');
-                    }
-                });
-
-                // 2. Edição
-                itemElement.addEventListener('click', function () {
-                    const nome = this.querySelector('.refeicao-nome').textContent.trim();
-                    const horaString = this.querySelector('.refeicao-horario').textContent.trim();
-                    const tipo = this.getAttribute('data-tipo');
-                    const hora = horaString.padStart(5, '0');
-
-                    document.getElementById('categoriaNome').value = nome;
-                    document.getElementById('horario').value = hora;
-                    document.getElementById('tipoRefeicao').value = tipo;
-                    document.querySelector('.cliente-nome').textContent = `(Editando: ${nome})`;
-                });
-            }
-
-            document.querySelectorAll('.refeicao-item.clickable-item').forEach(attachEventListeners);
-
-            filtroRefeicao.addEventListener('change', function () {
-                applyFilter(this.value);
-            });
-
-            const confirmButton = document.querySelector('.btn-confirmar');
-            const refeicaoForm = document.querySelector('.refeicao-form');
-
-            confirmButton.addEventListener('click', function (e) {
-                e.preventDefault();
-                // Simulação da lógica de confirmação...
-                alert('Ação registrada: Confirmar Edição/Criação (Simulado)');
-                refeicaoForm.reset();
-            });
-
-            document.querySelector('.btn-adicionar-refeicao').addEventListener('click', function () {
-                const form = document.querySelector('.refeicao-form');
-                form.reset();
-                document.querySelector('.cliente-nome').textContent = '(Cadastrando Nova Refeição)';
-                alert('Pronto para cadastrar uma nova refeição!');
-            });
         });
     </script>
 </body>

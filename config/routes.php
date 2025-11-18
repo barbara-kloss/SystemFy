@@ -6,7 +6,8 @@ use Systemfy\App\Admin\ExerciseController\{
     DeleteExerciseController,
     EditExerciseController,
     ExerciseFormController,
-    NewExerciseController
+    NewExerciseController,
+    BuscaClienteController as ExerciseBuscaClienteController
 };
 
 use Systemfy\App\Admin\MenuController\{
@@ -14,7 +15,8 @@ use Systemfy\App\Admin\MenuController\{
     DeleteMenuController,
     EditMenuController,
     MenuFormController,
-    MenuListController
+    MenuListController,
+    BuscaClienteController as MenuBuscaClienteController
 };
 
 use Systemfy\App\Admin\PlanoController\{
@@ -71,6 +73,7 @@ return [
     'GET|/admin/exercise/edit' => ExerciseFormController::class,
     'POST|/admin/exercise/edit' => EditExerciseController::class,
     'GET|/admin/exercise/delete' => DeleteExerciseController::class,
+    'GET|/admin/exercise/busca-cliente' => ExerciseBuscaClienteController::class,
     // exercise
     'GET|/admin/menu/list' => MenuListController::class,
     'GET|/admin/menu/save' => MenuFormController::class,
@@ -78,6 +81,7 @@ return [
     'GET|/admin/menu/edit' => MenuFormController::class,
     'POST|/admin/menu/edit' => EditMenuController::class,
     'GET|/admin/menu/delete' => DeleteMenuController::class,
+    'GET|/admin/menu/busca-cliente' => MenuBuscaClienteController::class,
     // menu
     'GET|/admin/agenda/list' => AgendaListController::class,
     'GET|/admin/agenda/save' => AgendaFormController::class,
