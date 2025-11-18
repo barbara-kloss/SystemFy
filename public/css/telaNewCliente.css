@@ -60,7 +60,7 @@ html {
 
     grid-template-areas:
         "nav top_bar"
-        "main meta"; 
+        "main main"; 
 
     grid-template-columns: 70% 30%; 
     grid-template-rows: 100px 1fr; 
@@ -143,6 +143,7 @@ html {
 /* ========================================================= */
 .client-form-main {
     grid-area: main;
+    grid-column: 1 / -1;
     display: flex;
     flex-direction: column;
     background: #FFFAE6;
@@ -150,7 +151,8 @@ html {
     padding: 20px;
     box-sizing: border-box;
     height: 95%;
-    overflow-y: auto; 
+    overflow-y: auto;
+    position: relative;
 }
 
 .page-title {
@@ -159,6 +161,40 @@ html {
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
     margin: 0 0 20px 0;
+}
+
+#client-form.form-unified {
+    display: grid;
+    grid-template-areas: 
+        "main_fields meta_fields";
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+}
+
+.form-main-fields {
+    grid-area: main_fields;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 30px;
+    width: 100%;
+    align-content: start;
+}
+
+.form-meta-fields {
+    grid-area: meta_fields;
+    display: flex;
+    flex-direction: column;
+    gap: 15px 5px;
+    height: 100%;
+    justify-content: space-between;
+    align-content: flex-start;
+    background: #FFFAE6;
+    border-radius: 28px;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 #client-form {
@@ -226,6 +262,8 @@ select {
     justify-content: space-between; 
     align-content: flex-start;
 }
+
+/* Estilos para os campos de dados físicos dentro do form unificado já estão acima */
 
 .data-section-title {
     color: black;

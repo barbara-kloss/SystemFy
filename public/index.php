@@ -20,12 +20,12 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $pdo = Database::getConnection();
 
 // Repositories
-$userRepository = new UserRepository($pdo);
-$reportRepository = new ReportRepository($pdo);
-$planoRepository = new PlanoRepository($pdo);
-$menuRepository = new MenuRepository($pdo);
-$exerciseRepository = new ExerciseRepository($pdo);
-$agendaRepository = new AgendaRepository($pdo);
+$planoRepository = new PlanoRepository();
+$userRepository = new UserRepository($planoRepository);
+$reportRepository = new ReportRepository();
+$menuRepository = new MenuRepository();
+$exerciseRepository = new ExerciseRepository();
+$agendaRepository = new AgendaRepository();
 
 // Rotas
 $routes = require __DIR__ . '/../config/routes.php';
@@ -38,7 +38,8 @@ session_start();
 
 // Proteção de rotas
 $isLoginRoute = $pathInfo === '/login';
-if (!array_key_exists('logado', $_SESSION) && !$isLoginRoute && $pathInfo !== '/cadastro') {
+$isCadastroRoute = $pathInfo === '/cadastro' || strpos($pathInfo, '/cadastro/') === 0;
+if (!array_key_exists('logado', $_SESSION) && !$isLoginRoute && !$isCadastroRoute) {
     header('Location: /login');
     return;
 }
@@ -113,6 +114,18 @@ if (array_key_exists($key, $routes)) {
         $controller = new $controllerClass($exerciseRepository);
 
     } elseif ($controllerClass === \Systemfy\App\ControllerLogin\NewUserController::class) {
+        $controller = new $controllerClass($userRepository, $planoRepository);
+
+    } elseif ($controllerClass === \Systemfy\App\ControllerLogin\GetClienteController::class) {
+        $controller = new $controllerClass($userRepository, $planoRepository);
+
+    } elseif ($controllerClass === \Systemfy\App\ControllerLogin\BuscaClienteCompletoController::class) {
+        $controller = new $controllerClass();
+
+    } elseif ($controllerClass === \Systemfy\App\ControllerLogin\CriarSenhaController::class) {
+        $controller = new $controllerClass($userRepository);
+
+    } elseif ($controllerClass === \Systemfy\App\Controller\MainClienteController::class) {
         $controller = new $controllerClass($userRepository);
 
         // --------------------------------------------
@@ -146,6 +159,8 @@ if (array_key_exists($key, $routes)) {
         //  OUTROS CONTROLLERS
         // --------------------------------------------
 
+    } elseif ($controllerClass === \Systemfy\App\ControllerLogin\RegisterController::class) {
+        $controller = new $controllerClass($planoRepository);
     } else {
         $controller = new $controllerClass($agendaRepository);
     }

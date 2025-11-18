@@ -17,13 +17,13 @@ class User
     private string $observacao;
     private float $massa;
     private float $gordura;
-    private Plano $plano_id;
+    private ?Plano $plano_id;
     private string $objetivo;
     private string $foto;
     private float $peso_meta;
 
     function __construct(
-        int $id, string $nome, Date $data_nasc, string $genero, string $telefone, string $senha, string $permissao, float $altura, int $peso, string $objetivo, bool $status, string $observacao, float $massa, float $gordura, Plano $plano_id, string $email, string $foto, float $peso_meta
+        int $id, string $nome, Date $data_nasc, string $genero, string $telefone, string $senha, string $permissao, float $altura, int $peso, string $objetivo, bool $status, string $observacao, float $massa, float $gordura, ?Plano $plano_id, string $email, string $foto, float $peso_meta
     ) {
         $this->id = $id;
         $this->nome = $nome;
@@ -115,7 +115,7 @@ class User
         $this->gordura = $gordura;
     }
 
-    public function setPlano(Plano $plano_id)
+    public function setPlano(?Plano $plano_id)
     {
         $this->plano_id = $plano_id;
     }
@@ -205,7 +205,7 @@ class User
         return $this->gordura;
     }
 
-    public function getPlanoId(): Plano
+    public function getPlanoId(): ?Plano
     {
         return $this->plano_id;
     }

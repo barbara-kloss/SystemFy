@@ -68,7 +68,12 @@ class PlanoRepository
         $stmt->bindValue(1, $id, \PDO::PARAM_INT);
         $stmt->execute();
 
-        return $this->hydratePlano($stmt->fetch(\PDO::FETCH_ASSOC));
+        $planoData = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($planoData === false) {
+            return null;
+        }
+
+        return $this->hydratePlano($planoData);
     }
 
     public function hydratePlano(array $PlanoData): Plano

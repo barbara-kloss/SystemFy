@@ -61,7 +61,9 @@ use Systemfy\App\ControllerLogin\{
     LoginFormController,
     LogoutController,
     RegisterAdminController,
-    RegisterClientController
+    RegisterClientController,
+    CriarSenhaFormController,
+    CriarSenhaController
 };
 
 
@@ -121,6 +123,9 @@ return [
     'GET|/admin/cadastro' => RegisterAdminController::class,
     'GET|/client/cadastro' => RegisterClientController::class,
     'POST|/cadastro' => NewUserController::class,
-
+    'GET|/cadastro/busca-cliente' => \Systemfy\App\ControllerLogin\BuscaClienteCompletoController::class,
+    'GET|/cadastro/get-cliente' => \Systemfy\App\ControllerLogin\GetClienteController::class,
+    'GET|/criar-senha' => CriarSenhaFormController::class,
+    'POST|/criar-senha' => CriarSenhaController::class,
     
 ];
