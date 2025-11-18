@@ -4,19 +4,19 @@ namespace Systemfy\App\Model;
 
 class Exercise
 {
-    private int $id;
-    private User $user;
-    private float $peso;
-    private string $repeticao;
-    private string $tipo_exercicio;
-    private int $dia;
-    private string $observacao;
-    private string $categoria;
-    private User $personal;
-    private string $video; // blob convertido em string binária
+    public int $id;
+    public User $user;
+    public float $peso;
+    public string $repeticao;
+    public string $tipo_exercicio;
+    public int $dia;
+    public string $observacao;
+    public string $categoria;
+    public User $personal;
+    public string $video; // blob convertido em string binária
 
     public function __construct(
-        int $id,
+        
         User $user,
         float $peso,
         string $repeticao,
@@ -27,7 +27,7 @@ class Exercise
         User $personal,
         string $video
     ) {
-        $this->id = $id;
+        
         $this->user = $user;
         $this->peso = $peso;
         $this->repeticao = $repeticao;

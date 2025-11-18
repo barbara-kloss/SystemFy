@@ -18,5 +18,7 @@
             "email": "thauana@gmail.com"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "smeghead/php-class-diagram": "^1.6"
+    }
 }

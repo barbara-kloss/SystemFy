@@ -3,13 +3,13 @@ namespace Systemfy\App\Model;
 
 class Menu
 {
-    private int $id;
-    private string $horario;         // TIME - armazenado como string "HH:MM:SS"
-    private int $categoria;
-    private string $observacao;
-    private User $usuario;           // id_user
-    private User $nutri;             // id_nutri
-    private string $titulo;
+    public int $id;
+    public string $horario;         // TIME - armazenado como string "HH:MM:SS"
+    public int $categoria;
+    public string $observacao;
+    public User $usuario;           // id_user
+    public User $nutri;             // id_nutri
+    public string $titulo;
 
     public function __construct(
         int $id,
