@@ -31,7 +31,7 @@ class MenuFormController implements Controller
                 $nomeCliente = $userData['nome_completo'] ?? '';
             }
         }
-        $menuList = $this->menuRepository->all();
+        $menuList = [];
         require_once __DIR__ . '/../../../View/Admin/telaNutricionalAdmin.php';
     }
 }

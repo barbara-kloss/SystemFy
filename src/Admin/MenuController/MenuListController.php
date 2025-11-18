@@ -15,8 +15,9 @@ class MenuListController implements Controller
 
     public function processaRequisicao(): void
     {
-        $menuList = $this->menuRepository->all();
+        $menuList = [];
         $menu = null;
+        $nomeCliente = '';
         require_once __DIR__ . '/../../../View/Admin/telaNutricionalAdmin.php';
     }
 

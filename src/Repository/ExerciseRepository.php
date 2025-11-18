@@ -99,6 +99,19 @@ class ExerciseRepository
         return $this->hydrateExercise($data);
     }
 
+    public function findByUserId(int $id_user): array
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM exercise WHERE id_user = ? ORDER BY id DESC');
+        $stmt->bindValue(1, $id_user, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $exerciseList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return array_map(
+            $this->hydrateExercise(...),
+            $exerciseList
+        );
+    }
+
     public function hydrateExercise(array $exerciseData): Exercise
     {
         $exercise = new Exercise(

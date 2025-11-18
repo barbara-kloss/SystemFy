@@ -87,6 +87,11 @@ if (array_key_exists($key, $routes)) {
         $controllerClass === \Systemfy\App\Admin\MenuController\BuscaClienteController::class
     ) {
         $controller = new $controllerClass();
+    
+    } elseif (
+        $controllerClass === \Systemfy\App\Admin\MenuController\BuscaMenuController::class
+    ) {
+        $controller = new $controllerClass($menuRepository);
 
     } elseif (
         $controllerClass === \Systemfy\App\Admin\ExerciseController\ExerciseFormController::class
@@ -101,6 +106,11 @@ if (array_key_exists($key, $routes)) {
         $controllerClass === \Systemfy\App\Admin\ExerciseController\BuscaClienteController::class
     ) {
         $controller = new $controllerClass();
+    
+    } elseif (
+        $controllerClass === \Systemfy\App\Admin\ExerciseController\BuscaExerciseController::class
+    ) {
+        $controller = new $controllerClass($exerciseRepository);
 
     } elseif ($controllerClass === \Systemfy\App\ControllerLogin\NewUserController::class) {
         $controller = new $controllerClass($userRepository);

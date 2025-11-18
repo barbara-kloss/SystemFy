@@ -153,32 +153,9 @@ function getCategoriaNome(int $id): string {
                             </a>
                         </div>
 
-                        <?php if (count($menuList) === 0): ?>
-                            <div class="lista-itens-scroll">
-                                <p style="padding: 24px; text-align:center; color:#555;">Nenhuma refeição cadastrada.</p>
-                            </div>
-                        <?php else: ?>
-                            <div class="lista-itens-scroll">
-                                <?php foreach ($menuList as $item): ?>
-                                    <?php if (!$item instanceof Menu) { continue; } ?>
-                                    <div class="refeicao-item">
-                                        <div style="flex: 1;">
-                                            <span class="refeicao-horario"><?= htmlspecialchars(substr($item->horario, 0, 5)); ?></span>
-                                            <span class="refeicao-nome"><?= htmlspecialchars($item->titulo); ?> (<?= getCategoriaNome($item->categoria); ?>)</span>
-                                            <?php if ($item->observacao): ?>
-                                                <span style="display: block; font-size: 0.85em; color: #666; margin-top: 4px;">
-                                                    <?= htmlspecialchars($item->observacao); ?>
-                                                </span>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div style="display: flex; gap: 8px;">
-                                            <a href="/admin/menu/edit?id=<?= $item->getId(); ?>" style="padding: 4px 8px; background: #3498db; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85em;">Editar</a>
-                                            <a href="/admin/menu/delete?id=<?= $item->getId(); ?>" style="padding: 4px 8px; background: #e74c3c; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85em;" onclick="return confirm('Tem certeza que deseja excluir esta refeição?');">Excluir</a>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
+                        <div class="lista-itens-scroll" id="listaRefeicoes">
+                            <p style="padding: 24px; text-align:center; color:#555;">Selecione um cliente para ver as refeições cadastradas.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -188,7 +165,66 @@ function getCategoriaNome(int $id): string {
         const buscaClienteInput = document.getElementById('buscaCliente');
         const idUserInput = document.getElementById('id_user');
         const suggestionsList = document.getElementById('suggestionsList');
+        const listaRefeicoes = document.getElementById('listaRefeicoes');
         let searchTimeout;
+
+        function getCategoriaNome(categoria) {
+            return categoria == 1 ? 'Geral' : 'Livre';
+        }
+
+        function carregarMenus(idUser) {
+            if (!idUser) {
+                listaRefeicoes.innerHTML = '<p style="padding: 24px; text-align:center; color:#555;">Selecione um cliente para ver as refeições cadastradas.</p>';
+                return;
+            }
+
+            listaRefeicoes.innerHTML = '<p style="padding: 24px; text-align:center; color:#555;">Carregando...</p>';
+
+            fetch(`/admin/menu/busca-menu?id_user=${encodeURIComponent(idUser)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        console.error('Erro na busca:', data.error);
+                        listaRefeicoes.innerHTML = '<p style="padding: 24px; text-align:center; color:#d32f2f;">Erro ao carregar refeições.</p>';
+                        return;
+                    }
+
+                    if (data.length === 0) {
+                        listaRefeicoes.innerHTML = '<p style="padding: 24px; text-align:center; color:#555;">Nenhuma refeição cadastrada para este cliente.</p>';
+                        return;
+                    }
+
+                    let html = '';
+                    data.forEach(item => {
+                        const horario = item.horario ? item.horario.substring(0, 5) : '';
+                        const titulo = (item.titulo || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        const observacao = item.observacao ? `<span style="display: block; font-size: 0.85em; color: #666; margin-top: 4px;">${(item.observacao || '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>` : '';
+                        html += `
+                            <div class="refeicao-item">
+                                <div style="flex: 1;">
+                                    <span class="refeicao-horario">${horario}</span>
+                                    <span class="refeicao-nome">${titulo} (${getCategoriaNome(item.categoria)})</span>
+                                    ${observacao}
+                                </div>
+                                <div style="display: flex; gap: 8px;">
+                                    <a href="/admin/menu/edit?id=${item.id}" style="padding: 4px 8px; background: #3498db; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85em;">Editar</a>
+                                    <a href="/admin/menu/delete?id=${item.id}" style="padding: 4px 8px; background: #e74c3c; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85em;" onclick="return confirm('Tem certeza que deseja excluir esta refeição?');">Excluir</a>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    listaRefeicoes.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('Erro na busca:', err);
+                    listaRefeicoes.innerHTML = '<p style="padding: 24px; text-align:center; color:#d32f2f;">Erro ao carregar refeições.</p>';
+                });
+        }
 
         buscaClienteInput.addEventListener('input', function() {
             const termo = this.value.trim();
@@ -198,6 +234,7 @@ function getCategoriaNome(int $id): string {
             if (termo.length < 2) {
                 suggestionsList.style.display = 'none';
                 idUserInput.value = '';
+                carregarMenus('');
                 return;
             }
 
@@ -233,6 +270,7 @@ function getCategoriaNome(int $id): string {
                                 idUserInput.value = cliente.id;
                                 buscaClienteInput.value = cliente.nome_completo || cliente.email || '';
                                 suggestionsList.style.display = 'none';
+                                carregarMenus(cliente.id);
                             });
                             suggestionsList.appendChild(item);
                         });
@@ -251,6 +289,11 @@ function getCategoriaNome(int $id): string {
                 suggestionsList.style.display = 'none';
             }
         });
+
+        // Carregar menus se já houver um usuário selecionado (caso de edição)
+        <?php if ($menu && $menu->id_user): ?>
+            carregarMenus(<?= $menu->id_user; ?>);
+        <?php endif; ?>
     </script>
 </body>
 

@@ -90,6 +90,19 @@ class MenuRepository
         return $this->hydrateMenu($data);
     }
 
+    public function findByUserId(int $id_user): array
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM menu WHERE id_user = ? ORDER BY id DESC');
+        $stmt->bindValue(1, $id_user, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $menuList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return array_map(
+            $this->hydrateMenu(...),
+            $menuList
+        );
+    }
+
     public function hydrateMenu(array $menuData): Menu
     {
         $menu = new Menu(

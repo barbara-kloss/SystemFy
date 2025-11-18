@@ -32,7 +32,7 @@ class ExerciseFormController implements Controller
                 $nomeCliente = $userData['nome_completo'] ?? '';
             }
         }
-        $exerciseList = $this->exerciseRepository->all();
+        $exerciseList = [];
         require_once __DIR__ . '/../../../View/Admin/telaPersonal.php';
     }
 }

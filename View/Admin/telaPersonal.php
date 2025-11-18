@@ -189,31 +189,9 @@ $selectedDia = $exercise?->dia ?? 2;
                             </a>
                         </div>
 
-                        <?php if (count($exerciseList) === 0): ?>
-                            <div class="lista-itens-scroll">
-                                <p style="padding: 24px; text-align:center; color:#555;">Nenhum treino cadastrado.</p>
-                            </div>
-                        <?php else: ?>
-                            <div class="lista-itens-scroll">
-                                <?php foreach ($exerciseList as $item): ?>
-                                    <?php if (!$item instanceof Exercise) { continue; } ?>
-                                    <div class="treino-item">
-                                        <div style="flex: 1;">
-                                            <span class="treino-label"><?= htmlspecialchars($diasSemana[$item->dia] ?? (string) $item->dia); ?></span>
-                                            <span class="treino-nome"><?= htmlspecialchars($item->tipo_exercicio); ?> (<?= htmlspecialchars($item->categoria); ?>)</span>
-                                            <span style="display: block; font-size: 0.85em; color: #666; margin-top: 4px;">
-                                                Séries: <?= htmlspecialchars((string) $item->repeticao); ?> | 
-                                                Peso: <?= htmlspecialchars(number_format($item->peso, 2, ',', '.')); ?> kg
-                                            </span>
-                                        </div>
-                                        <div style="display: flex; gap: 8px;">
-                                            <a href="/admin/exercise/edit?id=<?= $item->getId(); ?>" style="padding: 4px 8px; background: #3498db; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85em;">Editar</a>
-                                            <a href="/admin/exercise/delete?id=<?= $item->getId(); ?>" style="padding: 4px 8px; background: #e74c3c; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85em;" onclick="return confirm('Tem certeza que deseja excluir este exercício?');">Excluir</a>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
+                        <div class="lista-itens-scroll" id="listaTreinos">
+                            <p style="padding: 24px; text-align:center; color:#555;">Selecione um cliente para ver os treinos cadastrados.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -223,7 +201,81 @@ $selectedDia = $exercise?->dia ?? 2;
         const buscaClienteInput = document.getElementById('buscaCliente');
         const idUserInput = document.getElementById('id_user');
         const suggestionsList = document.getElementById('suggestionsList');
+        const listaTreinos = document.getElementById('listaTreinos');
         let searchTimeout;
+
+        const diasSemana = {
+            1: 'Domingo',
+            2: 'Segunda-feira',
+            3: 'Terça-feira',
+            4: 'Quarta-feira',
+            5: 'Quinta-feira',
+            6: 'Sexta-feira',
+            7: 'Sábado'
+        };
+
+        function formatarPeso(peso) {
+            if (!peso) return '0,00';
+            return parseFloat(peso).toFixed(2).replace('.', ',');
+        }
+
+        function carregarExercicios(idUser) {
+            if (!idUser) {
+                listaTreinos.innerHTML = '<p style="padding: 24px; text-align:center; color:#555;">Selecione um cliente para ver os treinos cadastrados.</p>';
+                return;
+            }
+
+            listaTreinos.innerHTML = '<p style="padding: 24px; text-align:center; color:#555;">Carregando...</p>';
+
+            fetch(`/admin/exercise/busca-exercise?id_user=${encodeURIComponent(idUser)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        console.error('Erro na busca:', data.error);
+                        listaTreinos.innerHTML = '<p style="padding: 24px; text-align:center; color:#d32f2f;">Erro ao carregar treinos.</p>';
+                        return;
+                    }
+
+                    if (data.length === 0) {
+                        listaTreinos.innerHTML = '<p style="padding: 24px; text-align:center; color:#555;">Nenhum treino cadastrado para este cliente.</p>';
+                        return;
+                    }
+
+                    let html = '';
+                    data.forEach(item => {
+                        const diaNome = diasSemana[item.dia] || item.dia;
+                        const tipoExercicio = (item.tipo_exercicio || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        const categoria = (item.categoria || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        const repeticao = (item.repeticao || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        html += `
+                            <div class="treino-item">
+                                <div style="flex: 1;">
+                                    <span class="treino-label">${diaNome}</span>
+                                    <span class="treino-nome">${tipoExercicio} (${categoria})</span>
+                                    <span style="display: block; font-size: 0.85em; color: #666; margin-top: 4px;">
+                                        Séries: ${repeticao} | 
+                                        Peso: ${formatarPeso(item.peso)} kg
+                                    </span>
+                                </div>
+                                <div style="display: flex; gap: 8px;">
+                                    <a href="/admin/exercise/edit?id=${item.id}" style="padding: 4px 8px; background: #3498db; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85em;">Editar</a>
+                                    <a href="/admin/exercise/delete?id=${item.id}" style="padding: 4px 8px; background: #e74c3c; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85em;" onclick="return confirm('Tem certeza que deseja excluir este exercício?');">Excluir</a>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    listaTreinos.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('Erro na busca:', err);
+                    listaTreinos.innerHTML = '<p style="padding: 24px; text-align:center; color:#d32f2f;">Erro ao carregar treinos.</p>';
+                });
+        }
 
         buscaClienteInput.addEventListener('input', function() {
             const termo = this.value.trim();
@@ -233,6 +285,7 @@ $selectedDia = $exercise?->dia ?? 2;
             if (termo.length < 2) {
                 suggestionsList.style.display = 'none';
                 idUserInput.value = '';
+                carregarExercicios('');
                 return;
             }
 
@@ -268,6 +321,7 @@ $selectedDia = $exercise?->dia ?? 2;
                                 idUserInput.value = cliente.id;
                                 buscaClienteInput.value = cliente.nome_completo || cliente.email || '';
                                 suggestionsList.style.display = 'none';
+                                carregarExercicios(cliente.id);
                             });
                             suggestionsList.appendChild(item);
                         });
@@ -286,6 +340,11 @@ $selectedDia = $exercise?->dia ?? 2;
                 suggestionsList.style.display = 'none';
             }
         });
+
+        // Carregar exercícios se já houver um usuário selecionado (caso de edição)
+        <?php if ($exercise && $exercise->id_user): ?>
+            carregarExercicios(<?= $exercise->id_user; ?>);
+        <?php endif; ?>
     </script>
 </body>
 
