@@ -15,7 +15,14 @@ class ClientExerciseListController implements Controller
 
     public function processaRequisicao(): void
     {
-        $exerciseList = $this->exerciseRepository->all();
+        $userId = $_SESSION['user_id'] ?? null;
+        
+        if ($userId) {
+            $exerciseList = $this->exerciseRepository->findByUserId((int) $userId);
+        } else {
+            $exerciseList = [];
+        }
+        
         require_once __DIR__ . '/../../../View/Cliente/telaTreinos.php';
     }
 

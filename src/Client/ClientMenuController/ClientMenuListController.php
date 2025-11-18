@@ -15,7 +15,14 @@ class ClientMenuListController implements Controller
 
     public function processaRequisicao(): void
     {
-        $menuList = $this->menuRepository->all();
+        $userId = $_SESSION['user_id'] ?? null;
+        
+        if ($userId) {
+            $menuList = $this->menuRepository->findByUserId((int) $userId);
+        } else {
+            $menuList = [];
+        }
+        
         require_once __DIR__ . '/../../../View/Cliente/telaNutricional.php';
     }
 

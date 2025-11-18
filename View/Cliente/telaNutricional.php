@@ -1,3 +1,26 @@
+<?php
+use Systemfy\App\Model\Menu;
+
+/** @var Menu[] $menuList */
+$menuList ??= [];
+
+function getCategoriaNome(int $id): string {
+    return $id == 1 ? 'Geral' : 'Livre';
+}
+
+function formatarHorario(?string $horario): string {
+    if (!$horario) return '';
+    $parts = explode(':', $horario);
+    if (count($parts) >= 2) {
+        return $parts[0] . 'h' . $parts[1];
+    }
+    return $horario;
+}
+
+// Separar menus por categoria
+$menusGeral = array_filter($menuList, fn($m) => $m instanceof Menu && $m->categoria == 1);
+$menusLivre = array_filter($menuList, fn($m) => $m instanceof Menu && $m->categoria == 2);
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -69,43 +92,51 @@
                     <div class="card-refeicoes card-refeicoes-geral">
                         <h3 class="card-titulo-refeicao">Refeições Geral</h3>
 
-                        <div class="item-refeicao clickable-refeicao" data-horario="6h30" data-tipo="Ao acordar" data-detalhes="Beba 500ml de água, 1 copo de suco de limão.">
-                            <span class="horario">6h30</span>
-                            <span class="nome-refeicao">Ao acordar</span>
-                        </div>
-                        <div class="item-refeicao clickable-refeicao" data-horario="7h00" data-tipo="Café da Manhã" data-detalhes="Ovos mexidos com 2 fatias de pão integral e café sem açúcar.">
-                            <span class="horario">7h00</span>
-                            <span class="nome-refeicao">Café da Manhã</span>
-                        </div>
-                        <div class="item-refeicao clickable-refeicao" data-horario="10h00" data-tipo="Lanche da Manhã" data-detalhes="1 Maçã e 1 punhado de castanhas.">
-                            <span class="horario">10h00</span>
-                            <span class="nome-refeicao">Lanche da Manhã</span>
-                        </div>
-                        <div class="item-refeicao item-hidratacao clickable-refeicao" data-horario="7h - 13h" data-tipo="Hidratação" data-detalhes="Beber 1,5 litro de água neste período.">
-                            <span class="horario">7h - 13h</span>
-                            <span class="nome-refeicao">Hidratação</span>
-                        </div>
+                        <?php if (count($menusGeral) === 0): ?>
+                            <div class="item-refeicao">
+                                <span class="nome-refeicao" style="color: #999;">Nenhuma refeição cadastrada</span>
+                            </div>
+                        <?php else: ?>
+                            <?php foreach ($menusGeral as $menu): ?>
+                                <?php if (!$menu instanceof Menu) { continue; } ?>
+                                <?php 
+                                    $horarioFormatado = formatarHorario($menu->horario);
+                                    $detalhes = $menu->observacao ? htmlspecialchars($menu->observacao) : 'Sem observações.';
+                                ?>
+                                <div class="item-refeicao clickable-refeicao" 
+                                     data-horario="<?= htmlspecialchars($horarioFormatado); ?>" 
+                                     data-tipo="<?= htmlspecialchars($menu->titulo ?? ''); ?>" 
+                                     data-detalhes="<?= htmlspecialchars($detalhes); ?>">
+                                    <span class="horario"><?= htmlspecialchars($horarioFormatado); ?></span>
+                                    <span class="nome-refeicao"><?= htmlspecialchars($menu->titulo ?? ''); ?></span>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
 
                     <div class="card-refeicoes card-refeicoes-livre">
                         <h3 class="card-titulo-refeicao">Refeições livre</h3>
 
-                        <div class="item-refeicao clickable-refeicao" data-horario="8h00" data-tipo="Ao acordar" data-detalhes="Suplemento pré-treino.">
-                            <span class="horario">8h00</span>
-                            <span class="nome-refeicao">Ao acordar</span>
-                        </div>
-                        <div class="item-refeicao clickable-refeicao" data-horario="8h30" data-tipo="Café da Manhã" data-detalhes="Pode escolher entre: tapioca com queijo ou panqueca de banana.">
-                            <span class="horario">8h30</span>
-                            <span class="nome-refeicao">Café da Manhã</span>
-                        </div>
-                        <div class="item-refeicao clickable-refeicao" data-horario="10h30" data-tipo="Lanche da Manhã" data-detalhes="Iogurte natural com granola.">
-                            <span class="horario">10h30</span>
-                            <span class="nome-refeicao">Lanche da Manhã</span>
-                        </div>
-                        <div class="item-refeicao item-hidratacao clickable-refeicao" data-horario="9h - 13h" data-tipo="Hidratação" data-detalhes="Beber 1 litro de água neste período.">
-                            <span class="horario">9h - 13h</span>
-                            <span class="nome-refeicao">Hidratação</span>
-                        </div>
+                        <?php if (count($menusLivre) === 0): ?>
+                            <div class="item-refeicao">
+                                <span class="nome-refeicao" style="color: #999;">Nenhuma refeição cadastrada</span>
+                            </div>
+                        <?php else: ?>
+                            <?php foreach ($menusLivre as $menu): ?>
+                                <?php if (!$menu instanceof Menu) { continue; } ?>
+                                <?php 
+                                    $horarioFormatado = formatarHorario($menu->horario);
+                                    $detalhes = $menu->observacao ? htmlspecialchars($menu->observacao) : 'Sem observações.';
+                                ?>
+                                <div class="item-refeicao clickable-refeicao" 
+                                     data-horario="<?= htmlspecialchars($horarioFormatado); ?>" 
+                                     data-tipo="<?= htmlspecialchars($menu->titulo ?? ''); ?>" 
+                                     data-detalhes="<?= htmlspecialchars($detalhes); ?>">
+                                    <span class="horario"><?= htmlspecialchars($horarioFormatado); ?></span>
+                                    <span class="nome-refeicao"><?= htmlspecialchars($menu->titulo ?? ''); ?></span>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
 
                 </div>
@@ -174,17 +205,37 @@
         'Noite': { min: 17.5, max: 2.9 } // 17:30 a 02:59
     };
     
-    // Função auxiliar para converter o horário (ex: "7h00") para um número decimal (ex: 7.00)
+    // Função auxiliar para converter o horário (ex: "7h48" ou "18:48") para um número decimal (ex: 7.8 ou 18.8)
     function parseTime(timeString) {
         if (!timeString) return 0;
         
-        // Remove a letra 'h' e substitui ':' por '.'
-        const numericTime = timeString.toLowerCase().replace('h', '.').split(' ')[0];
+        // Remove espaços e converte para minúsculas
+        let time = timeString.trim().toLowerCase();
         
-        // Se for um range (ex: 7h - 13h), pegamos a primeira hora para determinar o período
-        const firstHour = numericTime.split('-')[0];
+        // Se já estiver no formato "HH:MM", converter para decimal
+        if (time.includes(':')) {
+            const parts = time.split(':');
+            const hours = parseFloat(parts[0]) || 0;
+            const minutes = parseFloat(parts[1]) || 0;
+            return hours + (minutes / 60);
+        }
         
-        return parseFloat(firstHour);
+        // Se estiver no formato "7h48" ou "18h48"
+        if (time.includes('h')) {
+            const parts = time.split('h');
+            const hours = parseFloat(parts[0]) || 0;
+            const minutes = parseFloat(parts[1]) || 0;
+            return hours + (minutes / 60);
+        }
+        
+        // Se for um range (ex: 7h - 13h), pegamos a primeira hora
+        if (time.includes('-')) {
+            const firstHour = time.split('-')[0].trim();
+            return parseTime(firstHour);
+        }
+        
+        // Tentar parse direto
+        return parseFloat(time) || 0;
     }
     
     // Função principal para aplicar o filtro
