@@ -18,30 +18,43 @@ $diasSemana = [
 $exerciciosPorDia = [];
 foreach ($exerciseList as $exercise) {
     if ($exercise instanceof Exercise && $exercise->dia) {
-        if (!isset($exerciciosPorDia[$exercise->dia])) {
-            $exerciciosPorDia[$exercise->dia] = [];
+        $dia = (int) $exercise->dia;
+        if (!isset($exerciciosPorDia[$dia])) {
+            $exerciciosPorDia[$dia] = [];
         }
-        $exerciciosPorDia[$exercise->dia][] = $exercise;
+        $exerciciosPorDia[$dia][] = $exercise;
     }
+}
+
+// Preparar dados para JavaScript (apenas IDs e informações básicas)
+$exerciciosPorDiaJS = [];
+foreach ($exerciciosPorDia as $dia => $exercicios) {
+    $exerciciosPorDiaJS[$dia] = array_map(function($ex) {
+        return [
+            'id' => $ex->getId(),
+            'tipo_exercicio' => $ex->tipo_exercicio ?? '',
+            'video' => $ex->video ?? ''
+        ];
+    }, $exercicios);
 }
 
 // Obter o dia selecionado via GET ou usar o dia atual
 $diaSelecionado = filter_input(INPUT_GET, 'dia', FILTER_VALIDATE_INT);
 if ($diaSelecionado && $diaSelecionado >= 1 && $diaSelecionado <= 7) {
+    // Se um dia específico foi selecionado via GET, usar esse dia (mesmo que não tenha exercícios)
     $diaAtual = $diaSelecionado;
 } else {
     // Obter o dia atual (1 = Domingo, 7 = Sábado)
     $diaAtual = (int) date('w'); // 0 = Domingo, 6 = Sábado
     $diaAtual = $diaAtual === 0 ? 7 : $diaAtual; // Converter para 1-7
+    
+    // Se não houver exercícios para o dia atual E não foi selecionado via GET, usar o primeiro dia disponível
+    if (empty($exerciciosPorDia[$diaAtual]) && !empty($exerciciosPorDia)) {
+        $diaAtual = array_key_first($exerciciosPorDia);
+    }
 }
 
-// Se não houver exercícios para o dia atual, usar o primeiro dia disponível
-if (empty($exerciciosPorDia[$diaAtual]) && !empty($exerciciosPorDia)) {
-    $diaAtual = array_key_first($exerciciosPorDia);
-} elseif (empty($exerciciosPorDia)) {
-    $diaAtual = null;
-}
-
+// Obter exercícios do dia atual (pode estar vazio se não houver exercícios para esse dia)
 $exerciciosDoDia = $exerciciosPorDia[$diaAtual] ?? [];
 $primeiroExercicioComVideo = null;
 foreach ($exerciciosDoDia as $ex) {
@@ -248,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const videoFrame = document.getElementById('exerciseVideo');
     
     // Dados dos exercícios por dia (vindos do PHP)
-    const exerciciosPorDia = <?= json_encode($exerciciosPorDia, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE); ?>;
+    const exerciciosPorDia = <?= json_encode($exerciciosPorDiaJS, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE); ?>;
     
     // Função para extrair ID do YouTube
     function extractYouTubeId(url) {
@@ -268,13 +281,35 @@ document.addEventListener('DOMContentLoaded', function() {
     dayItems.forEach(item => {
         item.addEventListener('click', function() {
             const dia = this.getAttribute('data-dia');
-            if (exerciciosPorDia[dia]) {
-                // Recarregar página com parâmetro de dia
-                const url = new URL(window.location);
-                url.searchParams.set('dia', dia);
-                window.location.href = url.toString();
+            // Sempre permitir clicar, mesmo que não tenha exercícios (para mostrar mensagem)
+            const url = new URL(window.location);
+            url.searchParams.set('dia', dia);
+            window.location.href = url.toString();
+        });
+    });
+    
+    // Adicionar estilo visual para dias clicáveis
+    dayItems.forEach(item => {
+        const dia = item.getAttribute('data-dia');
+        const temExercicios = exerciciosPorDia && exerciciosPorDia[dia] && exerciciosPorDia[dia].length > 0;
+        
+        // Todos os dias são clicáveis
+        item.style.cursor = 'pointer';
+        item.addEventListener('mouseenter', function() {
+            if (!this.classList.contains('active-day')) {
+                this.style.opacity = '0.7';
+                this.style.transform = 'scale(1.05)';
             }
         });
+        item.addEventListener('mouseleave', function() {
+            this.style.opacity = '1';
+            this.style.transform = 'scale(1)';
+        });
+        
+        // Adicionar indicador visual se não tiver exercícios
+        if (!temExercicios && !item.classList.contains('active-day')) {
+            item.style.opacity = '0.6';
+        }
     });
     
     // Clique nos exercícios para trocar o vídeo

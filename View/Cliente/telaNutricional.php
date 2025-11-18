@@ -195,8 +195,13 @@ $menusLivre = array_filter($menuList, fn($m) => $m instanceof Menu && $m->catego
     // === LÓGICA DO FILTRO POR HORÁRIO (NOVA) ===
     const periodoBtn = document.querySelector('.periodo-btn');
     const dropdownContent = document.querySelector('.dropdown-content');
-    const filterLinks = dropdownContent.querySelectorAll('a');
+    const filterLinks = dropdownContent ? dropdownContent.querySelectorAll('a') : [];
     const allItems = document.querySelectorAll('.item-refeicao:not(.item-hidratacao)'); // Exclui hidratação para a lógica de hora simples
+    
+    // Verificar se os elementos existem
+    if (!periodoBtn || !dropdownContent || filterLinks.length === 0) {
+        console.warn('Elementos do filtro de período não encontrados');
+    }
 
     // Mapeamento dos períodos com base na hora de início da refeição (00h a 24h)
     const PERIOD_MAP = {
@@ -240,22 +245,34 @@ $menusLivre = array_filter($menuList, fn($m) => $m instanceof Menu && $m->catego
     
     // Função principal para aplicar o filtro
     function applyFilter(periodo) {
+        if (!periodoBtn) return;
+        
         // Atualiza o texto do botão de filtro
         periodoBtn.innerHTML = `${periodo} <span class="dropdown-arrow">▼</span>`;
         
-        const { min, max } = PERIOD_MAP[periodo];
+        const periodConfig = PERIOD_MAP[periodo];
+        if (!periodConfig) {
+            console.warn('Período não encontrado:', periodo);
+            return;
+        }
+        
+        const { min, max } = periodConfig;
 
         allItems.forEach(item => {
-            const horarioStr = item.querySelector('.horario').textContent;
+            const horarioElement = item.querySelector('.horario');
+            if (!horarioElement) return;
+            
+            const horarioStr = horarioElement.textContent.trim();
             const itemHour = parseTime(horarioStr);
             
             let isVisible = false;
 
             if (periodo === 'Todos') {
-                // Caso especial para mostrar tudo (Se você adicionar essa opção)
+                // Caso especial para mostrar tudo
                 isVisible = true;
             } else if (periodo === 'Noite') {
                 // Lógica especial para a noite (que atravessa a meia-noite)
+                // Noite: 17:30 (17.5) até 02:59 (2.98)
                 isVisible = itemHour >= min || itemHour <= max;
             } else {
                 // Lógica para Manhã e Tarde
@@ -264,7 +281,14 @@ $menusLivre = array_filter($menuList, fn($m) => $m instanceof Menu && $m->catego
 
             // A lógica de hidratação é mantida visível se estiver dentro do período
             const isHidratacao = item.classList.contains('item-hidratacao');
-            const isHidratacaoVisible = isHidratacao && (itemHour >= min && itemHour < max) || isHidratacao && periodo === 'Noite';
+            let isHidratacaoVisible = false;
+            if (isHidratacao) {
+                if (periodo === 'Noite') {
+                    isHidratacaoVisible = itemHour >= min || itemHour <= max;
+                } else {
+                    isHidratacaoVisible = itemHour >= min && itemHour < max;
+                }
+            }
 
             // Faz o item aparecer ou desaparecer
             if (isVisible || isHidratacaoVisible) {
@@ -276,34 +300,45 @@ $menusLivre = array_filter($menuList, fn($m) => $m instanceof Menu && $m->catego
     }
 
     // Adiciona o evento de clique a cada link do filtro
-    filterLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const periodo = e.target.textContent.trim();
-            applyFilter(periodo);
-            // Fecha o dropdown após o clique
-            dropdownContent.style.display = 'none';
+    if (filterLinks.length > 0) {
+        filterLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const periodo = e.target.textContent.trim();
+                applyFilter(periodo);
+                // Fecha o dropdown após o clique
+                if (dropdownContent) {
+                    dropdownContent.style.display = 'none';
+                }
+            });
         });
-    });
+    }
 
     // Inicia a tela aplicando o filtro Manhã
-    applyFilter('Manhã');
+    if (periodoBtn && allItems.length > 0) {
+        applyFilter('Manhã');
+    }
 
     // Torna o dropdown visual no clique (alterna o display)
-    periodoBtn.addEventListener('click', () => {
-        if (dropdownContent.style.display === 'block') {
-             dropdownContent.style.display = 'none';
-        } else {
-             dropdownContent.style.display = 'block';
-        }
-    });
-    
-    // Fecha o dropdown se clicar fora
-    window.addEventListener('click', (e) => {
-        if (!periodoBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
-            dropdownContent.style.display = 'none';
-        }
-    });
+    if (periodoBtn && dropdownContent) {
+        periodoBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (dropdownContent.style.display === 'block') {
+                dropdownContent.style.display = 'none';
+            } else {
+                dropdownContent.style.display = 'block';
+            }
+        });
+        
+        // Fecha o dropdown se clicar fora
+        window.addEventListener('click', (e) => {
+            if (periodoBtn && dropdownContent && 
+                !periodoBtn.contains(e.target) && 
+                !dropdownContent.contains(e.target)) {
+                dropdownContent.style.display = 'none';
+            }
+        });
+    }
 });
 </script>
 </body>
