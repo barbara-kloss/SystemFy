@@ -22,10 +22,6 @@
             <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
         </div>
 
-        <div class="logoWhatsApp">
-            <img src="/imgFy/whatsapp (3).png" alt="logoWhatsApp">
-        </div>
-
         <div class="fundoSemiTransparente">
 
             <div class="main-content-grid">
@@ -46,7 +42,7 @@
                 <div class="top-bar-container">
                     
                     <div class="search-bar">
-                        <input type="text" placeholder="Buscar Cliente (Nome ou Email)" class="search-input">
+                        <input type="text" placeholder="Buscar Cliente (Nome ou Email)" class="search-input" list="client-suggestions">
                         <i class="fas fa-search search-icon"></i>
                     </div>
 
@@ -56,6 +52,8 @@
                             <div class="textocardVerPerfil"> Ver perfil </div>
                         </a>
                     </div>
+                    
+                    <datalist id="client-suggestions"></datalist>
                 </div>
 
                 <div class="client-form-main">
@@ -76,7 +74,7 @@
                             <label for="genero">Gênero</label>
                             <select id="genero">
                                 <option value="" disabled selected>Selecione</option>
-                                <option value="Feminino">Feminino</moption>
+                                <option value="Feminino">Feminino</option>
                                 <option value="Masculino">Masculino</option>
                             </select>
                         </div>
@@ -93,7 +91,7 @@
                             <label for="plano">Plano</label>
                             <select id="plano">
                                 <option value="" disabled selected>Selecione</option>
-                                <option value="Basico">Básico</moption>
+                                <option value="Basico">Básico</option>
                                 <option value="Premium">Premium</option>
                             </select>
                         </div>
@@ -166,176 +164,221 @@
     </div>
 
     <script>
-        // =========================================================
-        // VARIÁVEIS DE TESTE
-        // =========================================================
-        const clientesSimulados = [
-            { id: 1, nome: "ANA MARIA DA SILVA", email: "ana.maria@email.com", genero: "Feminino", telefone: "(11) 9 8888-7777", dataNasc: "1995-10-20", plano: "Premium", objetivo: "Emagrecimento", obs: "Dieta sem carboidratos noturnos.", peso: 75.5, altura: 1.70 },
-            { id: 2, nome: "JOÃO PEDRO SOUZA", email: "joao.souza@email.com", genero: "Masculino", telefone: "(21) 9 1234-5678", dataNasc: "1988-05-15", plano: "Basico", objetivo: "Ganho de Massa", obs: "Necessita de suplementação pós-treino.", peso: 88.0, altura: 1.85 },
-            { id: 3, nome: "CARLA GOMES", email: "carla.gomes@email.com", genero: "Feminino", telefone: "(31) 9 9999-0000", dataNasc: "2001-01-01", plano: "Premium", objetivo: "Manutenção", obs: "Treino 3x por semana, foco em resistência.", peso: 60.2, altura: 1.63 }
-        ];
-        
-        let clienteAtualId = null; 
+    // =========================================================
+    // VARIÁVEIS DE TESTE
+    // =========================================================
+    const clientesSimulados = [
+        { id: 1, nome: "ANA MARIA DA SILVA", email: "ana.maria@email.com", genero: "Feminino", telefone: "(11) 9 8888-7777", dataNasc: "1995-10-20", plano: "Premium", objetivo: "Emagrecimento", obs: "Dieta sem carboidratos noturnos.", peso: 75.5, altura: 1.70 },
+        { id: 2, nome: "JOÃO PEDRO SOUZA", email: "joao.souza@email.com", genero: "Masculino", telefone: "(21) 9 1234-5678", dataNasc: "1988-05-15", plano: "Basico", objetivo: "Ganho de Massa", obs: "Necessita de suplementação pós-treino.", peso: 88.0, altura: 1.85 },
+        { id: 3, nome: "CARLA GOMES", email: "carla.gomes@email.com", genero: "Feminino", telefone: "(31) 9 9999-0000", dataNasc: "2001-01-01", plano: "Premium", objetivo: "Manutenção", obs: "Treino 3x por semana, foco em resistência.", peso: 60.2, altura: 1.63 }
+    ];
+    
+    let clienteAtualId = null; 
 
-        // =========================================================
-        // FUNÇÕES DE UTILIDADE
-        // =========================================================
-        window.calcularIMC = function() {
-            const altura = parseFloat(document.getElementById('altura').value);
-            const peso = parseFloat(document.getElementById('peso').value);
-            const imcInput = document.getElementById('imc');
+    // =========================================================
+    // FUNÇÕES DE UTILIDADE
+    // =========================================================
+    
+    // Função para preencher o Datalist com sugestões de clientes
+    function preencherDatalist() {
+        const datalist = document.getElementById('client-suggestions');
+        if (!datalist) return; 
+
+        datalist.innerHTML = ''; 
+
+        // Cria e adiciona opções para Nome e Email de cada cliente
+        clientesSimulados.forEach(cliente => {
+            let optionNome = document.createElement('option');
+            optionNome.value = cliente.nome;
+            datalist.appendChild(optionNome);
             
-            if (altura > 0 && peso > 0) {
-                const imc = peso / (altura * altura);
-                imcInput.value = imc.toFixed(2);
+            let optionEmail = document.createElement('option');
+            optionEmail.value = cliente.email;
+            datalist.appendChild(optionEmail);
+        });
+    }
+
+    window.calcularIMC = function() {
+        const altura = parseFloat(document.getElementById('altura').value);
+        const peso = parseFloat(document.getElementById('peso').value);
+        const imcInput = document.getElementById('imc');
+        
+        if (altura > 0 && peso > 0) {
+            // Fórmula: Peso / (Altura * Altura)
+            const imc = peso / (altura * altura);
+            imcInput.value = imc.toFixed(2);
+        } else {
+            imcInput.value = '';
+        }
+    }
+
+    function limparCampos(isNew = true) {
+        document.getElementById('client-form').reset();
+        document.getElementById('observacoes').value = ''; 
+        
+        // Limpa campos de dados físicos
+        document.getElementById('peso').value = '';
+        document.getElementById('altura').value = '';
+        document.getElementById('gordura').value = '';
+        document.getElementById('magra').value = '';
+        document.getElementById('metaPeso').value = '';
+
+        calcularIMC(); // Limpa o campo IMC
+        
+        if (isNew) {
+            document.getElementById('client-page-title').textContent = 'Clientes: Novo Cadastro'; // Título original
+            clienteAtualId = null; 
+            document.querySelector('.search-input').value = ''; // Limpa a barra de busca
+        }
+    }
+    
+    function carregarCliente(cliente) {
+        limparCampos(false); 
+        
+        document.getElementById('nome').value = cliente.nome;
+        document.getElementById('email').value = cliente.email;
+        document.getElementById('genero').value = cliente.genero;
+        document.getElementById('telefone').value = cliente.telefone;
+        document.getElementById('dataNasc').value = cliente.dataNasc;
+        document.getElementById('plano').value = cliente.plano;
+        document.getElementById('observacoes').value = cliente.obs;
+        document.getElementById('objetivo').value = cliente.objetivo;
+
+        document.getElementById('peso').value = cliente.peso;
+        document.getElementById('altura').value = cliente.altura;
+        // Campos gordura/massa magra não estão nos dados de teste, ficam vazios
+
+        calcularIMC(); 
+        
+        document.getElementById('client-page-title').textContent = `Cliente: ${cliente.nome}`;
+        clienteAtualId = cliente.id; 
+        
+        document.querySelector('.search-input').value = cliente.nome; // Preenche a barra de busca
+    }
+
+    // =========================================================
+    // EVENT LISTENERS
+    // =========================================================
+    document.addEventListener('DOMContentLoaded', function () {
+        // Inicializa com campos limpos e IMC calculado
+        limparCampos(true); 
+        calcularIMC();
+
+        const searchInput = document.querySelector('.search-input');
+        const bottomEditButton = document.getElementById('bottom-edit-button');
+        const bottomDeleteButton = document.getElementById('bottom-delete-button');
+        const clientNameInput = document.getElementById('nome');
+        const pageTitleElement = document.getElementById('client-page-title');
+        
+        // Chama a função para preencher o datalist
+        preencherDatalist();
+
+        // --- Atualizar Título da Página ao Digitar o Nome ---
+        function updatePageTitle() {
+            const nome = clientNameInput.value.trim();
+            if (nome && clienteAtualId === null) {
+                pageTitleElement.textContent = `Novo Cliente: ${nome}`;
+            } else if (clienteAtualId !== null) {
+                pageTitleElement.textContent = `Cliente: ${nome}`;
             } else {
-                imcInput.value = '';
+                pageTitleElement.textContent = 'Clientes: Novo Cadastro';
             }
         }
-
-        function limparCampos(isNew = true) {
-            document.getElementById('client-form').reset();
-            document.getElementById('observacoes').value = ''; 
-            
-            // Limpa campos de dados físicos
-            document.getElementById('peso').value = '';
-            document.getElementById('altura').value = '';
-            document.getElementById('gordura').value = '';
-            document.getElementById('magra').value = '';
-            document.getElementById('metaPeso').value = '';
-
-            calcularIMC(); 
-            
-            if (isNew) {
-                document.getElementById('client-page-title').textContent = 'Novo Cliente';
-                clienteAtualId = null; 
-            }
-        }
+        clientNameInput.addEventListener('input', updatePageTitle);
         
-        function carregarCliente(cliente) {
-            limparCampos(false); 
-            
-            document.getElementById('nome').value = cliente.nome;
-            document.getElementById('email').value = cliente.email;
-            document.getElementById('genero').value = cliente.genero;
-            document.getElementById('telefone').value = cliente.telefone;
-            document.getElementById('dataNasc').value = cliente.dataNasc;
-            document.getElementById('plano').value = cliente.plano;
-            document.getElementById('observacoes').value = cliente.obs;
-            document.getElementById('objetivo').value = cliente.objetivo;
-
-            document.getElementById('peso').value = cliente.peso;
-            document.getElementById('altura').value = cliente.altura;
-            
-            calcularIMC(); 
-            
-            document.getElementById('client-page-title').textContent = `Cliente: ${cliente.nome}`;
-            clienteAtualId = cliente.id; 
-            
-            document.querySelector('.search-input').value = '';
-        }
-
-        // =========================================================
-        // EVENT LISTENERS
-        // =========================================================
-        document.addEventListener('DOMContentLoaded', function () {
-            limparCampos(true);
-            calcularIMC();
-
-            const searchInput = document.querySelector('.search-input');
-            const bottomEditButton = document.getElementById('bottom-edit-button');
-            const bottomDeleteButton = document.getElementById('bottom-delete-button');
-            const clientNameInput = document.getElementById('nome');
-            const pageTitleElement = document.getElementById('client-page-title');
-
-            // --- Atualizar Título da Página ao Digitar ---
-            function updatePageTitle() {
-                const nome = clientNameInput.value.trim();
-                if (nome && clienteAtualId === null) {
-                    pageTitleElement.textContent = `Novo Cliente: ${nome}`;
-                } else if (clienteAtualId !== null) {
-                    pageTitleElement.textContent = `Cliente: ${nome}`;
-                } else {
-                    pageTitleElement.textContent = 'Novo Cliente';
-                }
-            }
-            clientNameInput.addEventListener('input', updatePageTitle);
-            
-            
-            // --- 1. LÓGICA DE BUSCA (SIMULADA) ---
-            searchInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    const termo = this.value.toUpperCase().trim();
-                    
-                    const clienteEncontrado = clientesSimulados.find(c => 
-                        c.nome.toUpperCase().includes(termo) || c.email.toUpperCase().includes(termo)
-                    );
-
-                    if (clienteEncontrado) {
-                        carregarCliente(clienteEncontrado);
-                        alert(`Cliente '${clienteEncontrado.nome}' carregado. (Simulado)`);
-                    } else {
-                        limparCampos(true); 
-                        alert(`Cliente com termo '${termo}' não encontrado. Iniciando novo cadastro.`);
-                    }
-                }
-            });
-
-
-            // --- 2. BOTÃO INFERIOR "EDITAR" (SALVAR/CONFIRMAR) ---
-            bottomEditButton.addEventListener('click', function(e) {
+        
+        // --- 1. LÓGICA DE BUSCA (SIMULADA) ---
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
                 e.preventDefault();
-
-                const nome = document.getElementById('nome').value.trim();
-                if (!nome || !document.getElementById('email').value.trim()) {
-                    alert('Nome e E-mail são obrigatórios.');
-                    return;
-                }
+                const termo = this.value.toUpperCase().trim();
                 
-                const isCreating = clienteAtualId === null;
-                const imc = document.getElementById('imc').value;
-                
-                alert(isCreating 
-                    ? `Cliente ${nome} cadastrado com sucesso! (IMC: ${imc})`
-                    : `Cliente ${nome} editado com sucesso! (IMC: ${imc})`
+                const clienteEncontrado = clientesSimulados.find(c => 
+                    c.nome.toUpperCase().includes(termo) || c.email.toUpperCase().includes(termo)
                 );
-                
-                limparCampos(true);
-            });
-            
-            
-            // --- 3. BOTÃO INFERIOR "EXCLUIR" ---
-            bottomDeleteButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                if (clienteAtualId === null) {
-                    alert('Não há cliente carregado para exclusão. Formulário limpo.');
-                    limparCampos(true);
-                    return;
-                }
 
-                const nomeCliente = document.getElementById('nome').value;
-                const confirmDelete = confirm(`ATENÇÃO! Tem certeza que deseja excluir o cliente ${nomeCliente}?`);
-                
-                if (confirmDelete) {
-                    const index = clientesSimulados.findIndex(c => c.id === clienteAtualId);
-                    if (index > -1) clientesSimulados.splice(index, 1);
-                    
-                    alert(`Cliente ${nomeCliente} excluído com sucesso! (Ação simulada)`);
-                    limparCampos(true);
+                if (clienteEncontrado) {
+                    carregarCliente(clienteEncontrado);
+                    alert(`Cliente '${clienteEncontrado.nome}' carregado. (Simulado)`);
+                } else {
+                    limparCampos(true); 
+                    alert(`Cliente com termo '${termo}' não encontrado. Iniciando novo cadastro.`);
                 }
-            });
-            
-            // Carrega cliente de exemplo ao iniciar
-            const exampleClient = clientesSimulados.find(c => c.id === 1);
-            if (exampleClient) {
-                carregarCliente(exampleClient);
-            } else {
-                 limparCampos(true);
             }
         });
+        
+        // Busca também ao selecionar uma sugestão (evento 'change')
+        searchInput.addEventListener('change', function(e) {
+            const termo = this.value.toUpperCase().trim();
+            
+            const clienteEncontrado = clientesSimulados.find(c => 
+                c.nome.toUpperCase() === termo || c.email.toUpperCase() === termo
+            );
+            
+            // Só carrega se o termo digitado/selecionado corresponder exatamente a um cliente
+            if (clienteEncontrado) {
+                carregarCliente(clienteEncontrado);
+            }
+        });
+
+
+        // --- 2. BOTÃO INFERIOR "EDITAR" (SALVAR/CONFIRMAR) ---
+        bottomEditButton.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const nome = document.getElementById('nome').value.trim();
+            if (!nome || !document.getElementById('email').value.trim()) {
+                alert('Nome e E-mail são obrigatórios.');
+                return;
+            }
+            
+            const isCreating = clienteAtualId === null;
+            const imc = document.getElementById('imc').value;
+            
+            alert(isCreating 
+                ? `Cliente ${nome} cadastrado com sucesso! (IMC: ${imc})`
+                : `Cliente ${nome} editado com sucesso! (IMC: ${imc})`
+            );
+            
+            // Simulação da limpeza pós-salvamento
+            limparCampos(true); 
+            preencherDatalist(); // Atualiza a lista de sugestões após salvar/cadastrar
+        });
+        
+        
+        // --- 3. BOTÃO INFERIOR "EXCLUIR" ---
+        bottomDeleteButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (clienteAtualId === null) {
+                alert('Não há cliente carregado para exclusão. Formulário limpo.');
+                limparCampos(true);
+                return;
+            }
+
+            const nomeCliente = document.getElementById('nome').value;
+            const confirmDelete = confirm(`ATENÇÃO! Tem certeza que deseja excluir o cliente ${nomeCliente}?`);
+            
+            if (confirmDelete) {
+                // Simulação de exclusão: remove do array de teste
+                const index = clientesSimulados.findIndex(c => c.id === clienteAtualId);
+                if (index > -1) clientesSimulados.splice(index, 1);
+                
+                alert(`Cliente ${nomeCliente} excluído com sucesso! (Ação simulada)`);
+                limparCampos(true);
+                preencherDatalist(); // Atualiza a lista de sugestões após exclusão
+            }
+        });
+        
+        // Carrega cliente de exemplo ao iniciar
+        const exampleClient = clientesSimulados.find(c => c.id === 1);
+        if (exampleClient) {
+            carregarCliente(exampleClient);
+        } else {
+            limparCampos(true);
+        }
+    });
     </script>
 </body>
 
-</html>
+</html><?php

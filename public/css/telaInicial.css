@@ -189,7 +189,7 @@ html {
     padding: 20px;
 }
 
-/* Card Progresso Meta Peso */
+/* Card Progresso Meta Peso (Percentuais) */
 .cardProgressoMetaPeso {
     grid-area: percentuals;
     background: #FFFAE6;
@@ -197,23 +197,173 @@ html {
     padding: 20px;
 }
 
+/* ========================================================= */
+/* ESTILOS DO GRÁFICO DE MEDIDOR (GAUGE) */
+/* ========================================================= */
+.gauge-container {
+    position: relative;
+    width: 280px;
+    height: 140px;
+    margin: 20px auto 40px auto;
+}
 
-/* Outros Estilos de Componentes (Sem Alterações) */
+.gauge-bg {
+    position: absolute;
+    width: 280px;
+    height: 140px;
+    overflow: hidden;
+    transform: rotate(180deg);
+}
+
+.gauge-track,
+.gauge-fill {
+    width: 260px;
+    height: 260px;
+    border: 50px solid;
+    
+    border-radius: 50%;
+    position: absolute;
+    top: -120px;
+    left: 0;
+    box-sizing: border-box;
+}
+
+.gauge-track {
+    border-color: rgb(255, 255, 255); /* Cor da trilha de fundo */
+}
+
+.gauge-fill {
+    /* Cor e preenchimento inicial */
+    border-top-color: #c0c0c0ff;
+    border-right-color: #ebe7e7ff;
+    clip-path: polygon(50% 100%, 0 100%, 0 0, 100% 0, 100% 100%, 100% 100%);
+    transform: rotate(-135deg); 
+}
+
+
+.scale-label {
+    position: absolute;
+    font-size: 30px;
+    font-weight: bold;
+    color: #000000;
+    font-size: 1.0em;
+    z-index: 10; 
+}
+
+.scale-label>div {
+    width: max-content;
+    margin-left: -50%;
+}
+
+.scale-label.min {
+    top: 140px;
+    left: 29px;
+    margin-left: 0;
+}
+
+.scale-label.mid {
+    top: 70px;
+    left: 160px;
+    transform: translateX(-50%);
+}
+
+.scale-label.max {
+    top: 140px;
+    left: 270px;
+}
+/* ========================================================= */
+
+/* ========================================================= */
+/* ESTILOS DOS CARDS DE PERCENTUAIS (Massa Corporal/Magra) */
+/* ========================================================= */
+
+/* Container Flex para alinhar os cards lado a lado */
+.percentual-container {
+    display: flex;
+    gap: 20px; /* Espaço entre os dois cards */
+    padding: 10px 0;
+    justify-content: space-around; /* Centraliza e distribui os cards */
+    align-items: flex-start;
+}
+
+/* Estilo do card individual */
+.percentual-card {
+    background-color: #2a2a2a21; 
+    border-radius: 20px;
+    padding: 15px 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex-basis: 48%; /* Garante que ocupem quase metade do espaço cada */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px; 
+}
+
+/* Título (Massa Corporal / Massa Magra) */
+.percentual-titulo {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #1E1E1E;
+    margin-bottom: 10px;
+}
+
+/* Valor de Percentual */
+.percentual-valor {
+    font-size: 3em; 
+    font-family: 'Akshar', sans-serif; 
+    font-weight: 700;
+    color: #1E1E1E;
+}
+/* ========================================================= */
+
+
+/* --------------------------------------------------------- */
+/* ESTILOS DO PERFIL (Conforme a imagem de referência) */
+/* --------------------------------------------------------- */
 .cardVerPerfil {
     width: 50px;
     height: 50px;
     border-radius: 9999px;
-    border: 2px #D4D2C8 solid;
+    /* SEM BORDA visível ou uma borda da cor do fundo do círculo */
+    border: none; /* Removendo a borda */
+    /* Fundo do círculo cinza claro */
+    background-color: #E6E1D7; /* Uma cor cinza claro similar à imagem */
     margin-bottom: 5px;
+    z-index: 50; 
+    
+    /* Centraliza o ícone */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em; /* Tamanho do ícone */
 }
 
+/* Estilo do ícone de usuário (fa-user) */
+.cardVerPerfil i {
+    color: #2A2A2A; /* Cor preta para o ícone */
+}
+
+/* Estilo do link (removendo sublinhado da tag <a>, se houver) */
+.profile-link {
+    text-decoration: none; /* Garante que o link não tenha sublinhado */
+}
+
+/* Estilo do texto "Ver perfil" */
 .textocardVerPerfil {
-    font-weight: 800;
-    color: #2A2A2A;
+    font-weight: 800; /* Pode ajustar para 400 ou 500 se quiser mais leve */
+    color: #2A2A2A; /* Cor cinza escuro para o texto */
     font-size: 0.8em; 
+    text-decoration: none; /* Garante que o texto não tenha sublinhado */
 }
 
-.titulo_peso, .titulo_percentual {
+/* --------------------------------------------------------- */
+/* FIM DOS ESTILOS DO PERFIL */
+/* --------------------------------------------------------- */
+
+/* Alterado: Corrigido o seletor para .titulo_percentual que estava incorreto no seu CSS original */
+.titulo_peso, .titulo_percentual { 
     color: #1E1E1E;
     font-size: 24px;
     font-family: 'Akshar', sans-serif;

@@ -4,7 +4,7 @@ html {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: 'Alata', 'Akshar', sans-serif;
+    font-family: 'Alata',  sans-serif;
     background: #2A2A2A;
 }
 
@@ -124,7 +124,7 @@ html {
     height: auto;
 }
 
-.logoWhatsApp {
+/* .logoWhatsApp {
     position: absolute;
     width: 3.5vw;
     height: 3.5vw;
@@ -136,7 +136,7 @@ html {
 .logoWhatsApp img {
     width: 100%;
     height: 100%;
-}
+} */
 
 /* ========================================================= */
 /* GRID LAYOUT PRINCIPAL */
@@ -175,13 +175,17 @@ html {
 
 .navBar a {
     text-decoration: none;
-    color: white;
+    color: white; /* Links brancos */
     font-size: 24px;
-    font-family: 'Akshar', sans-serif;
+    font-family: 'Alata', sans-serif; /* Fonte Alata */
     font-weight: 700;
     position: relative;
     transition: color 0.3s ease;
 }
+
+.navBar a.active {
+    color: #FFFAE6; 
+} 
 
 .navBar a::after {
     content: '';
@@ -190,26 +194,29 @@ html {
     bottom: -5px;
     width: 0;
     height: 2px;
-    background-color: black;
+    background-color: black; /* Sublinhado Preto */
     transition: width 0.3s ease;
 }
 
+/* Sublinhado da aba ativa/hover */
 .navBar a:hover::after,
 .navBar a.active::after {
     width: 100%;
 }
+/* Removendo a regra redundante abaixo para evitar conflitos */
+/* .navBar .nav-link::after { ... } */
 
 /* ========================================================= */
 /* BARRA SUPERIOR (Busca + Perfil) */
 /* ========================================================= */
-/* .top-right-bar {
+ .top-right-bar {
     grid-area: top_right;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 30px;
     padding-right: 10px;
-} */
+} 
 
 
 
@@ -325,14 +332,14 @@ html {
 
 .clientes-ativos-card .card-title {
     font-size: 35px;
-    font-family: Akshar;
+    font-family: 'Alata', sans-serif;
     font-weight: 700;
     margin-bottom: 10px;
 }
 
 .active-count {
     font-size: 140px;
-    font-family: Akshar;
+    font-family: Alata;
     font-weight: 700;
     line-height: 1em;
     margin: 0;
@@ -379,7 +386,7 @@ html {
 
 .client-name {
     font-size: 24px;
-    font-family: Akshar;
+    font-family: Alata;
     font-weight: 700;
     display: block;
     margin-bottom: 5px;
@@ -387,6 +394,6 @@ html {
 
 .notification-text {
     font-size: 20px;
-    font-family: Akshar;
+    font-family: Alata;
     font-weight: 400;
 }

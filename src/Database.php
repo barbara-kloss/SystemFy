@@ -8,7 +8,7 @@ class Database // <--- CORRIGIDO: D maiúsculo
 {
     public static function getConnection(): PDO
     {
-        $host = 'localhost:3306'; // Mantenha a porta aqui se não for a padrão (3306)
+        $host = 'localhost:3309'; // Mantenha a porta aqui se não for a padrão (3306)
         $db = 'systemfy';
         $user = 'root';
         $pass = 'root';

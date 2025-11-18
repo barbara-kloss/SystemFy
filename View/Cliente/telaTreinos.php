@@ -19,9 +19,13 @@
             <div class="bolinha bolinha5"></div>
             <div class="bolinha bolinha6"></div>
 
-            <div class="logoWhatsApp">
+            <!-- <div class="logoWhatsApp">
                 <img src="/imgFy/whatsapp (3).png" alt="logoWhatsApp">
-            </div>
+            </div> -->
+
+            <div class="logoCantoInferior">
+            <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
+        </div>
 
             <div class="fundoSemiTransparente">
 
@@ -31,7 +35,7 @@
                         <nav>
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a href="/client" class="nav-link">Home</a>
+                                    <a href="/client" class="nav-link">Inicio</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/client/menu/list" class="nav-link">Nutricional</a>

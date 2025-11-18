@@ -22,9 +22,9 @@
             <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo FY">
         </div>
 
-        <div class="logoWhatsApp">
+        <!-- <div class="logoWhatsApp">
             <img src="/imgFy/whatsapp (3).png" alt="logoWhatsApp">
-        </div>
+        </div> -->
 
         <div class="fundoSemiTransparente">
 

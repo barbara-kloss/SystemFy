@@ -132,7 +132,12 @@ html {
     align-self: start; 
     margin-right: 0;
     position: relative; 
+    
+    /* MODIFICAÇÃO: Margem negativa para subir o elemento acima da linha do grid */
+    margin-top: -30px; 
 }
+
+
 
 /* Posicionamento da Navbar (Esquerda) */
 .navBar {
@@ -163,11 +168,11 @@ html {
     transition: color 0.3s ease;
 }
 
-/* .navBar a.active {
+ .navBar a.active {
     color: #FFFAE6; 
-} */
+} 
 
-/* .navBar a::after {
+ .navBar a::after {
     content: '';
     position: absolute;
     left: 0;
@@ -176,7 +181,7 @@ html {
     height: 2px;
     background-color: #2A2A2A; 
     transition: width 0.3s ease;
-} */
+}
 
 /* Sublinhado da aba ativa/hover    */
 .navBar .nav-link::after {
@@ -191,20 +196,44 @@ html {
     background-color: #2A2A2A; 
 }
 
-/* Outros Estilos de Componentes */
+/* --------------------------------------------------------- */
+/* ESTILOS DO PERFIL (Conforme a imagem de referência) */
+/* --------------------------------------------------------- */
 .cardVerPerfil {
     width: 50px;
     height: 50px;
     border-radius: 9999px;
-    border: 2px #D4D2C8 solid;
+    border: none; 
+    background-color: #E6E1D7; /* Fundo do círculo cinza claro */
     margin-bottom: 5px;
+    z-index: 50; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em; 
 }
 
+/* Estilo do ícone de usuário (fa-user) */
+.cardVerPerfil i {
+    color: #2A2A2A; /* Cor preta para o ícone */
+}
+
+/* Estilo do link (removendo sublinhado da tag <a>, se houver) */
+.profile-link {
+    text-decoration: none; 
+}
+
+/* Estilo do texto "Ver perfil" */
 .textocardVerPerfil {
     font-weight: 800;
-    color: #2A2A2A;
-    font-size: 0.8em;
+    color: #2A2A2A; /* Cor cinza escuro para o texto */
+    font-size: 0.8em; 
+    text-decoration: none; /* Garante que o texto não tenha sublinhado */
 }
+
+/* --------------------------------------------------------- */
+/* FIM DOS ESTILOS DO PERFIL */
+/* --------------------------------------------------------- */
 
 
 /* ========================================================= */

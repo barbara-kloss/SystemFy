@@ -22,9 +22,7 @@
             <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
         </div>
 
-        <div class="logoWhatsApp">
-            <img src="/imgFy/whatsapp (3).png" alt="logoWhatsApp">
-        </div>
+        
 
         <div class="fundoSemiTransparente">
 
