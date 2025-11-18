@@ -23,6 +23,10 @@
                 <img src="/imgFy/whatsapp (3).png" alt="logoWhatsApp">
             </div> -->
 
+            <div class="logoCantoInferior">
+            <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
+        </div>
+
             <div class="fundoSemiTransparente">
 
                 <div class="header-content-grid">
@@ -31,7 +35,7 @@
                         <nav>
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a href="/client" class="nav-link">Home</a>
+                                    <a href="/client" class="nav-link">Inicio</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/client/menu/list" class="nav-link">Nutricional</a>

@@ -229,14 +229,13 @@ html {
 }
 
 .gauge-track {
-    /* CORREÇÃO PARA IMAGEM 2: Arco de fundo completo deve ser branco. */
-    border-color: white; 
+    border-color: rgb(255, 255, 255); /* Cor da trilha de fundo */
 }
 
 .gauge-fill {
-    /* CORREÇÃO PARA IMAGEM 2: Preenchimento preto em cima, branco na direita. */
-    border-top-color: black;
-    border-right-color: white; 
+    /* Cor e preenchimento inicial */
+    border-top-color: #c0c0c0ff;
+    border-right-color: #ebe7e7ff;
     clip-path: polygon(50% 100%, 0 100%, 0 0, 100% 0, 100% 100%, 100% 100%);
     transform: rotate(-135deg); 
 }
@@ -272,30 +271,7 @@ html {
     top: 140px;
     left: 270px;
 }
-
 /* ========================================================= */
-/* ESTILO DA AGULHA (PONTEIRO) - CORREÇÃO FINAL DA COR E ROTAÇÃO */
-/* ========================================================= */
-.gauge-container::before {
-    content: '';
-    position: absolute;
-    top: 50%; 
-    left: 50%; 
-    
-    /* Configuração visual da linha */
-    width: 3px; 
-    height: 55px;
-    /* CORREÇÃO FINAL: Agulha preta para ser visível no arco branco/claro */
-    background-color: black; 
-    
-    /* Centraliza o eixo de rotação na base */
-    transform-origin: bottom center; 
-    
-    /* ROTAÇÃO AJUSTADA para o ponto mais próximo de 45 */
-    transform: translate(-50%, -100%) rotate(-130deg); 
-    
-    z-index: 20; 
-}
 
 /* ========================================================= */
 /* ESTILOS DOS CARDS DE PERCENTUAIS (Massa Corporal/Magra) */
@@ -304,20 +280,20 @@ html {
 /* Container Flex para alinhar os cards lado a lado */
 .percentual-container {
     display: flex;
-    gap: 20px; 
+    gap: 20px; /* Espaço entre os dois cards */
     padding: 10px 0;
-    justify-content: space-around; 
+    justify-content: space-around; /* Centraliza e distribui os cards */
     align-items: flex-start;
 }
 
 /* Estilo do card individual */
 .percentual-card {
-    background-color: #FFFAE6; 
+    background-color: #2a2a2a21; 
     border-radius: 20px;
     padding: 15px 10px;
     text-align: center;
-    box-shadow: none; 
-    flex-basis: 48%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex-basis: 48%; /* Garante que ocupem quase metade do espaço cada */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -343,42 +319,50 @@ html {
 /* ========================================================= */
 
 
-/* Outros Estilos de Componentes (Ver perfil) */
+/* --------------------------------------------------------- */
+/* ESTILOS DO PERFIL (Conforme a imagem de referência) */
+/* --------------------------------------------------------- */
 .cardVerPerfil {
     width: 50px;
     height: 50px;
     border-radius: 9999px;
-    /* ESTILO NOVO: Borda Cinza Clara e Fundo Branco */
-    border: 2px solid #D4D2C8;
-    background-color: white; 
+    /* SEM BORDA visível ou uma borda da cor do fundo do círculo */
+    border: none; /* Removendo a borda */
+    /* Fundo do círculo cinza claro */
+    background-color: #E6E1D7; /* Uma cor cinza claro similar à imagem */
     margin-bottom: 5px;
     z-index: 50; 
     
-    /* Centraliza o ícone dentro do círculo */
+    /* Centraliza o ícone */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5em;
+    font-size: 1.5em; /* Tamanho do ícone */
 }
 
-/* Estilo para o ícone de usuário dentro do card */
+/* Estilo do ícone de usuário (fa-user) */
 .cardVerPerfil i {
-    color: #2a2a2a; 
+    color: #2A2A2A; /* Cor preta para o ícone */
 }
 
-.textocardVerPerfil {
-    font-weight: 800;
-    color: #2a2a2a; 
-    font-size: 0.8em; 
-    /* Garante o sublinhado na tag <a> ou no texto */
-    text-decoration: underline;
-}
-
-/* Remove o sublinhado extra do link se o texto já tiver */
+/* Estilo do link (removendo sublinhado da tag <a>, se houver) */
 .profile-link {
-    text-decoration: none; 
+    text-decoration: none; /* Garante que o link não tenha sublinhado */
 }
 
+/* Estilo do texto "Ver perfil" */
+.textocardVerPerfil {
+    font-weight: 800; /* Pode ajustar para 400 ou 500 se quiser mais leve */
+    color: #2A2A2A; /* Cor cinza escuro para o texto */
+    font-size: 0.8em; 
+    text-decoration: none; /* Garante que o texto não tenha sublinhado */
+}
+
+/* --------------------------------------------------------- */
+/* FIM DOS ESTILOS DO PERFIL */
+/* --------------------------------------------------------- */
+
+/* Alterado: Corrigido o seletor para .titulo_percentual que estava incorreto no seu CSS original */
 .titulo_peso, .titulo_percentual { 
     color: #1E1E1E;
     font-size: 24px;

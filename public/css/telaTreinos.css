@@ -34,7 +34,7 @@ html {
 .bolinha5 { width: 8vw; height: 8vw; top: 40vh; left: 55%; }
 .bolinha6 { width: 15vw; height: 15vh; top: 50vh; left: -5vw; background: #DDB35E; }
 
-/* Logo de WhatsApp no canto inferior esquerdo (Ajustar) */
+/* Logo de WhatsApp no canto inferior esquerdo (Ajustar)
 .logoWhatsApp {
     position: absolute;
     width: 3.5vw;
@@ -46,11 +46,26 @@ html {
 .logoWhatsApp img {
     width: 100%;
     height: 100%;
+} */
+
+/* Logos de Canto */
+.logoCantoInferior {
+    position: absolute;
+    width: 3.5vw;
+    height: auto;
+    left: 1.5vw;
+    top: 3vh;
+    z-index: 20;
+}
+
+.logoCantoInferior img {
+    width: 100%;
+    height: auto;
 }
 
 /* Fundo Semi Transparente (Contêiner principal - Ajuste de dimensões e centralização) */
 .fundoSemiTransparente {
-    width: 90%;
+    width:100%;
     max-width: 1400px; /* Limite máximo para telas grandes */
     height: 90vh;
     background: rgba(213, 205, 179, 0.43);

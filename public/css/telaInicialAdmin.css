@@ -175,13 +175,17 @@ html {
 
 .navBar a {
     text-decoration: none;
-    color: white;
+    color: white; /* Links brancos */
     font-size: 24px;
-    font-family: 'Alata', sans-serif;
+    font-family: 'Alata', sans-serif; /* Fonte Alata */
     font-weight: 700;
     position: relative;
     transition: color 0.3s ease;
 }
+
+.navBar a.active {
+    color: #FFFAE6; 
+} 
 
 .navBar a::after {
     content: '';
@@ -190,26 +194,29 @@ html {
     bottom: -5px;
     width: 0;
     height: 2px;
-    background-color: black;
+    background-color: black; /* Sublinhado Preto */
     transition: width 0.3s ease;
 }
 
+/* Sublinhado da aba ativa/hover */
 .navBar a:hover::after,
 .navBar a.active::after {
     width: 100%;
 }
+/* Removendo a regra redundante abaixo para evitar conflitos */
+/* .navBar .nav-link::after { ... } */
 
 /* ========================================================= */
 /* BARRA SUPERIOR (Busca + Perfil) */
 /* ========================================================= */
-/* .top-right-bar {
+ .top-right-bar {
     grid-area: top_right;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 30px;
     padding-right: 10px;
-} */
+} 
 
 
 
