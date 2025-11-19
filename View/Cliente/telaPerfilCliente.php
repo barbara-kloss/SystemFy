@@ -43,7 +43,33 @@
 
             <div class="user-profile-and-content">
                 <div class="user-info">
-                    <img src="<?= !empty($user->getFoto()) ? htmlspecialchars($user->getFoto()) : 'https://placehold.co/60x60' ?>" alt="Usuário" class="user-avatar" />
+                    <div class="photo-upload-container">
+                        <form id="photo-upload-form" action="/client/perfil/edit" method="POST" enctype="multipart/form-data">
+                            <input type="file" id="foto" name="foto" accept="image/*" class="photo-upload-input" />
+                            <button type="button" class="photo-upload-button" onclick="document.getElementById('foto').click()" title="Alterar Foto">
+                                <i class="fas fa-pencil"></i>
+                            </button>
+                            <label for="foto" class="photo-upload-label">
+                                <img src="<?php 
+                                    $foto = $user->getFoto();
+                                    if (!empty($foto)) {
+                                        // Se começa com data:image, já é base64
+                                        if (strpos($foto, 'data:image') === 0) {
+                                            echo htmlspecialchars($foto);
+                                        } else {
+                                            // Se for BLOB (string binária), converter para base64
+                                            // Detectar tipo MIME básico
+                                            $imageInfo = @getimagesizefromstring($foto);
+                                            $mimeType = $imageInfo ? $imageInfo['mime'] : 'image/jpeg';
+                                            echo 'data:' . $mimeType . ';base64,' . base64_encode($foto);
+                                        }
+                                    } else {
+                                        echo 'https://placehold.co/100x100';
+                                    }
+                                ?>" alt="Usuário" class="user-avatar" id="avatar-preview" />
+                            </label>
+                        </form>
+                    </div>
                     <span class="user-name"><?= htmlspecialchars($user->getNome()) ?></span>
                 </div>
 
@@ -141,6 +167,56 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('foto').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Validar tipo de arquivo
+                if (!file.type.startsWith('image/')) {
+                    alert('Por favor, selecione apenas arquivos de imagem.');
+                    return;
+                }
+                
+                // Validar tamanho (máximo 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('A imagem deve ter no máximo 5MB.');
+                    return;
+                }
+                
+                // Preview da imagem
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('avatar-preview').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+                
+                // Enviar formulário automaticamente
+                const form = document.getElementById('photo-upload-form');
+                const formData = new FormData(form);
+                
+                fetch('/client/perfil/edit', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else {
+                        return response.text();
+                    }
+                })
+                .then(data => {
+                    if (data) {
+                        console.log('Foto atualizada com sucesso');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao enviar foto:', error);
+                    alert('Erro ao enviar foto. Tente novamente.');
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

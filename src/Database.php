@@ -20,7 +20,9 @@ class Database // <--- CORRIGIDO: D maiúsculo
         try {
             $pdo = new PDO($dsn, $user, $pass);
             // Configura o PDO para lançar exceções em caso de erro SQL
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // Configura para retornar BLOBs como strings em vez de recursos
+            $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, true);
             return $pdo;
         } catch (PDOException $e) {
             // Se falhar a conexão, exibe a mensagem de erro detalhada e interrompe

@@ -68,7 +68,18 @@ class UserRepository
             $stmt->bindValue(13, ($gordura > 0) ? $gordura : null, \PDO::PARAM_STR);
             $stmt->bindValue(14, $planoIdValue, \PDO::PARAM_INT);
             $stmt->bindValue(15, $user->getEmail() ?: null);
-            $stmt->bindValue(16, $user->getFoto() ?: null);
+            // Salvar foto como BLOB no insert
+            $foto = $user->getFoto();
+            if (!empty($foto)) {
+                // Se a foto já está em base64 (data:image), extrair apenas os dados
+                if (strpos($foto, 'data:image') === 0) {
+                    $parts = explode(',', $foto);
+                    $foto = base64_decode($parts[1] ?? '');
+                }
+                $stmt->bindValue(16, $foto, \PDO::PARAM_LOB);
+            } else {
+                $stmt->bindValue(16, null, \PDO::PARAM_NULL);
+            }
             $pesoMeta = $user->getPesoMeta();
             $stmt->bindValue(17, ($pesoMeta > 0) ? $pesoMeta : null, \PDO::PARAM_STR);
 
@@ -133,7 +144,18 @@ class UserRepository
         $stmt->bindValue(':gordura', $user->getGordura());
         $stmt->bindValue(':plano_id', $planoIdValue);
         $stmt->bindValue(':email', $user->getEmail());
-        $stmt->bindValue(':foto', $user->getFoto());
+        // Salvar foto como BLOB
+        $foto = $user->getFoto();
+        if (!empty($foto)) {
+            // Se a foto já está em base64 (data:image), extrair apenas os dados
+            if (strpos($foto, 'data:image') === 0) {
+                $parts = explode(',', $foto);
+                $foto = base64_decode($parts[1] ?? '');
+            }
+            $stmt->bindValue(':foto', $foto, \PDO::PARAM_LOB);
+        } else {
+            $stmt->bindValue(':foto', null, \PDO::PARAM_NULL);
+        }
         $stmt->bindValue(':peso_meta', $user->getPesoMeta());
         $stmt->bindValue(':id', $user->getId());
 
@@ -145,6 +167,14 @@ class UserRepository
         $userList = $this->pdo
             ->query('SELECT * FROM user;')
             ->fetchAll(\PDO::FETCH_ASSOC);
+        
+        // Processar BLOBs de foto
+        foreach ($userList as &$userData) {
+            if (isset($userData['foto']) && $userData['foto'] !== null && is_resource($userData['foto'])) {
+                $userData['foto'] = stream_get_contents($userData['foto']);
+            }
+        }
+        
         return array_map(
             $this->hydrateUser(...),
             $userList
@@ -162,6 +192,14 @@ class UserRepository
             
             if (!$userData || empty($userData)) {
                 return null;
+            }
+            
+            // Ler BLOB da foto se existir
+            if (isset($userData['foto']) && $userData['foto'] !== null) {
+                // Se for resource (stream), ler o conteúdo
+                if (is_resource($userData['foto'])) {
+                    $userData['foto'] = stream_get_contents($userData['foto']);
+                }
             }
 
             return $this->hydrateUser($userData);
@@ -204,7 +242,12 @@ class UserRepository
         }
         
         $email = $UserData['email'] ?? '';
+        // Processar foto BLOB - manter como está para compatibilidade
         $foto = $UserData['foto'] ?? '';
+        // Se for BLOB (resource), converter para string base64
+        if (is_resource($foto)) {
+            $foto = stream_get_contents($foto);
+        }
         $peso_meta = isset($UserData['peso_meta']) && $UserData['peso_meta'] !== null ? (float) $UserData['peso_meta'] : 0.0;
         
         $user = new User(

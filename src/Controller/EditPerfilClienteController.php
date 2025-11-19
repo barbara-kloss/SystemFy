@@ -47,7 +47,32 @@ class EditPerfilClienteController implements Controller
         $gordura = $gordura_raw ? (float) str_replace(',', '.', $gordura_raw) : $user->getGordura();
         $peso_meta_raw = filter_input(INPUT_POST, 'peso-meta') ?? filter_input(INPUT_POST, 'peso_meta');
         $peso_meta = $peso_meta_raw ? (float) str_replace(',', '.', $peso_meta_raw) : $user->getPesoMeta();
-        $foto = filter_input(INPUT_POST, 'foto', FILTER_SANITIZE_STRING) ?? $user->getFoto();
+        
+        // Processar upload de foto
+        $foto = $user->getFoto();
+        if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+            $file = $_FILES['foto'];
+            
+            // Validar tipo de arquivo
+            $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($finfo, $file['tmp_name']);
+            finfo_close($finfo);
+            
+            if (in_array($mimeType, $allowedTypes)) {
+                // Validar tamanho (máximo 5MB)
+                if ($file['size'] <= 5 * 1024 * 1024) {
+                    // Ler o conteúdo do arquivo para salvar como BLOB
+                    $foto = file_get_contents($file['tmp_name']);
+                } else {
+                    header('Location: /client/perfil?erro=' . urlencode('A imagem deve ter no máximo 5MB'));
+                    exit();
+                }
+            } else {
+                header('Location: /client/perfil?erro=' . urlencode('Tipo de arquivo não permitido. Use apenas imagens (JPEG, PNG, GIF, WEBP)'));
+                exit();
+            }
+        }
 
         $dataNascObj = new Date($data_nasc);
         $planoId = $user->getPlanoId();
