@@ -112,8 +112,8 @@ if ($pesoAtual > 0) {
                     3. Ou usar o email do calendário diretamente (substitua SEU_EMAIL@gmail.com abaixo)
                     -->
                     <iframe class="frame_agenda" 
-                        src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FSao_Paulo&showPrint=0&mode=WEEK&src=thauanafeyth34%40gmail.com&color=%23039be5" 
-                        style="border-width:0" 
+                        src="https://calendar.google.com/calendar/embed?src=thauanafeyth34%40gmail.com&ctz=America%2FSao_Paulo" 
+                        style="border: 0" 
                         width="100%" 
                         height="100%" 
                         frameborder="0" 

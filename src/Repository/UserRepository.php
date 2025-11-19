@@ -5,13 +5,9 @@ namespace Systemfy\App\Repository;
 use PDO;
 use Systemfy\App\Database;
 use Systemfy\App\Model\User;
-<<<<<<< Updated upstream
 use Systemfy\App\Model\Date;
 use Systemfy\App\Model\Plano;
 use Systemfy\App\Repository\PlanoRepository;
-=======
-use Systemfy\App\Model\Plano;
->>>>>>> Stashed changes
 
 class UserRepository
 {
@@ -161,14 +157,6 @@ class UserRepository
             $stmt->bindValue(1, $id, \PDO::PARAM_INT);
             $stmt->execute();
 
-<<<<<<< Updated upstream
-        $userData = $stmt->fetch(\PDO::FETCH_ASSOC);
-        if ($userData === false) {
-            return null;
-        }
-
-        return $this->hydrateUser($userData);
-=======
             $userData = $stmt->fetch(\PDO::FETCH_ASSOC);
             
             if (!$userData || empty($userData)) {
@@ -180,12 +168,10 @@ class UserRepository
             error_log("Erro no UserRepository::find: " . $e->getMessage());
             return null;
         }
->>>>>>> Stashed changes
     }
 
     public function hydrateUser(array $UserData): User
     {
-<<<<<<< Updated upstream
         // Verificar se os dados são válidos
         if (empty($UserData) || !isset($UserData['id']) || $UserData['id'] === null) {
             throw new \InvalidArgumentException('Invalid user data provided to hydrateUser: id is missing or null');
@@ -244,65 +230,6 @@ class UserRepository
             $peso_meta
         );
         return $user;
-=======
-        try {
-            // Verificar se plano_id existe e criar objeto Plano se necessário
-            $plano = null;
-            if (!empty($UserData['plano_id']) && $UserData['plano_id'] > 0) {
-                try {
-                    $planoRepository = new PlanoRepository();
-                    $plano = $planoRepository->find((int) $UserData['plano_id']);
-                    if (!$plano) {
-                        $plano = new Plano(0, '', 0.0, '', false);
-                    }
-                } catch (\Exception $e) {
-                    // Se não conseguir buscar o plano, cria um objeto Plano vazio
-                    $plano = new Plano(0, '', 0.0, '', false);
-                }
-            } else {
-                // Criar um objeto Plano vazio quando não há plano_id
-                $plano = new Plano(0, '', 0.0, '', false);
-            }
-            
-            // Converter data_nascimento para Date se for string
-            $dataNasc = $UserData['data_nascimento'] ?? null;
-            if (is_string($dataNasc) && !empty($dataNasc)) {
-                try {
-                    $dataNasc = new \DateTime($dataNasc);
-                } catch (\Exception $e) {
-                    $dataNasc = new \DateTime();
-                }
-            } elseif (!$dataNasc instanceof \DateTime) {
-                $dataNasc = new \DateTime();
-            }
-            
-            // Criar User com os parâmetros na ordem correta do construtor
-            $user = new User(
-                (int) ($UserData['id'] ?? 0),
-                $UserData['nome_completo'] ?? '',
-                $dataNasc,
-                $UserData['genero'] ?? '',
-                $UserData['telefone'] ?? '',
-                $UserData['senha'] ?? '',
-                $UserData['permissao'] ?? '',
-                (float) ($UserData['altura'] ?? 0),
-                (int) ($UserData['peso'] ?? 0),
-                $UserData['objetivos'] ?? '',
-                (bool) ($UserData['status'] ?? false),
-                $UserData['observacao'] ?? '',
-                (float) ($UserData['massa'] ?? 0),
-                (float) ($UserData['gordura'] ?? 0),
-                $plano,
-                $UserData['email'] ?? '',
-                $UserData['foto'] ?? '',
-                (float) ($UserData['peso_meta'] ?? 0)
-            );
-            
-            return $user;
-        } catch (\Throwable $e) {
-            throw $e;
-        }
->>>>>>> Stashed changes
     }
 
 

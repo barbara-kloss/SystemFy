@@ -159,14 +159,10 @@ html {
     justify-content: flex-start; 
 }
 
-.navBar nav,
-.navBar nav ul,
-.navBar nav ul li,
-.navBar nav ul li a {
-    font-family: 'Akshar', sans-serif;
-}
-
-.navBar a {
+.navBar a,
+.navBar nav a,
+.navBar ul a,
+.navBar ul li a {
     text-decoration: none;
     color: white;
     font-size: 24px;
