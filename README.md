@@ -38,8 +38,10 @@ O **SystemFy** é uma plataforma web que permite o gerenciamento completo de cli
   - Status ativo/inativo
 
 - **Relatórios**
-  - Geração de relatórios de desempenho
-  - Exportação de dados
+  - Relatório de Clientes: Lista todos os clientes com status, planos e valores
+  - Relatório de Faturamento: Cálculo de faturamento mensal, anual e por plano
+  - Exportação em PDF e CSV
+  - Salvamento automático dos relatórios gerados no banco de dados
 
 - **Perfil**
   - Visualização e edição de dados pessoais
@@ -84,8 +86,7 @@ O **SystemFy** é uma plataforma web que permite o gerenciamento completo de cli
   - HTML5
   - CSS3
   - JavaScript (Vanilla)
-  - Font Awesome (ícones)
-  - Google Fonts (Alata, Akshar)
+  - Sistema de notificações (Toast e Modais)
 
 - **Banco de Dados**
   - MySQL/MariaDB
@@ -93,6 +94,11 @@ O **SystemFy** é uma plataforma web que permite o gerenciamento completo de cli
 - **Ferramentas**
   - Composer (gerenciamento de dependências)
   - Google Calendar API (integração)
+
+- **Bibliotecas Externas**
+  - **jsPDF** - Geração de PDFs para relatórios
+  - **Font Awesome** - Biblioteca de ícones
+  - **Google Fonts** - Fontes personalizadas (Alata, Akshar)
 
 ## 📦 Requisitos
 
@@ -156,6 +162,7 @@ SystemFy/
 │   └── routes.php
 ├── public/
 │   ├── css/
+│   ├── js/
 │   ├── imgFy/
 │   └── index.php
 ├── src/
@@ -190,6 +197,7 @@ SystemFy/
 
 - **public/** - Ponto de entrada público do sistema
   - `css/` - Arquivos de estilos CSS
+  - `js/` - Arquivos JavaScript (notificações, etc.)
   - `imgFy/` - Imagens e assets do sistema
   - `index.php` - Front Controller (ponto de entrada principal)
 
@@ -200,6 +208,9 @@ SystemFy/
     - `MenuController/` - Gerenciamento de cardápios
     - `PlanoController/` - Gerenciamento de planos
     - `ReportController/` - Geração de relatórios
+      - `GetClientesReportController` - Busca dados de clientes
+      - `GetFaturamentoReportController` - Calcula faturamento
+      - `SaveReportController` - Salva relatórios no banco
   - **Client/** - Controllers do cliente
     - `ClientAgendaController/` - Visualização de agenda do cliente
     - `ClientExerciseController/` - Visualização de treinos do cliente
@@ -262,7 +273,10 @@ O sistema utiliza sessões PHP para autenticação. Após o login, os seguintes 
 - `GET /admin/menu/list` - Lista de cardápios
 - `GET /admin/agenda/list` - Lista de eventos
 - `GET /admin/plano/list` - Lista de planos
-- `GET /admin/report/list` - Relatórios
+- `GET /admin/report/list` - Lista de relatórios
+- `GET /admin/report/clientes` - Dados para relatório de clientes (JSON)
+- `GET /admin/report/faturamento` - Dados para relatório de faturamento (JSON)
+- `POST /admin/report/save` - Salva relatório no banco
 - `GET /admin/perfil` - Perfil do administrador
 
 ### Cliente
@@ -271,6 +285,36 @@ O sistema utiliza sessões PHP para autenticação. Após o login, os seguintes 
 - `GET /client/menu/list` - Cardápios
 - `GET /client/agenda/list` - Agenda
 - `GET /client/perfil` - Perfil do cliente
+
+## 🔌 API REST
+
+O sistema possui uma API REST que retorna dados em formato JSON. A API é utilizada principalmente para:
+
+- **Busca de dados**: Endpoints de busca para autocomplete e filtros
+- **Relatórios**: Endpoints que fornecem dados para geração de relatórios
+- **Operações dinâmicas**: Check-ins, carregamento assíncrono de dados, etc.
+
+### Características da API
+
+- **Formato**: JSON (Content-Type: application/json)
+- **Autenticação**: Baseada em sessão PHP
+- **Métodos HTTP**: GET e POST
+- **Encoding**: UTF-8
+- **Códigos de Resposta**: 
+  - `200` - Sucesso
+  - `400` - Erro de validação
+  - `404` - Recurso não encontrado
+  - `500` - Erro interno do servidor
+
+### Endpoints Principais
+
+A API inclui endpoints para:
+- Busca de clientes, exercícios e cardápios
+- Geração de dados para relatórios (clientes e faturamento)
+- Salvamento de relatórios
+- Gerenciamento de check-ins de exercícios
+
+Todos os endpoints da API são consumidos pelo frontend via JavaScript (fetch/AJAX) para proporcionar uma experiência dinâmica e responsiva.
 
 ## 🔧 Configuração
 
@@ -305,6 +349,25 @@ Os arquivos CSS estão em `public/css/`. As cores principais do sistema são:
 O sistema utiliza as fontes:
 - **Alata** - Títulos e textos principais
 - **Akshar** - Textos secundários e botões
+
+### Sistema de Notificações
+
+O sistema possui um sistema moderno de notificações:
+
+- **Toast Notifications**: Mensagens temporárias que aparecem no canto superior direito
+  - Tipos: success, error, warning, info
+  - Desaparecem automaticamente após alguns segundos
+  - Animações suaves de entrada/saída
+
+- **Modais de Confirmação**: Substituem os `confirm()` nativos do navegador
+  - Design moderno e responsivo
+  - Botões "Confirmar" e "Cancelar"
+  - Fecha com ESC ou clicando fora
+  - Só executa ações após confirmação explícita
+
+Arquivos:
+- `public/css/notifications.css` - Estilos das notificações
+- `public/js/notifications.js` - Lógica das notificações
 
 ## 📊 Diagrama de Classes
 
@@ -361,6 +424,7 @@ Para suporte, envie um e-mail para barbarakf383@gmail.com ou abra uma issue no r
 - [ ] Integração com pagamentos
 - [ ] Chat em tempo real
 - [ ] Relatórios avançados com gráficos
+- [ ] Relatório de Agenda
 
 ---
 
