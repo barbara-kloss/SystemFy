@@ -52,7 +52,11 @@ use Systemfy\App\Client\ClientMenuController\ClientMenuListController;
 
 use Systemfy\App\Controller\{
     MainAdminController,
-    MainClienteController
+    MainClienteController,
+    PerfilClienteController,
+    PerfilAdminController,
+    EditPerfilClienteController,
+    EditPerfilAdminController
 };
 use Systemfy\App\ControllerLogin\{
     NewUserController,
@@ -128,5 +132,9 @@ return [
     'GET|/cadastro/get-cliente' => \Systemfy\App\ControllerLogin\GetClienteController::class,
     'GET|/criar-senha' => CriarSenhaFormController::class,
     'POST|/criar-senha' => CriarSenhaController::class,
+    'GET|/client/perfil' => PerfilClienteController::class,
+    'POST|/client/perfil' => EditPerfilClienteController::class,
+    'GET|/admin/perfil' => PerfilAdminController::class,
+    'POST|/admin/perfil' => EditPerfilAdminController::class,
     
 ];

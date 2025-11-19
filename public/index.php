@@ -150,9 +150,6 @@ if (array_key_exists($key, $routes)) {
     } elseif ($controllerClass === \Systemfy\App\ControllerLogin\LogoutController::class) {
         $controller = new $controllerClass();
 
-    } elseif ($controllerClass === \Systemfy\App\Controller\MainAdminController::class) {
-        $controller = new $controllerClass();
-
         // --------------------------------------------
         //  BLOCO CLIENTE – AGENDA
         // --------------------------------------------
@@ -186,7 +183,19 @@ if (array_key_exists($key, $routes)) {
         $controller = new $controllerClass($menuRepository);
 
     } elseif ($controllerClass === \Systemfy\App\Controller\MainClienteController::class) {
-        $controller = new $controllerClass();
+        $controller = new $controllerClass($userRepository);
+
+    } elseif ($controllerClass === \Systemfy\App\Controller\PerfilClienteController::class) {
+        $controller = new $controllerClass($userRepository, $planoRepository);
+
+    } elseif ($controllerClass === \Systemfy\App\Controller\PerfilAdminController::class) {
+        $controller = new $controllerClass($userRepository);
+
+    } elseif ($controllerClass === \Systemfy\App\Controller\EditPerfilClienteController::class) {
+        $controller = new $controllerClass($userRepository, $planoRepository);
+
+    } elseif ($controllerClass === \Systemfy\App\Controller\EditPerfilAdminController::class) {
+        $controller = new $controllerClass($userRepository);
 
         // --------------------------------------------
         //  OUTROS CONTROLLERS

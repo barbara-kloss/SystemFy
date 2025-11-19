@@ -102,17 +102,15 @@ class UserRepository
         altura = :altura, peso = :peso, objetivos = :objetivos,
         status = :status, observacao = :observacao,
         massa = :massa, gordura = :gordura, plano_id = :plano_id, email = :email, foto = :foto, peso_meta = :peso_meta
-        WHERE id = :id;'; // sem mudança de permissao
+        WHERE id = :id;';
         $stmt = $this->pdo->prepare($sql);
         
         $planoId = $user->getPlanoId();
         $planoIdValue = $planoId ? $planoId->getId() : null;
         
-        // Fazer hash da senha se ela foi alterada (não está em hash)
         $senha = $user->getSenha();
         if (!empty($senha)) {
             $senhaInfo = @password_get_info($senha);
-            // Se não é um hash válido (algo é null ou false), fazer hash
             if (!isset($senhaInfo['algo']) || $senhaInfo['algo'] === false || $senhaInfo['algo'] === null) {
                 $senha = password_hash($senha, PASSWORD_ARGON2ID);
             }
@@ -172,19 +170,14 @@ class UserRepository
 
     public function hydrateUser(array $UserData): User
     {
-        // Verificar se os dados são válidos
         if (empty($UserData) || !isset($UserData['id']) || $UserData['id'] === null) {
             throw new \InvalidArgumentException('Invalid user data provided to hydrateUser: id is missing or null');
         }
         
-        // Garantir valores padrão para campos que podem ser null
         $id = (int) $UserData['id'];
         $nome = $UserData['nome_completo'] ?? '';
-        
-        // Handle Date object - create from string or use default
         $data_nasc_str = $UserData['data_nascimento'] ?? '0000-00-00';
         $data_nasc = new Date($data_nasc_str);
-        
         $genero = $UserData['genero'] ?? '';
         $telefone = $UserData['telefone'] ?? '';
         $senha = $UserData['senha'] ?? '';
@@ -197,12 +190,11 @@ class UserRepository
         $massa = isset($UserData['massa']) && $UserData['massa'] !== null ? (float) $UserData['massa'] : 0.0;
         $gordura = isset($UserData['gordura']) && $UserData['gordura'] !== null ? (float) $UserData['gordura'] : 0.0;
         
-        // Handle Plano object - fetch from repository if plano_id exists
         $plano_id_raw = $UserData['plano_id'] ?? null;
         $plano_id = null;
         if ($plano_id_raw !== null && $this->planoRepository !== null) {
             $plano = $this->planoRepository->find((int) $plano_id_raw);
-            $plano_id = $plano; // Can be null if not found
+            $plano_id = $plano;
         }
         
         $email = $UserData['email'] ?? '';

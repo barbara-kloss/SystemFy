@@ -57,7 +57,7 @@
                 <div class="profile-box-container">
 
                     <label for="profileImageUpload" class="cardVerPerfil">
-                        <img id="profileImage" src="" alt="Foto de Perfil">
+                        <img id="profileImage" src="<?= !empty($user->getFoto()) ? htmlspecialchars($user->getFoto()) : '' ?>" alt="Foto de Perfil">
                         <i class="fas fa-pencil-alt edit-icon" id="lapis"></i>
                     </label>
 
@@ -65,12 +65,12 @@
 
                     <div class="profile-field">
                         <div class="minicardNometit"> Nome completo </div>
-                        <div class="minicardNome"> Nome do Administrador </div>
+                        <div class="minicardNome"> <?= htmlspecialchars($user->getNome()) ?> </div>
                     </div>
 
                     <div class="profile-field">
                         <div class="minicardEmailtit"> E-mail </div>
-                        <div class="minicarEmail"> admin@sistema.com </div>
+                        <div class="minicarEmail"> <?= htmlspecialchars($user->getEmail()) ?> </div>
                     </div>
 
                     <button class="bt_editar"> Editar Perfil </button>

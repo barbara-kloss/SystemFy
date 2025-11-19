@@ -43,8 +43,8 @@
 
             <div class="user-profile-and-content">
                 <div class="user-info">
-                    <img src="https://placehold.co/60x60" alt="Usuário" class="user-avatar" />
-                    <span class="user-name">Nome do Usuário</span>
+                    <img src="<?= !empty($user->getFoto()) ? htmlspecialchars($user->getFoto()) : 'https://placehold.co/60x60' ?>" alt="Usuário" class="user-avatar" />
+                    <span class="user-name"><?= htmlspecialchars($user->getNome()) ?></span>
                 </div>
 
                 <div class="profile-main-content">
@@ -54,11 +54,11 @@
                         <div class="row-group">
                             <div class="input-group">
                                 <label for="nome">Nome completo</label>
-                                <input type="text" id="nome" value="" readonly>
+                                <input type="text" id="nome" value="<?= htmlspecialchars($user->getNome()) ?>" readonly>
                             </div>
                             <div class="input-group">
                                 <label for="email">E-mail</label>
-                                <input type="email" id="email" value="" readonly>
+                                <input type="email" id="email" value="<?= htmlspecialchars($user->getEmail()) ?>" readonly>
                             </div>
                         </div>
 
@@ -67,31 +67,34 @@
                                 <label for="genero">Gênero</label>
                                 <div class="custom-select-wrapper">
                                     <select id="genero" disabled>
-                                        <option value="" selected>Selecione</option>
+                                        <option value="" <?= empty($user->getGenero()) ? 'selected' : '' ?>>Selecione</option>
+                                        <option value="Masculino" <?= $user->getGenero() === 'Masculino' ? 'selected' : '' ?>>Masculino</option>
+                                        <option value="Feminino" <?= $user->getGenero() === 'Feminino' ? 'selected' : '' ?>>Feminino</option>
+                                        <option value="Outro" <?= $user->getGenero() === 'Outro' ? 'selected' : '' ?>>Outro</option>
                                     </select>
                                     <span class="select-arrow"></span>
                                 </div>
                             </div>
                             <div class="input-group">
                                 <label for="telefone">Telefone</label>
-                                <input type="text" id="telefone" value="" readonly>
+                                <input type="text" id="telefone" value="<?= htmlspecialchars($user->getTelefone()) ?>" readonly>
                             </div>
                         </div>
 
                         <div class="row-group">
                             <div class="input-group">
                                 <label for="data-nascimento">Data Nascimento</label>
-                                <input type="text" id="data-nascimento" value="" readonly>
+                                <input type="text" id="data-nascimento" value="<?= htmlspecialchars($user->getDataNasc()->getDate()) ?>" readonly>
                             </div>
                             <div class="input-group">
                                 <label for="plano">Plano</label>
-                                <input type="text" id="plano" value="" readonly>
+                                <input type="text" id="plano" value="<?= $user->getPlanoId() ? htmlspecialchars($user->getPlanoId()->getCategoria()) : 'Sem plano' ?>" readonly>
                             </div>
                         </div>
 
                         <div class="textarea-group">
                             <label for="observacoes">Observações</label>
-                            <textarea id="observacoes" readonly></textarea>
+                            <textarea id="observacoes" readonly><?= htmlspecialchars($user->getObservacao()) ?></textarea>
                         </div>
                     </div>
 
@@ -99,38 +102,46 @@
 
                         <label class="section-title-metrics" for="objetivo">Dados Físicos</label>
 
+                        <?php
+                        $imc = 0;
+                        if ($user->getAltura() > 0 && $user->getPeso() > 0) {
+                            $alturaMetros = $user->getAltura() / 100;
+                            $imc = $user->getPeso() / ($alturaMetros * $alturaMetros);
+                            $imc = number_format($imc, 2, '.', '');
+                        }
+                        ?>
                         <div class="row-group-half">
                             <div class="input-group">
                                 <label for="objetivo">Objetivo</label>
-                                <input type="text" id="objetivo" value="" readonly>
+                                <input type="text" id="objetivo" value="<?= htmlspecialchars($user->getObjetivo()) ?>" readonly>
                             </div>
                             <div class="input-group">
                                 <label for="imc">IMC</label>
-                                <input type="text" id="imc" value="" readonly>
+                                <input type="text" id="imc" value="<?= $imc > 0 ? $imc : '' ?>" readonly>
                             </div>
                         </div>
                         <div class="row-group-half">
                             <div class="input-group">
                                 <label for="peso">Peso</label>
                                 <div class="input-with-unit">
-                                    <input type="text" id="peso" value="" readonly>
+                                    <input type="text" id="peso" value="<?= $user->getPeso() > 0 ? $user->getPeso() : '' ?>" readonly>
                                     <span class="unit-label">Kg</span>
                                 </div>
                             </div>
                             <div class="input-group">
                                 <label for="altura">Altura</label>
-                                <input type="text" id="altura" value="" readonly>
+                                <input type="text" id="altura" value="<?= $user->getAltura() > 0 ? number_format($user->getAltura(), 2, ',', '') : '' ?>" readonly>
                             </div>
                         </div>
 
                         <div class="row-group-half">
                             <div class="input-group">
                                 <label for="gordura">% Gordura Corporal:</label>
-                                <input type="text" id="gordura" value="" readonly>
+                                <input type="text" id="gordura" value="<?= $user->getGordura() > 0 ? number_format($user->getGordura(), 2, ',', '') : '' ?>" readonly>
                             </div>
                             <div class="input-group">
                                 <label for="massa-magra">% Massa Magra:</label>
-                                <input type="text" id="massa-magra" value="" readonly>
+                                <input type="text" id="massa-magra" value="<?= $user->getMassa() > 0 ? number_format($user->getMassa(), 2, ',', '') : '' ?>" readonly>
                             </div>
                         </div>
                     </div>
