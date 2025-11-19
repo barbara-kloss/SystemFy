@@ -125,7 +125,7 @@ foreach ($exerciciosDoDia as $ex) {
                     </div>
 
                     <div class="profile-box-container">
-                        <a href="/client/cadastro" class="profile-link">
+                        <a href="/client/perfil" class="profile-link">
                             <div class="cardVerPerfil"><i class="fas fa-user"></i></div>
                             <div class="textocardVerPerfil"> Ver perfil</div>
                         </a>
