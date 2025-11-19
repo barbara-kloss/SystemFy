@@ -16,7 +16,7 @@ class ClientAgendaListController implements Controller
     public function processaRequisicao(): void
     {
         $agendaList = $this->agendaRepository->all();
-        require_once __DIR__ . '/../../views/booklist.php';
+        require_once __DIR__ . '/../../View/Cliente/telaAgendaList.php';
     }
 
 

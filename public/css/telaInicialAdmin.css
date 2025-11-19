@@ -302,13 +302,51 @@ html {
     box-sizing: border-box;
     overflow: hidden;
     /* Importante para o iframe */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header do calendário com botão */
+.calendar-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+}
+
+/* Botão de criar evento */
+.btn-novo-evento {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: #DDB35E;
+    color: #2A2A2A;
+    text-decoration: none;
+    border-radius: 20px;
+    font-family: 'Alata', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-novo-evento:hover {
+    background-color: #c9a04d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-novo-evento i {
+    font-size: 14px;
 }
 
 /* Iframe do Google Calendar */
 .frame_agenda {
     width: 100%;
-    height: 100%;
-    /* Preenche 100% do .calendar-api-container */
+    flex: 1;
+    /* Ocupa o espaço restante após o header */
     border: none;
     border-radius: 20px;
 }
