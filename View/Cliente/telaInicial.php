@@ -98,16 +98,24 @@ if ($pesoAtual > 0) {
                 </div>
 
                 <div class="profile-box-container">
-                    <a href="/client/cadastro"class="profile-link">
+                    <a href="/client/cadastro" class="profile-link">
                         <div class="cardVerPerfil"><i class="fas fa-user"></i></div>
                         <div class="textocardVerPerfil"> Ver perfil</div>
                     </a>
                 </div>
 
                 <div class="calendar-api-container">
-                    <iframe class="frame_agenda" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FSao_Paulo&showPrint=0&mode=WEEK&src=dGhhdWFuYWZleXRoMzRAZ21haWwuY29t&src=cHQuYnJheiliYW4gI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uYnJheiliYW4gI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%230b8043&color=%230b8043%22" 
+                    <!-- 
+                    IMPORTANTE: Para o calendário aparecer, você precisa:
+                    1. Tornar o calendário público no Google Calendar
+                    2. Ir em Configurações > Integrar calendário e copiar o código iframe
+                    3. Ou usar o email do calendário diretamente (substitua SEU_EMAIL@gmail.com abaixo)
+                    -->
+                    <iframe class="frame_agenda" 
+                        src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FSao_Paulo&showPrint=0&mode=WEEK&src=thauanafeyth34%40gmail.com&color=%23039be5" 
                         style="border-width:0" 
-                        width="100%" height="100%" 
+                        width="100%" 
+                        height="100%" 
                         frameborder="0" 
                         scrolling="no">
                     </iframe>

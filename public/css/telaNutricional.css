@@ -69,11 +69,13 @@ html {
     position: relative;
     background: rgba(213.53, 205.82, 179.63, 0.43);
     border-radius: 28px;
-    padding: 0;
+    padding: 30px;
     box-sizing: border-box;
     overflow: hidden;
     margin-left: 0;
     transform: translateX(2.5%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 /* Logos de Canto */
@@ -107,7 +109,7 @@ html {
 /* GRID INTERNO (Layout principal) */
 /* ========================================================= */
 .main-content-grid {
-    height: 90%;
+    height: 100%;
     display: grid;
 
     grid-template-areas:
@@ -118,7 +120,6 @@ html {
     grid-template-rows: 60px 1fr; 
 
     grid-gap: 20px; 
-    padding: 30px; 
 }
 
 /* Wrapper para Perfil (top_right) */
@@ -144,8 +145,8 @@ html {
     grid-area: nav;
     align-self: center;
     justify-self: start;
-    padding-left: 0;
-    margin-left: 0;
+    padding-left: 0; 
+    margin-left: 0; 
 }
 
 .navBar ul {
@@ -155,7 +156,14 @@ html {
     display: flex;
     gap: 40px;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-start; 
+}
+
+.navBar nav,
+.navBar nav ul,
+.navBar nav ul li,
+.navBar nav ul li a {
+    font-family: 'Akshar', sans-serif;
 }
 
 .navBar a {
@@ -168,32 +176,20 @@ html {
     transition: color 0.3s ease;
 }
 
- .navBar a.active {
-    color: #FFFAE6; 
-} 
-
- .navBar a::after {
+.navBar a::after {
     content: '';
     position: absolute;
     left: 0;
     bottom: -5px;
     width: 0;
     height: 2px;
-    background-color: #2A2A2A; 
+    background-color: black;
     transition: width 0.3s ease;
 }
 
-/* Sublinhado da aba ativa/hover    */
-.navBar .nav-link::after {
-    content: ''; position: absolute; left: 0; bottom: -5px; width: 0;
-    height: 2px;
-    background-color: #2A2A2A;
-    transition: width 0.3s ease;
-} 
-.navBar .nav-item:hover::after,
-.navBar .nav-item.active::after {
+.navBar a:hover::after,
+.navBar a.active::after {
     width: 100%;
-    background-color: #2A2A2A; 
 }
 
 /* --------------------------------------------------------- */
@@ -220,7 +216,13 @@ html {
 
 /* Estilo do link (removendo sublinhado da tag <a>, se houver) */
 .profile-link {
-    text-decoration: none; 
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: inherit;
 }
 
 /* Estilo do texto "Ver perfil" */
@@ -457,7 +459,7 @@ html {
 /* MODAL STYLES (Para exibir os detalhes) */
 /* ========================================================= */
 .modal {
-    display: none; /* Escondido por padrão */
+    display: none !important; /* Escondido por padrão */
     position: fixed; 
     z-index: 200; /* Alto z-index para ficar acima de tudo */
     left: 0;
@@ -467,9 +469,13 @@ html {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro semitransparente */
     backdrop-filter: blur(5px);
-    display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.modal[style*="display: flex"],
+.modal.show {
+    display: flex !important;
 }
 
 .modal-content {

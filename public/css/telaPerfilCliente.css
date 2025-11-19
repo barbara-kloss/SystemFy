@@ -56,11 +56,9 @@ html {
 /* ========================================================= */
 .fundoSemiTransparente {
     width: 90%;
-    max-width: 1400px; 
+    max-width: 1750px; 
     min-width: 700px;
-    /* Altura ajustada para caber no viewport */
-    max-height: 95vh; 
-    height: auto; 
+    height: 90vh;
     
     background: rgba(213, 205, 179, 0.43);
     border-radius: 28px;
@@ -70,24 +68,39 @@ html {
     flex-direction: column;
     position: relative;
     gap: 1.5vw; 
+    overflow: hidden;
     
     /* Adiciona margem à direita e remove margem esquerda */
-    margin-right: 5vw; 
+    margin-right: 3vw; 
     margin-left: 0; 
+    
+    /* Efeito de desfoque no fundo (igual ao admin) */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 /* BARRA DE NAVEGAÇÃO */
 .navBar {
     width: 100%;
     background: none; 
-    padding: 0.8vw 0;
-    border-radius: 10px;
+    padding: 0;
+    border-radius: 0;
+    padding-left: 0;
+    margin-left: 0;
 }
-.navBar ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 2.5vw; align-items: center; padding-left: 1.5vw; }
-.navBar .nav-link {
+.navBar ul { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+    display: flex; 
+    gap: 40px; 
+    align-items: center; 
+    justify-content: flex-start; 
+}
+.navBar a {
     text-decoration: none;
     color: white;
-    font-size: 1.6vw; 
+    font-size: 24px; 
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
     position: relative;
@@ -95,16 +108,19 @@ html {
 }
 
 /* Sublinhado da aba ativa/hover */
-.navBar .nav-link::after {
-    content: ''; position: absolute; left: 0; bottom: -5px; width: 0;
+.navBar a::after {
+    content: ''; 
+    position: absolute; 
+    left: 0; 
+    bottom: -5px; 
+    width: 0;
     height: 2px;
-    background-color: #2A2A2A;
+    background-color: black;
     transition: width 0.3s ease;
 }
-.navBar .nav-link:hover::after,
-.navBar .nav-link.active::after {
+.navBar a:hover::after,
+.navBar a.active::after {
     width: 100%;
-    background-color: #2A2A2A; 
 }
 
 /* 2. USER INFO E CONTEÚDO */

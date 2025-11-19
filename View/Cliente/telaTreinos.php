@@ -71,6 +71,7 @@ foreach ($exerciciosDoDia as $ex) {
     <meta charset="UTF-8">
     <title>Treinos</title>
     <link rel="stylesheet" href="/css/telaTreinos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 
@@ -97,27 +98,26 @@ foreach ($exerciciosDoDia as $ex) {
 
                 <div class="header-content-grid">
                     <div class="navBar">
-
                         <nav>
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a href="/client" class="nav-link">Inicio</a>
+                                    <a href="/client">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/client/menu/list" class="nav-link">Nutricional</a>
+                                    <a href="/client/menu/list">Nutricional</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/client/exercise/list" class="nav-link active">Treinos</a>
+                                    <a href="/client/exercise/list" class="active">Treinos</a>
                                 </li>
                             </ul>
                         </nav>
                     </div>
 
                     <div class="profile-box-container">
-                        <div class="cardVerPerfil">
-                            <!-- <img src="https://placehold.co/30x30" alt="Ícone de Perfil" class="profile-icon"/> -->
-                        </div>
-                        <div class="textocardVerPerfil">Ver perfil</div>
+                        <a href="/client/cadastro" class="profile-link">
+                            <div class="cardVerPerfil"><i class="fas fa-user"></i></div>
+                            <div class="textocardVerPerfil"> Ver perfil</div>
+                        </a>
                     </div>
                 </div>
                 <div class="main-screen-box">

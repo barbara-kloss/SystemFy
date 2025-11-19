@@ -25,17 +25,17 @@
 
         <div class="fundoSemiTransparente profile-screen">
 
-            <div class="navBar top-floating-nav">
+            <div class="navBar">
                 <nav>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="/client" class="nav-link">Home</a>
+                            <a href="/client">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/client/menu/list" class="nav-link">Nutricional</a>
+                            <a href="/client/menu/list">Nutricional</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/client/exercise/list" class="nav-link active">Treinos</a>
+                            <a href="/client/exercise/list">Treinos</a>
                         </li>
                     </ul>
                 </nav>
@@ -43,8 +43,8 @@
 
             <div class="user-profile-and-content">
                 <div class="user-info">
-                    <img src="https://placehold.co/60x60" alt="Avatar Shrek" class="user-avatar" />
-                    <span class="user-name">User</span>
+                    <img src="https://placehold.co/60x60" alt="Usuário" class="user-avatar" />
+                    <span class="user-name">Nome do Usuário</span>
                 </div>
 
                 <div class="profile-main-content">
@@ -54,11 +54,11 @@
                         <div class="row-group">
                             <div class="input-group">
                                 <label for="nome">Nome completo</label>
-                                <input type="text" id="nome" value="Shreck" readonly>
+                                <input type="text" id="nome" value="" readonly>
                             </div>
                             <div class="input-group">
                                 <label for="email">E-mail</label>
-                                <input type="email" id="email" value="shreck@gmail.com" readonly>
+                                <input type="email" id="email" value="" readonly>
                             </div>
                         </div>
 
@@ -67,25 +67,25 @@
                                 <label for="genero">Gênero</label>
                                 <div class="custom-select-wrapper">
                                     <select id="genero" disabled>
-                                        <option value="lista">Lista Suspensa</option>
+                                        <option value="" selected>Selecione</option>
                                     </select>
                                     <span class="select-arrow"></span>
                                 </div>
                             </div>
                             <div class="input-group">
                                 <label for="telefone">Telefone</label>
-                                <input type="text" id="telefone" value="(00) 0 0000-0000" readonly>
+                                <input type="text" id="telefone" value="" readonly>
                             </div>
                         </div>
 
                         <div class="row-group">
                             <div class="input-group">
                                 <label for="data-nascimento">Data Nascimento</label>
-                                <input type="text" id="data-nascimento" value="01/12/1600" readonly>
+                                <input type="text" id="data-nascimento" value="" readonly>
                             </div>
                             <div class="input-group">
                                 <label for="plano">Plano</label>
-                                <input type="text" id="plano" value="Premium" readonly>
+                                <input type="text" id="plano" value="" readonly>
                             </div>
                         </div>
 
@@ -102,35 +102,35 @@
                         <div class="row-group-half">
                             <div class="input-group">
                                 <label for="objetivo">Objetivo</label>
-                                <input type="text" id="objetivo" value="Ganho de Massa" readonly>
+                                <input type="text" id="objetivo" value="" readonly>
                             </div>
                             <div class="input-group">
                                 <label for="imc">IMC</label>
-                                <input type="text" id="imc" value="20.0" readonly>
+                                <input type="text" id="imc" value="" readonly>
                             </div>
                         </div>
                         <div class="row-group-half">
                             <div class="input-group">
                                 <label for="peso">Peso</label>
                                 <div class="input-with-unit">
-                                    <input type="text" id="peso" value="50" readonly>
+                                    <input type="text" id="peso" value="" readonly>
                                     <span class="unit-label">Kg</span>
                                 </div>
                             </div>
                             <div class="input-group">
                                 <label for="altura">Altura</label>
-                                <input type="text" id="altura" value="1,68" readonly>
+                                <input type="text" id="altura" value="" readonly>
                             </div>
                         </div>
 
                         <div class="row-group-half">
                             <div class="input-group">
                                 <label for="gordura">% Gordura Corporal:</label>
-                                <input type="text" id="gordura" value="%50" readonly>
+                                <input type="text" id="gordura" value="" readonly>
                             </div>
                             <div class="input-group">
                                 <label for="massa-magra">% Massa Magra:</label>
-                                <input type="text" id="massa-magra" value="%15" readonly>
+                                <input type="text" id="massa-magra" value="" readonly>
                             </div>
                         </div>
                     </div>
