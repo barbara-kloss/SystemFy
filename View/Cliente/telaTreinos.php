@@ -82,7 +82,9 @@ foreach ($exerciciosDoDia as $ex) {
     <meta charset="UTF-8">
     <title>Treinos</title>
     <link rel="stylesheet" href="/css/telaTreinos.css">
+    <link rel="stylesheet" href="/css/notifications.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="/js/notifications.js"></script>
 </head>
 
 
@@ -392,7 +394,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     const actionText = action === 'add' ? 'registrar' : 'remover';
                     console.error(`Erro ao ${actionText} check-in:`, data.error || 'Erro desconhecido');
-                    alert(`Erro ao ${actionText} check-in: ` + (data.error || 'Erro desconhecido'));
+                    showToast(`Erro ao ${actionText} check-in: ` + (data.error || 'Erro desconhecido'), 'error', 4000);
                     // Reverter o estado do checkbox
                     this.checked = !this.checked;
                 }
@@ -400,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(err => {
                 const actionText = action === 'add' ? 'registrar' : 'remover';
                 console.error(`Erro ao ${actionText} check-in:`, err);
-                alert(`Erro ao ${actionText} check-in: ` + err.message);
+                showToast(`Erro ao ${actionText} check-in: ` + err.message, 'error', 4000);
                 // Reverter o estado do checkbox
                 this.checked = !this.checked;
             });

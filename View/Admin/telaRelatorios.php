@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatórios</title>
     <link rel="stylesheet" href="/css/telaRelatorios.css">
+    <link rel="stylesheet" href="/css/notifications.css">
     <link href="https://fonts.googleapis.com/css2?family=Alata&family=Akshar:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="/js/notifications.js"></script> 
 </head>
 
 <body>
@@ -122,60 +124,163 @@
             document.body.removeChild(element); 
         }
 
+        // Função para buscar dados do servidor
+        async function buscarDadosRelatorio(type) {
+            try {
+                let url = '';
+                if (type === 'Clientes') {
+                    url = '/admin/report/clientes';
+                } else if (type === 'Faturamento') {
+                    url = '/admin/report/faturamento';
+                } else {
+                    return null;
+                }
+
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                if (result.success) {
+                    return result.data;
+                } else {
+                    throw new Error(result.error || 'Erro ao buscar dados');
+                }
+                } catch (error) {
+                    console.error('Erro ao buscar dados:', error);
+                    showToast('Erro ao buscar dados do relatório: ' + error.message, 'error', 5000);
+                    return null;
+                }
+        }
+
+        // Função para salvar relatório no banco
+        async function salvarRelatorio(tipo, dados, formato) {
+            try {
+                const response = await fetch('/admin/report/save', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        tipo: tipo,
+                        dados: dados,
+                        formato: formato
+                    })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    console.log('Relatório salvo com sucesso:', result.id);
+                } else {
+                    console.error('Erro ao salvar relatório:', result.error);
+                }
+            } catch (error) {
+                console.error('Erro ao salvar relatório:', error);
+            }
+        }
+
         // 1. Lógica dos Botões de Exportação (PDF/CSV)
         exportButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', async function() {
                 const format = this.getAttribute('data-export');
                 const card = this.closest('.relatorio-card');
                 const type = card.querySelector('.card-title').textContent.trim();
                 
-                // CORREÇÃO: Removemos a tentativa de buscar .card-description que não existe.
                 const description = `Dados detalhados do relatório de ${type}.`; 
-
                 const now = new Date().toLocaleDateString('pt-BR'); 
                 let fileName = `Relatorio_${type.replace(/\s/g, '')}_${new Date().toISOString().slice(0, 10)}`;
                 
-                if (format === 'csv') {
-                    // Conteúdo CSV real
-                    let csvContent = "ID,Nome/Mês,Status,Valor\n";
-                    csvContent += "1,Cliente A,Ativo,R$ 150,00\n";
-                    csvContent += "2,Cliente B,Ativo,R$ 200,00\n";
-                    csvContent += "3,Cliente C,Inativo,R$ 0,00\n";
+                // Buscar dados do servidor
+                let dados = await buscarDadosRelatorio(type);
+                
+                // Se não conseguir buscar dados, usar dados padrão (apenas para Agenda)
+                if (!dados && type === 'Agenda') {
+                    dados = [
+                        { id: "4", nome: "Treino c/ João", status: "Confirmado", valor: "25/Dez 10:00" },
+                        { id: "5", nome: "Consulta Nutri", status: "Pendente", valor: "26/Dez 14:00" }
+                    ];
+                } else if (!dados) {
+                    showToast('Não foi possível carregar os dados do relatório.', 'error', 4000);
+                    return;
+                }
 
-                    alert(`Preparando exportação de ${type} como CSV...`);
+                // Preparar dados para exportação
+                // Para Faturamento, usar cabeçalhos mais curtos para dar mais espaço
+                const head = type === "Faturamento" 
+                    ? [["Tipo", "Descrição", "Status", "Valor"]] 
+                    : [["ID", "Nome/Compromisso", "Status", "Valor/Data"]];
+                let body = [];
+
+                if (type === "Clientes") {
+                    body = dados.map(item => [
+                        item.id?.toString() || '',
+                        item.nome || '',
+                        item.status || '',
+                        item.valor || ''
+                    ]);
+                } else if (type === "Faturamento") {
+                    body = dados.map(item => {
+                        // Se for header ou separador, formatar diferente
+                        if (item.isHeader) {
+                            return [
+                                item.tipo || '',
+                                item.descricao || '',
+                                '',
+                                ''
+                            ];
+                        } else if (item.isSeparator) {
+                            return ['', '', '', ''];
+                        } else {
+                            // Para descrição, processar quebras de linha
+                            let descricao = (item.descricao || '---');
+                            // Se tiver \n, converter para array de linhas (formato que autoTable entende melhor)
+                            let descricaoLinhas;
+                            if (descricao.includes('\\n')) {
+                                descricaoLinhas = descricao.split('\\n');
+                            } else {
+                                descricaoLinhas = descricao;
+                            }
+                            
+                            return [
+                                item.tipo || '',
+                                descricaoLinhas,
+                                item.status || '---',
+                                item.valor || ''
+                            ];
+                        }
+                    });
+                } else if (type === "Agenda") {
+                    body = dados.map(item => [
+                        item.id?.toString() || '',
+                        item.nome || '',
+                        item.status || '',
+                        item.valor || ''
+                    ]);
+                }
+
+                // Salvar relatório no banco
+                await salvarRelatorio(type, dados, format);
+
+                if (format === 'csv') {
+                    // Gerar CSV
+                    let csvContent = head[0].join(',') + '\n';
+                    body.forEach(row => {
+                        csvContent += row.map(cell => `"${cell}"`).join(',') + '\n';
+                    });
+
+                    showToast(`Preparando exportação de ${type} como CSV...`, 'info', 2000);
                     simulateTextDownload(fileName + '.csv', csvContent, 'text/csv');
 
                 } else if (format === 'pdf') {
                     
                     if (typeof jsPDF !== 'undefined') {
-                        alert(`Gerando PDF  para ${type}...`);
+                        showToast(`Gerando PDF para ${type}...`, 'info', 2000);
                         
                         const doc = new jsPDF();
+                        // Para faturamento, usar orientação landscape se necessário ou ajustar margens
                         const title = `Relatório de ${type}`;
                         
-                        // ESTRUTURAÇÃO TESTE
-                        const head = [["ID", "Nome/Compromisso", "Status", "Valor/Data"]];
-                        let body = [];
-
-                        if (type === "Clientes") {
-                             body = [
-                                 ["1", "João Silva", "Ativo", "R$ 150,00"],
-                                 ["2", "Maria Santos", "Ativo", "R$ 200,00"],
-                                 ["3", "Pedro Souza", "Inativo", "R$ 0,00"]
-                             ];
-                        } else if (type === "Faturamento") {
-                            body = [
-                                ["Mensal Previsto", "---", "Ativo", "R$ 350,00"],
-                                ["Anual (Estimado)", "---", "---", "R$ 4.200,00"]
-                            ];
-                        } else if (type === "Agenda") {
-                            body = [
-                                ["4", "Treino c/ João", "Confirmado", "25/Dez 10:00"],
-                                ["5", "Consulta Nutri", "Pendente", "26/Dez 14:00"]
-                            ];
-                        }
-
-
                         // Configuração do PDF (Estilo Básico)
                         doc.setFont('helvetica', 'bold');
                         doc.setFontSize(18);
@@ -185,34 +290,86 @@
                         doc.setFontSize(10);
                         doc.setFont('helvetica', 'normal');
                         doc.setTextColor(102, 102, 102);
-                        // Usando a descrição corrigida:
                         doc.text(`Descrição: ${description}`, 20, 30, { maxWidth: 170 });
                         doc.text(`Gerado em: ${now}`, 190, 10, null, null, "right");
                         
-                        // Geração da Tabela (Você deve incluir o CDN de jspdf-autotable para isso funcionar)
+                        // Geração da Tabela
                         if (typeof doc.autoTable === 'function') {
+                            // Configuração especial para Faturamento
+                            const isFaturamento = type === "Faturamento";
+                            
                             doc.autoTable({
                                 head: head,
                                 body: body,
                                 startY: 40,
-                                theme: 'striped', 
-                                headStyles: { fillColor: [42, 42, 42], textColor: 255 }, 
-                                styles: { cellPadding: 3, fontSize: 10 },
-                                columnStyles: { 3: { halign: 'right' } } 
+                                theme: isFaturamento ? 'plain' : 'striped',
+                                headStyles: { fillColor: [42, 42, 42], textColor: 255 },
+                                styles: { 
+                                    cellPadding: isFaturamento ? { top: 12, bottom: 12, left: 8, right: 8 } : 6, 
+                                    fontSize: isFaturamento ? 9 : 10,
+                                    lineWidth: 0.1,
+                                    lineColor: [200, 200, 200],
+                                    overflow: 'linebreak',
+                                    cellMinHeight: isFaturamento ? 30 : 10
+                                },
+                                columnStyles: { 
+                                    0: { cellWidth: isFaturamento ? 70 : 30, cellMinHeight: isFaturamento ? 30 : 10, overflow: 'linebreak' },  // ID/Tipo - aumentado para evitar sobreposição
+                                    1: { cellWidth: isFaturamento ? 90 : 70, cellMinHeight: isFaturamento ? 30 : 10, overflow: 'linebreak' },  // Nome/Compromisso/Descrição
+                                    2: { cellWidth: isFaturamento ? 20 : 40, cellMinHeight: isFaturamento ? 30 : 10 },  // Status
+                                    3: { cellWidth: isFaturamento ? 30 : 50, halign: 'right', cellMinHeight: isFaturamento ? 30 : 10 }  // Valor/Data
+                                },
+                                margin: { left: 5, right: 5 },
+                                tableWidth: 'auto',
+                                didParseCell: function(data) {
+                                    // Formatação especial para headers e separadores no faturamento
+                                    if (isFaturamento) {
+                                        // Se a célula está vazia (separador)
+                                        if (data.cell.text[0] === '' && data.row.index > 0) {
+                                            data.cell.styles.fillColor = [250, 250, 250];
+                                            data.cell.styles.minCellHeight = 8;
+                                            data.cell.styles.lineWidth = 0;
+                                        }
+                                        // Se for header (primeira coluna em maiúsculas e negrito)
+                                        if (data.row.index > 0 && data.column.index === 0 && 
+                                            data.cell.text[0] && typeof data.cell.text[0] === 'string' &&
+                                            data.cell.text[0].toUpperCase() === data.cell.text[0] &&
+                                            data.cell.text[0].length > 5) {
+                                            data.cell.styles.fontStyle = 'bold';
+                                            data.cell.styles.fillColor = [235, 235, 235];
+                                            data.cell.styles.textColor = [42, 42, 42];
+                                            data.cell.styles.fontSize = 11;
+                                        }
+                                        // Permitir quebra de linha na coluna de descrição
+                                        if (data.column.index === 1) {
+                                            data.cell.styles.cellMinHeight = 30;
+                                            data.cell.styles.overflow = 'linebreak';
+                                            // Se for array (múltiplas linhas), garantir altura suficiente
+                                            if (Array.isArray(data.cell.text)) {
+                                                data.cell.styles.cellMinHeight = data.cell.text.length * 10 + 15;
+                                            }
+                                        }
+                                        // Aumentar espaçamento vertical para todas as células
+                                        if (!data.cell.styles.cellPadding || typeof data.cell.styles.cellPadding === 'number') {
+                                            data.cell.styles.cellPadding = { top: 12, bottom: 12, left: 8, right: 8 };
+                                        }
+                                    }
+                                }
                             });
                         } else {
                             // Fallback Simples se autoTable não estiver disponível
                             let y = 45;
                             doc.setFontSize(12);
-                            doc.text("Dados de Exemplo (Instale o plugin jspdf-autotable para melhor visualização):", 20, y);
+                            doc.text("Dados do Relatório:", 20, y);
                             y += 8;
-                            head[0].forEach((h, i) => doc.text(h, 20 + i * 40, y));
+                            // Aumentar espaçamento entre colunas no fallback
+                            const colPositions = [20, 60, 120, 170];
+                            head[0].forEach((h, i) => doc.text(h, colPositions[i] || (20 + i * 50), y));
                             y += 5;
                             doc.setLineWidth(0.5);
                             doc.line(20, y, 190, y);
                             y += 5;
                             body.forEach(row => {
-                                row.forEach((cell, i) => doc.text(cell, 20 + i * 40, y));
+                                row.forEach((cell, i) => doc.text(cell, colPositions[i] || (20 + i * 50), y));
                                 y += 7;
                             });
                         }
@@ -220,7 +377,7 @@
                         doc.save(fileName + '.pdf'); 
 
                     } else {
-                        alert("ERRO: A biblioteca jsPDF não está pronta. Certifique-se de que os CDNs da jsPDF e do jspdf-autotable foram incluídos corretamente no <head>.");
+                        showToast("ERRO: A biblioteca jsPDF não está pronta. Certifique-se de que os CDNs da jsPDF e do jspdf-autotable foram incluídos corretamente no <head>.", 'error', 6000);
                     }
                 }
             });

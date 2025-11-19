@@ -34,8 +34,9 @@ class NewUserController implements Controller
             exit();
         }
         $data_nasc = filter_input(INPUT_POST, 'data_nascimento');
-        if ($data_nasc === false || $data_nasc === null) {
-            $data_nasc = '0000-00-00';
+        if ($data_nasc === false || $data_nasc === null || $data_nasc === '') {
+            header('Location: /cadastro?sucesso=0&erro=' . urlencode('Data de nascimento é obrigatória'));
+            exit();
         }
         $genero = filter_input(INPUT_POST, 'genero') ?? '';
         if ($genero === '') {

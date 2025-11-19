@@ -21,43 +21,6 @@ classDiagram
         -string objetivo
         -string foto
         -float peso_meta
-        +__construct(...)
-        +getId() int
-        +getNome() string
-        +getEmail() string
-        +getDataNasc() Date
-        +getGenero() string
-        +getTelefone() string
-        +getSenha() string
-        +getPermissao() string
-        +getAltura() float
-        +getPeso() int
-        +getStatus() bool
-        +getObservacao() string
-        +getMassa() float
-        +getGordura() float
-        +getPlanoId() Plano
-        +getObjetivo() string
-        +getFoto() string
-        +getPesoMeta() float
-        +setId(int) void
-        +setNome(string) void
-        +setEmail(string) void
-        +setDate(Date) void
-        +setGenero(string) void
-        +setTelefone(string) void
-        +setSenha(string) void
-        +setPermissao(string) void
-        +setAltura(float) void
-        +setPeso(int) void
-        +setStatus(bool) void
-        +setObs(string) void
-        +setMassa(float) void
-        +setGordura(float) void
-        +setPlano(Plano) void
-        +setObjetivo(string) void
-        +setFoto(string) void
-        +setPesoMeta(float) void
     }
 
     class Plano {
@@ -66,17 +29,47 @@ classDiagram
         -float preco
         -string descricao
         -bool ativo
-        +__construct(int, string, float, string, bool)
-        +getId() int
-        +getCategoria() string
-        +getPreco() float
-        +getDescricao() string
-        +getAtivo() bool
-        +setId(int) void
-        +setCategoria(string) void
-        +setPreco(float) void
-        +setDescricao(string) void
-        +setAtivo(bool) void
+    }
+
+    class Exercise {
+        -int id
+        -int id_user
+        -float peso
+        -string repeticao
+        -string tipo_exercicio
+        -int dia
+        -string observacao
+        -string categoria
+        -int id_personal
+        -string video
+    }
+
+    class Menu {
+        -int id
+        -string horario
+        -int categoria
+        -string observacao
+        -int id_user
+        -int id_nutri
+        -string titulo
+    }
+
+    class Report {
+        -int id
+        -Date data
+        -User personal_id
+        -User nutri_id
+        -User objetivo
+        -User user
+        -Plano plano
+    }
+
+    class Checkin {
+        -int id
+        -int id_user
+        -int id_exercise
+        -string categoria
+        -datetime data_checkin
     }
 
     class Date {
@@ -90,7 +83,6 @@ classDiagram
         -PDO pdo
         -PlanoRepository planoRepository
         -string lastError
-        +__construct(PlanoRepository)
         +getLastError() string
         +add(User) bool
         +update(User) bool
@@ -110,6 +102,47 @@ classDiagram
         +hydratePlano(array) Plano
     }
 
+    class ExerciseRepository {
+        -PDO pdo
+        +add(Exercise) bool
+        +update(Exercise) bool
+        +all() array
+        +find(int) Exercise
+        +findByUser(int) array
+    }
+
+    class MenuRepository {
+        -PDO pdo
+        +add(Menu) bool
+        +update(Menu) bool
+        +all() array
+        +find(int) Menu
+        +findByUser(int) array
+    }
+
+    class ReportRepository {
+        -PDO pdo
+        +add(Report) bool
+        +all() array
+        +find(int) Report
+        +hydrateReport(array) Report
+    }
+
+    class CheckinRepository {
+        -PDO pdo
+        +add(Checkin) bool
+        +findByUserAndExercise(int, int) Checkin
+        +findByUser(int) array
+    }
+
+    class AgendaRepository {
+        -PDO pdo
+        +add(Agenda) bool
+        +update(Agenda) bool
+        +all() array
+        +find(int) Agenda
+    }
+
     class Database {
         <<utility>>
         +getConnection() PDO
@@ -117,18 +150,40 @@ classDiagram
 
     User "1" --> "0..1" Plano : plano_id
     User --> Date : data_nasc
+    User "1" --> "*" Exercise : id_user
+    User "1" --> "*" Menu : id_user
+    User "1" --> "*" Checkin : id_user
+    Exercise "1" --> "*" Checkin : id_exercise
     UserRepository --> User : manages
     UserRepository --> PlanoRepository : uses
     UserRepository --> Database : uses
     PlanoRepository --> Plano : manages
     PlanoRepository --> Database : uses
+    ExerciseRepository --> Exercise : manages
+    ExerciseRepository --> Database : uses
+    MenuRepository --> Menu : manages
+    MenuRepository --> Database : uses
+    ReportRepository --> Report : manages
+    ReportRepository --> Database : uses
+    CheckinRepository --> Checkin : manages
+    CheckinRepository --> Database : uses
+    AgendaRepository --> Database : uses
 ```
 
 ## Relacionamentos
 
 - **User** possui uma relação opcional (0..1) com **Plano** através do atributo `plano_id`
 - **User** utiliza **Date** para representar a data de nascimento
+- **User** possui múltiplos **Exercise** (1 para muitos)
+- **User** possui múltiplos **Menu** (1 para muitos)
+- **User** possui múltiplos **Checkin** (1 para muitos)
+- **Exercise** possui múltiplos **Checkin** (1 para muitos)
 - **UserRepository** gerencia objetos **User** e utiliza **PlanoRepository** para buscar planos
 - **PlanoRepository** gerencia objetos **Plano**
-- Ambos os repositórios utilizam **Database** para obter a conexão PDO
+- **ExerciseRepository** gerencia objetos **Exercise**
+- **MenuRepository** gerencia objetos **Menu**
+- **ReportRepository** gerencia objetos **Report**
+- **CheckinRepository** gerencia objetos **Checkin**
+- **AgendaRepository** gerencia objetos **Agenda**
+- Todos os repositórios utilizam **Database** para obter a conexão PDO
 

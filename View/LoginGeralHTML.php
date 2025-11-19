@@ -9,6 +9,8 @@ $erro = isset($_GET['erro']) ? $_GET['erro'] : null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela Login - Usuário</title>
     <link rel="stylesheet" href="css/LoginGeral.css">
+    <link rel="stylesheet" href="/css/notifications.css">
+    <script src="/js/notifications.js"></script>
     </head>
 <body>
     <div class="background">
@@ -75,14 +77,14 @@ $erro = isset($_GET['erro']) ? $_GET['erro'] : null;
                     
                     if (!email) {
                         e.preventDefault();
-                        alert('Por favor, digite seu email');
+                        showToast('Por favor, digite seu email', 'warning', 3000);
                         emailInput.focus();
                         return false;
                     }
                     
                     if (!senha) {
                         e.preventDefault();
-                        alert('Por favor, digite sua senha');
+                        showToast('Por favor, digite sua senha', 'warning', 3000);
                         senhaInput.focus();
                         return false;
                     }

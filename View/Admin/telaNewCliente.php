@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Clientes</title>
     <link rel="stylesheet" href="/css/telaNewCliente.css">
+    <link rel="stylesheet" href="/css/notifications.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="/js/notifications.js"></script>
 </head>
 
 <body>
@@ -386,6 +388,8 @@
                 console.log('Termo muito curto, escondendo sugestões');
                 suggestionsList.style.display = 'none';
                 suggestionsList.innerHTML = '';
+                idClienteForm.value = '';
+                limparCampos();
                 return;
             }
             
@@ -481,7 +485,7 @@
                 })
                 .then(data => {
                     if (data.error) {
-                        alert('Erro ao carregar cliente: ' + data.error);
+                        showToast('Erro ao carregar cliente: ' + data.error, 'error', 5000);
                         return;
                     }
 
@@ -510,7 +514,7 @@
                 })
                 .catch(err => {
                     console.error('Erro ao carregar cliente:', err);
-                    alert('Erro ao carregar dados do cliente');
+                    showToast('Erro ao carregar dados do cliente', 'error', 4000);
                 });
         }
         
@@ -551,13 +555,13 @@
             
             if (!nome) {
                 e.preventDefault();
-                alert('Nome é obrigatório.');
+                showToast('Nome é obrigatório.', 'warning', 3000);
                 return;
             }
             
             if (!genero || genero === '') {
                 e.preventDefault();
-                alert('Gênero é obrigatório.');
+                showToast('Gênero é obrigatório.', 'warning', 3000);
                 return;
             }
             

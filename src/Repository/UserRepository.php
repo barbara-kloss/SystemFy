@@ -50,7 +50,7 @@ class UserRepository
             
             $stmt->bindValue(1, $user->getNome() ?: null);
             $dataNasc = $user->getDataNasc()->getDate();
-            $stmt->bindValue(2, ($dataNasc && $dataNasc !== '0000-00-00') ? $dataNasc : null);
+            $stmt->bindValue(2, $dataNasc);
             $stmt->bindValue(3, $user->getGenero() ?: null);
             $stmt->bindValue(4, $user->getTelefone() ?: null);
             $stmt->bindValue(5, $hash);
@@ -119,7 +119,8 @@ class UserRepository
         }
         
         $stmt->bindValue(':nome_completo', $user->getNome());
-        $stmt->bindValue(':data_nascimento', $user->getDataNasc()->getDate());
+        $dataNasc = $user->getDataNasc()->getDate();
+        $stmt->bindValue(':data_nascimento', $dataNasc);
         $stmt->bindValue(':genero', $user->getGenero());
         $stmt->bindValue(':telefone', $user->getTelefone());
         $stmt->bindValue(':senha', $senha);

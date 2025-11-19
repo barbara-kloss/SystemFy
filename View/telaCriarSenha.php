@@ -9,6 +9,8 @@ $erro = isset($_GET['erro']) ? $_GET['erro'] : null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>Tela Criar Senha</title>
     <link rel="stylesheet" href="/css/telaCriarSenha.css">
+    <link rel="stylesheet" href="/css/notifications.css">
+    <script src="/js/notifications.js"></script>
 </head>
 <body>
     <div class="background">
@@ -73,7 +75,7 @@ $erro = isset($_GET['erro']) ? $_GET['erro'] : null;
             
             if (senha.length < 6) {
                 e.preventDefault();
-                alert('A senha deve ter no mínimo 6 caracteres');
+                showToast('A senha deve ter no mínimo 6 caracteres', 'warning', 3000);
                 return false;
             }
             

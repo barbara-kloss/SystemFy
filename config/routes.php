@@ -28,7 +28,10 @@ use Systemfy\App\Admin\PlanoController\{
 };
 
 use Systemfy\App\Admin\ReportController\{
-    ReportListController
+    ReportListController,
+    GetClientesReportController,
+    GetFaturamentoReportController,
+    SaveReportController
 };
 
 use Systemfy\App\Admin\AgendaController\{
@@ -107,6 +110,9 @@ return [
     'GET|/admin/plano/list' => \Systemfy\App\Admin\PlanoController\PlanoListController::class,
     // plano
     'GET|/admin/report/list' => ReportListController::class,
+    'GET|/admin/report/clientes' => GetClientesReportController::class,
+    'GET|/admin/report/faturamento' => GetFaturamentoReportController::class,
+    'POST|/admin/report/save' => SaveReportController::class,
     // report
     // -- parte do cliente:
     'GET|/client/agenda/list' => ClientAgendaListController::class,

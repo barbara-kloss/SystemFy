@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planos</title>
     <link rel="stylesheet" href="/css/telaPlanos.css">
+    <link rel="stylesheet" href="/css/notifications.css">
     <link href="https://fonts.googleapis.com/css2?family=Alata&family=Akshar:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="/js/notifications.js"></script> 
 </head>
 
 <body>
@@ -212,9 +214,16 @@
                 const currentStatus = this.getAttribute('data-status');
                 const newStatus = currentStatus === 'Ativo' ? 'Inativo' : 'Ativo';
                 
-                if (confirm(`Tem certeza que deseja ${newStatus === 'Ativo' ? 'ATIVAR' : 'DESATIVAR'} o plano?`)) {
-                    togglePlanStatus(id, newStatus);
-                }
+                showConfirmModal(
+                    `Tem certeza que deseja ${newStatus === 'Ativo' ? 'ATIVAR' : 'DESATIVAR'} o plano?`,
+                    'Confirmar Alteração',
+                    'Confirmar',
+                    'Cancelar'
+                ).then(confirmed => {
+                    if (confirmed) {
+                        togglePlanStatus(id, newStatus);
+                    }
+                });
             });
         });
     }
@@ -262,10 +271,10 @@
                 window.location.reload();
             }
         })
-        .catch(error => {
-            console.error('Erro ao alterar status do plano:', error);
-            alert('Erro ao alterar status do plano. Tente novamente.');
-        });
+            .catch(error => {
+                console.error('Erro ao alterar status do plano:', error);
+                showToast('Erro ao alterar status do plano. Tente novamente.', 'error', 4000);
+            });
     }
     
     function resetForm() {
@@ -330,7 +339,7 @@
             })
             .catch(error => {
                 console.error('Erro ao salvar plano:', error);
-                alert('Erro ao salvar plano. Tente novamente.');
+                showToast('Erro ao salvar plano. Tente novamente.', 'error', 4000);
             });
         });
 
