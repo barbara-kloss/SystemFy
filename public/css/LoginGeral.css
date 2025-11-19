@@ -86,24 +86,26 @@ body, html {
     padding: 12px 40px;
     border: none;
     border-radius: 30px;
-    background: #2a2a2a;
+    background: #DDB35E;
+    color: #2A2A2A;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .login-box button a {
     text-decoration: none;
-    color: #e6c06b;
+    color: #2A2A2A;
 }
 
 .login-box button:hover {
-    background: #e6c06b;
+    background: #2A2A2A;
+    color: #DDB35E;
 }
 
 .login-box button:hover a {
-    color: #e6c06b;
+    color: #DDB35E;
 }
 
 /* Mensagem de erro */

@@ -77,6 +77,12 @@ if ($pesoAtual > 0) {
         <div class="logoCantoInferior">
             <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
         </div>
+
+        <div class="logoutCantoInferior">
+            <a href="/logout" class="logout-link">
+                <div class="cardLogout"><i class="fas fa-sign-out-alt"></i></div>
+            </a>
+        </div>
         
         <div class="fundoSemiTransparente">
             <div class="main-content-grid">
@@ -112,7 +118,7 @@ if ($pesoAtual > 0) {
                     3. Ou usar o email do calendário diretamente (substitua SEU_EMAIL@gmail.com abaixo)
                     -->
                     <iframe class="frame_agenda" 
-                        src="https://calendar.google.com/calendar/embed?src=thauanafeyth34%40gmail.com&ctz=America%2FSao_Paulo" 
+                        src="https://calendar.google.com/calendar/embed?src=thauanafeyth34%40gmail.com&ctz=America%2FSao_Paulo&mode=WEEK&wkst=1" 
                         style="border: 0" 
                         width="100%" 
                         height="100%" 

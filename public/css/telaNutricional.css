@@ -92,6 +92,52 @@ html {
     height: auto;
 }
 
+/* Botão de Logout no canto inferior esquerdo */
+.logoutCantoInferior {
+    position: absolute;
+    left: 1.5vw;
+    bottom: 3vh;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logoutCantoInferior .logout-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.logoutCantoInferior .cardLogout {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px #ffffff solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    font-size: 1.5em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.logoutCantoInferior .cardLogout:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: #ffffff;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+.logoutCantoInferior .cardLogout i {
+    color: #ffffff;
+}
+
 
 /* ========================================================= */
 /* GRID INTERNO (Layout principal) */
@@ -216,6 +262,7 @@ html {
     font-size: 0.8em; 
     text-decoration: none; /* Garante que o texto não tenha sublinhado */
 }
+
 
 /* --------------------------------------------------------- */
 /* FIM DOS ESTILOS DO PERFIL */

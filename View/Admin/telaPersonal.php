@@ -51,6 +51,12 @@ $selectedDia = $exercise?->dia ?? 2;
             <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">
         </div>
 
+        <div class="logoutCantoInferior">
+            <a href="/logout" class="logout-link">
+                <div class="cardLogout"><i class="fas fa-sign-out-alt"></i></div>
+            </a>
+        </div>
+
         <div class="fundoSemiTransparente">
             <div class="main-content-grid">
                 <div class="navBar">
