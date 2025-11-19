@@ -127,7 +127,7 @@ composer install
 1. Crie um banco de dados MySQL:
 
 ```sql
-CREATE DATABASE systemfy CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE systemfy ;
 ```
 
 2. Execute os scripts SQL necessários (crie as tabelas conforme a estrutura do sistema)
@@ -141,48 +141,7 @@ $user = 'seu_usuario';
 $pass = 'sua_senha';
 ```
 
-### 4. Configure o servidor web
-
-#### Apache
-
-Configure o DocumentRoot para apontar para a pasta `public`:
-
-```apache
-<VirtualHost *:80>
-    ServerName systemfy.local
-    DocumentRoot "C:/caminho/para/SystemFy/public"
-    
-    <Directory "C:/caminho/para/SystemFy/public">
-        AllowOverride All
-        Require all granted
-    </Directory>
-</VirtualHost>
-```
-
-#### Nginx
-
-```nginx
-server {
-    listen 80;
-    server_name systemfy.local;
-    root /caminho/para/SystemFy/public;
-    
-    index index.php;
-    
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-    }
-    
-    location ~ \.php$ {
-        fastcgi_pass unix:/var/run/php/php8.0-fpm.sock;
-        fastcgi_index index.php;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    }
-}
-```
-
-### 5. Permissões (Linux/Mac)
+### 4. Permissões (Linux/Mac)
 
 ```bash
 chmod -R 755 public/
@@ -193,36 +152,74 @@ chmod -R 755 src/
 
 ```
 SystemFy/
-├── config/                 # Configurações
-│   └── routes.php         # Definição de rotas
-├── public/                # Ponto de entrada público
-│   ├── css/              # Estilos CSS
-│   ├── imgFy/            # Imagens e assets
-│   └── index.php         # Front Controller
-├── src/                   # Código fonte
-│   ├── Admin/            # Controllers do administrador
+├── config/
+│   └── routes.php
+├── public/
+│   ├── css/
+│   ├── imgFy/
+│   └── index.php
+├── src/
+│   ├── Admin/
 │   │   ├── AgendaController/
 │   │   ├── ExerciseController/
 │   │   ├── MenuController/
 │   │   ├── PlanoController/
 │   │   └── ReportController/
-│   ├── Client/           # Controllers do cliente
+│   ├── Client/
 │   │   ├── ClientAgendaController/
 │   │   ├── ClientExerciseController/
 │   │   └── ClientMenuController/
-│   ├── Controller/       # Controllers principais
-│   ├── ControllerLogin/  # Controllers de autenticação
-│   ├── Database.php      # Classe de conexão
-│   ├── Model/           # Modelos de dados
-│   └── Repository/      # Repositórios (acesso a dados)
-├── View/                 # Views/Templates
-│   ├── Admin/           # Views do administrador
-│   ├── Cliente/         # Views do cliente
+│   ├── Controller/
+│   ├── ControllerLogin/
+│   ├── Database.php
+│   ├── Model/
+│   └── Repository/
+├── View/
+│   ├── Admin/
+│   ├── Cliente/
 │   └── LoginGeralHTML.php
-├── vendor/              # Dependências do Composer
-├── composer.json        # Configuração do Composer
-└── README.md           # Este arquivo
+├── vendor/
+├── composer.json
+└── README.md
 ```
+
+### Descrição dos Diretórios
+
+- **config/** - Configurações do sistema
+  - `routes.php` - Definição de rotas da aplicação
+
+- **public/** - Ponto de entrada público do sistema
+  - `css/` - Arquivos de estilos CSS
+  - `imgFy/` - Imagens e assets do sistema
+  - `index.php` - Front Controller (ponto de entrada principal)
+
+- **src/** - Código fonte da aplicação
+  - **Admin/** - Controllers do administrador
+    - `AgendaController/` - Gerenciamento de agenda
+    - `ExerciseController/` - Gerenciamento de exercícios
+    - `MenuController/` - Gerenciamento de cardápios
+    - `PlanoController/` - Gerenciamento de planos
+    - `ReportController/` - Geração de relatórios
+  - **Client/** - Controllers do cliente
+    - `ClientAgendaController/` - Visualização de agenda do cliente
+    - `ClientExerciseController/` - Visualização de treinos do cliente
+    - `ClientMenuController/` - Visualização de cardápios do cliente
+  - **Controller/** - Controllers principais
+  - **ControllerLogin/** - Controllers de autenticação
+  - `Database.php` - Classe de conexão com banco de dados
+  - **Model/** - Modelos de dados (entidades)
+  - **Repository/** - Repositórios (camada de acesso a dados)
+
+- **View/** - Views/Templates da aplicação
+  - **Admin/** - Views do administrador
+  - **Cliente/** - Views do cliente
+  - `LoginGeralHTML.php` - Template de login
+
+- **vendor/** - Dependências do Composer (geradas automaticamente)
+
+- `composer.json` - Configuração do Composer e dependências do projeto
+
+- `README.md` - Documentação do projeto
 
 ## 🔐 Autenticação
 
@@ -368,4 +365,5 @@ Para suporte, envie um e-mail para barbarakf383@gmail.com ou abra uma issue no r
 ---
 
 **Desenvolvido com ❤️ para profissionais de educação física e nutrição**
+
 

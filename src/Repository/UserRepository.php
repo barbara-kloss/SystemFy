@@ -102,15 +102,17 @@ class UserRepository
         altura = :altura, peso = :peso, objetivos = :objetivos,
         status = :status, observacao = :observacao,
         massa = :massa, gordura = :gordura, plano_id = :plano_id, email = :email, foto = :foto, peso_meta = :peso_meta
-        WHERE id = :id;';
+        WHERE id = :id;'; // sem mudança de permissao
         $stmt = $this->pdo->prepare($sql);
         
         $planoId = $user->getPlanoId();
         $planoIdValue = $planoId ? $planoId->getId() : null;
         
+        // Fazer hash da senha se ela foi alterada (não está em hash)
         $senha = $user->getSenha();
         if (!empty($senha)) {
             $senhaInfo = @password_get_info($senha);
+            // Se não é um hash válido (algo é null ou false), fazer hash
             if (!isset($senhaInfo['algo']) || $senhaInfo['algo'] === false || $senhaInfo['algo'] === null) {
                 $senha = password_hash($senha, PASSWORD_ARGON2ID);
             }
@@ -170,14 +172,18 @@ class UserRepository
 
     public function hydrateUser(array $UserData): User
     {
+        // Verificar se os dados são válidos
         if (empty($UserData) || !isset($UserData['id']) || $UserData['id'] === null) {
             throw new \InvalidArgumentException('Invalid user data provided to hydrateUser: id is missing or null');
         }
         
+        // Garantir valores padrão para campos que podem ser null
         $id = (int) $UserData['id'];
         $nome = $UserData['nome_completo'] ?? '';
+        
         $data_nasc_str = $UserData['data_nascimento'] ?? '0000-00-00';
         $data_nasc = new Date($data_nasc_str);
+        
         $genero = $UserData['genero'] ?? '';
         $telefone = $UserData['telefone'] ?? '';
         $senha = $UserData['senha'] ?? '';
@@ -194,7 +200,6 @@ class UserRepository
         $plano_id = null;
         if ($plano_id_raw !== null && $this->planoRepository !== null) {
             $plano = $this->planoRepository->find((int) $plano_id_raw);
-            $plano_id = $plano;
         }
         
         $email = $UserData['email'] ?? '';
