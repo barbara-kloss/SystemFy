@@ -51,11 +51,6 @@
                 </div>
 
                 <div class="calendar-api-container">
-                    <div class="calendar-header">
-                        <a href="/admin/agenda/save" class="btn-novo-evento">
-                            <i class="fas fa-plus"></i> Criar Evento
-                        </a>
-                    </div>
                     <!-- 
                     IMPORTANTE: Para o calendário aparecer, você precisa:
                     1. Tornar o calendário público no Google Calendar

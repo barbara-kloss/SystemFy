@@ -65,15 +65,7 @@
                         <div class="row-group">
                             <div class="input-group">
                                 <label for="genero">Gênero</label>
-                                <div class="custom-select-wrapper">
-                                    <select id="genero" disabled>
-                                        <option value="" <?= empty($user->getGenero()) ? 'selected' : '' ?>>Selecione</option>
-                                        <option value="Masculino" <?= $user->getGenero() === 'Masculino' ? 'selected' : '' ?>>Masculino</option>
-                                        <option value="Feminino" <?= $user->getGenero() === 'Feminino' ? 'selected' : '' ?>>Feminino</option>
-                                        <option value="Outro" <?= $user->getGenero() === 'Outro' ? 'selected' : '' ?>>Outro</option>
-                                    </select>
-                                    <span class="select-arrow"></span>
-                                </div>
+                                <input type="text" id="genero" value="<?= htmlspecialchars($user->getGenero() ?? '') ?>" readonly>
                             </div>
                             <div class="input-group">
                                 <label for="telefone">Telefone</label>
