@@ -186,36 +186,35 @@ html {
     gap: 20px;
 }
 
-/* Check-in e Seleção de Dias (Organização) */
-.check-in-box {
-    padding-top: 20px;
-}
-.checkbox-wrapper {
+/* Check-in por exercício */
+.checkbox-wrapper-exercise {
     display: flex;
     align-items: center;
-    font-size: 18px;
-    color: #2A2A2A;
-    font-weight: 700;
-}
-.checkbox-wrapper input[type="checkbox"] {
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border: 1px solid #2A2A2A;
-    border-radius: 4px;
     margin-right: 10px;
-    background-color: #2A2A2A;
+}
+.checkbox-wrapper-exercise input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #2A2A2A;
+    border-radius: 4px;
+    background-color: transparent;
     position: relative;
     cursor: pointer;
+    flex-shrink: 0;
 }
-.checkbox-wrapper input[type="checkbox"]:checked:after {
-    content: '✓'; /* Ou use um ícone */
+.checkbox-wrapper-exercise input[type="checkbox"]:checked {
+    background-color: #2A2A2A;
+}
+.checkbox-wrapper-exercise input[type="checkbox"]:checked:after {
+    content: '✓';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 14px;
-    color: #FFFAE6; /* Cor do check */
+    color: #FFFAE6;
+    font-weight: bold;
 }
 
 

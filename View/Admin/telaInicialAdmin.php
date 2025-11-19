@@ -61,7 +61,7 @@
 
                 <div class="clientes-ativos-card">
                     <h2 class="card-title">Clientes Ativos</h2>
-                    <p class="active-count">15</p>
+                    <p class="active-count"><?= htmlspecialchars($clientesAtivos ?? 0); ?></p>
                 </div>
 
                 <div class="notifications-container">
@@ -96,19 +96,22 @@
 
                     item.innerHTML = `
                         <span class="client-name">${notification.nome}</span>
-                        <span class="notification-text">Registrou check-in em ${notification.treino}</span>
+                        <span class="notification-text">Registrou check-in em Treino ${notification.treino}</span>
                     `;
 
                     listContainer.appendChild(item);
                 });
             }
 
-            // SIMULAÇÃO DE DADOS DO BANCO DE DADOS
-            const notificationsFromDB = [
-                { nome: "Shreck", treino: "Treino Superiores" },
-                { nome: "Fiona", treino: "Cárdio Intenso" },
-                { nome: "Gato de Botas", treino: "Yoga Matinal" }
-            ];
+            // DADOS REAIS DO BANCO DE DADOS
+            const notificationsFromDB = <?= json_encode(array_map(function($checkin) {
+                $nome = trim($checkin['nome_cliente'] ?? '');
+                $categoria = trim($checkin['categoria'] ?? '');
+                return [
+                    'nome' => !empty($nome) ? $nome : 'Cliente',
+                    'treino' => !empty($categoria) ? $categoria : 'Treino'
+                ];
+            }, $checkins ?? []), JSON_UNESCAPED_UNICODE); ?>;
 
             loadNotifications(notificationsFromDB);
         });

@@ -113,6 +113,7 @@ return [
     'GET|/client/agenda/delete' => ClientDeleteAgendaController::class,
     // agenda cliente
     'GET|/client/exercise/list' => ClientExerciseListController::class,
+    'POST|/client/exercise/checkin' => \Systemfy\App\Client\ClientExerciseController\ClientCheckinController::class,
     // exercise cliente
     'GET|/client/menu/list' => ClientMenuListController::class,
     // menu cliente

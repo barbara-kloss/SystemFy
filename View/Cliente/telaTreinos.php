@@ -4,6 +4,17 @@ use Systemfy\App\Model\Exercise;
 /** @var Exercise[] $exerciseList */
 $exerciseList ??= [];
 
+/** @var int[] $checkinsHoje Array com IDs dos exercícios que têm check-in hoje */
+$checkinsHoje ??= [];
+
+// Debug temporário - remover depois de testar
+// var_dump("Check-ins hoje:", $checkinsHoje);
+// foreach ($exerciseList as $ex) {
+//     if ($ex->getId()) {
+//         var_dump("Exercise ID: " . $ex->getId() . ", está em checkinsHoje: " . (in_array((int)$ex->getId(), $checkinsHoje, true) ? 'SIM' : 'NÃO'));
+//     }
+// }
+
 $diasSemana = [
     1 => 'Domingo',
     2 => 'Segunda-feira',
@@ -122,13 +133,6 @@ foreach ($exerciciosDoDia as $ex) {
                 </div>
                 <div class="main-screen-box">
 
-                    <div class="check-in-box">
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox" id="checkin" checked>
-                            <label for="checkin">Check-in</label>
-                        </div>
-                    </div>
-
                     <div class="day-selector" id="daySelector">
                         <?php 
                         $abreviacoes = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
@@ -204,7 +208,26 @@ foreach ($exerciciosDoDia as $ex) {
                                         <div class="exercise-item" 
                                              data-video="<?= htmlspecialchars($exercise->video ?? ''); ?>"
                                              data-observacao="<?= htmlspecialchars($observacao); ?>"
+                                             data-exercise-id="<?= $exercise->getId(); ?>"
+                                             data-categoria="<?= htmlspecialchars($exercise->categoria ?? ''); ?>"
                                              style="cursor: <?= $temVideo ? 'pointer' : 'default'; ?>;">
+                                            <div class="checkbox-wrapper-exercise">
+                                                <?php 
+                                                $exerciseId = $exercise->getId();
+                                                // Debug: verificar se o ID está no array de check-ins
+                                                $isChecked = $exerciseId !== null && in_array((int)$exerciseId, $checkinsHoje, true);
+                                                // Debug temporário - remover depois
+                                                // if ($exerciseId) {
+                                                //     error_log("Exercise ID: $exerciseId, Check-ins hoje: " . json_encode($checkinsHoje) . ", Is checked: " . ($isChecked ? 'true' : 'false'));
+                                                // }
+                                                ?>
+                                                <input type="checkbox" 
+                                                       class="exercise-checkin" 
+                                                       id="checkin-<?= $exerciseId; ?>"
+                                                       data-exercise-id="<?= $exerciseId; ?>"
+                                                       data-categoria="<?= htmlspecialchars($exercise->categoria ?? ''); ?>"
+                                                       <?= $isChecked ? 'checked' : ''; ?>>
+                                            </div>
                                             <?php if ($temVideo): ?>
                                                 <span class="play-icon">▶</span>
                                             <?php else: ?>
@@ -312,13 +335,75 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Clique nos exercícios para trocar o vídeo
+    // Clique nos exercícios para trocar o vídeo (mas não quando clicar no checkbox)
     exerciseItems.forEach(item => {
-        item.addEventListener('click', function() {
+        item.addEventListener('click', function(e) {
+            // Não fazer nada se clicou no checkbox
+            if (e.target.type === 'checkbox' || e.target.closest('.checkbox-wrapper-exercise')) {
+                return;
+            }
             const videoUrl = this.getAttribute('data-video');
             if (videoUrl) {
                 updateVideo(videoUrl);
             }
+        });
+    });
+    
+    // =========================================================
+    // CHECK-IN POR EXERCÍCIO
+    // =========================================================
+    const checkboxes = document.querySelectorAll('.exercise-checkin');
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const exerciseId = this.getAttribute('data-exercise-id');
+            const categoria = this.getAttribute('data-categoria');
+            const action = this.checked ? 'add' : 'remove';
+            
+            // Salvar ou remover check-in
+            fetch('/client/exercise/checkin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `id_exercise=${encodeURIComponent(exerciseId)}&action=${action}`
+            })
+            .then(response => {
+                // Verificar se a resposta é OK antes de fazer parse do JSON
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        try {
+                            const data = JSON.parse(text);
+                            throw new Error(data.error || 'Erro ao processar check-in');
+                        } catch (e) {
+                            if (e instanceof Error && e.message !== 'Erro ao processar check-in') {
+                                throw e;
+                            }
+                            throw new Error(`Erro ${response.status}: ${text || response.statusText}`);
+                        }
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    const actionText = action === 'add' ? 'registrado' : 'removido';
+                    console.log(`Check-in ${actionText} com sucesso!`);
+                } else {
+                    const actionText = action === 'add' ? 'registrar' : 'remover';
+                    console.error(`Erro ao ${actionText} check-in:`, data.error || 'Erro desconhecido');
+                    alert(`Erro ao ${actionText} check-in: ` + (data.error || 'Erro desconhecido'));
+                    // Reverter o estado do checkbox
+                    this.checked = !this.checked;
+                }
+            })
+            .catch(err => {
+                const actionText = action === 'add' ? 'registrar' : 'remover';
+                console.error(`Erro ao ${actionText} check-in:`, err);
+                alert(`Erro ao ${actionText} check-in: ` + err.message);
+                // Reverter o estado do checkbox
+                this.checked = !this.checked;
+            });
         });
     });
 });

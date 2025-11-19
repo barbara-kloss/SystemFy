@@ -125,6 +125,10 @@ if (array_key_exists($key, $routes)) {
     } elseif ($controllerClass === \Systemfy\App\ControllerLogin\CriarSenhaController::class) {
         $controller = new $controllerClass($userRepository);
 
+    } elseif ($controllerClass === \Systemfy\App\Controller\MainAdminController::class) {
+        $checkinRepository = new \Systemfy\App\Repository\CheckinRepository();
+        $controller = new $controllerClass($userRepository, $checkinRepository);
+
     } elseif ($controllerClass === \Systemfy\App\Controller\MainClienteController::class) {
         $controller = new $controllerClass($userRepository);
 
@@ -146,7 +150,12 @@ if (array_key_exists($key, $routes)) {
         // --------------------------------------------
 
     } elseif ($controllerClass === \Systemfy\App\Client\ClientExerciseController\ClientExerciseListController::class) {
-        $controller = new $controllerClass($exerciseRepository);
+        $checkinRepository = new \Systemfy\App\Repository\CheckinRepository();
+        $controller = new $controllerClass($exerciseRepository, $checkinRepository);
+
+    } elseif ($controllerClass === \Systemfy\App\Client\ClientExerciseController\ClientCheckinController::class) {
+        $checkinRepository = new \Systemfy\App\Repository\CheckinRepository();
+        $controller = new $controllerClass($checkinRepository, $exerciseRepository);
 
         // --------------------------------------------
         //  CLIENTE – MENU

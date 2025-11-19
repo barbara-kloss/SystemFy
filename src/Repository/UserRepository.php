@@ -226,6 +226,24 @@ class UserRepository
         return $user;
     }
 
+    public function countActiveClients(): int
+    {
+        try {
+            $sql = "SELECT COUNT(*) as total 
+                    FROM user 
+                    WHERE permissao = 'cliente' 
+                    AND status = 1";
+            
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            
+            $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return (int) ($result['total'] ?? 0);
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
+
 
 }
 
