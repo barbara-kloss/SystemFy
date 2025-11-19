@@ -152,16 +152,22 @@ class UserRepository
 
     public function find(int $id)
     {
-        $stmt = $this->pdo->prepare('SELECT * FROM user WHERE id = ?;');
-        $stmt->bindValue(1, $id, \PDO::PARAM_INT);
-        $stmt->execute();
+        try {
+            $stmt = $this->pdo->prepare('SELECT * FROM user WHERE id = ?;');
+            $stmt->bindValue(1, $id, \PDO::PARAM_INT);
+            $stmt->execute();
 
-        $userData = $stmt->fetch(\PDO::FETCH_ASSOC);
-        if ($userData === false) {
+            $userData = $stmt->fetch(\PDO::FETCH_ASSOC);
+            
+            if (!$userData || empty($userData)) {
+                return null;
+            }
+
+            return $this->hydrateUser($userData);
+        } catch (\Throwable $e) {
+            error_log("Erro no UserRepository::find: " . $e->getMessage());
             return null;
         }
-
-        return $this->hydrateUser($userData);
     }
 
     public function hydrateUser(array $UserData): User

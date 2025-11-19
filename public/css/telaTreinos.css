@@ -63,15 +63,21 @@ html {
     height: auto;
 }
 
-/* Fundo Semi Transparente (Contêiner principal - Ajuste de dimensões e centralização) */
+/* Fundo Semi Transparente (Contêiner principal) */
 .fundoSemiTransparente {
-    width:100%;
-    max-width: 1400px; /* Limite máximo para telas grandes */
+    width: 90%;
+    max-width: 1750px;
     height: 90vh;
-    background: rgba(213, 205, 179, 0.43);
+    position: relative;
+    background: rgba(213.53, 205.82, 179.63, 0.43);
     border-radius: 28px;
-    padding: 30px; 
+    padding: 30px;
     box-sizing: border-box;
+    overflow: hidden;
+    margin-left: 0;
+    transform: translateX(2.5%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -89,9 +95,10 @@ html {
 
 /* 1a. Navegação */
 .navBar {
-    display: flex;
-    align-items: center;
-    gap: 50px; /* Espaço entre o título e a nav */
+    align-self: center;
+    justify-self: start;
+    padding-left: 0;
+    margin-left: 0;
 }
 
 .screen-title {
@@ -108,34 +115,33 @@ html {
     display: flex;
     gap: 40px;
     align-items: center;
+    justify-content: flex-start;
 }
 
-.navBar .nav-link {
+.navBar a {
     text-decoration: none;
     color: white;
     font-size: 24px;
+    font-family: 'Akshar', sans-serif;
     font-weight: 700;
     position: relative;
     transition: color 0.3s ease;
 }
 
 /* Sublinhado da aba ativa/hover */
-.navBar .nav-link::after {
+.navBar a::after {
     content: '';
     position: absolute;
     left: 0;
     bottom: -5px;
     width: 0;
-    height: px; /* Mais espesso como na imagem */
-    background-color: #2A2A2A;
+    height: 2px;
+    background-color: black;
     transition: width 0.3s ease;
 }
 
-.navBar .nav-link.active::after {
-    width: 100%;
-    background-color: #2A2A2A; /* Cor escura do sublinhado na ativa */
-}
-.navBar .nav-link:hover::after {
+.navBar a:hover::after,
+.navBar a.active::after {
     width: 100%;
 }
 
@@ -153,25 +159,37 @@ html {
     width: 50px;
     height: 50px;
     border-radius: 9999px;
-    border: 2px #D4D2C8 solid;
+    border: none;
+    background-color: #E6E1D7;
     margin-bottom: 5px;
+    z-index: 50;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.5); /* Fundo sutil */
+    font-size: 1.5em;
 }
 
-.profile-icon {
-    width: 30px;
-    height: 30px;
-    /* Adicionar a cor do ícone, se for um SVG ou imagem colorida */
+/* Estilo do ícone de usuário (fa-user) */
+.cardVerPerfil i {
+    color: #2A2A2A;
+}
+
+/* Estilo do link (removendo sublinhado da tag <a>, se houver) */
+.profile-link {
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: inherit;
 }
 
 .textocardVerPerfil {
-    font-weight: 400; /* Altere para 400 ou 500 para parecer com Alata */
+    font-weight: 800;
     color: #2A2A2A;
-    font-size: 16px; 
-    font-family: 'Alata', sans-serif;
+    font-size: 0.8em;
+    text-decoration: none;
 }
 
 /* 2. Main Screen Box (Box de Conteúdo Amarelado) */

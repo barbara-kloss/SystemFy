@@ -29,6 +29,7 @@ $menusLivre = array_filter($menuList, fn($m) => $m instanceof Menu && $m->catego
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutricional</title>
     <link rel="stylesheet" href="/css/telaNutricional.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Alata&family=Akshar:wght@700&display=swap" rel="stylesheet">
 </head>
 
@@ -82,8 +83,10 @@ $menusLivre = array_filter($menuList, fn($m) => $m instanceof Menu && $m->catego
                         </div>
                     </div>
                     <div class="profile-box-container">
-                        <div class="cardVerPerfil"> </div>
-                        <div class="textocardVerPerfil"> Ver perfil</div>
+                        <a href="/client/cadastro" class="profile-link">
+                            <div class="cardVerPerfil"><i class="fas fa-user"></i></div>
+                            <div class="textocardVerPerfil"> Ver perfil</div>
+                        </a>
                     </div>
                 </div>
 
