@@ -21,8 +21,8 @@ class NewPlanoController implements Controller
             exit();
         }
 
-        $preco = filter_input(INPUT_POST, 'preco', FILTER_SANITIZE_NUMBER_FLOAT);
-        if ($preco === false) {
+        $preco = filter_input(INPUT_POST, 'preco', FILTER_VALIDATE_FLOAT);
+        if ($preco === false || $preco === null) {
             header('Location: /admin/plano/list?sucesso=0');
             exit();
         }
@@ -33,9 +33,13 @@ class NewPlanoController implements Controller
             exit();
         }
 
-        $ativo = filter_input(INPUT_POST, 'ativo', FILTER_VALIDATE_BOOL);
-// categoria, preco, descricao
-        $result = $this->planoRepository->add(new Plano($categoria, $preco, $descricao, $ativo));
+        $ativoInput = filter_input(INPUT_POST, 'ativo');
+        // Converter string '0' ou '1' para boolean
+        $ativo = ($ativoInput === '1' || $ativoInput === 'true' || $ativoInput === true);
+        
+        // Criar plano com id temporário (será definido pelo repository após inserção)
+        $plano = new Plano(0, $categoria, $preco, $descricao, $ativo);
+        $result = $this->planoRepository->add($plano);
 
         if ($result === false){
             header('Location: /admin/plano/list?sucesso=0');

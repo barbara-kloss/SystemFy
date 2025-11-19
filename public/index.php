@@ -139,7 +139,7 @@ if (array_key_exists($key, $routes)) {
         $controller = new $controllerClass();
 
     } elseif ($controllerClass === \Systemfy\App\ControllerLogin\RegisterController::class) {
-        $controller = new $controllerClass();
+        $controller = new $controllerClass($planoRepository);
 
     } elseif ($controllerClass === \Systemfy\App\ControllerLogin\LoginFormController::class) {
         $controller = new $controllerClass();

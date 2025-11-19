@@ -17,14 +17,16 @@ class PlanoRepository
     {
         $sql = "INSERT INTO plano(categoria, preco, descricao, ativo) values(?,?,?,?)";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(1, $plano->categoria);
-        $stmt->bindValue(2, $plano->preco);
-        $stmt->bindValue(3, $plano->descricao);
-        $stmt->bindValue(4, $plano->ativo);
+        $stmt->bindValue(1, $plano->getCategoria());
+        $stmt->bindValue(2, $plano->getPreco());
+        $stmt->bindValue(3, $plano->getDescricao());
+        $stmt->bindValue(4, $plano->getAtivo(), PDO::PARAM_BOOL);
 
         $result = $stmt->execute();
-        $id = $this->pdo->lastInsertId();
-        $plano->setId(intval($id));
+        if ($result) {
+            $id = $this->pdo->lastInsertId();
+            $plano->setId(intval($id));
+        }
         return $result;
     }
     //    public function remove(int $id): bool
@@ -42,11 +44,11 @@ class PlanoRepository
         $sql = 'UPDATE plano SET categoria = :categoria, 
         preco = :preco, descricao = :descricao, ativo = :ativo  WHERE id = :id;';
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':categoria', $plano->categoria);
-        $stmt->bindValue(':preco', $plano->preco);
-        $stmt->bindValue(':descricao', $plano->descricao);
-        $stmt->bindValue(':ativo', $plano->ativo);
-        $stmt->bindValue(':id', $plano->id);
+        $stmt->bindValue(':categoria', $plano->getCategoria());
+        $stmt->bindValue(':preco', $plano->getPreco());
+        $stmt->bindValue(':descricao', $plano->getDescricao());
+        $stmt->bindValue(':ativo', $plano->getAtivo(), PDO::PARAM_BOOL);
+        $stmt->bindValue(':id', $plano->getId(), PDO::PARAM_INT);
 
         return $stmt->execute();
     }

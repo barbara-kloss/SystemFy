@@ -13,12 +13,15 @@ html {
 .background {
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     background: #2A2A2A;
     display: flex;
     justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    align-items: flex-start;
+    padding: 20px 0;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* Bolinhas decorativas */
@@ -34,15 +37,17 @@ html {
 .fundoSemiTransparente {
     width: 90%;
     max-width: 1750px;
-    height: 90vh;
+    min-height: 90vh;
+    height: auto;
     position: relative;
     background: rgba(213.53, 205.82, 179.63, 0.43);
     border-radius: 28px;
     padding: 0; 
     box-sizing: border-box;
-    overflow: hidden; 
+    overflow: visible; 
     margin-left: 0; 
     transform: translateX(2.5%); 
+    margin-bottom: 30px;
 }
 
 /* Logos de Canto */
@@ -55,7 +60,8 @@ html {
 /* GRID LAYOUT PRINCIPAL */
 /* ========================================================= */
 .main-content-grid {
-    height: 90%;
+    min-height: 90%;
+    height: auto;
     display: grid;
     
     grid-template-areas:
@@ -68,7 +74,7 @@ html {
     
     grid-gap: 20px; 
     padding: 30px; 
-    overflow: hidden; 
+    overflow: visible; 
 }
 
 /* --- NAV BAR --- */
@@ -138,7 +144,7 @@ html {
     display: flex;
     gap: 30px; 
     width: 100%;
-    height: 100%; 
+    min-height: 0;
     box-sizing: border-box;
     align-items: flex-start; 
 }
@@ -148,28 +154,27 @@ html {
     width: 35%; 
     background: #FFFAE6;
     border-radius: 28px;
-    padding: 30px; /* Mantém o padding para os campos */
+    padding: 20px; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     flex-shrink: 0;
     box-sizing: border-box;
     
-    flex: 1; 
-    min-height: 0; 
+    height: fit-content;
+    max-height: 100%;
     
     display: flex;
     flex-direction: column;
-    overflow-y: hidden; 
-    height:80%
+    overflow: hidden;
 }
 
 /* 💥 CORREÇÃO FINAL DA LINHA DO TÍTULO COM PSEUDO-ELEMENTO */
 .form-title {
     color: #2A2A2A;
-    font-size: 26px;
+    font-size: 24px;
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
     margin-top: 0;
-    margin-bottom: 25px; 
+    margin-bottom: 15px; 
     
     /* Remove as bordas problemáticas */
     border-bottom: none; 
@@ -178,15 +183,16 @@ html {
     /* Setup para o ::after */
     position: relative; 
     overflow: visible; 
+    flex-shrink: 0;
 }
 
 .form-title::after {
     content: ''; 
     position: absolute;
-    /* Alinha o início da linha na borda esquerda do card, invadindo o padding de 30px */
-    left: -30px; 
-    /* Calcula a largura para cobrir a largura do H3 (100%) + os 30px de padding de cada lado */
-    width: calc(100% + 60px); 
+    /* Alinha o início da linha na borda esquerda do card, invadindo o padding de 20px */
+    left: -20px; 
+    /* Calcula a largura para cobrir a largura do H3 (100%) + os 20px de padding de cada lado */
+    width: calc(100% + 40px); 
     bottom: -5px; 
     height: 2px; 
     background-color: #DDB35E; 
@@ -196,18 +202,44 @@ html {
 #planoForm {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     flex-grow: 1; 
+    min-height: 0;
+    max-height: 500px;
     overflow-y: auto; /* Permite scrollbar no conteúdo do formulário */
+    overflow-x: hidden;
     
     /* Adiciona um pequeno padding para garantir que o scrollbar não cole na borda direita */
-    padding-right: 15px; 
+    padding-right: 10px; 
+    
+    /* Estilizar a scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: #DDB35E #EDE7D1;
+}
+
+/* Estilizar scrollbar para navegadores WebKit (Chrome, Safari, Edge) */
+#planoForm::-webkit-scrollbar {
+    width: 8px;
+}
+
+#planoForm::-webkit-scrollbar-track {
+    background: #EDE7D1;
+    border-radius: 10px;
+}
+
+#planoForm::-webkit-scrollbar-thumb {
+    background: #DDB35E;
+    border-radius: 10px;
+}
+
+#planoForm::-webkit-scrollbar-thumb:hover {
+    background: #c9a04d;
 }
 
 /* LAYOUT DE DUAS COLUNAS DENTRO DO FORMULÁRIO */
 #planoForm .input-group-grid-row {
     display: flex;
-    gap: 15px; 
+    gap: 10px; 
     width: 100%;
 }
 #planoForm .input-group-grid-row .half-width-field {
@@ -218,10 +250,10 @@ html {
 
 .input-group label {
     color: #2A2A2A;
-    font-size: 18px;
+    font-size: 16px;
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     display: block;
 }
 
@@ -231,33 +263,38 @@ html {
     background: #EDE7D1;
     border-radius: 12px;
     border: none;
-    padding: 12px 15px;
-    font-size: 16px;
+    padding: 10px 12px;
+    font-size: 15px;
     color: #1E1E1E;
     width: 100%;
     box-sizing: border-box;
 }
 
 #planoForm textarea {
-    min-height: 80px;
+    min-height: 60px;
     resize: vertical;
 }
 
 .form-actions {
     display: flex;
-    gap: 15px;
-    margin-top: auto; 
-    padding-top: 20px;
+    gap: 10px;
+    margin-top: 8px; 
+    padding-top: 8px;
     flex-shrink: 0;
     /* Alinha os botões com o conteúdo (compensando o padding-right do #planoForm) */
-    padding-right: 15px;
+    padding-right: 10px;
+    border-top: 1px solid #DDB35E;
+    position: sticky;
+    bottom: 0;
+    background: #FFFAE6;
+    z-index: 10;
 }
 
 .btn-confirmar, .btn-cancelar {
     flex-grow: 1;
-    height: 45px;
+    height: 40px;
     border-radius: 28px;
-    font-size: 18px;
+    font-size: 16px;
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
     cursor: pointer;
@@ -287,19 +324,47 @@ html {
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     box-sizing: border-box;
-    height: 80%; 
+    height: fit-content;
+    max-height: 450px;
     overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    
+    /* Estilizar a scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: #DDB35E #EDE7D1;
+}
+
+/* Estilizar scrollbar para navegadores WebKit (Chrome, Safari, Edge) */
+.planos-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.planos-list-container::-webkit-scrollbar-track {
+    background: #EDE7D1;
+    border-radius: 10px;
+}
+
+.planos-list-container::-webkit-scrollbar-thumb {
+    background: #DDB35E;
+    border-radius: 10px;
+}
+
+.planos-list-container::-webkit-scrollbar-thumb:hover {
+    background: #c9a04d;
 }
 
 .list-title {
     color: #2A2A2A;
-    font-size: 26px;
+    font-size: 24px;
     font-family: 'Akshar', sans-serif;
     font-weight: 700;
     margin-top: 0;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     border-bottom: 2px solid #DDB35E;
     padding-bottom: 5px;
+    flex-shrink: 0;
 }
 
 /* Estilo Individual do Plano */

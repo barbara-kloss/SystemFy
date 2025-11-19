@@ -67,6 +67,25 @@
                     </button>
                 </div>
 
+                <?php 
+                $sucesso = filter_input(INPUT_GET, 'sucesso', FILTER_VALIDATE_INT);
+                if ($sucesso !== null): 
+                ?>
+                    <div class="alert-message <?= $sucesso === 1 ? 'alert-success' : 'alert-error'; ?>" id="alertMessage">
+                        <?= $sucesso === 1 ? 'Operação realizada com sucesso!' : 'Erro ao realizar operação. Tente novamente.'; ?>
+                    </div>
+                    <script>
+                        // Remover mensagem após 3 segundos
+                        setTimeout(function() {
+                            const alert = document.getElementById('alertMessage');
+                            if (alert) {
+                                alert.style.opacity = '0';
+                                setTimeout(() => alert.remove(), 300);
+                            }
+                        }, 3000);
+                    </script>
+                <?php endif; ?>
+
                 <div class="content-cards-wrapper">
 
                     <div class="card-plano-form" id="formPlanoCard">
@@ -119,12 +138,25 @@
     </div>
 
 <script>
-    // Simulação de Banco de Dados de Planos
-    let planos = [
-        { id: 1, nome: 'Plano Básico', valor: 99.90, descricao: 'Acesso a treinos e acompanhamento semanal.', status: 'Ativo' },
-        { id: 2, nome: 'Plano Premium', valor: 199.90, descricao: 'Tudo do básico mais plano nutricional e suporte 24h.', status: 'Ativo' },
-        { id: 3, nome: 'Plano Arquivado', valor: 0.00, descricao: 'Plano antigo, sem novas adesões.', status: 'Inativo' }
-    ];
+    // Dados reais do banco de dados (vindos do PHP)
+    const planosFromDB = <?= json_encode(array_map(function($plano) {
+        return [
+            'id' => $plano->getId(),
+            'categoria' => $plano->getCategoria(),
+            'preco' => $plano->getPreco(),
+            'descricao' => $plano->getDescricao(),
+            'ativo' => $plano->getAtivo()
+        ];
+    }, $planoList ?? []), JSON_UNESCAPED_UNICODE); ?>;
+    
+    // Converter para formato usado no frontend
+    let planos = planosFromDB.map(p => ({
+        id: p.id,
+        nome: p.categoria,
+        valor: parseFloat(p.preco),
+        descricao: p.descricao,
+        status: p.ativo ? 'Ativo' : 'Inativo'
+    }));
 
     let isEditing = false;
     let planoToEditId = null;
@@ -207,13 +239,33 @@
     }
 
     function togglePlanStatus(id, newStatus) {
-        const planoIndex = planos.findIndex(p => p.id === id);
-        if (planoIndex !== -1) {
-            planos[planoIndex].status = newStatus;
-            
-            alert(`Plano ${planos[planoIndex].nome} foi ${newStatus.toLowerCase()}! (Ação simulada)`);
-            renderPlanosList();
-        }
+        const plano = planos.find(p => p.id === id);
+        if (!plano) return;
+
+        // Carregar o plano para edição e atualizar apenas o status
+        const ativo = newStatus === 'Ativo';
+        
+        const formData = new FormData();
+        formData.append('categoria', plano.nome);
+        formData.append('preco', plano.valor);
+        formData.append('descricao', plano.descricao);
+        formData.append('ativo', ativo ? '1' : '0');
+
+        fetch(`/admin/plano/edit?id=${id}`, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            } else {
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao alterar status do plano:', error);
+            alert('Erro ao alterar status do plano. Tente novamente.');
+        });
     }
     
     function resetForm() {
@@ -238,32 +290,48 @@
             e.preventDefault();
             
             const id = document.getElementById('planoId').value ? parseInt(document.getElementById('planoId').value) : null;
-            const nomePlano = document.getElementById('nomePlano').value.trim();
-            const valor = parseFloat(document.getElementById('valor').value);
+            const categoria = document.getElementById('nomePlano').value.trim();
+            const preco = parseFloat(document.getElementById('valor').value);
             const descricao = document.getElementById('descricao').value.trim();
             const status = document.getElementById('status').value;
+            const ativo = status === 'Ativo';
 
-            const novoPlano = {
-                nome: nomePlano,
-                valor: valor,
-                descricao: descricao,
-                status: status
-            };
+            // Criar FormData para enviar via POST
+            const formData = new FormData();
+            formData.append('categoria', categoria);
+            formData.append('preco', preco);
+            formData.append('descricao', descricao);
+            formData.append('ativo', ativo ? '1' : '0');
 
-            if (isEditing) {
-                const index = planos.findIndex(p => p.id === id);
-                if (index !== -1) {
-                    planos[index] = { id: id, ...novoPlano };
-                    alert(`Plano '${nomePlano}' atualizado com sucesso! (Ação simulada)`);
-                }
+            let url;
+            if (isEditing && id) {
+                url = `/admin/plano/edit?id=${id}`;
             } else {
-                const newId = planos.length > 0 ? Math.max(...planos.map(p => p.id)) + 1 : 1;
-                planos.push({ id: newId, ...novoPlano });
-                alert(`Plano '${nomePlano}' cadastrado com sucesso! (Ação simulada)`);
+                url = '/admin/plano/save';
             }
 
-            resetForm();
-            renderPlanosList();
+            // Enviar para o backend
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    return response.text();
+                }
+            })
+            .then(data => {
+                // Se não redirecionou, recarregar a página
+                if (data !== undefined) {
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao salvar plano:', error);
+                alert('Erro ao salvar plano. Tente novamente.');
+            });
         });
 
         // EVENTO: Botão Novo Plano (Limpa o formulário)

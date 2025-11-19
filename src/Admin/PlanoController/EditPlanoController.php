@@ -38,11 +38,11 @@ class EditPlanoController implements Controller
             exit();
         }
 
-        $ativo = filter_input(INPUT_POST, 'ativo', FILTER_VALIDATE_BOOL);
+        $ativoInput = filter_input(INPUT_POST, 'ativo');
+        // Converter string '0' ou '1' para boolean
+        $ativo = ($ativoInput === '1' || $ativoInput === 'true' || $ativoInput === true);
 
-
-        $plano = new Plano($categoria, $preco, $descricao, $ativo);
-        $plano->setId($id);
+        $plano = new Plano($id, $categoria, $preco, $descricao, $ativo);
 
         $result = $this->planoRepository->update($plano);
 
