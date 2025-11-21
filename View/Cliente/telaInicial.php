@@ -155,7 +155,7 @@ if ($pesoAtual > 0) {
                     <div class="percentual-container">
                         
                         <div class="percentual-card">
-                            <div class="percentual-titulo">Massa Corporal</div>
+                            <div class="percentual-titulo">Gordura Corporal</div>
                             <div class="percentual-valor"><?= $percentualMassaCorporal > 0 ? '%' . number_format($percentualMassaCorporal, 1, ',', '.') : '--%'; ?></div>
                         </div>
                         
