@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="profile-box-container">
-                    <a href="/admin/cadastro" class="profile-link">
+                    <a href="/admin/perfil" class="profile-link">
                         <div class="cardVerPerfil"> <i class="fas fa-user"></i> </div>
                         <div class="textocardVerPerfil"> Ver perfil </div>
                     </a>

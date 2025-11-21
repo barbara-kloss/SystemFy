@@ -14,7 +14,7 @@ function showToast(message, type = 'info', duration = 3000) {
     document.body.appendChild(toast);
     
     // Animação de entrada
-    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => toast.classList.add('show'), 100);
     
     // Remover após duração
     setTimeout(() => {
@@ -60,7 +60,7 @@ function showConfirmModal(message, title = 'Confirmação', confirmText = 'Confi
         document.body.appendChild(overlay);
         
         // Animação de entrada
-        setTimeout(() => overlay.classList.add('show'), 10);
+        setTimeout(() => overlay.classList.add('show'), 100);
         
         // Eventos dos botões
         const btnConfirm = modal.querySelector('.btn-confirm');
