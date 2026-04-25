@@ -143,11 +143,11 @@ html {
     color: #ffffff;
 }
 
-/* .logoWhatsApp {
+.logoWhatsApp {
     position: absolute;
     width: 3.5vw;
     height: 3.5vw;
-    left: 1.5vw;
+    right: 1.5vw;
     bottom: 3vh;
     z-index: 20;
 }
@@ -155,7 +155,7 @@ html {
 .logoWhatsApp img {
     width: 100%;
     height: 100%;
-} */
+}
 
 /* ========================================================= */
 /* GRID LAYOUT PRINCIPAL */

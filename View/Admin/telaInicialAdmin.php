@@ -28,9 +28,9 @@
             </a>
         </div>
 
-        <!-- <div class="logoWhatsApp">
+        <a href="https://wa.me/5541991720658" class="logoWhatsApp" target="_blank" rel="noopener noreferrer">
             <img src="/imgFy/whatsapp (3).png" alt="logoWhatsApp">
-        </div> -->
+        </a>
 
         <div class="fundoSemiTransparente">
 

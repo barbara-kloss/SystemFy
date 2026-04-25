@@ -99,9 +99,9 @@ foreach ($exerciciosDoDia as $ex) {
             <div class="bolinha bolinha5"></div>
             <div class="bolinha bolinha6"></div>
 
-            <!-- <div class="logoWhatsApp">
+            <a href="https://wa.me/5541991720658" class="logoWhatsApp" target="_blank" rel="noopener noreferrer">
                 <img src="/imgFy/whatsapp (3).png" alt="logoWhatsApp">
-            </div> -->
+            </a>
 
             <div class="logoCantoInferior">
             <img src="/imgFy/logoSemfundoEscritaBranca.png" alt="Logo">

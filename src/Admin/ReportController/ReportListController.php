@@ -15,7 +15,6 @@ class ReportListController implements Controller
 
     public function processaRequisicao(): void
     {
-        $reportList = $this->reportRepository->all();
         require_once __DIR__ . '/../../../View/Admin/telaRelatorios.php';
     }
 

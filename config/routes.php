@@ -31,6 +31,7 @@ use Systemfy\App\Admin\ReportController\{
     ReportListController,
     GetClientesReportController,
     GetFaturamentoReportController,
+    GetAgendaReportController,
     SaveReportController
 };
 
@@ -112,6 +113,7 @@ return [
     'GET|/admin/report/list' => ReportListController::class,
     'GET|/admin/report/clientes' => GetClientesReportController::class,
     'GET|/admin/report/faturamento' => GetFaturamentoReportController::class,
+    'GET|/admin/report/agenda' => GetAgendaReportController::class,
     'POST|/admin/report/save' => SaveReportController::class,
     // report
     // -- parte do cliente:
